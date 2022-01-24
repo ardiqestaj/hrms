@@ -1,7 +1,5 @@
-
 @extends('layouts.master')
 @section('content')
-    
 
     <!-- Page Wrapper -->
     <div class="page-wrapper">

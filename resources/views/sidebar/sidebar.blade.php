@@ -17,7 +17,7 @@
                             <li><a href="{{ route('em/dashboard') }}">Employee Dashboard</a></li>
                         </ul>
                     </li>
-                    @if (Auth::user()->role_name=='Admin')
+                    <!-- @if (Auth::user()->role_name=='Admin')
                         <li class="menu-title"> <span>Authentication</span> </li>
                         <li class="submenu">
                             <a href="#">
@@ -29,7 +29,7 @@
                                 <li><a href="{{ route('activity/login/logout') }}">Activity User</a></li>
                             </ul>
                         </li>
-                    @endif
+                    @endif -->
                     <li class="menu-title">
                         <span>Employees</span>
                     </li>
@@ -50,14 +50,50 @@
                             <li><a href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
                             <li><a href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>
                             <li><a href="departments.html">Departments</a></li>
-                            <li><a href="designations.html">Designations</a></li>
+                            <!-- <li><a href="designations.html">Designations</a></li>
                             <li><a href="timesheet.html">Timesheet</a></li>
                             <li><a href="shift-scheduling.html">Shift & Schedule</a></li>
-                            <li><a href="overtime.html">Overtime</a></li>
+                            <li><a href="overtime.html">Overtime</a></li> -->
                         </ul>
                     </li>
-                    <li class="menu-title"> <span>HR</span> </li>
+
+                    <li class="menu-title">
+                        <span>Clients</span>
+                    </li>
+                    <li class="submen">
+                        <a href="{{ route('clients/clients') }}" class="noti-dot">
+                            <i class="la la-briefcase"></i>
+                            <span> All Clients</span>
+                        </a>
+                        <!-- <ul style="display: none;">
+                            <li><a class="active" href="{{ route('all/employee/card') }}">All Employees</a></li>
+                            <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
+                            <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin) 
+                                <span class="badge badge-pill bg-primary float-right">1</span></a>
+                            </li>
+                        </ul> -->
+                    </li>
+
+                    <li class="menu-title">
+                        <span>Locations</span>
+                    </li>
                     <li class="submenu">
+                        <a href="#" class="noti-dot">
+                            <i class="la la-map"></i>
+                            <span> All Locations</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a class="active" href="{{ route('all/employee/card') }}">All Employees</a></li>
+                            <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
+                            <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin) 
+                                <span class="badge badge-pill bg-primary float-right">1</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title"> <span>HR</span> </li>
+                    <!-- <li class="submenu">
                         <a href="#">
                             <i class="la la-files-o"></i>
                             <span> Sales </span> 
@@ -71,7 +107,7 @@
                             <li><a href="provident-fund.html">Provident Fund</a></li>
                             <li><a href="taxes.html">Taxes</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="submenu"> <a href="#"><i class="la la-money"></i>
                         <span> Payroll </span> <span class="menu-arrow"></span></a>
                         <ul style="display: none;">
@@ -80,7 +116,7 @@
                             <li><a href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
                         </ul>
                     </li>
-                    <li class="submenu"> <a href="#"><i class="la la-pie-chart"></i>
+                    <!-- <li class="submenu"> <a href="#"><i class="la la-pie-chart"></i>
                         <span> Reports </span> <span class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li><a href="{{ route('form/expense/reports/page') }}"> Expense Report </a></li>
@@ -92,8 +128,8 @@
                             <li><a href="{{ route('form/leave/reports/page') }}"> Leave Report </a></li>
                             <li><a href="{{ route('form/daily/reports/page') }}"> Daily Report </a></li>
                         </ul>
-                    </li>
-                    <li class="menu-title"> <span>Performance</span> </li>
+                    </li> -->
+                    <!-- <li class="menu-title"> <span>Performance</span> </li>
                     <li class="submenu"> <a href="#"><i class="la la-graduation-cap"></i>
                         <span> Performance </span> <span class="menu-arrow"></span></a>
                         <ul style="display: none;">
@@ -136,7 +172,7 @@
                         <ul style="display: none;">
                             <li><a href="profile.html"> Employee Profile </a></li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
