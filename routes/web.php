@@ -66,6 +66,7 @@ Route::post('unlock', [App\Http\Controllers\LockScreen::class, 'unlock'])->name(
 // ------------------------------ register ---------------------------------//
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
+Route::post('/register/user', [App\Http\Controllers\UserController::class, 'storeUser'])->name('register/user');
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');
