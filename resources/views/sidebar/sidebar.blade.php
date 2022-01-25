@@ -2,19 +2,46 @@
 <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
+
+                <li class="nav-item dropdown has-arrow main-drop">
+					<a href="#" class="nav-link text-center mb-4" data-toggle="dropdown">
+						<span class="user-img">
+						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" class="profile-img" alt="{{ Auth::user()->name }}">
+						<span class="status online"></span></span>
+						<h3 class="d-block text-dark">{{ Auth::user()->name }}</h3>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
+						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
+						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+					</div>
+
+                          <!-- Mobile Menu -->
+                    <div class="dropdown mobile-user-menu">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="profile.html">My Profile</a> 
+                            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                        </div>
+                    </div>
+			        <!-- /Mobile Menu -->
+				</li>
+
                 <ul>
-                    <li class="menu-title">
+                    <!-- <li class="menu-title">
                         <span>Main</span>
-                    </li>
+                    </li> -->
                     <li class="submenu">
-                        <a href="#">
+                        <a href="#" class="text-center">
                             <i class="la la-dashboard"></i>
-                            <span> Dashboard</span>
+                            <span class="dash-category"> Dashboard</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
-                            <li><a href="{{ route('home') }}">Admin Dashboard</a></li>
-                            <li><a href="{{ route('em/dashboard') }}">Employee Dashboard</a></li>
+                            <li><a class="active" href="{{ route('home') }}">Dashboard</a></li>
+                            <li><a href="{{ route('em/dashboard') }}">Dashboard</a></li>
                         </ul>
                     </li>
                     <!-- @if (Auth::user()->role_name=='Admin')
@@ -30,22 +57,20 @@
                             </ul>
                         </li>
                     @endif -->
-                    <li class="menu-title">
+                    <!-- <li class="menu-title">
                         <span>Employees</span>
-                    </li>
+                    </li> -->
                     <li class="submenu">
-                        <a href="#" class="noti-dot">
-                            <i class="la la-user"></i>
-                            <span> Employees</span>
+                        <a href="#" class="">
+                            <i class="las la-user-friends"></i>
+                            <span class="dash-category"> Employees</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
-                            <li><a class="active" href="{{ route('all/employee/card') }}">All Employees</a></li>
+                            <li><a href="{{ route('all/employee/card') }}">All Employees</a></li>
                             <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
-                            <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin) 
-                                <span class="badge badge-pill bg-primary float-right">1</span></a>
-                            </li>
-                            <li><a href="{{route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
+                            <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin)</a></li>
+                            <li><a href="{{ route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
                             <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
                             <li><a href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
                             <li><a href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>
@@ -57,13 +82,13 @@
                         </ul>
                     </li>
 
-                    <li class="menu-title">
+                    <!-- <li class="menu-title">
                         <span>Clients</span>
-                    </li>
-                    <li class="submen">
-                        <a href="{{ route('clients/clients') }}" class="noti-dot">
-                            <i class="la la-briefcase"></i>
-                            <span> All Clients</span>
+                    </li> -->
+                    <li class="">
+                        <a href="{{ route('clients/clients') }}">
+                            <i class="las la-briefcase"></i>
+                            <span class="dash-category">Clients</span>
                         </a>
                         <!-- <ul style="display: none;">
                             <li><a class="active" href="{{ route('all/employee/card') }}">All Employees</a></li>
@@ -74,25 +99,27 @@
                         </ul> -->
                     </li>
 
-                    <li class="menu-title">
+                    <!-- <li class="menu-title">
                         <span>Locations</span>
-                    </li>
+                    </li> -->
                     <li class="submenu">
-                        <a href="#" class="noti-dot">
-                            <i class="la la-map"></i>
-                            <span> All Locations</span>
+                        <a href="#" class="">
+                            <i class="las la-map-marked-alt"></i>
+                            <span class="dash-category">Locations</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
-                            <li><a class="active" href="{{ route('all/employee/card') }}">All Employees</a></li>
+                            <li><a class="" href="{{ route('all/employee/card') }}">All Employees</a></li>
                             <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                             <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin) 
-                                <span class="badge badge-pill bg-primary float-right">1</span></a>
+                                <span class=""></span></a>
                             </li>
                         </ul>
                     </li>
 
-                    <li class="menu-title"> <span>HR</span> </li>
+                    <!-- <li class="menu-title"> 
+                        <span>HR</span> 
+                    </li> -->
                     <!-- <li class="submenu">
                         <a href="#">
                             <i class="la la-files-o"></i>
@@ -108,7 +135,7 @@
                             <li><a href="taxes.html">Taxes</a></li>
                         </ul>
                     </li> -->
-                    <li class="submenu"> <a href="#"><i class="la la-money"></i>
+                    <li class="submenu"> <a href="#"><i class="las la-wallet"></i>
                         <span> Payroll </span> <span class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li><a href="{{ route('form/salary/page') }}"> Employee Salary </a></li>

@@ -29,6 +29,32 @@ class ClientsController extends Controller
         
     }
 
+        /**
+     * Show the client's profile
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function clientProfile()
+    {
+        return view('clients.client-profile');
+        //
+    }
+
+   
+
+    
+        /**
+     * Show the clients in list form
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function clientsList()
+    {
+        return view('clients.clients-list');
+        //
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
