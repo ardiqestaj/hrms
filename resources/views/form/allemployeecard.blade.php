@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('content')
 
-
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -29,7 +28,8 @@
                 </div>
             </div>
             <!-- /Page Header -->
-
+            {{-- message --}}
+            {!! Toastr::message() !!}
             <!-- Search Filter -->
             <form action="{{ route('all/employee/search') }}" method="POST">
                 @csrf
@@ -59,7 +59,6 @@
             </form>
             <!-- Search Filter -->
             {{-- message --}}
-            {!! Toastr::message() !!}
             <div class="row staff-grid-row">
                 @foreach ($users as $lists)
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
@@ -102,13 +101,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/save') }}" method="POST">
+                        <form action="{{ route('register/user') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Name <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" id="name" name="name" required>
+                                        <input class="form-control @error('name') is-invalid @enderror" type="text"
+                                            id="name" name="name" value="{{ old('name') }}" required>
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -116,7 +121,7 @@
                                     <div class="form-group">
                                         <label class="col-form-label">Last Name <span
                                                 class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" id="lastName" name="lastName" required>
+                                        <input class="form-control" type="text" id="lastname" name="lastname" required>
                                     </div>
                                 </div>
 
@@ -124,22 +129,55 @@
                                     <div class="form-group">
                                         <label class="col-form-label">User Name <span
                                                 class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" id="userName" name="userName" required>
+                                        <input class="form-control" type="text" id="username" name="username" required>
                                     </div>
                                 </div>
+
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" id="email" name="email" required>
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email"
+                                            id="email" value="{{ old('email') }}" name="email" required>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Password <span class="text-danger">*</span></label>
+                                        <label class="col-form-label">Employee ID <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="rec_id" name=""
+                                            placeholder="Auto id employee" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Role <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="role_name" name="role_name"
+                                            placeholder="Employee" value="Employee" readonly>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" class="image" name="image" value="photo_defaults.jpg">
+
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label" @error('password') is-invalid @enderror"
+                                            name="password">Password <span class="text-danger">*</span></label>
                                         <input class="form-control" type="password" id="password" name="password"
                                             required>
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -148,17 +186,25 @@
                                         <label class="col-form-label">Confirm Password <span
                                                 class="text-danger">*</span></label>
                                         <input class="form-control" type="password" id="confirmPassword"
-                                            name="confirimPassword" required>
+                                            name="password_confirmation">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Phone Number <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" id="phone_number" name="phone_number">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Birth Date <span class="text-danger">*</span></label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" id="birthDate"
-                                                name="birthDate" required>
-                                        </div>
+                                        <label class="col-form-label">Birthday <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control datetimepicker" type="text" id="birthDate"
+                                            name="birth_date" required>
+
                                     </div>
                                 </div>
 
@@ -167,6 +213,7 @@
                                         <label>Gender <span class="text-danger">*</span></label>
                                         <select class="select form-control" style="width: 100%;" tabindex="-1"
                                             aria-hidden="true" id="gender" name="gender" required>
+                                            <option value="" selected disabled>-- Select --</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                         </select>
@@ -175,19 +222,10 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Employee ID <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="employee_id" name="employee_id"
-                                            placeholder="Auto id employee" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
                                         <label class="col-form-label">Type of Work <span
                                                 class="text-danger">*</span></label>
                                         <select class="select select2s-hidden-accessible" style="width: 100%;"
-                                            tabindex="-1" aria-hidden="true" id="typeOfWork" name="typeOfWork" required>
+                                            tabindex="-1" aria-hidden="true" id="type_of_work" name="type_of_work" required>
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key => $user)
                                                 <option value="{{ $user->name }}">{{ $user->name }}</option>
@@ -195,35 +233,77 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Payment Method <span
+                                                class="text-danger">*</span></label>
+                                        <select class="select select2s-hidden-accessible" style="width: 100%;"
+                                            tabindex="-1" aria-hidden="true" id="payment_method" name="payment_method"
+                                            required>
+                                            <option value="">-- Select --</option>
+                                            <option value="hourly">Hourly</option>
+                                            <option value="parttime">Parttime</option>
+                                            <option value="fulltime">Fulltime</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-sm-12">
-                                <div class="form-group wday-box">
-                                    <label class="checkbox-inline"><input type="checkbox" value="monday"
-                                            class="days recurring" checked=""> <span
-                                            class="checkmark">M</span></label>
 
-                                    <label class="checkbox-inline"><input type="checkbox" value="tuesday"
-                                            class="days recurring" checked=""><span
-                                            class="checkmark">T</span></label>
+                            <label for="col-form-label">Possible working days and hours <span
+                                    class="text-danger">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-group wday-box">
 
-                                    <label class="checkbox-inline"><input type="checkbox" value="wednesday"
-                                            class="days recurring" checked=""><span
-                                            class="checkmark">W</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
+                                                    class="days recurring" checked=""> <span
+                                                    class="checkmark">M</span></label>
 
-                                    <label class="checkbox-inline"><input type="checkbox" value="thursday"
-                                            class="days recurring" checked=""><span
-                                            class="checkmark">T</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
+                                                    class="days recurring" checked=""><span
+                                                    class="checkmark">T</span></label>
 
-                                    <label class="checkbox-inline"><input type="checkbox" value="friday"
-                                            class="days recurring" checked=""><span
-                                            class="checkmark">F</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="wednesday"
+                                                    value="Y" class="days recurring" checked=""><span
+                                                    class="checkmark">W</span></label>
 
-                                    <label class="checkbox-inline"><input type="checkbox" value="saturday"
-                                            class="days recurring"><span class="checkmark">S</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
+                                                    class="days recurring" checked=""><span
+                                                    class="checkmark">T</span></label>
 
-                                    <label class="checkbox-inline"><input type="checkbox" value="sunday"
-                                            class="days recurring"><span class="checkmark">S</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
+                                                    class="days recurring" checked=""><span
+                                                    class="checkmark">F</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"
+                                                    class="days recurring"><span class="checkmark">S</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"
+                                                    class="days recurring"><span class="checkmark">S</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="input-group time timepicker">
+                                            <input class="form-control" type="text" name="time_start"><span
+                                                class="input-group-append input-group-addon"><span
+                                                    class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="input-group time timepicker">
+                                            <input class="form-control" type="text" name="time_end"><span
+                                                class="input-group-append input-group-addon"><span
+                                                    class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -241,10 +321,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $key = 0;
-                                        $key1 = 0;
-                                        ?>
                                         @foreach ($permission_lists as $lists)
                                             <tr>
                                                 <td>{{ $lists->permission_name }}</td>
@@ -305,7 +381,7 @@
                                 </table>
                             </div> --}}
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                             </div>
                         </form>
                     </div>
