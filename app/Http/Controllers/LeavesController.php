@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\LeavesAdmin;
+use App\Models\leaveSettings;
 use DB;
 use DateTime;
 
 class LeavesController extends Controller
 {
-    // leaves
+    // -------------------------------------------------------------------------------------------------------
+    // leaves Admin 
     public function leaves()
     {
         $leaves = DB::table('leaves_admins')
@@ -106,13 +108,91 @@ class LeavesController extends Controller
             return redirect()->back();
         }
     }
-
+    // ------------------------------------------------------------------
     // leaveSettings
     public function leaveSettings()
     {
-        return view('form.leavesettings');
+        $leaves = DB::table('leave_settings')
+                    ->get();
+        return view('form.leavesettings',compact('leaves'));
     }
 
+    public function saveLeaveSettings(Request $request)
+    {
+        $request->validate([
+            'leave_names' => 'required|string|max:255',
+            'leave_days' => 'required|string|max:255',
+        ]);
+        
+        DB::beginTransaction();
+        try {
+            $leavesettings = new leaveSettings;
+            $leavesettings->leave_names = $request->leave_names;
+            $leavesettings->leave_days  = $request->leave_days;
+            $leavesettings->save();
+            
+            DB::commit();
+            Toastr::success('Create new leave :)','Success');
+            return redirect()->back();
+            
+        } catch(\Exception $e) {
+            DB::rollback();
+            Toastr::error('Add leave fail :)','Error');
+            return redirect()->back();
+        }
+    }
+     // delete recordSetting
+     public function deleteSetting($leave_id)
+     {
+         try {
+            leaveSettings::where('leave_id',$leave_id)->delete();
+             Toastr::success('Leaves deleted successfully :)','Success');
+             return redirect()->back();
+         
+         } catch(\Exception $e) {
+ 
+             DB::rollback();
+             Toastr::error('Leaves admin delete fail :)','Error');
+             return redirect()->back();
+         }
+        // return DD ('OK');
+     }
+
+    public function editLeaveSetting(Request $request, $leave_id)
+    {
+     DB::beginTransaction();
+     try {
+         $update = [
+
+             'leave_names'  => $request->leave_names,
+             'leave_days'  => $request->leave_days
+         ];
+
+         leaveSettings::where('leave_id',$leave_id)->update($update);
+         DB::commit();
+         
+         DB::commit();
+         Toastr::success('Updated Leaves successfully :)','Success');
+         return redirect()->back();
+     } catch(\Exception $e) {
+         DB::rollback();
+         Toastr::error('Update Leaves fail :)','Error');
+         return redirect()->back();
+     }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------
+      // leaves Employee
+      public function leavesEmployee()
+      {
+          return view('form.leavesemployee');
+      }
+
+
+
+
+
+    //   ----------------------------------------------------------------------------------------------------------
     // attendance admin
     public function attendanceIndex()
     {
@@ -125,11 +205,7 @@ class LeavesController extends Controller
         return view('form.attendanceemployee');
     }
 
-    // leaves Employee
-    public function leavesEmployee()
-    {
-        return view('form.leavesemployee');
-    }
+  
 
     // shiftscheduling
     public function shiftScheduLing()

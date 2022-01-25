@@ -2,9 +2,10 @@
 @extends('layouts.master')
 @section('content')
    
-
+                {{-- message --}}
+                {!! Toastr::message() !!}
     <!-- Page Wrapper -->
-    <div class="page-wrapper">
+    <div class="page-wrapper ">
         <!-- Page Content -->
         <div class="content container-fluid">
             <!-- Page Header -->
@@ -17,6 +18,9 @@
                             <li class="breadcrumb-item active">Leave Settings</li>
                         </ul>
                     </div>
+                    <div class="col-auto float-right ml-auto">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                    </div>
                 </div>
             </div>
             <!-- /Page Header -->
@@ -24,7 +28,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- Annual Leave -->
-                    <div class="card leave-box" id="leave_annual">
+                    <!-- <div class="card leave-box" id="leave_annual">
                         <div class="card-body">
                             <div class="h3 card-title with-switch">
                                 Annual 											
@@ -36,10 +40,10 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="leave-item">
+                            <div class="leave-item"> -->
                             
                                 <!-- Annual Days Leave -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <div class="form-group">
@@ -51,11 +55,11 @@
                                     <div class="leave-right">
                                         <button class="leave-edit-btn">Edit</button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Annual Days Leave -->
                                 
                                 <!-- Carry Forward -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <label class="d-block">Carry forward</label>
@@ -82,11 +86,11 @@
                                             Edit
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Carry Forward -->
                                 
                                 <!-- Earned Leave -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <label class="d-block">Earned leave</label>
@@ -103,16 +107,16 @@
                                         </div>
                                     </div>
                                     <div class="leave-right">
-                                        <button class="leave-edit-btn">
-                                            Edit
-                                        </button>
+                                        <button class="leave-edit-btn"> -->
+                                            <!-- Edit -->
+                                        <!-- </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Earned Leave -->
-                            </div>
+                            <!-- </div> -->
                             
                             <!-- Custom Policy -->
-                            <div class="custom-policy">
+                            <!-- <div class="custom-policy">
                                 <div class="leave-header">
                                     <div class="title">Custom policy</div>
                                     <div class="leave-action">
@@ -150,24 +154,27 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- /Custom Policy -->
-                        </div>
-                    </div>
+                        <!-- </div>
+                    </div> -->
                     <!-- /Annual Leave -->
                     
                     <!-- Sick Leave -->
+                    @foreach ($leaves as $leave)
                     <div class="card leave-box" id="leave_sick">
                         <div class="card-body">
                             <div class="h3 card-title with-switch">
-                                Sick 											
-                                <div class="onoffswitch">
+                            {{$leave->leave_names}} 											
+                                <!-- <div class="onoffswitch">
                                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_sick" checked>
                                     <label class="onoffswitch-label" for="switch_sick">
                                         <span class="onoffswitch-inner"></span>
                                         <span class="onoffswitch-switch"></span>
                                     </label>
-                                </div>
+                                </div> -->
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_leave{{$leave->leave_id}}"><i class="fa fa-plus"></i> Edit</a>
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#delete_leave{{$leave->leave_id}}"><i class="fa fa-plus"></i> Delete</a>
                             </div>
                             <div class="leave-item">
                                 <div class="leave-row">
@@ -175,23 +182,84 @@
                                         <div class="input-box">
                                             <div class="form-group">
                                                 <label>Days</label>
-                                                <input type="text" class="form-control" disabled>
+                                                <input type="text" value="{{$leave->leave_days}}" class="form-control" disabled >
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="leave-right">
+                                    <!-- <div class="leave-right">
                                         <button class="leave-edit-btn">
                                             Edit
                                         </button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Delete Modal -->
+                    <div class="modal custom-modal fade" id="delete_leave{{$leave->leave_id}}" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="form-header">
+                                        <h3>Delete Custom Policy</h3>
+                                        <p>Are you sure want to delete?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <form action="{{ url('form/leavesettings/delete/' . $leave->leave_id) }}" method="GET">
+                                            <!-- @csrf -->
+                                            <!-- <input type="text" name="leave_id" class="e_id" value=""> -->
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <button type="submit" class="btn btn-primary continue-btn submit-btn leaveDeleteSetting">Delete</button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- edit Leave Modal -->
+                    <div class="modal custom-modal fade" id="edit_leave{{$leave->leave_id}}" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit leave</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url('form/leavesettings/edit/' . $leave->leave_id) }} method="GET">
+                                        <!-- @csrf -->
+                                        <div class="form-group">
+                                            <label>Leave Name <span class="text-danger">*</span></label>
+                                            <input class="form-control" value="{{$leave->leave_names}}" type="text" id="nameLeave" name="leave_names">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Leave Date <span class="text-danger">*</span></label>
+                                            <div class="">
+                                                <input class="form-control" value="{{$leave->leave_days}}" type="text" name="leave_days">
+                                            </div>
+                                        </div>
+                                        <div class="submit-section">
+                                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Add Leave Modal -->
+                    <!-- /Delete Custom Policy Modal -->
+                    @endforeach
                     <!-- /Sick Leave -->
                     
                     <!-- Hospitalisation Leave -->
-                    <div class="card leave-box" id="leave_hospitalisation">
+                    <!-- <div class="card leave-box" id="leave_hospitalisation">
                         <div class="card-body">
                             <div class="h3 card-title with-switch">
                                 Hospitalisation 											
@@ -203,10 +271,10 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="leave-item">
+                            <div class="leave-item"> -->
                             
                                 <!-- Annual Days Leave -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <div class="form-group">
@@ -220,12 +288,12 @@
                                             Edit
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Annual Days Leave -->
-                            </div>
+                            <!-- </div> -->
                             
                             <!-- Custom Policy -->
-                            <div class="custom-policy">
+                            <!-- <div class="custom-policy">
                                 <div class="leave-header">
                                     <div class="title">Custom policy</div>
                                     <div class="leave-action">
@@ -263,15 +331,15 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- /Custom Policy -->
                             
-                        </div>
-                    </div>
+                        <!-- </div>
+                    </div> -->
                     <!-- /Hospitalisation Leave -->
                     
                     <!-- Maternity Leave -->
-                    <div class="card leave-box" id="leave_maternity">
+                    <!-- <div class="card leave-box" id="leave_maternity">
                         <div class="card-body">
                             <div class="h3 card-title with-switch">
                                 Maternity  <span class="subtitle">Assigned to female only</span>
@@ -301,11 +369,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- /Maternity Leave -->
                     
                     <!-- Paternity Leave -->
-                    <div class="card leave-box" id="leave_paternity">
+                    <!-- <div class="card leave-box" id="leave_paternity">
                         <div class="card-body">
                             <div class="h3 card-title with-switch">
                                 Paternity  <span class="subtitle">Assigned to male only</span>
@@ -335,11 +403,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- /Paternity Leave -->
                     
                     <!-- Custom Create Leave -->
-                    <div class="card leave-box mb-0" id="leave_custom01">
+                    <!-- <div class="card leave-box mb-0" id="leave_custom01">
                         <div class="card-body">
                             <div class="h3 card-title with-switch">
                                 LOP 											
@@ -352,10 +420,10 @@
                                 </div>
                                 <button class="btn btn-danger leave-delete-btn" type="button">Delete</button>
                             </div>
-                            <div class="leave-item">
+                            <div class="leave-item"> -->
                             
                                 <!-- Annual Days Leave -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <div class="form-group">
@@ -367,11 +435,11 @@
                                     <div class="leave-right">
                                         <button class="leave-edit-btn">Edit</button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Annual Days Leave -->
                                 
                                 <!-- Carry Forward -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <label class="d-block">Carry forward</label>
@@ -398,11 +466,11 @@
                                             Edit
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Carry Forward -->
                                 
                                 <!-- Earned Leave -->
-                                <div class="leave-row">
+                                <!-- <div class="leave-row">
                                     <div class="leave-left">
                                         <div class="input-box">
                                             <label class="d-block">Earned leave</label>
@@ -423,12 +491,12 @@
                                             Edit
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /Earned Leave -->
-                            </div>
+                            <!-- </div> -->
                             
                             <!-- Custom Policy -->
-                            <div class="custom-policy">
+                            <!-- <div class="custom-policy">
                                 <div class="leave-header">
                                     <div class="title">Custom policy</div>
                                     <div class="leave-action">
@@ -466,7 +534,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- /Custom Policy -->
                         </div>
                     </div>
@@ -478,7 +546,7 @@
         <!-- /Page Content -->
 
         <!-- Add Custom Policy Modal -->
-        <div id="add_custom_policy" class="modal custom-modal fade" role="dialog">
+        <!-- <div id="add_custom_policy" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -528,11 +596,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- /Add Custom Policy Modal -->
         
         <!-- Edit Custom Policy Modal -->
-        <div id="edit_custom_policy" class="modal custom-modal fade" role="dialog">
+        <!-- <div id="edit_custom_policy" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -582,36 +650,52 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- /Edit Custom Policy Modal -->
         
-        <!-- Delete Custom Policy Modal -->
-        <div class="modal custom-modal fade" id="delete_custom_policy" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
+        
+        <!-- Add Leave Modal -->
+        <div class="modal custom-modal fade" id="add_leave" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add leave</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="modal-body">
-                        <div class="form-header">
-                            <h3>Delete Custom Policy</h3>
-                            <p>Are you sure want to delete?</p>
-                        </div>
-                        <div class="modal-btn delete-action">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        <form action="{{ route('form/leavesettings/add') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label>Leave Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="nameLeave" name="leave_names">
+                            </div>
+                            <div class="form-group">
+                                <label>Leave Date <span class="text-danger">*</span></label>
+                                <div class="">
+                                    <input class="form-control" placeholder="Number of days" type="text" id="leaveDate" name="leave_days">
                                 </div>
                             </div>
-                        </div>
+                            <div class="submit-section">
+                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Delete Custom Policy Modal -->
+        <!-- /Add Leave Modal -->
        
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
+    <script>
+        $(document).on('click','.leaveDeleteSetting',function()
+        {
+            var _this = $(this).parents('form');
+            $('.e_id').val(_this.find('.leave_id').text());
+        });
+    </script>
+    <!-- @section('script') -->
     @endsection
 @endsection

@@ -50,7 +50,13 @@
                                             <td>{{ $items->name_holiday }}</td>
                                             <td>{{date('d F, Y',strtotime($items->date_holiday)) }}</td>
                                             <td>{{date('l',strtotime($items->date_holiday)) }}</td>
-                                            <td></td>
+                                            <td><div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    </div>
+                                                </div></td>
                                         </tr>
                                     @endif
                                 @endforeach
