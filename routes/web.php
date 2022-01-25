@@ -134,6 +134,8 @@ Route::get('form/shiftlist/page', [App\Http\Controllers\LeavesController::class,
 
 // ----------------------------- Clients ------------------------------//
 Route::get('clients/clients', [App\Http\Controllers\ClientsController::class, 'clients'])->middleware('auth')->name('clients/clients');
+Route::get('clients/client-profile', [App\Http\Controllers\ClientsController::class, 'clientProfile'])->middleware('auth')->name('clients/client-profile');
+Route::get('clients/clients-list', [App\Http\Controllers\ClientsController::class, 'clientsList'])->middleware('auth')->name('clients/clients-list');
 
 
 // ----------------------------- form payroll  ------------------------------//

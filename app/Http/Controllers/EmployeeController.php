@@ -347,3 +347,4 @@ class EmployeeController extends Controller
         return view('form.employeeprofile',compact('user','users'));
     }
 }
+    
