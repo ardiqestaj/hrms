@@ -126,8 +126,15 @@ Route::post('form/leaves/save', [App\Http\Controllers\LeavesController::class, '
 Route::post('form/leaves/edit', [App\Http\Controllers\LeavesController::class, 'editRecordLeave'])->middleware('auth')->name('form/leaves/edit');
 Route::post('form/leaves/edit/delete', [App\Http\Controllers\LeavesController::class, 'deleteLeave'])->middleware('auth')->name('form/leaves/edit/delete');
 
-// ----------------------------- form attendance  ------------------------------//
+// ----------------------------- form leaves Settings ------------------------------//
 Route::get('form/leavesettings/page', [App\Http\Controllers\LeavesController::class, 'leaveSettings'])->middleware('auth')->name('form/leavesettings/page');
+Route::post('form/leavesettings/add', [App\Http\Controllers\LeavesController::class, 'saveLeaveSettings'])->middleware('auth')->name('form/leavesettings/add');
+Route::get('form/leavesettings/delete/{leave_id}', [App\Http\Controllers\LeavesController::class, 'deleteSetting'])->middleware('auth');
+Route::get('form/leavesettings/edit/{leave_id}', [App\Http\Controllers\LeavesController::class, 'editLeaveSetting'])->middleware('auth');
+
+
+
+// ----------------------------- form attendance  ------------------------------//
 Route::get('attendance/page', [App\Http\Controllers\LeavesController::class, 'attendanceIndex'])->middleware('auth')->name('attendance/page');
 Route::get('attendance/employee/page', [App\Http\Controllers\LeavesController::class, 'AttendanceEmployee'])->middleware('auth')->name('attendance/employee/page');
 Route::get('form/shiftscheduling/page', [App\Http\Controllers\LeavesController::class, 'shiftScheduLing'])->middleware('auth')->name('form/shiftscheduling/page');
