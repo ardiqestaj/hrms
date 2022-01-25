@@ -11,9 +11,9 @@
             </div>
             <!-- /Logo -->
             <!-- Header Title -->
-            <div class="page-title-box float-left">
+            <!-- <div class="page-title-box float-left">
                 <h3>Admin Dashboard</h3>
-            </div>
+            </div> -->
             <!-- /Header Title -->
             <!-- Header Menu -->
             <ul class="nav user-menu">
@@ -24,8 +24,8 @@
                             <i class="fa fa-search"></i>
                     </a>
                         <form action="search.html">
-                            <input class="form-control" type="text" placeholder="Search here">
-                            <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                            <input class="form-control bg-white" type="text" placeholder="Search here">
+                            <button class="btn text-muted" type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                 </li>
@@ -33,7 +33,7 @@
             
                 <!-- Flag -->
                 <li class="nav-item dropdown has-arrow flag-nav">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <a class="nav-link dropdown-toggle text-muted" data-toggle="dropdown" href="#" role="button">
                         <img src="{{ URL::to('assets/img/flags/us.png') }}" alt="" height="20"> <span>English</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -57,10 +57,10 @@
                 <!-- /Flag -->
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link text-muted" href="{{ route('login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    <a class="nav-link text-muted" href="{{ route('register') }}">Register</a>
                 </li>
             </ul>
             <!-- /Header Menu -->

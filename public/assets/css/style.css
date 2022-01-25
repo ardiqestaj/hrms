@@ -577,7 +577,7 @@ table.dataTable thead>tr>td.sorting {
 -----------------------*/
 
 .btn {
-    border-radius: 20px;
+    /* border-radius: 20px !important; */
 }
 
 .btn.disabled,
@@ -2322,11 +2322,16 @@ table.dataTable thead>tr>td.sorting {
 .account-box {
     background-color: #fff;
     border: 1px solid #ededed;
-    border-radius: 4px;
+    border-radius: 30px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
     margin: 0 auto;
     overflow: hidden;
     width: 480px;
+    box-shadow: var(--box-shadow);
+}
+
+.account-box:hover {
+    box-shadow: var(--hover-box-shadow);
 }
 
 .account-wrapper {
@@ -2343,11 +2348,7 @@ table.dataTable thead>tr>td.sorting {
 }
 
 .account-box .account-btn {
-    background: #f43b48;
-    background: -moz-linear-gradient(left, #f43b48 0%, #453a94 100%);
-    background: -webkit-linear-gradient(left, #f43b48 0%, #453a94 100%);
-    background: -ms-linear-gradient(left, #f43b48 0%, #453a94 100%);
-    background: linear-gradient(to right, #f43b48 0%, #453a94 100%);
+    background-color: #55CE63;
     border: 0;
     border-radius: 4px;
     display: block;
@@ -6775,13 +6776,14 @@ table.table-inbox tbody tr.checked {
 -----------------------*/
 
 .apply-btn {
-    background: #f43b48;
+    /* background: #f43b48;
     background: -moz-linear-gradient(left, #f43b48 0%, #453a94 100%);
     background: -webkit-linear-gradient(left, #f43b48 0%, #453a94 100%);
     background: -ms-linear-gradient(left, #f43b48 0%, #453a94 100%);
-    background: linear-gradient(to right, #f43b48 0%, #453a94 100%);
+    background: linear-gradient(to right, #f43b48 0%, #453a94 100%); */
     border-color: transparent;
     box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+    background-color: #F43B48;
     color: #fff;
     position: absolute;
     right: 20px;
@@ -6791,12 +6793,17 @@ table.table-inbox tbody tr.checked {
 .job-list {
     background-color: #fff;
     border: 1px solid #ededed;
-    border-radius: 4px;
+    border-radius: 20px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
     display: block;
     margin-bottom: 35px;
     position: relative;
     transition: all 0.3s ease 0s;
+    box-shadow: var(--box-shadow);
+}
+
+.job-list:hover {
+    box-shadow: var(--hover-box-shadow);
 }
 
 .job-list-det {
@@ -6825,7 +6832,7 @@ table.table-inbox tbody tr.checked {
 
 .job-list .job-list-footer {
     background-color: #f9f9f9;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 20px 20px;
     position: relative;
     padding: 20px;
 }
@@ -6979,6 +6986,12 @@ table.table-inbox tbody tr.checked {
     padding: 30px;
     position: relative;
     width: 100%;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.job-widget:hover {
+    box-shadow: var(--hover-box-shadow);
 }
 
 .job-desc-title h2 {
@@ -7332,7 +7345,6 @@ table.table-inbox tbody tr.checked {
 
 .error-page {
     align-items: center;
-    background-color: rgba(244, 59, 72, 0.2);
     color: #1f1f1f;
     display: flex;
 }
@@ -7531,7 +7543,7 @@ table.table-inbox tbody tr.checked {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50px;
-    color: #fff;
+    color: #929AA7;
     height: 40px;
     padding: 10px 50px 10px 15px;
 }
@@ -9706,7 +9718,7 @@ ul.comment-list li ul.children {
         transition: all 0.4s ease;
     }
     .responsive-search {
-        color: #fff;
+        color: #929AA7;
         display: inline-block;
     }
     .top-nav-search form {
