@@ -123,12 +123,16 @@ Route::post('form/holidays/save', [App\Http\Controllers\HolidayController::class
 Route::post('form/holidays/update', [App\Http\Controllers\HolidayController::class, 'updateRecord'])->middleware('auth')->name('form/holidays/update');
 Route::post('form/holidays/delete', [App\Http\Controllers\HolidayController::class, 'deleteRecord'])->middleware('auth')->name('form/holidays/delete');
 
-// ----------------------------- form leaves ------------------------------//
+// ----------------------------- form leaves Admin------------------------------//
 Route::get('form/leaves/new', [App\Http\Controllers\LeavesController::class, 'leaves'])->middleware('auth')->name('form/leaves/new');
 Route::get('form/leavesemployee/new', [App\Http\Controllers\LeavesController::class, 'leavesEmployee'])->middleware('auth')->name('form/leavesemployee/new');
 Route::post('form/leaves/save', [App\Http\Controllers\LeavesController::class, 'saveRecord'])->middleware('auth')->name('form/leaves/save');
 Route::post('form/leaves/edit', [App\Http\Controllers\LeavesController::class, 'editRecordLeave'])->middleware('auth')->name('form/leaves/edit');
 Route::post('form/leaves/edit/delete', [App\Http\Controllers\LeavesController::class, 'F'])->middleware('auth')->name('form/leaves/edit/delete');
+
+// ----------------------------- form leaves Admin------------------------------//
+
+
 
 // ----------------------------- form leaves Settings ------------------------------//
 Route::get('form/leavesettings/page', [App\Http\Controllers\LeavesController::class, 'leaveSettings'])->middleware('auth')->name('form/leavesettings/page');
