@@ -1,8 +1,6 @@
-
 @extends('layouts.master')
 @section('content')
    
-
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -344,7 +342,6 @@
             $('#e_from_date').val(_this.find('.from_date').text());  
             $('#e_to_date').val(_this.find('.to_date').text());  
             $('#e_leave_reason').val(_this.find('.leave_reason').text());
-
             var leave_type = (_this.find(".leave_type").text());
             var _option = '<option selected value="' + leave_type+ '">' + _this.find('.leave_type').text() + '</option>'
             $( _option).appendTo("#e_leave_type");

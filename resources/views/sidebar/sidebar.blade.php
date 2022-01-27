@@ -3,33 +3,9 @@
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
 
-                <li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link text-center mb-4" data-toggle="dropdown">
-						<span class="user-img">
-						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" class="profile-img" alt="{{ Auth::user()->name }}">
-						<span class="status online"></span></span>
-						<h3 class="d-block text-dark">{{ Auth::user()->name }}</h3>
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
-						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-					</div>
+             
 
-                          <!-- Mobile Menu -->
-                    <div class="dropdown mobile-user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="profile.html">My Profile</a> 
-                            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-                        </div>
-                    </div>
-			        <!-- /Mobile Menu -->
-				</li>
-
-                <ul>
+                <ul class="sidebar-main-menu">
                     <!-- <li class="menu-title">
                         <span>Main</span>
                     </li> -->
@@ -40,7 +16,7 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
-                            <li><a class="active" href="{{ route('home') }}">Dashboard</a></li>
+                            <li><a class="" href="{{ route('home') }}">Dashboard</a></li>
                             <li><a href="{{ route('em/dashboard') }}">Dashboard</a></li>
                         </ul>
                     </li>
@@ -69,11 +45,11 @@
                         <ul style="display: none;">
                             <li><a href="{{ route('all/employee/card') }}">All Employees</a></li>
                             <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
-                            <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin)</a></li>
-                            <li><a href="{{ route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
+                            <li><a href="{{ route('form/leaves/new') }}">Leaves</a></li>
+                            <li><a href="{{ route('form/leavesemployee/new')}}">Leaves</a></li>
                             <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
-                            <li><a href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
-                            <li><a href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>
+                            <li><a href="{{ route('attendance/page') }}">Attendance</a></li>
+                            <li><a href="{{ route('attendance/employee/page') }}">Attendance</a></li>
                             <li><a href="departments.html">Departments</a></li>
                             <!-- <li><a href="designations.html">Designations</a></li>
                             <li><a href="timesheet.html">Timesheet</a></li>
@@ -85,7 +61,7 @@
                     <!-- <li class="menu-title">
                         <span>Clients</span>
                     </li> -->
-                    <li class="">
+                    <li class="submenu-click">
                         <a href="{{ route('clients/clients') }}">
                             <i class="las la-briefcase"></i>
                             <span class="dash-category">Clients</span>

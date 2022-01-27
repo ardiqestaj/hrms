@@ -18,8 +18,8 @@
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link  active"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>

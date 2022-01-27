@@ -1,3 +1,6 @@
-// body {
-//     background-color: #efefed !important;
-// }
+.submenu,
+.submenu-click {
+    &:hover {
+        background-color: #F4F4FC;
+    }
+}

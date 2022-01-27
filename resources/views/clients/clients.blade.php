@@ -60,11 +60,11 @@
 					<!-- Search Filter -->
 					
 					<div class="row staff-grid-row">
+					@foreach ($users as $lists )
 						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                        @foreach ($users as $lists )
 							<div class="profile-widget">
 								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
+									<a href="{{ route('clients/client-profile') }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
 								</div>
 								<div class="dropdown profile-action">
 									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -76,144 +76,11 @@
 								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Global Technologies</a></h4>
 								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Barry Cuda</a></h5>
 								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
+								<a href="chat.html" class="btn btn-white btn-sm m-t-10 client-msg">Message</a>
 								<a href="{{ route('clients/client-profile') }}" class="btn btn-white btn-sm m-t-10">View Profile</a>
 							</div>
+						</div>
                         @endforeach
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Delta Infotech</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Tressa Wexler</a></h5>
-								<div class="small text-muted">Manager</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img src="{{ URL::to('/assets/images/'. $lists->avatar) }}" alt=""></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Cream Inc</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Ruby Bartlett</a></h5>
-								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img src="{{ URL::to('/assets/images/'. $lists->avatar) }}" alt=""></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Wellware Company</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Misty Tison</a></h5>
-								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Mustang Technologies</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Daniel Deacon</a></h5>
-								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">International Software Inc</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Walter Weaver</a></h5>
-								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Mercury Software Inc</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Amanda Warren</a></h5>
-								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-							<div class="profile-widget">
-								<div class="profile-img">
-									<a href="client-profile.html" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $lists->avatar) }}"></a>
-								</div>
-								<div class="dropdown profile-action">
-									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-								</div>
-								<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Carlson Tech</a></h4>
-								<h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Betty Carlson</a></h5>
-								<div class="small text-muted">CEO</div>
-								<a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-								<a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-							</div>
-						</div>
 					</div>
                 </div>
 				<!-- /Page Content -->
