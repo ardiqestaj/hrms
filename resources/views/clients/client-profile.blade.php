@@ -22,7 +22,7 @@
 					</div>
 					<!-- /Page Header -->
 					
-					<div class="card mb-0">
+					<div class="card profile-info-card  mb-0">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -38,7 +38,7 @@
 											<div class="row">
 												<div class="col-md-5">
 													<div class="profile-info-left">
-														<h3 class="user-name m-t-0">Global Technologies</h3>
+														<h3 class="user-name">Global Technologies</h3>
 														<h5 class="company-role m-t-0 mb-0">Barry Cuda</h5>
 														<small class="text-muted">CEO</small>
 														<div class="staff-id">Employee ID : CLT-0001</div>

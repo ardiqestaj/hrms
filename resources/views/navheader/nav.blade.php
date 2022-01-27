@@ -3,6 +3,31 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
+			<li class="nav-item dropdown has-arrow main-drop">
+					<a href="#" class="nav-link p-0 mb-4 nav-profile" data-toggle="dropdown">
+						<span class="user-img d-flex align-items-center justify-content-center">
+						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" class="profile-img"  style="border: 1px solid black" alt="{{ Auth::user()->name }}">
+						</span>
+						<h4 class="d-block text-dark mt-2">{{ Auth::user()->name }}</h4>
+					</a>
+					<div class="dropdown-menu profile-list-items"  style="border: 1px solid black">
+						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
+						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
+						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+					</div>
+
+                          <!-- Mobile Menu -->
+                    <div class="dropdown mobile-user-menu">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="profile.html">My Profile</a> 
+                            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                        </div>
+                    </div>
+			        <!-- /Mobile Menu -->
+				</li>
 				<!-- <a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a> -->
 			</div>
 			<!-- /Logo -->

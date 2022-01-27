@@ -292,16 +292,22 @@ $(document).ready(function() {
             $('body').removeClass('mini-sidebar');
             $('.subdrop + ul').slideDown();
             $(".sidebar-menu ul li").css("padding-left", "30px")
-            $(".nav-item .profile-img ").css({ "width": "70px", "height": "70px" });
+            $(".nav-item .profile-img ").css({ "width": "60px", "height": "60px" });
             $(".nav-item h3").css({ "visibility": "visible", "opacity": "1" })
-            $(".slimScrollDiv").css({ "width": "100%", "margin-left": "0px" })
+            $(".slimScrollDiv").css({ "margin-left": "0px" })
+            $(".nav-profile").css({ "margin-top": "15px", "margin-left": "0px" })
+            $(".sidebar-menu ul ul a").css("padding-left", "40px")
+
         } else {
             $('body').addClass('mini-sidebar');
             $('.subdrop + ul').slideUp();
             $(".sidebar-menu ul li").css("padding-left", "0px")
             $(".nav-item .profile-img ").css({ "width": "40px", "height": "40px" });
             $(".nav-item h3").css({ "visibility": "hidden", "opacity": "0" })
-            $(".slimScrollDiv").css({ "width": "120%", "margin-left": "15px" })
+            $(".slimScrollDiv").css({ "margin-left": "15px" })
+            $(".nav-profile").css({ "margin-top": "15px", "margin-left": "-50px" })
+
+
 
         }
         return false;
@@ -314,18 +320,21 @@ $(document).ready(function() {
                 $('body').addClass('expand-menu');
                 $('.subdrop + ul').slideDown();
                 $(".sidebar-menu ul li").css("padding-left", "30px")
-                $(".nav-item .profile-img ").css({ "width": "70px", "height": "70px" });
+                $(".nav-item .profile-img ").css({ "width": "60px", "height": "60px" });
                 $(".nav-item h3").css({ "visibility": "visible", "opacity": "1" })
-                $(".slimScrollDiv").css({ "width": "100%", "margin-left": "0px" })
-
-
+                $(".slimScrollDiv").css({ "margin-left": "0px" })
+                $(".nav-profile").css({ "margin-top": "10px", "margin-left": "0px" })
+                $(".header-left").css("margin-left", "60px");
+                $(".sidebar-menu ul ul a").css("padding-left", "40px")
             } else {
                 $('body').removeClass('expand-menu');
                 $('.subdrop + ul').slideUp();
                 $(".sidebar-menu ul li").css("padding-left", "0px")
                 $(".nav-item .profile-img ").css({ "width": "40px", "height": "40px" });
                 $(".nav-item h3").css({ "visibility": "hidden", "opacity": "0" })
-                $(".slimScrollDiv").css({ "width": "120%", "margin-left": "15px" })
+                $(".slimScrollDiv").css({ "margin-left": "15px" })
+                $(".nav-profile").css({ "margin-top": "15px", "margin-left": "-50px" })
+                $(".header-left").css("margin-left", "0px");
 
             }
             return false;

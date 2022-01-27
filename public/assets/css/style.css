@@ -338,6 +338,19 @@ table tr:last-child td:last-child {
     border-bottom-right-radius: 10px;
 }
 
+.profile-info-card {
+    border-radius: 0;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+}
+
+.tab-box {
+    border-radius: 0px;
+    border-bottom-left-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+    border: none;
+}
+
 
 /*-----------------
 	2. Table
@@ -1648,13 +1661,12 @@ table.dataTable thead>tr>td.sorting {
 .header .header-left {
     float: left;
     height: 60px;
-    padding: 0 20px;
+    /* padding: 0 20px; */
     position: relative;
     text-align: center;
     width: 230px;
     z-index: 1;
     transition: all 0.2s ease-in-out;
-    margin-right: 35px;
 }
 
 .header .header-left .logo {
@@ -1662,9 +1674,17 @@ table.dataTable thead>tr>td.sorting {
     line-height: 60px;
 }
 
+.profile-list-items {
+    position: absolute;
+    left: 50% !important;
+    top: 100% !important;
+    transform: translateX(-50%) !important;
+}
+
 .bar-icon {
     display: inline-block;
     width: 21px;
+    transform: translateX(100%);
 }
 
 .bar-icon span {
@@ -1675,6 +1695,10 @@ table.dataTable thead>tr>td.sorting {
     height: 3px;
     margin-bottom: 5px;
     width: 21px;
+}
+
+.nav-profile {
+    margin-top: 15px;
 }
 
 .bar-icon span:nth-child(2) {
@@ -1780,6 +1804,7 @@ table.dataTable thead>tr>td.sorting {
 .user-img {
     display: inline-block;
     position: relative;
+    backface-visibility: hidden;
 }
 
 .main-drop .user-img img {
@@ -1849,7 +1874,7 @@ table.dataTable thead>tr>td.sorting {
     top: 80px;
     transition: all 0.2s ease-in-out 0s;
     width: 230px;
-    z-index: 10000;
+    z-index: 100;
 }
 
 .sidebar.opened {
@@ -1873,13 +1898,10 @@ table.dataTable thead>tr>td.sorting {
     margin: 0;
     padding: 0;
     position: relative;
-    /* border: 1px solid black; */
-    /* margin-left: 30px; */
-    /* padding-left: 30px; */
 }
 
-.sidebar-menu ul li a.active {
-    /* border: 1px solid black; */
+ul.sidebar-main-menu {
+    margin-top: 35px;
 }
 
 .sidebar-menu ul li {
@@ -1888,10 +1910,14 @@ table.dataTable thead>tr>td.sorting {
     transition: all .2s;
 }
 
+.submenu:hover,
+.submenu-click:hover {
+    background-color: #F4F4FC;
+}
 
-/* .submenu>a.active {
-    border-left: 5px solid black;
-} */
+.submenu li:hover {
+    background-color: #EBEBF5;
+}
 
 .sidebar-menu li a {
     color: #333;
@@ -2020,7 +2046,7 @@ table.dataTable thead>tr>td.sorting {
 .sidebar-menu ul ul a {
     display: block;
     font-size: 14px;
-    padding: 9px 10px 9px 30px;
+    padding: 0px 0px 10px 30px;
     position: relative;
 }
 
@@ -2133,9 +2159,10 @@ table.dataTable thead>tr>td.sorting {
 }
 
 .nav-item .profile-img {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     transition: all .3s;
+    backface-visibility: hidden;
 }
 
 .main-drop {
@@ -2242,10 +2269,9 @@ table.dataTable thead>tr>td.sorting {
 }
 
 .add-btn {
-    background-color: #f43b48;
-    border: 1px solid #f43b48;
-    border-radius: 50px;
-    color: #fff;
+    border: 1px solid #D0D0D0;
+    border-radius: 5px;
+    color: #888;
     float: right;
     font-weight: 500;
     min-width: 140px;
@@ -2254,9 +2280,8 @@ table.dataTable thead>tr>td.sorting {
 .add-btn:hover,
 .add-btn:focus,
 .add-btn:active {
-    background-color: #f10e1d;
-    border: 1px solid #f10e1d;
-    color: #fff;
+    border: 1px solid #333333;
+    color: #333333;
 }
 
 .add-btn i {
@@ -2945,6 +2970,11 @@ table.dataTable thead>tr>td.sorting {
 
 .profile-img-wrap.edit-img .fileupload.btn {
     left: 0;
+}
+
+.staff-msg,
+.client-msg {
+    display: none;
 }
 
 
@@ -3820,7 +3850,7 @@ input::placeholder {
 .form-focus .form-control {
     height: 50px;
     padding: 21px 12px 6px;
-    border-radius: 20px;
+    border-radius: 5px;
     box-shadow: var(--box-shadow);
 }
 
@@ -3852,7 +3882,7 @@ input::placeholder {
 .form-focus .select2-container .select2-selection--single {
     border: 1px solid #e3e3e3;
     height: 50px;
-    border-radius: 20px;
+    border-radius: 5px;
     box-shadow: var(--box-shadow);
 }
 
@@ -4025,7 +4055,7 @@ input::placeholder {
 
 .view-icons .btn {
     background-color: #fff;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #D0D0D0;
     color: #888;
     font-size: 18px;
     margin-right: 5px;
@@ -4033,8 +4063,14 @@ input::placeholder {
     padding: 4px;
 }
 
+.view-icons .btn:hover {
+    color: #333;
+    border: 1px solid #333;
+}
+
 .view-icons .btn.active {
     color: #333;
+    border: 1px solid #333;
 }
 
 

@@ -21,21 +21,21 @@
             {{-- message --}}
             {!! Toastr::message() !!}
             <!-- /Page Header -->
-            <div class="card mb-0">
+            <div class="card profile-info-card mb-0">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href="#"><img alt="" src="{{ URL::to('/assets/images/'. $user[0]->avatar) }}" alt="{{ $user[0]->name }}"></a>
+                                        <a href="#"><img alt="" class="" src="{{ URL::to('/assets/images/'. $user[0]->avatar) }}" alt="{{ $user[0]->name }}"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name m-t-0 mb-0">{{ $user[0]->name }}</h3>
+                                                <h3 class="user-name mt-0 mt-md-5 mb-0">{{ $user[0]->name }}</h3>
                                                 <h6 class="text-muted"> {{ $user[0]->department }}</h6>
                                                 <small class="text-muted">{{ $user[0]->position }}</small>
                                                 <div class="staff-id">Employee ID : {{ $user[0]->rec_id }}</div>
@@ -44,7 +44,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <ul class="personal-info">
+                                            <ul class="personal-info" style="list-style-type: disc;">
                                                 <li>
                                                     <div class="title">Phone:</div>
                                                     <div class="text"><a href="">{{ Auth::user()->phone_number }}</a></div>
