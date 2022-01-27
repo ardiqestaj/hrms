@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Models\LeavesAdmin;
+// use App\Models\LeavesAdmin;
 use App\Models\leaveSettings;
+use App\Models\LeaveApplies;
 use DB;
 use DateTime;
 
@@ -15,21 +16,24 @@ class LeavesController extends Controller
     // leaves Admin 
     public function leaves()
     {
-        $leaves = DB::table('leaves_admins')
-                    ->join('users', 'users.rec_id', '=', 'leaves_admins.rec_id')
-                    ->select('leaves_admins.*', 'users.position','users.name','users.avatar')
+        $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_settings', 'leave_settings.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_settings.leave_names','leave_settings.leave_id')
                     ->get();
+        $LeaveTypes = DB::table('leave_settings')->get();
 
-        return view('form.leaves',compact('leaves'));
+        return view('form.leaves',compact('leaves', 'LeaveTypes'));
     }
     // save record
     public function saveRecord(Request $request)
     {
         $request->validate([
-            'leave_type'   => 'required|string|max:255',
+            'leave_type_id'   => 'required|string|max:255',
             'from_date'    => 'required|string|max:255',
             'to_date'      => 'required|string|max:255',
             'leave_reason' => 'required|string|max:255',
+            // 'status' => 'required|string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -40,13 +44,14 @@ class LeavesController extends Controller
             $day     = $from_date->diff($to_date);
             $days    = $day->d;
 
-            $leaves = new LeavesAdmin;
+            $leaves = new LeaveApplies;
             $leaves->rec_id        = $request->rec_id;
-            $leaves->leave_type    = $request->leave_type;
+            $leaves->leave_type_id    = $request->leave_type_id;
             $leaves->from_date     = $request->from_date;
             $leaves->to_date       = $request->to_date;
             $leaves->day           = $days;
             $leaves->leave_reason  = $request->leave_reason;
+            // $leaves->status  = $request->status;
             $leaves->save();
             
             DB::commit();
@@ -71,15 +76,15 @@ class LeavesController extends Controller
             $days    = $day->d;
 
             $update = [
-                'id'           => $request->id,
-                'leave_type'   => $request->leave_type,
+                'leave_applies_id'           => $request->id,
+                'leave_type_id'   => $request->leave_type_id,
                 'from_date'    => $request->from_date,
                 'to_date'      => $request->to_date,
                 'day'          => $days,
                 'leave_reason' => $request->leave_reason,
             ];
 
-            LeavesAdmin::where('id',$request->id)->update($update);
+            LeaveApplies::where('leave_applies_id',$request->id)->update($update);
             DB::commit();
             
             DB::commit();
@@ -97,7 +102,7 @@ class LeavesController extends Controller
     {
         try {
 
-            LeavesAdmin::destroy($request->id);
+            LeaveApplies::destroy($request->id);
             Toastr::success('Leaves admin deleted successfully :)','Success');
             return redirect()->back();
         

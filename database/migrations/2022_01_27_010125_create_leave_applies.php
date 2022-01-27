@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLeavesAdminsTable extends Migration
+class CreateLeaveApplies extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateLeavesAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('leaves_admins', function (Blueprint $table) {
-            $table->id();
+        Schema::create('leave_applies', function (Blueprint $table) {
+            $table->id('leave_applies_id');
             $table->string('rec_id')->nullable();
             $table->string('leave_type_id')->nullable();
             $table->string('from_date')->nullable();
@@ -33,6 +33,6 @@ class CreateLeavesAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leaves_admins');
+        Schema::dropIfExists('leave_applies');
     }
 }

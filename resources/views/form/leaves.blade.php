@@ -130,8 +130,8 @@
                                                     <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                                 </h2>
                                             </td>
-                                            <td hidden class="id">{{ $items->id }}</td>
-                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td hidden class="id">{{$items->leave_id}}</td>
+                                            <td class="leave_type">{{$items->leave_names}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
                                             <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
                                             <td hidden class="to_date">{{$items->to_date}}</td>
@@ -141,13 +141,22 @@
                                             <td class="text-center">
                                                 <div class="dropdown action-label">
                                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                        <i class="fa fa-dot-circle-o text-purple"></i>
+                                                        @if($items->status = 'New' )
+                                                        New
+                                                        @elseif($items->status = 'Pending')
+                                                        Pending
+                                                        @elseif($items->status = 'Approved')
+                                                        Approved
+                                                        @else
+                                                        Declined
+                                                        @endif
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-purple"></i> New</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                                        <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#new_leave"><i class="fa fa-dot-circle-o text-purple"></i> New</a> -->
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                                        <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -186,11 +195,11 @@
                             @csrf
                             <div class="form-group">
                                 <label>Leave Type <span class="text-danger">*</span></label>
-                                <select class="select" id="leaveType" name="leave_type">
+                                <select class="select" id="leaveType" name="leave_type_id">
                                     <option selected disabled>Select Leave Type</option>
-                                    <option value="Casual Leave 12 Days">Casual Leave 12 Days</option>
-                                    <option value="Medical Leave">Medical Leave</option>
-                                    <option value="Loss of Pay">Loss of Pay</option>
+                                    @foreach($LeaveTypes as $LeaveType)
+                                    <option value="{{$LeaveType->leave_id}}">{{$LeaveType->leave_names}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
@@ -284,12 +293,14 @@
                         </div>
                         <div class="modal-btn delete-action">
                             <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Approve</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Decline</a>
-                                </div>
+                                <form action="{{ route('form/leaves/edit') }}" method="POST">
+                                    <div class="col-6">
+                                        <button href="javascript:void(0);" class="btn btn-primary continue-btn">Approve</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -297,6 +308,54 @@
             </div>
         </div>
         <!-- /Approve Leave Modal -->
+        <!-- pending Leave Modal -->
+        <div class="modal custom-modal fade" id="pending_leave" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-header">
+                            <h3>Leave Approve</h3>
+                            <p>Are you sure want to pending for this leave?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Pending</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /pending Leave Modal -->
+         <!-- Declined Leave Modal -->
+         <div class="modal custom-modal fade" id="declined_leave" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-header">
+                            <h3>Leave Approve</h3>
+                            <p>Are you sure want to decline for this leave?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Decline</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Declined Leave Modal -->
         
         <!-- Delete Leave Modal -->
         <div class="modal custom-modal fade" id="delete_approve" role="dialog">
@@ -350,6 +409,14 @@
     {{-- delete model --}}
     <script>
         $(document).on('click','.leaveDelete',function()
+        {
+            var _this = $(this).parents('tr');
+            $('.e_id').val(_this.find('.id').text());
+        });
+    </script>
+    {{-- Approve model --}}
+    <script>
+        $(document).on('click','.ApproveLeave',function()
         {
             var _this = $(this).parents('tr');
             $('.e_id').val(_this.find('.id').text());
