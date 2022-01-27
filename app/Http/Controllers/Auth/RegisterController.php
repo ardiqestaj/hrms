@@ -44,6 +44,6 @@ class RegisterController extends Controller
         ]);
 
         Toastr::success('Create new account successfully :)','Success');
-        return redirect('all/employee/card');
+        return redirect('login');
     }
 }

@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-			<!-- /Page Header -->
+            <!-- /Page Header -->
             {{-- message --}}
             {!! Toastr::message() !!}
             <div class="row">
@@ -29,49 +29,155 @@
                         <div class="card-body">
                             <form action="{{ route('all/employee/update') }}" method="POST">
                                 @csrf
-                                <input type="hidden" class="form-control" id="id" name="id" value="{{ $employees[0]->id }}">
+                                <input type="hidden" class="form-control" id="id" name="id"
+                                    value="{{ $employees[0]->employee_id }}">
                                 <div class="form-group row">
-                                    <label class="col-form-label col-md-2">Full Name</label>
+                                    <label class="col-form-label col-md-2">Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="name" name="name" value="{{ $employees[0]->name }}">
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            value="{{ $employees[0]->name }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-2">Lastname</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="lastname" name="lastname"
+                                            value="{{ $employees[0]->lastname }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-2">Username</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            value="{{ $employees[0]->username }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Email</label>
                                     <div class="col-md-10">
-                                        <input type="email" class="form-control" id="email" name="email" value="{{ $employees[0]->email }}">
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            value="{{ $employees[0]->email }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-2">Phone Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                            value="{{ $employees[0]->phone_number }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Birth Date</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control datetimepicker" id="birth_date" name="birth_date" value="{{ $employees[0]->birth_date }}">
+                                        <input type="text" class="form-control datetimepicker" id="birthDate"
+                                            name="birth_date" value="{{ $employees[0]->birth_date }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Gender</label>
                                     <div class="col-md-10">
                                         <select class="select form-control" id="gender" name="gender">
-                                            <option value="{{ $employees[0]->gender }}" {{ ( $employees[0]->gender == $employees[0]->gender) ? 'selected' : '' }}>{{ $employees[0]->gender }} </option>
+                                            <option value="{{ $employees[0]->gender }}"
+                                                {{ $employees[0]->gender == $employees[0]->gender ? 'selected' : '' }}>
+                                                {{ $employees[0]->gender }} </option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label col-md-2">Employee ID</label>
+                                    <label class="col-form-label col-md-2">Type Of Work</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{ $employees[0]->employee_id }}" readonly>
+                                        <select class="select form-control" id="type_of_work" name="type_of_work">
+                                            <option value="{{ $employees[0]->type_of_work }}"
+                                                {{ $employees[0]->type_of_work == $employees[0]->type_of_work ? 'selected' : '' }}>
+                                                {{ $employees[0]->type_of_work }} </option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label col-md-2">Company</label>
+                                    <label class="col-form-label col-md-2">Payment Method</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="company" name="company" value="{{ $employees[0]->company }}">
+                                        <select class="select form-control" id="payment_method" name="payment_method">
+                                            <option value="{{ $employees[0]->payment_method }}"
+                                                {{ $employees[0]->payment_method == $employees[0]->payment_method ? 'selected' : '' }}
+                                                disabled>
+                                                {{ $employees[0]->payment_method }} </option>
+                                            <option value="Hourly">Hourly</option>
+                                            <option value="Parttime">Parttime</option>
+                                            <option value="Fulltime">Fulltime</option>
+                                        </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
+                                    <div class="form-group wday-box">
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->monday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">M</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->tuesday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->wednesday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">W</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->thursday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->friday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">F</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->saturday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"
+                                                class="days recurring"
+                                                {{ $employees[0]->sunday == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">S</span></label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <label class="col-form-label col-md-2">Possible Working Hours</label>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="text" name="time_start"
+                                                    value="{{ $employees[0]->time_start }}"><span
+                                                    class="input-group-append input-group-addon"><span
+                                                        class="input-group-text"><i
+                                                            class="fa fa-clock-o"></i></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="text" name="time_end"
+                                                    value="{{ $employees[0]->time_end }}"><span
+                                                    class="input-group-append input-group-addon"><span
+                                                        class="input-group-text"><i
+                                                            class="fa fa-clock-o"></i></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="form-group row">
                                     <label class="col-form-label col-md-2">Employee Permission</label>
                                     <div class="col-md-10">
                                         <div class="table-responsive m-t-15">
@@ -92,42 +198,68 @@
                                                     $key = 0;
                                                     $key1 = 0;
                                                     ?>
-                                                    @foreach ($permission as $items )
-                                                    <tr>
-                                                        <td>{{ $items->module_permission }}</td>
-                                                        <input type="hidden" name="permission[]" value="{{ $items->module_permission }}">
-                                                        <input type="hidden" name="id_permission[]" value="{{ $items->id }}">
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="read{{ ++$key }}" id="read" name="read[]" value="Y"{{ $items->read =="Y" ? 'checked' : ''}} >
-                                                            <input type="checkbox" class="read{{ ++$key1 }}" id="read" name="read[]" value="N" {{ $items->read =="N" ? 'checked' : ''}}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="write{{ ++$key }}" id="write" name="write[]" value="Y" {{ $items->write =="Y" ? 'checked' : ''}}>
-                                                            <input type="checkbox" class="write{{ ++$key1 }}" id="write" name="write[]" value="N" {{ $items->write =="N" ? 'checked' : ''}}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="create{{ ++$key }}" id="create" name="create[]" value="Y" {{ $items->create =="Y" ? 'checked' : ''}}>
-                                                            <input type="checkbox" class="create{{ ++$key1 }}" id="create" name="create[]" value="N" {{ $items->create =="N" ? 'checked' : ''}}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="delete{{ ++$key }}" id="delete" name="delete[]" value="Y" {{ $items->delete =="Y" ? 'checked' : ''}}>
-                                                            <input type="checkbox" class="delete{{ ++$key1 }}" id="delete" name="delete[]" value="N" {{ $items->delete =="N" ? 'checked' : ''}}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="import{{ ++$key }}" id="import" name="import[]" value="Y" {{ $items->import =="Y" ? 'checked' : ''}}>
-                                                            <input type="checkbox" class="import{{ ++$key1 }}" id="import" name="import[]" value="N" {{ $items->import =="N" ? 'checked' : ''}}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="export{{ ++$key }}" id="export" name="export[]" value="Y" {{ $items->export =="Y" ? 'checked' : ''}}>
-                                                            <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $items->export =="N" ? 'checked' : ''}}>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($permission as $items)
+                                                        <tr>
+                                                            <td>{{ $items->module_permission }}</td>
+                                                            <input type="hidden" name="permission[]"
+                                                                value="{{ $items->module_permission }}">
+                                                            <input type="hidden" name="id_permission[]"
+                                                                value="{{ $items->id }}">
+                                                            <td class="text-center">
+                                                                <input type="checkbox" class="read{{ ++$key }}"
+                                                                    id="read" name="read[]" value="Y"
+                                                                    {{ $items->read == 'Y' ? 'checked' : '' }}>
+                                                                <input type="checkbox" class="read{{ ++$key1 }}"
+                                                                    id="read" name="read[]" value="N"
+                                                                    {{ $items->read == 'N' ? 'checked' : '' }}>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="checkbox" class="write{{ ++$key }}"
+                                                                    id="write" name="write[]" value="Y"
+                                                                    {{ $items->write == 'Y' ? 'checked' : '' }}>
+                                                                <input type="checkbox" class="write{{ ++$key1 }}"
+                                                                    id="write" name="write[]" value="N"
+                                                                    {{ $items->write == 'N' ? 'checked' : '' }}>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="checkbox" class="create{{ ++$key }}"
+                                                                    id="create" name="create[]" value="Y"
+                                                                    {{ $items->create == 'Y' ? 'checked' : '' }}>
+                                                                <input type="checkbox" class="create{{ ++$key1 }}"
+                                                                    id="create" name="create[]" value="N"
+                                                                    {{ $items->create == 'N' ? 'checked' : '' }}>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="checkbox" class="delete{{ ++$key }}"
+                                                                    id="delete" name="delete[]" value="Y"
+                                                                    {{ $items->delete == 'Y' ? 'checked' : '' }}>
+                                                                <input type="checkbox" class="delete{{ ++$key1 }}"
+                                                                    id="delete" name="delete[]" value="N"
+                                                                    {{ $items->delete == 'N' ? 'checked' : '' }}>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="checkbox" class="import{{ ++$key }}"
+                                                                    id="import" name="import[]" value="Y"
+                                                                    {{ $items->import == 'Y' ? 'checked' : '' }}>
+                                                                <input type="checkbox" class="import{{ ++$key1 }}"
+                                                                    id="import" name="import[]" value="N"
+                                                                    {{ $items->import == 'N' ? 'checked' : '' }}>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="checkbox" class="export{{ ++$key }}"
+                                                                    id="export" name="export[]" value="Y"
+                                                                    {{ $items->export == 'Y' ? 'checked' : '' }}>
+                                                                <input type="checkbox" class="export{{ ++$key1 }}"
+                                                                    id="export" name="export[]" value="N"
+                                                                    {{ $items->export == 'N' ? 'checked' : '' }}>
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2"></label>
                                     <div class="col-md-10">
@@ -141,26 +273,22 @@
             </div>
         </div>
         <!-- /Page Content -->
-        
+
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
+@section('script')
     <script>
-        $("input:checkbox").on('click', function()
-        {
+        $("input:checkbox").on('click', function() {
             var $box = $(this);
-            if ($box.is(":checked"))
-            {
+            if ($box.is(":checked")) {
                 var group = "input:checkbox[class='" + $box.attr("class") + "']";
                 $(group).prop("checked", false);
                 $box.prop("checked", true);
-            }
-            else
-            {
+            } else {
                 $box.prop("checked", false);
             }
         });
     </script>
-    @endsection
+@endsection
 
 @endsection

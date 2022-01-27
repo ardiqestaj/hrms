@@ -1,7 +1,6 @@
-
 @extends('layouts.master')
 @section('content')
-    
+
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -17,11 +16,12 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add Holiday</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i
+                                class="fa fa-plus"></i> Add Holiday</a>
                     </div>
                 </div>
             </div>
-			<!-- /Page Header -->
+            <!-- /Page Header -->
             {{-- message --}}
             {!! Toastr::message() !!}
 
@@ -43,38 +43,50 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($holiday as $key=>$items )
-                                    @if(($today_date > $items->date_holiday))
+                                {{-- @foreach ($holiday as $key => $items)
+                                    @if ($today_date > $items->date_holiday)
                                         <tr class="holiday-completed">
                                             <td>{{ ++$key }}</td>
                                             <td>{{ $items->name_holiday }}</td>
-                                            <td>{{date('d F, Y',strtotime($items->date_holiday)) }}</td>
-                                            <td>{{date('l',strtotime($items->date_holiday)) }}</td>
-                                            <td><div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <td>{{ date('d F, Y', strtotime($items->date_holiday)) }}</td>
+                                            <td>{{ date('l', strtotime($items->date_holiday)) }}</td>
+                                            <td>
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a class="dropdown-item userUpdate" data-toggle="modal"
+                                                            data-id="'.$items->id.'" data-target="#edit_holiday"><i
+                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item holidayDelete" href="#" data-toggle="modal"
+                                                            data-target="#delete_holiday"><i
+                                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
-                                                </div></td>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endif
-                                @endforeach
-                                @foreach ($holiday as $key=>$items )
-                                    @if(($today_date <= $items->date_holiday))
+                                @endforeach --}}
+                                @foreach ($holiday as $key => $items)
+                                    @if ($today_date <= $items->date_holiday)
                                         <tr class="holiday-upcoming">
                                             <td hidden class="id">{{ $items->id }}</td>
                                             <td>{{ ++$key }}</td>
                                             <td class="holidayName">{{ $items->name_holiday }}</td>
-                                            <td hidden class="holidayDate">{{$items->date_holiday }}</td>
-                                            <td>{{date('d F, Y',strtotime($items->date_holiday)) }}</td>
-                                            <td>{{date('l',strtotime($items->date_holiday)) }}</td>
+                                            <td hidden class="holidayDate">{{ $items->date_holiday }}</td>
+                                            <td>{{ date('d F, Y', strtotime($items->date_holiday)) }}</td>
+                                            <td>{{ date('l', strtotime($items->date_holiday)) }}</td>
                                             <td class="text-right">
                                                 <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a class="dropdown-item userUpdate" data-toggle="modal"
+                                                            data-id="'.$items->id.'" data-target="#edit_holiday"><i
+                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item holidayDelete" href="#" data-toggle="modal"
+                                                            data-target="#delete_holiday"><i
+                                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -108,7 +120,8 @@
                             <div class="form-group">
                                 <label>Holiday Date <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text" id="holidayDate" name="holidayDate">
+                                    <input class="form-control datetimepicker" type="text" id="holidayDate"
+                                        name="holidayDate">
                                 </div>
                             </div>
                             <div class="submit-section">
@@ -142,7 +155,8 @@
                             <div class="form-group">
                                 <label>Holiday Date <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="holidayDate_edit" name="holidayDate" value="">
+                                    <input type="text" class="form-control datetimepicker" id="holidayDate_edit"
+                                        name="holidayDate" value="">
                                 </div>
                             </div>
                             <div class="submit-section">
@@ -165,37 +179,49 @@
                             <p>Are you sure want to delete?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                            <form action="{{ route('form/holidays/delete') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" class="e_id" value="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit"
+                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Delete Holiday Modal -->
-       
+
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
+@section('script')
     <script>
         document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>
     {{-- update js --}}
     <script>
-        $(document).on('click','.userUpdate',function()
-        {
+        $(document).on('click', '.userUpdate', function() {
             var _this = $(this).parents('tr');
             $('#e_id').val(_this.find('.id').text());
             $('#holidayName_edit').val(_this.find('.holidayName').text());
-            $('#holidayDate_edit').val(_this.find('.holidayDate').text());  
+            $('#holidayDate_edit').val(_this.find('.holidayDate').text());
         });
     </script>
-    @endsection
+    {{-- delete model --}}
+    <script>
+        $(document).on('click', '.holidayDelete', function() {
+            var _this = $(this).parents('tr');
+            $('.e_id').val(_this.find('.id').text());
+        });
+    </script>
+@endsection
 
 @endsection
