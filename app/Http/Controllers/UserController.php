@@ -26,7 +26,7 @@ class UserController extends Controller
             'phone_number'  => 'required|string|max:255',
             'birth_date'    => 'required|string|max:255',
             'gender'        => 'required|string|max:255',
-            'type_of_work'  => 'required|string|max:255',
+            'department'  => 'required|string|max:255',
             'payment_method'=> 'required|string|max:255',
             // 'mondey'        => 'accepted',
             // 'tuesday'       => 'accepted',
@@ -51,6 +51,7 @@ class UserController extends Controller
             'join_date' => $todayDate,
             'role_name' => $request->role_name,
             'phone_number' => $request->phone_number,
+            'department' => $request->department,
             'password'  => Hash::make($request->password),
         ]);
 
@@ -66,7 +67,7 @@ class UserController extends Controller
             'phone_number'  => $request->phone_number,
             'birth_date'    => $request->birth_date,
             'gender'        => $request->gender,
-            'type_of_work'  => $request->type_of_work,
+            'department'    => $request->department,
             'payment_method'=> $request->payment_method,
             'monday'        => $request->monday,
             'tuesday'       => $request->tuesday,

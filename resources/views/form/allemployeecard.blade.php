@@ -48,8 +48,8 @@
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="position">
-                            <label class="focus-label">Position</label>
+                            <input type="text" class="form-control floating" name="department">
+                            <label class="focus-label">Department</label>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
@@ -222,15 +222,21 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Type of Work <span
+                                        <label class="col-form-label">Department <span
                                                 class="text-danger">*</span></label>
-                                        <select class="select select2s-hidden-accessible" style="width: 100%;"
-                                            tabindex="-1" aria-hidden="true" id="type_of_work" name="type_of_work" required>
-                                            <option value="">-- Select --</option>
-                                            @foreach ($userList as $key => $user)
-                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                        <select class="select @error('role_name') is-invalid @enderror" name="department"
+                                            id="department">
+                                            <option selected disabled>-- Select Role Name --</option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->department }}">
+                                                    {{ $department->department }}</option>
                                             @endforeach
                                         </select>
+                                        @error('role_name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -242,9 +248,9 @@
                                             tabindex="-1" aria-hidden="true" id="payment_method" name="payment_method"
                                             required>
                                             <option value="">-- Select --</option>
-                                            <option value="hourly">Hourly</option>
-                                            <option value="parttime">Parttime</option>
-                                            <option value="fulltime">Fulltime</option>
+                                            <option value="Hourly">Hourly</option>
+                                            <option value="Parttime">Parttime</option>
+                                            <option value="Fulltime">Fulltime</option>
                                         </select>
                                     </div>
                                 </div>

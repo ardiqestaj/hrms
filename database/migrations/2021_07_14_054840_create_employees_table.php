@@ -24,7 +24,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('gender')->nullable();
-            $table->string('type_of_work')->nullable();
+            $table->string('department')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('monday')->nullable();
             $table->string('tuesday')->nullable();
