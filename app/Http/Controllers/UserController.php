@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\ProfileInformation;
 use Brian2694\Toastr\Facades\Toastr;
 use Hash;
 use DB;
@@ -78,6 +79,16 @@ class UserController extends Controller
             'sunday'        => $request->sunday,
             'time_start'    => $request->time_start,
             'time_end'      => $request->time_end,
+        ]);
+
+        ProfileInformation::create([
+            'name'          => $request->name,
+            'rec_id'   => $users->rec_id,
+            'phone_number'  => $request->phone_number,
+            'birth_date'    => $request->birth_date,
+            'department'    => $request->department,
+            'gender'        => $request->gender,
+            'email'         => $request->email,
         ]);
         Toastr::success('Create new account successfully :)','Success');
         return redirect('all/employee/card');

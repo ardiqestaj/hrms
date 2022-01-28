@@ -170,7 +170,7 @@
                                     <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon"
                                             data-toggle="modal" data-target="#emergency_contact_modal"><i
                                                 class="fa fa-pencil"></i></a></h3>
-                                    <h5 class="section-title">Primary</h5>
+                                    <hr>
                                     <ul class="personal-info">
                                         @if (!empty($family))
                                             <li>
@@ -236,25 +236,40 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Leo</td>
-                                                    <td>Brother</td>
-                                                    <td>Feb 16th, 2019</td>
-                                                    <td>9876543210</td>
-                                                    <td class="text-right">
-                                                        <div class="dropdown dropdown-action">
-                                                            <a aria-expanded="false" data-toggle="dropdown"
-                                                                class="action-icon dropdown-toggle" href="#"><i
-                                                                    class="material-icons">more_vert</i></a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a href="#" class="dropdown-item"><i
-                                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                <a href="#" class="dropdown-item"><i
-                                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                @if (!empty($family))
+
+                                                    <tr>
+                                                        @if (Auth::user()->rec_id == $family->rec_id)
+                                                            <td>{{ $family->name }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+
+                                                        @if (Auth::user()->rec_id == $family->rec_id)
+                                                            <td>{{ $family->relationship }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+
+                                                        @if (Auth::user()->rec_id == $family->rec_id)
+                                                            <td>{{ $family->birthdate }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+
+                                                        @if (Auth::user()->rec_id == $family->rec_id)
+                                                            <td>{{ $family->phone_number }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+                                                    @else
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+                                                    </tr>
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -913,7 +928,9 @@
             </div>
         </div>
         <!-- /Page Content -->
+
         @if (!empty($information))
+
             <!-- Profile Modal -->
             <div id="profile_info" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -925,6 +942,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
+
                             <form action="{{ route('profile/information/save') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
@@ -945,9 +963,9 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Full Name</label>
+
                                                     <input type="text" class="form-control" id="name" name="name"
-                                                        value="{{ $employee->name . ' ' . $employee->lastname }}"
-                                                        readonly>
+                                                        value="{{ $information->name }}" readonly>
                                                     <input type="hidden" class="form-control" id="rec_id" name="rec_id"
                                                         value="{{ Auth::user()->rec_id }}">
                                                     <input type="hidden" class="form-control" id="email" name="email"
@@ -960,7 +978,7 @@
                                                     <div class="cal-icon">
                                                         <input class="form-control datetimepicker" type="text"
                                                             id="birthDate" name="birthDate"
-                                                            value="{{ $employee->birth_date }}" readonly>
+                                                            value="{{ $information->birth_date }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -968,14 +986,14 @@
                                                 <div class="form-group">
                                                     <label>Gender</label>
                                                     <input class="form-control" type="text" id="gender" name="gender"
-                                                        value="{{ $employee->gender }}" readonly>
+                                                        value="{{ $information->gender }}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Phone Number</label>
                                                     <input type="text" class="form-control" id="phone_number"
-                                                        name="phone_number" value="{{ $employee->phone_number }}"
+                                                        name="phone_number" value="{{ $information->phone_number }}"
                                                         readonly>
                                                 </div>
                                             </div>
@@ -983,12 +1001,14 @@
                                                 <div class="form-group">
                                                     <label>Department <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="department"
-                                                        name="department" value="{{ $employee->department }}" readonly>
+                                                        name="department" value="{{ $information->department }}"
+                                                        readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -1028,9 +1048,11 @@
                                                     {{ $information->reports_to }} </option>
                                                 @foreach ($user as $users)
                                                     @if ($users->role_name == 'Admin')
-                                                        <option value="{{ $users->name }}">{{ $users->name }}</option>
+                                                        <option value="{{ $users->name }}">{{ $users->name }}
+                                                        </option>
                                                     @elseif ($users->role_name == 'Super Admin')
-                                                        <option value="{{ $users->name }}">{{ $users->name }}</option>
+                                                        <option value="{{ $users->name }}">{{ $users->name }}
+                                                        </option>
 
                                                     @endif
                                                 @endforeach
@@ -1184,95 +1206,122 @@
         @endif
 
         <!-- Family Info Modal -->
-        <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"> Family Informations</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-scroll">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Family Member <a href="javascript:void(0);"
-                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Name <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
+        @if (!empty($family))
+            <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Family Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('family/information/save') }}" method="POST">
+                                @csrf
+                                <div class="form-scroll">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Family Member <a href="javascript:void(0);"
+                                                    class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="name"
+                                                            value="{{ $family->name }}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Relationship <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Relationship <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="relationship"
+                                                            value="{{ $family->relationship }}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Date of birth <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Date of birth <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="birthdate"
+                                                            value="{{ $family->birthdate }}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Phone <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Phone <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="phone_number"
+                                                            value="{{ $family->phone_number }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);"
-                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Name <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Relationship <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Date of birth <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Phone <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="add-more">
-                                            <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
-                                        </div>
-                                    </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>
-                            </div>
-                            <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @else
+            <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Family Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('family/information/save') }}" method="POST">
+                                @csrf
+                                <div class="form-scroll">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Family Member <a href="javascript:void(0);"
+                                                    class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Relationship <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="relationship">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Date of birth <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="birthdate">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Phone <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="phone_number">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- /Family Info Modal -->
 
         @if (!empty($family))
@@ -1452,7 +1501,7 @@
                                     </div>
                                 </div>
 
-                                <div class="card">
+                                <div class="card" id="add_to_me">
                                     <div class="card-body">
                                         <h3 class="card-title">Education Informations <a href="javascript:void(0);"
                                                 class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
@@ -1639,4 +1688,9 @@
 
         <!-- /Page Content -->
     </div>
+    <script>
+        document.getElementById("add-div").onclick = function() {
+            $('#to-be-cloned').clone().insertAfter($('#to-be-cloned:last'));
+        }
+    </script>
 @endsection

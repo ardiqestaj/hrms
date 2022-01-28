@@ -18,7 +18,7 @@ class CreateFamiliesTable extends Migration
             $table->string('name')->nullable();
             $table->string('relationship')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('birthdate')->nullable();
+            $table->string('birthdate')->nullable()->default('N/A');
             $table->string('rec_id')->nullable();
             $table->timestamps();
         });

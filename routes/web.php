@@ -112,7 +112,10 @@ Route::post('all/employee/search', [App\Http\Controllers\EmployeeController::cla
 Route::post('all/employee/list/search', [App\Http\Controllers\EmployeeController::class, 'employeeListSearch'])->name('all/employee/list/search');
 
 // ------------------------------ department ---------------------------------//
-Route::get('form/department/new', [App\Http\Controllers\DepartmentController::class, 'allDepartmet'])->name('form/department/new');
+Route::get('form/department/new', [App\Http\Controllers\DepartmentController::class, 'allDepartmet'])->middleware('auth')->name('form/department/new');
+Route::post('form/department/save', [App\Http\Controllers\DepartmentController::class, 'saveDepartment'])->middleware('auth')->name('form/department/save');
+Route::post('form/department/update', [App\Http\Controllers\DepartmentController::class, 'updateDepartment'])->middleware('auth')->name('form/department/update');
+Route::post('form/department/delete', [App\Http\Controllers\DepartmentController::class, 'deleteDepartment'])->middleware('auth')->name('form/department/delete');
 
 // ----------------------------- profile employee ------------------------------//
 Route::get('employee/profile/{rec_id}', [App\Http\Controllers\EmployeeController::class, 'profileEmployee'])->middleware('auth');
