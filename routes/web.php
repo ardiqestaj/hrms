@@ -129,10 +129,13 @@ Route::get('form/leaves/new', [App\Http\Controllers\LeavesController::class, 'le
 Route::get('form/leavesemployee/new', [App\Http\Controllers\LeavesController::class, 'leavesEmployee'])->middleware('auth')->name('form/leavesemployee/new');
 Route::post('form/leaves/save', [App\Http\Controllers\LeavesController::class, 'saveRecord'])->middleware('auth')->name('form/leaves/save');
 Route::post('form/leaves/edit', [App\Http\Controllers\LeavesController::class, 'editRecordLeave'])->middleware('auth')->name('form/leaves/edit');
-Route::post('form/leaves/edit/delete', [App\Http\Controllers\LeavesController::class, 'F'])->middleware('auth')->name('form/leaves/edit/delete');
+Route::post('form/leaves/edit/delete', [App\Http\Controllers\LeavesController::class, 'deleteLeave'])->middleware('auth')->name('form/leaves/edit/delete');
 
-// ----------------------------- form leaves Admin------------------------------//
+// ----------------------------- form leaves Admin Status------------------------------//
+Route::post('form/leaves/status', [App\Http\Controllers\LeavesController::class, 'statusLeave'])->middleware('auth')->name('form/leaves/status');
 
+// ----------------------------- form leaves Employee------------------------------//
+// Route::get('form/leavesemployee/new', [App\Http\Controllers\LeavesController::class, 'leavesEmployee'])->middleware('auth')->name('form/leavesemployee/new');
 
 
 // ----------------------------- form leaves Settings ------------------------------//

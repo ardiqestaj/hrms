@@ -9,6 +9,10 @@ use App\Models\leaveSettings;
 use App\Models\LeaveApplies;
 use DB;
 use DateTime;
+use Session;
+
+use Auth;
+
 
 class LeavesController extends Controller
 {
@@ -162,7 +166,7 @@ class LeavesController extends Controller
          }
         // return DD ('OK');
      }
-
+// Update leave setting -------------------------------------------------------------------------------------
     public function editLeaveSetting(Request $request, $leave_id)
     {
      DB::beginTransaction();
@@ -187,10 +191,47 @@ class LeavesController extends Controller
     }
 
     // -----------------------------------------------------------------------------------------------------------
+    // Aprrove status from admin -------------------------------------------------------------------------------
+    public function statusLeave(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $update = [
+                'status' => $request->status,
+                'approved_by' => $request->approved_by
+            ];
+
+            LeaveApplies::where('leave_applies_id',$request->id)->update($update);
+            DB::commit();
+            
+            DB::commit();
+            Toastr::success('Status Updated :)','Success');
+            return redirect()->back();
+        } catch(\Exception $e) {
+            DB::rollback();
+            Toastr::error('Status updatet fail :)','Error');
+            return redirect()->back();
+        }
+    }
       // leaves Employee
       public function leavesEmployee()
       {
-          return view('form.leavesemployee');
+        $user = Auth::User();
+        Session::put('user', $user);
+        $user=Session::get('user');
+        $profile = $user->rec_id;
+
+        // $userapprove = DB::table('users')->get();
+        $leavesapplies = DB::table('leave_applies')
+                    ->join('leave_settings', 'leave_settings.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.approved_by')
+                    ->select('leave_applies.*','users.name','users.avatar','leave_settings.leave_names','leave_settings.leave_id')
+                    ->where('leave_applies.rec_id',$profile)
+                    ->get();
+
+        $LeaveTypes = leaveSettings::all();
+        return view('form.leavesemployee',compact('LeaveTypes','leavesapplies'));
       }
 
 

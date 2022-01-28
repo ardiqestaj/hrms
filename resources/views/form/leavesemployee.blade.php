@@ -25,28 +25,36 @@
             
             <!-- Leave Statistics -->
             <div class="row">
+            @foreach ($LeaveTypes as $LeaveType ) 
+            @if($LeaveType->leave_names == 'Annual Leave')
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Annual Leave</h6>
-                        <h4>12</h4>
+                        <h4>{{$LeaveType->leave_days}}</h4>
                     </div>
                 </div>
+            @endif
+            @endforeach
+            @foreach ($LeaveTypes as $LeaveType ) 
+            @if($LeaveType->leave_names == 'Medical Leave')
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Medical Leave</h6>
-                        <h4>3</h4>
+                        <h4>{{$LeaveType->leave_days}}</h4>
                     </div>
                 </div>
+            @endif
+            @endforeach
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Other Leave</h6>
-                        <h4>4</h4>
+                        <h4>{{ ($LeaveTypes->sum('leave_days') - $leavesapplies->sum('day') - $leavesapplies->sum('day'))-($LeaveTypes->sum('leave_days') - $leavesapplies->sum('day')) }}</h4>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Remaining Leave</h6>
-                        <h4>5</h4>
+                        <h4>{{$LeaveTypes->sum('leave_days') - $leavesapplies->sum('day')}}</h4>
                     </div>
                 </div>
             </div>
@@ -69,23 +77,34 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(!empty($leavesapplies))
+                                    @foreach ($leavesapplies as $leavesapplie )  
                                 <tr>
-                                    <td>Casual Leave</td>
-                                    <td>8 Mar 2019</td>
-                                    <td>9 Mar 2019</td>
-                                    <td>2 days</td>
-                                    <td>Going to Hospital</td>
+                                    <td>{{$leavesapplie->leave_names}}</td>
+                                    <td>{{date('d F, Y',strtotime($leavesapplie->from_date)) }}</td>
+                                    <td>{{date('d F, Y',strtotime($leavesapplie->to_date)) }}</td>
+                                    <td>{{$leavesapplie->day}} Days</td>
+                                    <td>{{$leavesapplie->leave_reason}}</td>
                                     <td class="text-center">
                                         <div class="action-label">
-                                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                                <i class="fa fa-dot-circle-o text-purple"></i> New
-                                            </a>
+                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                            <i class="fa fa-dot-circle-o text-purple"></i>
+                                            @if($leavesapplie->status == 'New' )
+                                                New
+                                            @elseif($leavesapplie->status == 'Pending')
+                                                Pending
+                                            @elseif($leavesapplie->status == 'Approved')
+                                                Approved
+                                            @else
+                                                Declined
+                                            @endif
+                                        </a>
                                         </div>
                                     </td>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="profile.html" class="avatar avatar-xs"><img src="{{URL::to('assets/img/profiles/avatar-09.jpg')}}" alt=""></a>
-                                            <a href="#">Richard Miles</a>
+                                        <a href="profile.html" class="avatar avatar-xs"><img src="{{URL::to('assets/img/profiles/' . $leavesapplie->avatar)}}" alt=""></a>
+                                            <a href="#">{{$leavesapplie->name}}</a>
                                         </h2>
                                     </td>
                                     <td class="text-right">
@@ -98,35 +117,8 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Casual Leave</td>
-                                    <td>10 Jan 2019</td>
-                                    <td>10 Jan 2019</td>
-                                    <td>First Half</td>
-                                    <td>Going to Hospital</td>
-                                    <td class="text-center">
-                                        <div class="action-label">
-                                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a href="profile.html" class="avatar avatar-xs"><img src="{{URL::to('assets/img/profiles/avatar-09.jpg')}}" alt=""></a>
-                                            <a href="#">Richard Miles</a>
-                                        </h2>
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="dropdown dropdown-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -147,26 +139,28 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="{{ route('form/leaves/save') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <label>Leave Type <span class="text-danger">*</span></label>
-                                <select class="select">
-                                    <option>Select Leave Type</option>
-                                    <option>Casual Leave 12 Days</option>
-                                    <option>Medical Leave</option>
-                                    <option>Loss of Pay</option>
+                                <select class="select" id="leaveType" name="leave_type_id">
+                                    <option selected disabled>Select Leave Type</option>
+                                    @foreach($LeaveTypes as $LeaveType)
+                                    <option value="{{$LeaveType->leave_id}}">{{$LeaveType->leave_names}}</option>
+                                    @endforeach
                                 </select>
                             </div>
+                            <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
                             <div class="form-group">
                                 <label>From <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text">
+                                    <input type="text" class="form-control datetimepicker" id="from_date" name="from_date">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>To <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text">
+                                    <input type="text" class="form-control datetimepicker" id="to_date" name="to_date">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -179,10 +173,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Leave Reason <span class="text-danger">*</span></label>
-                                <textarea rows="4" class="form-control"></textarea>
+                                <textarea rows="4" class="form-control" id="leave_reason" name="leave_reason"></textarea>
                             </div>
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                             </div>
                         </form>
                     </div>

@@ -2,84 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LeaveApplies;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
+// use App\Models\LeavesAdmin;
+use App\Models\leaveSettings;
+use App\Models\LeaveApplies;
+use DB;
+// use DateTime;
+
 
 class LeaveAppliesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+     // profile user
+     public function leaveAppliesEmployee()
+     {   
+         $user = Auth::User();
+         Session::put('user', $user);
+         $user=Session::get('user');
+         $profile = $user->rec_id;
+        
+         $user = DB::table('users')->get();
+         $employees = DB::table('leave_applies')->where('rec_id',$profile)->first();
+         $LeaveTypes = leaveSettings::all();
+         return view('form.leavesemployee',compact('$LeaveTypes'));
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\LeaveApplies  $leaveApplies
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LeaveApplies $leaveApplies)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\LeaveApplies  $leaveApplies
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LeaveApplies $leaveApplies)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LeaveApplies  $leaveApplies
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, LeaveApplies $leaveApplies)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\LeaveApplies  $leaveApplies
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(LeaveApplies $leaveApplies)
-    {
-        //
-    }
+ 
+         if(empty($employees))
+         {
+             $Leaveapplies = DB::table('leave_applies')->where('rec_id',$profile)->first();
+             return view('form.leavesemployee',compact('Leaveapplies','user'));
+ 
+         }else{
+             $rec_id = $employees->rec_id;
+             if($rec_id == $profile)
+             {
+                 $Leaveapplies = DB::table('leave_applies')->where('rec_id',$profile)->first();
+                 return view('form.leavesemployee',compact('Leaveapplies','user'));
+             }else{
+                 $Leaveapplies = LeaveApplies::all();
+                 return view('form.leavesemployee',compact('Leaveapplies','user'));
+             } 
+         }
+        
+     }
 }
