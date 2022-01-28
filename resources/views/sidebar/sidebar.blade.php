@@ -64,7 +64,6 @@
                         <li><a href="{{ route('all/employee/card') }}">All Employees</a></li>
                         <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                         <li><a href="{{ route('form/leaves/new') }}">Leaves</a></li>
-                        <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
                         <li><a href="{{ route('attendance/employee/page') }}">Attendance</a></li>
                         <li><a href="{{ route('form/department/new') }}">Departments</a></li>
                     @endif
@@ -95,7 +94,7 @@
 
                 <!--Admin - Locations -->
                 @if (Auth::user()->role_name == 'Admin')
-                <li>
+                <li class="submenu">
                     <a href="#" class="">
                         <i class="las la-map-marked-alt"></i>
                         <span class="dash-category">Locations</span>
@@ -144,10 +143,11 @@
                 <li class="submenu"> <a href="#"><i class="las la-cog"></i>
                         <span> Settings </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="{{ route('form/salary/page') }}"> Company Settings </a></li>
-                        <li><a href="{{ url('form/salary/view') }}"> Theme Settings </a></li>
-                        <li><a href="{{ route('form/payroll/items') }}"> Change Password </a></li>
-                        <li><a href="{{ route('form/payroll/items') }}"> Role Permissions </a></li>
+                        <li><a href="{{ route('company/settings/page') }}"> Company Settings </a></li>
+                        <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
+                        <li><a href="{{ route('theme/settings/page') }}"> Theme Settings </a></li>
+                        <li><a href="{{ route('change/password') }} "> Change Password </a></li>
+                        <li><a href="{{ route('roles/permissions/page') }}"> Role Permissions </a></li>
                     </ul>
                 </li>
                 @endif

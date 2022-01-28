@@ -53,6 +53,10 @@ Route::get('roles/permissions/page', [App\Http\Controllers\SettingController::cl
 Route::post('roles/permissions/save', [App\Http\Controllers\SettingController::class, 'addRecord'])->middleware('auth')->name('roles/permissions/save');
 Route::post('roles/permissions/update', [App\Http\Controllers\SettingController::class, 'editRolesPermissions'])->middleware('auth')->name('roles/permissions/update');
 Route::post('roles/permissions/delete', [App\Http\Controllers\SettingController::class, 'deleteRolesPermissions'])->middleware('auth')->name('roles/permissions/delete');
+Route::get('theme/settings/page', [App\Http\Controllers\SettingController::class, 'themeSettings'])->middleware('auth')->name('theme/settings/page');
+
+// Route::get('settings/change-password', [App\Http\Controllers\SettingController::class, 'changePasswordView'])->middleware('auth')->name('settings/change-password');
+// Route::post('settings/update-password', [App\Http\Controllers\SettingController::class, 'changePasswordDB'])->middleware('auth')->name('settings/update-password');
 
 // -----------------------------login----------------------------------------//
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
