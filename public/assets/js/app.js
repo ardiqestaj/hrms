@@ -362,6 +362,36 @@ $(document).ready(function() {
         });
     }
 
+
+
+    // $("#education-card label :nth-of-type(1)").attr('value', 'Oxford University');
+    // $("#education-card label :nth-of-type(2)").attr('value', 'Computer Science');
+    // $("#education-card label :nth-of-type(3)").attr('value', '01/06/2002');
+    // $("#education-card label :nth-of-type(4)").attr('value', '31/05/2006');
+    // $("#education-card label :nth-of-type(5)").attr('value', 'BE Computer Science');
+    // $("#education-card label :nth-of-type(6)").attr('value', 'Grade A');
+
+
+    var $firstForm = $("#education-card");
+    $("#education-card-add-btn").on("click", function() {
+        var $clonedForm = $(this).closest("#education-card").clone()
+        $clonedForm.insertAfter($('#education-card:last'));
+        bindRemove($clonedForm);
+    });
+
+    function bindRemove($form) {
+        $form.find("#education-card-delete-btn").on("click", function() {
+            $form.remove();
+        });
+    }
+    bindRemove($firstForm);
+
+    // remove text
+
+
+
+
+
 });
 
 // Loader
