@@ -48,13 +48,13 @@
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Other Leave</h6>
-                        <h4>{{ ($LeaveTypes->sum('leave_days') - $leavesapplies->sum('day') - $leavesapplies->sum('day'))-($LeaveTypes->sum('leave_days') - $leavesapplies->sum('day')) }}</h4>
+                        <h4>{{ $LeaveTypes->sum('leave_days') - $LeaveTypes->where('leave_names', 'Medical Leave')->sum('leave_days') - $LeaveTypes->where('leave_names', 'Annual Leave')->sum('leave_days')}}</h4>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Remaining Leave</h6>
-                        <h4>{{$LeaveTypes->sum('leave_days') - $leavesapplies->sum('day')}}</h4>
+                        <h4>{{$LeaveTypes->sum('leave_days') - $leavesapplies->where('status', 'Approved')->sum('day')}}</h4>
                     </div>
                 </div>
             </div>
@@ -80,22 +80,28 @@
                             @if(!empty($leavesapplies))
                                     @foreach ($leavesapplies as $leavesapplie )  
                                 <tr>
+                                    <td hidden class="id">{{$leavesapplie->leave_applies_id}}</td>
+                                    <td hidden class="from_date">{{ $leavesapplie->from_date }}</td>
+                                    <td hidden class="to_date">{{$leavesapplie->to_date}}</td>
                                     <td>{{$leavesapplie->leave_names}}</td>
                                     <td>{{date('d F, Y',strtotime($leavesapplie->from_date)) }}</td>
                                     <td>{{date('d F, Y',strtotime($leavesapplie->to_date)) }}</td>
-                                    <td>{{$leavesapplie->day}} Days</td>
-                                    <td>{{$leavesapplie->leave_reason}}</td>
+                                    <td class="day">{{$leavesapplie->day}} Days</td>
+                                    <td class="leave_reason"> {{$leavesapplie->leave_reason}}</td>
                                     <td class="text-center">
                                         <div class="action-label">
                                         <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            <i class="fa fa-dot-circle-o text-purple"></i>
                                             @if($leavesapplie->status == 'New' )
+                                            <i class="fa fa-dot-circle-o text-purple"></i>
                                                 New
                                             @elseif($leavesapplie->status == 'Pending')
+                                            <i class="fa fa-dot-circle-o text-danger"></i>
                                                 Pending
                                             @elseif($leavesapplie->status == 'Approved')
+                                            <i class="fa fa-dot-circle-o text-success"></i>
                                                 Approved
                                             @else
+                                            <i class="fa fa-dot-circle-o text-danger"></i>
                                                 Declined
                                             @endif
                                         </a>
@@ -103,18 +109,26 @@
                                     </td>
                                     <td>
                                         <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar avatar-xs"><img src="{{URL::to('assets/img/profiles/' . $leavesapplie->avatar)}}" alt=""></a>
-                                            <a href="#">{{$leavesapplie->name}}</a>
+                                        @foreach($users as $user)
+                                            <a href="#"> 
+                                                @if($user->rec_id == $leavesapplie->approved_by)
+                                                {{$user->name}}
+                                             @endif
+                                             </a>
+                                        @endforeach
+                                        @if('Not Yet' == $leavesapplie->approved_by)
+                                                Waiting...
+                                             @endif
                                         </h2>
                                     </td>
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                <a class="dropdown-item leaveUpdate" href="#" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                             </div>
-                                        </div>
+                                        </div>                                    
                                     </td>
                                 </tr>
                                 @endforeach
@@ -196,29 +210,32 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="{{ route('form/leaves/edit') }}" method="POST">
+                            @csrf
+                            <input type="hidden" id="e_id" name="id" value="">
                             <div class="form-group">
                                 <label>Leave Type <span class="text-danger">*</span></label>
-                                <select class="select">
-                                    <option>Select Leave Type</option>
-                                    <option>Casual Leave 12 Days</option>
+                                <select class="select" id="e_leave_typ" name="leave_type_id">
+                                @foreach($LeaveTypes as $LeaveType)
+                                    <option value="{{$LeaveType->leave_id}}">{{$LeaveType->leave_names}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>From <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input class="form-control datetimepicker" value="01-01-2019" type="text">
+                                    <input type="text" class="form-control datetimepicker" id="e_from_date" name="from_date" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>To <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input class="form-control datetimepicker" value="01-01-2019" type="text">
+                                    <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Number of days <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly type="text" value="2">
+                                <input class="form-control" readonly type="text" id="e_number_of_days" name="number_of_days" value="">
                             </div>
                             <div class="form-group">
                                 <label>Remaining Leaves <span class="text-danger">*</span></label>
@@ -226,10 +243,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Leave Reason <span class="text-danger">*</span></label>
-                                <textarea rows="4" class="form-control">Going to hospital</textarea>
+                                <textarea rows="4" class="form-control" id="e_leave_reason" name="leave_reason" value=""></textarea>
                             </div>
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Save</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Save</button>
                             </div>
                         </form>
                     </div>
@@ -248,14 +265,18 @@
                             <p>Are you sure want to Cancel this leave?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                            <form action="{{ route('form/leavesemployee/delete') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" class="e_id" value="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -265,4 +286,27 @@
 
     </div>
     <!-- /Page Wrapper -->
+    <!-- {{-- update js --}} -->
+    <script>
+        $(document).on('click','.leaveUpdate',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#e_id').val(_this.find('.id').text());
+            $('#e_number_of_days').val(_this.find('.day').text());
+            $('#e_from_date').val(_this.find('.from_date').text());  
+            $('#e_to_date').val(_this.find('.to_date').text());  
+            $('#e_leave_reason').val(_this.find('.leave_reason').text());
+            var leave_type = (_this.find(".leave_type").text());
+            var _option = '<option selected value="' + leave_type+ '">' + _this.find('.leave_type').text() + '</option>'
+            $( _option).appendTo("#e_leave_type");
+        });
+    </script>
+    <!-- Delete leaveby employees -->
+    <script>
+        $(document).on('click','.leaveDelete',function()
+        {
+            var _this = $(this).parents('tr');
+            $('.e_id').val(_this.find('.id').text());
+        });
+    </script>
 @endsection

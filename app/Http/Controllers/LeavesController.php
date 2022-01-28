@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-// use App\Models\LeavesAdmin;
 use App\Models\leaveSettings;
 use App\Models\LeaveApplies;
 use DB;
@@ -214,24 +213,74 @@ class LeavesController extends Controller
             return redirect()->back();
         }
     }
-      // leaves Employee
+      // add leaves Employee -------------------------------------------------------------------------
       public function leavesEmployee()
       {
         $user = Auth::User();
         Session::put('user', $user);
         $user=Session::get('user');
         $profile = $user->rec_id;
+        $not = 'Not Yet';
 
-        // $userapprove = DB::table('users')->get();
+
         $leavesapplies = DB::table('leave_applies')
                     ->join('leave_settings', 'leave_settings.leave_id', '=', 'leave_applies.leave_type_id')
-                    ->join('users', 'users.rec_id', '=', 'leave_applies.approved_by')
-                    ->select('leave_applies.*','users.name','users.avatar','leave_settings.leave_names','leave_settings.leave_id')
+                    ->select('leave_applies.*','leave_settings.leave_names','leave_settings.leave_id')
                     ->where('leave_applies.rec_id',$profile)
                     ->get();
-
+        $users = DB::table('users')->get();
         $LeaveTypes = leaveSettings::all();
-        return view('form.leavesemployee',compact('LeaveTypes','leavesapplies'));
+        return view('form.leavesemployee',compact('LeaveTypes','leavesapplies','users'));
+      }
+      
+      // edit leaves Employee record
+    public function editLeavesEmployee(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $from_date = new DateTime($request->from_date);
+            $to_date = new DateTime($request->to_date);
+            $day     = $from_date->diff($to_date);
+            $days    = $day->d;
+
+            $update = [
+                'leave_applies_id'           => $request->id,
+                'leave_type_id'   => $request->leave_type_id,
+                'from_date'    => $request->from_date,
+                'to_date'      => $request->to_date,
+                'day'          => $days,
+                'leave_reason' => $request->leave_reason,
+            ];
+
+            LeaveApplies::where('leave_applies_id',$request->id)->update($update);
+            DB::commit();
+            
+            DB::commit();
+            Toastr::success('Updated Leaves successfully :)','Success');
+            return redirect()->back();
+        } catch(\Exception $e) {
+            DB::rollback();
+            Toastr::error('Update Leaves fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+      // Delete leaves Employee -------------------------------------------------------------------------
+      public function deleteLeavesEmployee(Request $request) {
+        try {
+
+            LeaveApplies::destroy($request->id);
+            Toastr::success('Leaves admin deleted successfully :)','Success');
+            return redirect()->back();
+        
+        } catch(\Exception $e) {
+
+            DB::rollback();
+            Toastr::error('Leaves admin delete fail :)','Error');
+            return redirect()->back();
+        }
+
       }
 
 
