@@ -173,8 +173,10 @@
                                         <span class="onoffswitch-switch"></span>
                                     </label>
                                 </div> -->
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_leave{{$leave->leave_id}}"><i class="fa fa-plus"></i> Edit</a>
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#delete_leave{{$leave->leave_id}}"><i class="fa fa-plus"></i> Delete</a>
+                                <div class="d-flex">
+                                    <a href="#" class="btn add-btn edit-button m-2" data-toggle="modal" data-target="#edit_leave{{$leave->leave_id}}"><i class="fa fa-pencil"></i> Edit</a>
+                                    <a href="#" class="btn add-btn delete-button m-2" data-toggle="modal" data-target="#delete_leave{{$leave->leave_id}}"><i class="fa fa-trash"></i> Delete</a>
+                                </div>
                             </div>
                             <div class="leave-item">
                                 <div class="leave-row">

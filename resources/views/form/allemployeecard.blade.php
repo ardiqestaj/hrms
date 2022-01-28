@@ -262,13 +262,13 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <div class="form-group wday-box">
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
+                                        <div class="wday-box">
+                                        <fieldset>
+                                            <label class="checkbox-inline"><input type="checkbox" name="monday" value="t"
                                                     class="days recurring" checked=""> <span
                                                     class="checkmark">M</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
+                                            <label class="checkbox-inline"><input type="checkbox" name="monday" value="X"
                                                     class="days recurring" checked=""><span
                                                     class="checkmark">T</span></label>
 
@@ -289,6 +289,7 @@
 
                                             <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"
                                                     class="days recurring"><span class="checkmark">S</span></label>
+                                        </fieldset>
                                         </div>
                                     </div>
                                 </div>
@@ -296,18 +297,14 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                            <input class="form-control" type="text" name="time_start"><span
-                                                class="input-group-append input-group-addon"><span
-                                                    class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                        <input class="form-control" type="time" id="time_start" name="time_start">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                            <input class="form-control" type="text" name="time_end"><span
-                                                class="input-group-append input-group-addon"><span
-                                                    class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                        <input class="form-control" type="time" id="time_end" name="time_end">
                                         </div>
                                     </div>
                                 </div>
