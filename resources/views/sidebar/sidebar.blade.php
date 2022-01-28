@@ -6,36 +6,53 @@
 
 
             <ul class="sidebar-main-menu">
-                <!-- <li class="menu-title">
-                        <span>Main</span>
-                    </li> -->
-                <li class="submenu">
-                    <a href="#" class="text-center">
+                    <!-- Admin Dashboard -->
+                @if (Auth::user()->role_name == 'Admin')
+                <li class="submenu-click">
+                    <a href="{{ route('home') }}" class="text-center">
                         <i class="la la-dashboard"></i>
                         <span class="dash-category"> Dashboard</span>
-                        <span class="menu-arrow"></span>
+                        <!-- <span class="menu-arrow"></span> -->
                     </a>
-                    <ul style="display: none;">
+                    <!-- <ul style="display: none;">
                         <li><a class="" href="{{ route('home') }}">Dashboard</a></li>
                         <li><a href="{{ route('em/dashboard') }}">Dashboard</a></li>
-                    </ul>
+                    </ul> -->
                 </li>
-                <!-- @if (Auth::user()->role_name == 'Admin')
-                        <li class="menu-title"> <span>Authentication</span> </li>
-                        <li class="submenu">
-                            <a href="#">
-                                <i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
-                            </a>
-                            <ul style="display: none;">
-                                <li><a href="{{ route('userManagement') }}">All User</a></li>
-                                <li><a href="{{ route('activity/log') }}">Activity Log</a></li>
-                                <li><a href="{{ route('activity/login/logout') }}">Activity User</a></li>
-                            </ul>
-                        </li>
-                    @endif -->
-                <!-- <li class="menu-title">
-                        <span>Employees</span>
-                    </li> -->
+                @endif
+
+                <!-- Employee Dashboard -->
+                @if (Auth::user()->role_name == 'Employee')
+                <li>
+                    <a href="{{ route('em/dashboard') }}" class="text-center">
+                        <i class="la la-dashboard"></i>
+                        <span class="dash-category"> Dashboard</span>
+                        <!-- <span class="menu-arrow"></span> -->
+                    </a>
+                    <!-- <ul style="display: none;">
+                        <li><a class="" href="{{ route('home') }}">Dashboard</a></li>
+                        <li><a href="{{ route('em/dashboard') }}">Dashboard</a></li>
+                    </ul> -->
+                </li>
+                @endif
+
+
+                <!-- Admin User Controller -->
+                @if (Auth::user()->role_name == 'Admin')
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('userManagement') }}">All User</a></li>
+                            <li><a href="{{ route('activity/log') }}">Activity Log</a></li>
+                            <li><a href="{{ route('activity/login/logout') }}">Activity User</a></li>
+                        </ul>
+                    </li>
+                @endif
+
+
+                <!-- Employees Admin  -->
                 <li class="submenu">
                     <a href="#" class="">
                         <i class="las la-user-friends"></i>
@@ -43,55 +60,57 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul style="display: none;">
+                     @if (Auth::user()->role_name == 'Admin')
                         <li><a href="{{ route('all/employee/card') }}">All Employees</a></li>
                         <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                         <li><a href="{{ route('form/leaves/new') }}">Leaves</a></li>
-                        <li><a href="{{ route('form/leavesemployee/new') }}">Leaves</a></li>
                         <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
-                        <li><a href="{{ route('attendance/page') }}">Attendance</a></li>
                         <li><a href="{{ route('attendance/employee/page') }}">Attendance</a></li>
                         <li><a href="{{ route('form/department/new') }}">Departments</a></li>
+                    @endif
+
+                <!-- Employees Employee -->
+                    @if (Auth::user()->role_name == 'Employee')
+                        <li><a href="{{ route('form/leavesemployee/new') }}">Leaves</a></li>
+                        <li><a href="{{ route('attendance/page') }}">Attendance</a></li>
                         <!-- <li><a href="designations.html">Designations</a></li>
                             <li><a href="timesheet.html">Timesheet</a></li>
                             <li><a href="shift-scheduling.html">Shift & Schedule</a></li>
                             <li><a href="overtime.html">Overtime</a></li> -->
+                    @endif
                     </ul>
                 </li>
 
-                <!-- <li class="menu-title">
-                        <span>Clients</span>
-                    </li> -->
+
+                <!--Admin - Clents -->
+                @if (Auth::user()->role_name == 'Admin')
                 <li class="submenu-click">
                     <a href="{{ route('clients/clients') }}">
                         <i class="las la-briefcase"></i>
                         <span class="dash-category">Clients</span>
                     </a>
-                    <!-- <ul style="display: none;">
-                            <li><a class="active" href="{{ route('all/employee/card') }}">All Employees</a></li>
-                            <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
-                            <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin)
-                                <span class="badge badge-pill bg-primary float-right">1</span></a>
-                            </li>
-                        </ul> -->
                 </li>
+                @endif
 
-                <!-- <li class="menu-title">
-                        <span>Locations</span>
-                    </li> -->
-                <li class="submenu">
+
+                <!--Admin - Locations -->
+                @if (Auth::user()->role_name == 'Admin')
+                <li>
                     <a href="#" class="">
                         <i class="las la-map-marked-alt"></i>
                         <span class="dash-category">Locations</span>
-                        <span class="menu-arrow"></span>
+                        <!-- <span class="menu-arrow"></span> -->
                     </a>
-                    <ul style="display: none;">
+                    <!-- <ul style="display: none;">
                         <li><a class="" href="{{ route('all/employee/card') }}">All Employees</a></li>
                         <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                         <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin)
                                 <span class=""></span></a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
+                @endif
+
 
                 <!-- <li class="menu-title">
                         <span>HR</span>
@@ -119,6 +138,20 @@
                         <li><a href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
                     </ul>
                 </li>
+
+                <!-- Admin settings -->
+                @if (Auth::user()->role_name == 'Admin')
+                <li class="submenu"> <a href="#"><i class="las la-cog"></i>
+                        <span> Settings </span> <span class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li><a href="{{ route('form/salary/page') }}"> Company Settings </a></li>
+                        <li><a href="{{ url('form/salary/view') }}"> Theme Settings </a></li>
+                        <li><a href="{{ route('form/payroll/items') }}"> Change Password </a></li>
+                        <li><a href="{{ route('form/payroll/items') }}"> Role Permissions </a></li>
+                    </ul>
+                </li>
+                @endif
+
                 <!-- <li class="submenu"> <a href="#"><i class="la la-pie-chart"></i>
                         <span> Reports </span> <span class="menu-arrow"></span></a>
                         <ul style="display: none;">

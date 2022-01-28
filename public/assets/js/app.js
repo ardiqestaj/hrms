@@ -291,12 +291,12 @@ $(document).ready(function() {
         if ($('body').hasClass('mini-sidebar')) {
             $('body').removeClass('mini-sidebar');
             $('.subdrop + ul').slideDown();
-            $(".sidebar-menu ul li").css("padding-left", "30px")
+            $(".sidebar-menu ul li").css("padding-left", "15px")
             $(".nav-item .profile-img ").css({ "width": "60px", "height": "60px" });
             $(".nav-item h3").css({ "visibility": "visible", "opacity": "1" })
             $(".slimScrollDiv").css({ "margin-left": "0px" })
             $(".nav-profile").css({ "margin-top": "15px", "margin-left": "0px" })
-            $(".sidebar-menu ul ul a").css("padding-left", "40px")
+            $(".sidebar-menu ul ul a").css("padding-left", "60px")
 
         } else {
             $('body').addClass('mini-sidebar');
@@ -306,6 +306,7 @@ $(document).ready(function() {
             $(".nav-item h3").css({ "visibility": "hidden", "opacity": "0" })
             $(".slimScrollDiv").css({ "margin-left": "15px" })
             $(".nav-profile").css({ "margin-top": "15px", "margin-left": "-50px" })
+                // $(".sidebar-menu ul ul a").css("padding-left", "30px")
 
 
 
@@ -319,13 +320,13 @@ $(document).ready(function() {
             if (targ) {
                 $('body').addClass('expand-menu');
                 $('.subdrop + ul').slideDown();
-                $(".sidebar-menu ul li").css("padding-left", "30px")
+                $(".sidebar-menu ul li").css("padding-left", "15px")
                 $(".nav-item .profile-img ").css({ "width": "60px", "height": "60px" });
                 $(".nav-item h3").css({ "visibility": "visible", "opacity": "1" })
                 $(".slimScrollDiv").css({ "margin-left": "0px" })
                 $(".nav-profile").css({ "margin-top": "10px", "margin-left": "0px" })
                 $(".header-left").css("margin-left", "60px");
-                $(".sidebar-menu ul ul a").css("padding-left", "40px")
+                $(".sidebar-menu ul ul a").css("padding-left", "55px")
             } else {
                 $('body').removeClass('expand-menu');
                 $('.subdrop + ul').slideUp();

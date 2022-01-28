@@ -146,8 +146,12 @@ Version      : 3.6
 -----------------------*/
 
 :root {
+    /* -----------Box Shadow----------- */
     --box-shadow: 0 7px 7px 0 rgb(60 64 67 / 4%), 0 1px 3px 1px rgb(60 64 67 / 4%) !important;
     --hover-box-shadow: 0 7px 7px 0 rgb(60 64 67 / 10%), 0 1px 3px 1px rgb(60 64 67 / 10%) !important;
+    /* -----------Colors---------------- */
+    --add-btn-color: #55CE63;
+    --delete-btn-color: #F62D51;
 }
 
 html {
@@ -1637,23 +1641,12 @@ table.dataTable thead>tr>td.sorting {
 -----------------------*/
 
 .header {
-    /* background: #f43b48;
-    background: -moz-linear-gradient(left, #ff6361 30%, #003F5C 100%);
-    background: -webkit-linear-gradient(left, #ff6361 30%, #003F5C 100%);
-    background: -ms-linear-gradient(left, #ff6361 30%, #003F5C 100%);
-    background: linear-gradient(to right, #ff6361 30%, #003F5C 100%);
-    border-bottom: 1px solid transparent;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); */
     background-color: #EBEBF5;
-    /* background-color: ; */
-    /* box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.3); */
-    /* height: 60px; */
     left: 0;
     position: fixed;
     right: 0;
     top: 0;
     z-index: 1002;
-    /* padding-top: 10px; */
     padding: 10px 40px;
     padding-right: 40px;
 }
@@ -1661,7 +1654,7 @@ table.dataTable thead>tr>td.sorting {
 .header .header-left {
     float: left;
     height: 60px;
-    /* padding: 0 20px; */
+    padding: 0 20px;
     position: relative;
     text-align: center;
     width: 230px;
@@ -1906,7 +1899,7 @@ ul.sidebar-main-menu {
 
 .sidebar-menu ul li {
     /* border: 1px solid black; */
-    padding-left: 43px;
+    /* padding-left: 43px; */
     transition: all .2s;
 }
 
@@ -1974,28 +1967,28 @@ ul.sidebar-main-menu {
 }
 
 .mobile-user-menu {
-    color: #fff;
+    color: #000;
     display: none;
     float: right;
     font-size: 24px;
-    height: 60px;
     line-height: 60px;
-    padding: 0 20px;
+    /* padding: 0 20px; */
+    text-align: right;
     position: absolute;
     right: 0;
-    text-align: right;
-    top: 0;
-    width: 60px;
+    top: 30px;
+    width: 40px;
+    height: 40px;
     z-index: 10;
 }
 
 .mobile-user-menu>a {
-    color: #fff;
+    color: #000;
     padding: 0;
 }
 
 .mobile-user-menu a:hover {
-    color: #fff;
+    color: #000;
 }
 
 .mobile-user-menu>.dropdown-menu {
@@ -2046,7 +2039,7 @@ ul.sidebar-main-menu {
 .sidebar-menu ul ul a {
     display: block;
     font-size: 14px;
-    padding: 0px 0px 10px 30px;
+    padding: 0px 0px 10px 70px;
     position: relative;
 }
 
@@ -7217,6 +7210,14 @@ table.table-inbox tbody tr.checked {
     padding: 2px 15px;
 }
 
+.add-button {
+    color: var(--add-btn-color) !important;
+}
+
+.delete-button {
+    color: var(--delete-btn-color) !important;
+}
+
 
 /*-----------------
 	48. Termination
@@ -9470,6 +9471,9 @@ ul.comment-list li ul.children {
 -----------------------*/
 
 @media only screen and (min-width: 991px) {
+    .nav-profile {
+        display: block !important;
+    }
     #toggle_btn {
         color: #999;
         float: left;
@@ -9652,6 +9656,13 @@ ul.comment-list li ul.children {
     .profile-rightbar {
         display: inline-block !important;
     }
+    .sidebar {
+        top: 40px;
+    }
+    .header {
+        height: 60px;
+        padding: unset;
+    }
     .profile-info-left {
         border-right: none;
         border-bottom: 2px dashed #ccc;
@@ -9734,7 +9745,7 @@ ul.comment-list li ul.children {
         padding-right: 0;
     }
     a.mobile_btn {
-        color: #fff;
+        color: #000;
         font-size: 24px;
         height: 60px;
         left: 0;
