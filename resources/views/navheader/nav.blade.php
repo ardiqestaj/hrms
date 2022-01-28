@@ -4,7 +4,7 @@
 			<!-- Logo -->
 			<div class="header-left">
 				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link p-0 mb-4 nav-profile d-none"  data-toggle="dropdown">
+					<a href="#" class="nav-link p-0 mb-4 nav-profile"  data-toggle="dropdown">
 						<span class="user-img d-flex align-items-center justify-content-center">
 						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" class="profile-img"  style="border: 1px solid black" alt="{{ Auth::user()->name }}">
 						</span>

@@ -13,6 +13,12 @@ class SettingController extends Controller
     {
         return view('settings.companysettings');
     }
+
+    // theme/settings/page
+    public function themeSettings()
+    {
+        return view('settings.theme-settings');
+    }
     
     // Roles & Permissions 
     public function rolesPermissions()

@@ -1346,11 +1346,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form class="" id="education-form">
                             <div class="form-scroll">
-                                <div class="card">
-                                    {{-- <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="card" id="education-card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon" id="education-card-delete-btn"><i class="fa fa-trash-o"></i></a></h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
@@ -1395,27 +1395,26 @@
                                         </div>
                                     </div> --}}
                                 </div>
-
-                                <div class="card">
-                                    {{-- <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                        <div class="row">
+                                <div class="card"  id="education-card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon" id="education-card-delete-btn"><i class="fa fa-trash-o"></i></a></h3>
+                                        <div class="row education-info">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="Oxford University" class="form-control floating">
+                                                    <input type="text" value="" class="form-control floating edu-info1">
                                                     <label class="focus-label">Institution</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="Computer Science" class="form-control floating">
+                                                    <input type="text" value="" class="form-control floating edu-info2">
                                                     <label class="focus-label">Subject</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
                                                     <div class="cal-icon">
-                                                        <input type="text" value="01/06/2002" class="form-control floating datetimepicker">
+                                                        <input type="text" value="" class="form-control floating edu-info3 datetimepicker">
                                                     </div>
                                                     <label class="focus-label">Starting Date</label>
                                                 </div>
@@ -1423,26 +1422,26 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
                                                     <div class="cal-icon">
-                                                        <input type="text" value="31/05/2006" class="form-control floating datetimepicker">
+                                                        <input type="text" value="" class="form-control floating edu-info4 datetimepicker">
                                                     </div>
                                                     <label class="focus-label">Complete Date</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="BE Computer Science" class="form-control floating">
+                                                    <input type="text" value="" class="form-control floating edu-info5">
                                                     <label class="focus-label">Degree</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="Grade A" class="form-control floating">
+                                                    <input type="text" value="" class="form-control floating edu-info6">
                                                     <label class="focus-label">Grade</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="add-more">
-                                            <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                            <a href="javascript:void(0);" id="education-card-add-btn"><i class="fa fa-plus-circle"></i> Add More</a>
                                         </div>
                                     </div> --}}
                                 </div>
