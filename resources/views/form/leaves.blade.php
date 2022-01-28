@@ -24,8 +24,8 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="stats-info">
-                        <h6>Today Presents</h6>
-                        <h4>12 / 60</h4>
+                        <h6>New Request</h6>
+                        <h4>{{$leaves->where('status', 'New')->count()}}</h4>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -43,7 +43,7 @@
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Pending Requests</h6>
-                        <h4>12</h4>
+                        <h4>{{$leaves->where('status', 'Pending')->count()}}</h4>
                     </div>
                 </div>
             </div>
@@ -141,14 +141,17 @@
                                             <td class="text-center">
                                                 <div class="dropdown action-label">
                                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-purple"></i>
                                                         @if($items->status == 'New' )
+                                                        <i class="fa fa-dot-circle-o text-purple"></i>
                                                             New
                                                         @elseif($items->status == 'Pending')
+                                                        <i class="fa fa-dot-circle-o text-danger"></i>
                                                             Pending
                                                         @elseif($items->status == 'Approved')
+                                                        <i class="fa fa-dot-circle-o text-success"></i>
                                                             Approved
                                                         @else
+                                                        <i class="fa fa-dot-circle-o text-danger"></i>
                                                             Declined
                                                         @endif
                                                     </a>
@@ -216,6 +219,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label>Number of days <span class="text-danger">*</span></label>
+                                <input class="form-control" readonly type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Remaining Leaves <span class="text-danger">*</span></label>
+                                <input class="form-control" readonly value="12" type="text">
+                            </div>
+                            <div class="form-group">
                                 <label>Leave Reason <span class="text-danger">*</span></label>
                                 <textarea rows="4" class="form-control" id="leave_reason" name="leave_reason"></textarea>
                             </div>
@@ -245,11 +256,10 @@
                             <input type="hidden" id="e_id" name="id" value="">
                             <div class="form-group">
                                 <label>Leave Type <span class="text-danger">*</span></label>
-                                <select class="select" id="e_leave_type" name="leave_type">
-                                    <option selected disabled>Select Leave Type</option>
-                                    <option value="Casual Leave 12 Days">Casual Leave 12 Days</option>
-                                    <option value="Medical Leave">Medical Leave</option>
-                                    <option value="Loss of Pay">Loss of Pay</option>
+                                <select class="select" id="e_leave_typ" name="leave_type_id">
+                                @foreach($LeaveTypes as $LeaveType)
+                                    <option value="{{$LeaveType->leave_id}}">{{$LeaveType->leave_names}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
@@ -292,20 +302,20 @@
                             <p>Are you sure want to approve for this leave?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            <div class="row">
                                 <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
+                                <div class="row">
                                     <div class="col-6">
                                     <input type="hidden" name="id" class="e_id" value="">
                                     <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                     <input type="hidden" name="status" class="" value="Approved">
-                                        <button type="submit" class="btn btn-primary continue-btn">Approve</button>
+                                        <button type="submit" class="btn btn-primary submit-btn continue-btn">Approve</button>
                                     </div>
                                     <div class="col-6">
-                                        <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -321,21 +331,21 @@
                             <h3>Leave Approve</h3>
                             <p>Are you sure want to pending for this leave?</p>
                         </div>
-                        <div class="modal-btn delete-action">
-                            <div class="row">
+                            <div class="modal-btn delete-action">
                                 <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
+                                <div class="row">
                                     <div class="col-6">
                                     <input type="hidden" name="id" class="e_id" value="">
                                     <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                     <input type="hidden" name="status" class="" value="Pending">
-                                        <button type="submit" class="btn btn-primary continue-btn">Pending</button>
+                                        <button type="submit" class="btn btn-primary submit-btn continue-btn">Pending</button>
                                     </div>
                                     <div class="col-6">
-                                        <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -352,20 +362,20 @@
                             <p>Are you sure want to decline for this leave?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            <div class="row">
                             <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
-                                    <div class="col-6">
                                     <input type="hidden" name="id" class="e_id" value="">
                                     <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                     <input type="hidden" name="status" class="" value="Declined">
-                                        <button type="submit" class="btn btn-primary continue-btn">Declined</button>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Declined</button>
                                     </div>
                                     <div class="col-6">
-                                        <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
