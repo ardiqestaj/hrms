@@ -22,6 +22,7 @@ class CreateLeaveApplies extends Migration
             $table->string('day')->nullable();
             $table->string('leave_reason')->nullable();
             $table->string('status')->default('New');
+            $table->string('approved_by')->default('Not Yet');
             $table->timestamps();
         });
     }

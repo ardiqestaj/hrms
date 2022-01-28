@@ -130,7 +130,7 @@
                                                     <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                                 </h2>
                                             </td>
-                                            <td hidden class="id">{{$items->leave_id}}</td>
+                                            <td hidden class="id">{{$items->leave_applies_id}}</td>
                                             <td class="leave_type">{{$items->leave_names}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
                                             <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
@@ -142,21 +142,21 @@
                                                 <div class="dropdown action-label">
                                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa fa-dot-circle-o text-purple"></i>
-                                                        @if($items->status = 'New' )
-                                                        New
-                                                        @elseif($items->status = 'Pending')
-                                                        Pending
-                                                        @elseif($items->status = 'Approved')
-                                                        Approved
+                                                        @if($items->status == 'New' )
+                                                            New
+                                                        @elseif($items->status == 'Pending')
+                                                            Pending
+                                                        @elseif($items->status == 'Approved')
+                                                            Approved
                                                         @else
-                                                        Declined
+                                                            Declined
                                                         @endif
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#new_leave"><i class="fa fa-dot-circle-o text-purple"></i> New</a> -->
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                                        <a class="dropdown-item PendingLeave" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
                                                         <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                                        <a class="dropdown-item DeclinedLeave" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -293,9 +293,13 @@
                         </div>
                         <div class="modal-btn delete-action">
                             <div class="row">
-                                <form action="{{ route('form/leaves/edit') }}" method="POST">
+                                <form action="{{ route('form/leaves/status') }}" method="POST">
+                                @csrf
                                     <div class="col-6">
-                                        <button href="javascript:void(0);" class="btn btn-primary continue-btn">Approve</button>
+                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
+                                    <input type="hidden" name="status" class="" value="Approved">
+                                        <button type="submit" class="btn btn-primary continue-btn">Approve</button>
                                     </div>
                                     <div class="col-6">
                                         <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
@@ -308,7 +312,7 @@
             </div>
         </div>
         <!-- /Approve Leave Modal -->
-        <!-- pending Leave Modal -->
+        <!-- Pending Leave Modal -->
         <div class="modal custom-modal fade" id="pending_leave" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -319,12 +323,18 @@
                         </div>
                         <div class="modal-btn delete-action">
                             <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Pending</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                </div>
+                                <form action="{{ route('form/leaves/status') }}" method="POST">
+                                @csrf
+                                    <div class="col-6">
+                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
+                                    <input type="hidden" name="status" class="" value="Pending">
+                                        <button type="submit" class="btn btn-primary continue-btn">Pending</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -343,12 +353,18 @@
                         </div>
                         <div class="modal-btn delete-action">
                             <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Decline</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                </div>
+                            <form action="{{ route('form/leaves/status') }}" method="POST">
+                                @csrf
+                                    <div class="col-6">
+                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
+                                    <input type="hidden" name="status" class="" value="Declined">
+                                        <button type="submit" class="btn btn-primary continue-btn">Declined</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -356,7 +372,6 @@
             </div>
         </div>
         <!-- /Declined Leave Modal -->
-        
         <!-- Delete Leave Modal -->
         <div class="modal custom-modal fade" id="delete_approve" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
@@ -417,6 +432,22 @@
     {{-- Approve model --}}
     <script>
         $(document).on('click','.ApproveLeave',function()
+        {
+            var _this = $(this).parents('tr');
+            $('.e_id').val(_this.find('.id').text());
+        });
+    </script>
+    {{-- Pending model --}}
+    <script>
+        $(document).on('click','.PendingLeave',function()
+        {
+            var _this = $(this).parents('tr');
+            $('.e_id').val(_this.find('.id').text());
+        });
+    </script>
+    {{-- Declined model --}}
+    <script>
+        $(document).on('click','.DeclinedLeave',function()
         {
             var _this = $(this).parents('tr');
             $('.e_id').val(_this.find('.id').text());

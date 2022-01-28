@@ -19,6 +19,11 @@ class CreateLeaveSettingsTable extends Migration
             $table->string('leave_days')->nullable();
             $table->timestamps();
         });
+        DB::table('leave_settings')->insert([
+            ['leave_names' => 'Annual Leave', 'leave_days' => '14'],
+            ['leave_names' => 'Medical Leave', 'leave_days' => '7'],
+            
+        ]);
     }
 
     /**
