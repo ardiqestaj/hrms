@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-	
+
 
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -28,7 +28,9 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href="#"><img alt="" class="" src="{{ URL::to('/assets/images/'. $user[0]->avatar) }}" alt="{{ $user[0]->name }}"></a>
+                                        <a href="#"><img alt="" class=""
+                                                src="{{ URL::to('/assets/images/' . $user[0]->avatar) }}"
+                                                alt="{{ $user[0]->name }}"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">
@@ -39,36 +41,40 @@
                                                 <h6 class="text-muted"> {{ $user[0]->department }}</h6>
                                                 <small class="text-muted">{{ $user[0]->position }}</small>
                                                 <div class="staff-id">Employee ID : {{ $user[0]->rec_id }}</div>
-                                                <div class="small doj text-muted">Date of Join : {{ $user[0]->join_date }}</div>
-                                                <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
+                                                <div class="small doj text-muted">Date of Join : {{ $user[0]->join_date }}
+                                                </div>
+                                                <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send
+                                                        Message</a></div>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <ul class="personal-info" style="list-style-type: disc;">
                                                 <li>
                                                     <div class="title">Phone:</div>
-                                                    <div class="text"><a href="">{{ Auth::user()->phone_number }}</a></div>
+                                                    <div class="text"><a
+                                                            href="">{{ Auth::user()->phone_number }}</a></div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Email:</div>
-                                                    <div class="text"><a href="">{{ Auth::user()->email }}</a></div>
+                                                    <div class="text"><a href="">{{ Auth::user()->email }}</a>
+                                                    </div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Birthday:</div>
-                                                    @if(!empty($users))
-                                                    <div class="text">{{ $users->birth_date }}</div>
+                                                    @if (!empty($users))
+                                                        <div class="text">{{ $users->birth_date }}</div>
                                                     @endif
                                                 </li>
                                                 <li>
                                                     <div class="title">Address:</div>
-                                                    @if(!empty($users))
-                                                    <div class="text">{{ $users->address }}</div>
+                                                    @if (!empty($users))
+                                                        <div class="text">{{ $users->address }}</div>
                                                     @endif
                                                 </li>
                                                 <li>
                                                     <div class="title">Gender:</div>
-                                                    @if(!empty($users))
-                                                    <div class="text">{{ $users->gender }}</div>
+                                                    @if (!empty($users))
+                                                        <div class="text">{{ $users->gender }}</div>
                                                     @endif
                                                 </li>
                                                 <li>
@@ -76,37 +82,43 @@
                                                     <div class="text">
                                                         <div class="avatar-box">
                                                             <div class="avatar avatar-xs">
-                                                                <img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                                                                <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
+                                                                    alt="{{ Auth::user()->name }}">
                                                             </div>
                                                         </div>
                                                         <a href="profile.html">
                                                             {{ Auth::user()->name }}
                                                         </a>
                                                     </div>
-                                                </li> 
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal"
+                                        class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-					
+
             <div class="card tab-box">
                 <div class="row user-tabs">
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
-                            <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Projects</a></li>
-                            <li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin Only)</small></a></li>
+                            <li class="nav-item"><a href="#emp_profile" data-toggle="tab"
+                                    class="nav-link active">Profile</a></li>
+                            <li class="nav-item"><a href="#emp_projects" data-toggle="tab"
+                                    class="nav-link">Projects</a></li>
+                            <li class="nav-item"><a href="#bank_statutory" data-toggle="tab"
+                                    class="nav-link">Bank & Statutory <small class="text-danger">(Admin
+                                        Only)</small></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            
+
             <div class="tab-content">
                 <!-- Profile Info Tab -->
                 <div id="emp_profile" class="pro-overview tab-pane fade show active">
@@ -114,7 +126,9 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Personal Informations <a href="#" class="edit-icon"
+                                            data-toggle="modal" data-target="#personal_info_modal"><i
+                                                class="fa fa-pencil"></i></a></h3>
                                     <ul class="personal-info">
                                         <li>
                                             <div class="title">Passport No.</div>
@@ -155,7 +169,9 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon"
+                                            data-toggle="modal" data-target="#emergency_contact_modal"><i
+                                                class="fa fa-pencil"></i></a></h3>
                                     <h5 class="section-title">Primary</h5>
                                     <ul class="personal-info">
                                         <li>
@@ -220,7 +236,9 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Family Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Family Informations <a href="#" class="edit-icon"
+                                            data-toggle="modal" data-target="#family_info_modal"><i
+                                                class="fa fa-pencil"></i></a></h3>
                                     <div class="table-responsive">
                                         <table class="table table-nowrap">
                                             <thead>
@@ -240,10 +258,14 @@
                                                     <td>9876543210</td>
                                                     <td class="text-right">
                                                         <div class="dropdown dropdown-action">
-                                                            <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                            <a aria-expanded="false" data-toggle="dropdown"
+                                                                class="action-icon dropdown-toggle" href="#"><i
+                                                                    class="material-icons">more_vert</i></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                <a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                <a href="#" class="dropdown-item"><i
+                                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                <a href="#" class="dropdown-item"><i
+                                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -259,7 +281,9 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Education Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Education Informations <a href="#" class="edit-icon"
+                                            data-toggle="modal" data-target="#education_info"><i
+                                                class="fa fa-pencil"></i></a></h3>
                                     <div class="experience-box">
                                         <ul class="experience-list">
                                             <li>
@@ -268,7 +292,8 @@
                                                 </div>
                                                 <div class="experience-content">
                                                     <div class="timeline-content">
-                                                        <a href="#/" class="name">International College of Arts and Science (UG)</a>
+                                                        <a href="#/" class="name">International College of Arts
+                                                            and Science (UG)</a>
                                                         <div>Bsc Computer Science</div>
                                                         <span class="time">2000 - 2003</span>
                                                     </div>
@@ -280,7 +305,8 @@
                                                 </div>
                                                 <div class="experience-content">
                                                     <div class="timeline-content">
-                                                        <a href="#/" class="name">International College of Arts and Science (PG)</a>
+                                                        <a href="#/" class="name">International College of Arts
+                                                            and Science (PG)</a>
                                                         <div>Msc Computer Science</div>
                                                         <span class="time">2000 - 2003</span>
                                                     </div>
@@ -294,7 +320,9 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Experience <a href="#" class="edit-icon"
+                                            data-toggle="modal" data-target="#experience_info"><i
+                                                class="fa fa-pencil"></i></a></h3>
                                     <div class="experience-box">
                                         <ul class="experience-list">
                                             <li>
@@ -303,8 +331,10 @@
                                                 </div>
                                                 <div class="experience-content">
                                                     <div class="timeline-content">
-                                                        <a href="#/" class="name">Web Designer at Zen Corporation</a>
-                                                        <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                                        <a href="#/" class="name">Web Designer at Zen
+                                                            Corporation</a>
+                                                        <span class="time">Jan 2013 - Present (5 years 2
+                                                            months)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -315,7 +345,8 @@
                                                 <div class="experience-content">
                                                     <div class="timeline-content">
                                                         <a href="#/" class="name">Web Designer at Ron-tech</a>
-                                                        <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                                        <span class="time">Jan 2013 - Present (5 years 2
+                                                            months)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -325,8 +356,10 @@
                                                 </div>
                                                 <div class="experience-content">
                                                     <div class="timeline-content">
-                                                        <a href="#/" class="name">Web Designer at Dalt Technology</a>
-                                                        <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                                        <a href="#/" class="name">Web Designer at Dalt
+                                                            Technology</a>
+                                                        <span class="time">Jan 2013 - Present (5 years 2
+                                                            months)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -338,7 +371,7 @@
                     </div>
                 </div>
                 <!-- /Profile Info Tab -->
-                
+
                 <!-- Projects Tab -->
                 <div class="tab-pane fade" id="emp_projects">
                     <div class="row">
@@ -346,16 +379,21 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
+                                            href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Office Management</a></h4>
                                     <small class="block text-ellipsis m-b-15">
-                                        <span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
-                                        <span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
+                                        <span class="text-xs">1</span> <span class="text-muted">open tasks,
+                                        </span>
+                                        <span class="text-xs">9</span> <span class="text-muted">tasks
+                                            completed</span>
                                     </small>
                                     <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
                                         typesetting industry. When an unknown printer took a galley of type and
@@ -373,7 +411,8 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
+                                                        src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -381,44 +420,55 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
+                                                        src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
+                                                        src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
+                                                        src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
+                                                        src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
+                                    </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
+                                            class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
+                                            href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Project Management</a></h4>
                                     <small class="block text-ellipsis m-b-15">
-                                        <span class="text-xs">2</span> <span class="text-muted">open tasks, </span>
-                                        <span class="text-xs">5</span> <span class="text-muted">tasks completed</span>
+                                        <span class="text-xs">2</span> <span class="text-muted">open tasks,
+                                        </span>
+                                        <span class="text-xs">5</span> <span class="text-muted">tasks
+                                            completed</span>
                                     </small>
                                     <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
                                         typesetting industry. When an unknown printer took a galley of type and
@@ -436,7 +486,8 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
+                                                        src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -444,44 +495,55 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
+                                                        src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
+                                                        src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
+                                                        src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
+                                                        src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
+                                    </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
+                                            class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
+                                            href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Video Calling App</a></h4>
                                     <small class="block text-ellipsis m-b-15">
-                                        <span class="text-xs">3</span> <span class="text-muted">open tasks, </span>
-                                        <span class="text-xs">3</span> <span class="text-muted">tasks completed</span>
+                                        <span class="text-xs">3</span> <span class="text-muted">open tasks,
+                                        </span>
+                                        <span class="text-xs">3</span> <span class="text-muted">tasks
+                                            completed</span>
                                     </small>
                                     <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
                                         typesetting industry. When an unknown printer took a galley of type and
@@ -499,7 +561,8 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
+                                                        src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -507,44 +570,55 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
+                                                        src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
+                                                        src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
+                                                        src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
+                                                        src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
+                                    </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
+                                            class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
+                                            href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#"
+                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Hospital Administration</a></h4>
                                     <small class="block text-ellipsis m-b-15">
-                                        <span class="text-xs">12</span> <span class="text-muted">open tasks, </span>
-                                        <span class="text-xs">4</span> <span class="text-muted">tasks completed</span>
+                                        <span class="text-xs">12</span> <span class="text-muted">open tasks,
+                                        </span>
+                                        <span class="text-xs">4</span> <span class="text-muted">tasks
+                                            completed</span>
                                     </small>
                                     <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
                                         typesetting industry. When an unknown printer took a galley of type and
@@ -562,7 +636,8 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
+                                                        src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -570,25 +645,31 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
+                                                        src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
+                                                        src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
+                                                        src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
+                                                        src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+                                    <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
+                                    </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
+                                            class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -596,7 +677,7 @@
                     </div>
                 </div>
                 <!-- /Projects Tab -->
-                
+
                 <!-- Bank Statutory Tab -->
                 <div class="tab-pane fade" id="bank_statutory">
                     <div class="card">
@@ -606,7 +687,8 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Salary basis <span class="text-danger">*</span></label>
+                                            <label class="col-form-label">Salary basis <span
+                                                    class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select salary basis type</option>
                                                 <option>Hourly</option>
@@ -618,12 +700,14 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Salary amount <small class="text-muted">per month</small></label>
+                                            <label class="col-form-label">Salary amount <small class="text-muted">per
+                                                    month</small></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">$</span>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Type your salary amount" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -654,7 +738,8 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">PF No. <span class="text-danger">*</span></label>
+                                            <label class="col-form-label">PF No. <span
+                                                    class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select PF contribution</option>
                                                 <option>Yes</option>
@@ -676,7 +761,8 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
+                                            <label class="col-form-label">Additional rate <span
+                                                    class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select additional rate</option>
                                                 <option>0%</option>
@@ -713,7 +799,8 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
+                                            <label class="col-form-label">Additional rate <span
+                                                    class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select additional rate</option>
                                                 <option>0%</option>
@@ -737,7 +824,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <hr>
                                 <h3 class="card-title"> ESI Information</h3>
                                 <div class="row">
@@ -753,7 +840,8 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">ESI No. <span class="text-danger">*</span></label>
+                                            <label class="col-form-label">ESI No. <span
+                                                    class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select ESI contribution</option>
                                                 <option>Yes</option>
@@ -775,7 +863,8 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
+                                            <label class="col-form-label">Additional rate <span
+                                                    class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select additional rate</option>
                                                 <option>0%</option>
@@ -799,7 +888,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn" type="submit">Save</button>
                                 </div>
@@ -823,19 +912,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('profile/information/save') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('profile/information/save') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="profile-img-wrap edit-img">
-                                        @if(!empty($users))
-                                        <img class="inline-block" src="{{ URL::to('/assets/images/'. $users->avatar) }}" alt="{{ $users->name }}">
+                                        @if (!empty($users))
+                                            <img class="inline-block"
+                                                src="{{ URL::to('/assets/images/' . $users->avatar) }}"
+                                                alt="{{ $users->name }}">
                                         @endif
                                         <div class="fileupload btn">
                                             <span class="btn-text">edit</span>
                                             <input class="upload" type="file" id="image" name="images">
-                                            @if(!empty($users))
-                                            <input type="hidden" name="hidden_image" id="e_image" value="{{ $users->avatar }}">
+                                            @if (!empty($users))
+                                                <input type="hidden" name="hidden_image" id="e_image"
+                                                    value="{{ $users->avatar }}">
                                             @endif
                                         </div>
                                     </div>
@@ -843,10 +936,13 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Full Name</label>
-                                                @if(!empty($users))
-                                                <input type="text" class="form-control" id="name" name="name" value="{{ $users->name }}">
-                                                <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ $users->rec_id }}">
-                                                <input type="hidden" class="form-control" id="email" name="email" value="{{ $users->email }}">
+                                                @if (!empty($users))
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        value="{{ $users->name }}">
+                                                    <input type="hidden" class="form-control" id="rec_id" name="rec_id"
+                                                        value="{{ $users->rec_id }}">
+                                                    <input type="hidden" class="form-control" id="email" name="email"
+                                                        value="{{ $users->email }}">
                                                 @endif
                                             </div>
                                         </div>
@@ -854,8 +950,10 @@
                                             <div class="form-group">
                                                 <label>Birth Date</label>
                                                 <div class="cal-icon">
-                                                    @if(!empty($users))
-                                                    <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate" value="{{ $users->birth_date }}">
+                                                    @if (!empty($users))
+                                                        <input class="form-control datetimepicker" type="text"
+                                                            id="birthDate" name="birthDate"
+                                                            value="{{ $users->birth_date }}">
                                                     @endif
                                                 </div>
                                             </div>
@@ -864,10 +962,12 @@
                                             <div class="form-group">
                                                 <label>Gender</label>
                                                 <select class="select form-control" id="gender" name="gender">
-                                                    @if(!empty($users))
-                                                    <option value="{{ $users->gender }}" {{ ( $users->gender == $users->gender) ? 'selected' : '' }}>{{ $users->gender }} </option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
+                                                    @if (!empty($users))
+                                                        <option value="{{ $users->gender }}"
+                                                            {{ $users->gender == $users->gender ? 'selected' : '' }}>
+                                                            {{ $users->gender }} </option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -879,40 +979,45 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        @if(!empty($users))
-                                        <input type="text" class="form-control" id="address" name="address" value="{{ $users->address }}">
+                                        @if (!empty($users))
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                value="{{ $users->address }}">
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>State</label>
-                                        @if(!empty($users))
-                                        <input type="text" class="form-control" id="state" name="state" value="{{ $users->state }}">
+                                        @if (!empty($users))
+                                            <input type="text" class="form-control" id="state" name="state"
+                                                value="{{ $users->state }}">
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Country</label>
-                                        @if(!empty($users))
-                                        <input type="text" class="form-control" id="" name="country" value="{{ $users->country }}">
+                                        @if (!empty($users))
+                                            <input type="text" class="form-control" id="" name="country"
+                                                value="{{ $users->country }}">
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Pin Code</label>
-                                        @if(!empty($users))
-                                        <input type="text" class="form-control" id="pin_code" name="pin_code" value="{{ $users->pin_code }}">
+                                        @if (!empty($users))
+                                            <input type="text" class="form-control" id="pin_code" name="pin_code"
+                                                value="{{ $users->pin_code }}">
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Phone Number</label>
-                                        @if(!empty($users))
-                                        <input type="text" class="form-control" id="phoneNumber" name="phone_number" value="{{ $users->phone_number }}">
+                                        @if (!empty($users))
+                                            <input type="text" class="form-control" id="phoneNumber" name="phone_number"
+                                                value="{{ $users->phone_number }}">
                                         @endif
                                     </div>
                                 </div>
@@ -921,11 +1026,13 @@
                                     <div class="form-group">
                                         <label>Department <span class="text-danger">*</span></label>
                                         <select class="select" id="department" name="department">
-                                            @if(!empty($users))
-                                            <option value="{{ $users->department }}" {{ ( $users->department == $users->department) ? 'selected' : '' }}>{{ $users->department }} </option>
-                                            <option value="Web Development">Web Development</option>
-                                            <option value="IT Management">IT Management</option>
-                                            <option value="Marketing">Marketing</option>
+                                            @if (!empty($users))
+                                                <option value="{{ $users->department }}"
+                                                    {{ $users->department == $users->department ? 'selected' : '' }}>
+                                                    {{ $users->department }} </option>
+                                                <option value="Web Development">Web Development</option>
+                                                <option value="IT Management">IT Management</option>
+                                                <option value="Marketing">Marketing</option>
                                             @endif
                                         </select>
                                     </div>
@@ -934,11 +1041,13 @@
                                     <div class="form-group">
                                         <label>Designation <span class="text-danger">*</span></label>
                                         <select class="select" id="designation" name="designation">
-                                            @if(!empty($users))
-                                            <option value="{{ $users->designation }}" {{ ( $users->designation == $users->designation) ? 'selected' : '' }}>{{ $users->designation }} </option>
-                                            <option value="Web Designer">Web Designer</option>
-                                            <option value="Web Developer">Web Developer</option>
-                                            <option value="Android Developer">Android Developer</option>
+                                            @if (!empty($users))
+                                                <option value="{{ $users->designation }}"
+                                                    {{ $users->designation == $users->designation ? 'selected' : '' }}>
+                                                    {{ $users->designation }} </option>
+                                                <option value="Web Designer">Web Designer</option>
+                                                <option value="Web Developer">Web Developer</option>
+                                                <option value="Android Developer">Android Developer</option>
                                             @endif
                                         </select>
                                     </div>
@@ -947,11 +1056,13 @@
                                     <div class="form-group">
                                         <label>Reports To <span class="text-danger">*</span></label>
                                         <select class="select" id="" name="reports_to">
-                                            @if(!empty($users))
-                                            <option value="{{ $users->reports_to }}" {{ ( $users->reports_to == $users->reports_to) ? 'selected' : '' }}>{{ $users->reports_to }} </option>
-                                            @foreach ($user as $users )
-                                            <option value="{{ $users->name }}">{{ $users->name }}</option>
-                                            @endforeach
+                                            @if (!empty($users))
+                                                <option value="{{ $users->reports_to }}"
+                                                    {{ $users->reports_to == $users->reports_to ? 'selected' : '' }}>
+                                                    {{ $users->reports_to }} </option>
+                                                @foreach ($user as $users)
+                                                    <option value="{{ $users->name }}">{{ $users->name }}</option>
+                                                @endforeach
                                             @endif
                                         </select>
                                     </div>
@@ -966,7 +1077,7 @@
             </div>
         </div>
         <!-- /Profile Modal -->
-    
+
         <!-- Personal Info Modal -->
         <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1046,7 +1157,7 @@
             </div>
         </div>
         <!-- /Personal Info Modal -->
-        
+
         <!-- Family Info Modal -->
         <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1062,7 +1173,8 @@
                             <div class="form-scroll">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                        <h3 class="card-title">Family Member <a href="javascript:void(0);"
+                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -1091,10 +1203,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -1136,7 +1249,7 @@
             </div>
         </div>
         <!-- /Family Info Modal -->
-        
+
         <!-- Emergency Contact Modal -->
         <div id="emergency_contact_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1180,7 +1293,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title">Primary Contact</h3>
@@ -1221,7 +1334,7 @@
             </div>
         </div>
         <!-- /Emergency Contact Modal -->
-        
+
         <!-- Education Modal -->
         <div id="education_info" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1280,9 +1393,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
-
                                 <div class="card"  id="education-card">
                                     <div class="card-body">
                                         <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon" id="education-card-delete-btn"><i class="fa fa-trash-o"></i></a></h3>
@@ -1331,7 +1443,7 @@
                                         <div class="add-more">
                                             <a href="javascript:void(0);" id="education-card-add-btn"><i class="fa fa-plus-circle"></i> Add More</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="submit-section">
@@ -1343,7 +1455,7 @@
             </div>
         </div>
         <!-- /Education Modal -->
-        
+
         <!-- Experience Modal -->
         <div id="experience_info" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1359,11 +1471,13 @@
                             <div class="form-scroll">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                        <h3 class="card-title">Experience Informations <a href="javascript:void(0);"
+                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
-                                                    <input type="text" class="form-control floating" value="Digital Devlopment Inc">
+                                                    <input type="text" class="form-control floating"
+                                                        value="Digital Devlopment Inc">
                                                     <label class="focus-label">Company Name</label>
                                                 </div>
                                             </div>
@@ -1382,7 +1496,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
                                                     <div class="cal-icon">
-                                                        <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
+                                                        <input type="text" class="form-control floating datetimepicker"
+                                                            value="01/07/2007">
                                                     </div>
                                                     <label class="focus-label">Period From</label>
                                                 </div>
@@ -1390,7 +1505,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
                                                     <div class="cal-icon">
-                                                        <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
+                                                        <input type="text" class="form-control floating datetimepicker"
+                                                            value="08/06/2018">
                                                     </div>
                                                     <label class="focus-label">Period To</label>
                                                 </div>
@@ -1398,14 +1514,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                        <h3 class="card-title">Experience Informations <a href="javascript:void(0);"
+                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
-                                                    <input type="text" class="form-control floating" value="Digital Devlopment Inc">
+                                                    <input type="text" class="form-control floating"
+                                                        value="Digital Devlopment Inc">
                                                     <label class="focus-label">Company Name</label>
                                                 </div>
                                             </div>
@@ -1424,7 +1542,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
                                                     <div class="cal-icon">
-                                                        <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
+                                                        <input type="text" class="form-control floating datetimepicker"
+                                                            value="01/07/2007">
                                                     </div>
                                                     <label class="focus-label">Period From</label>
                                                 </div>
@@ -1432,7 +1551,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
                                                     <div class="cal-icon">
-                                                        <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
+                                                        <input type="text" class="form-control floating datetimepicker"
+                                                            value="08/06/2018">
                                                     </div>
                                                     <label class="focus-label">Period To</label>
                                                 </div>

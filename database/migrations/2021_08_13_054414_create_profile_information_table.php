@@ -20,7 +20,7 @@ class CreateProfileInformationTable extends Migration
             $table->string('email')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('gender')->nullable();
-            $table->string('address')->nullable();
+            $table->string('address')->nullable()->default('N/A');
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('pin_code')->nullable();
