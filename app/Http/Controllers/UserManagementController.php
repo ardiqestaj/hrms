@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Employee;
 use App\Models\Form;
 use App\Models\ProfileInformation;
+use App\Models\Family;
 use App\Rules\MatchOldPassword;
 use Carbon\Carbon;
 use Session;
@@ -32,7 +33,7 @@ class UserManagementController extends Controller
         {
             return redirect()->route('home');
         }
-        
+
     }
     // search user
     public function searchUser(Request $request)
@@ -96,14 +97,14 @@ class UserManagementController extends Controller
                                 ->where('status','LIKE','%'.$request->status.'%')
                                 ->get();
             }
-           
+
             return view('usermanagement.user_control',compact('users','role_name','position','department','status_user','result'));
         }
         else
         {
             return redirect()->route('home');
         }
-    
+
     }
 
     // use activity log
@@ -121,32 +122,41 @@ class UserManagementController extends Controller
 
     // profile user
     public function profile()
-    {   
+    {
         $user = Auth::User();
         Session::put('user', $user);
         $user=Session::get('user');
         $profile = $user->rec_id;
-       
+
         $user = DB::table('users')->get();
         $employees = DB::table('profile_information')->where('rec_id',$profile)->first();
+        $families = DB::table('families')->where('rec_id',$profile)->first();
 
         if(empty($employees))
         {
             $information = DB::table('profile_information')->where('rec_id',$profile)->first();
-            return view('usermanagement.profile_user',compact('information','user'));
+            $employee = DB::table('employees')->where('employee_id',$profile)->first();
+            $family = DB::table('families')->where('rec_id',$profile)->first();
+
+            return view('usermanagement.profile_user',compact('information','user','employee', 'family'));
 
         }else{
             $rec_id = $employees->rec_id;
             if($rec_id == $profile)
             {
                 $information = DB::table('profile_information')->where('rec_id',$profile)->first();
-                return view('usermanagement.profile_user',compact('information','user'));
+                $employee = DB::table('employees')->where('employee_id',$profile)->first();
+                $family = DB::table('families')->where('rec_id',$profile)->first();
+
+                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family'));
             }else{
                 $information = ProfileInformation::all();
-                return view('usermanagement.profile_user',compact('information','user'));
-            } 
+                $employee = Employee::all();
+                $family = Family::all();
+
+                return view('usermanagement.profile_user',compact('information','user', 'employee','family'));
+            }
         }
-       
     }
 
     // save profile information
@@ -178,7 +188,7 @@ class UserManagementController extends Controller
                     'avatar' => $image_name,
                 ];
                 User::where('rec_id',$request->rec_id)->update($update);
-            } 
+            }
 
             $information = ProfileInformation::updateOrCreate(['rec_id' => $request->rec_id]);
             $information->name         = $request->name;
@@ -195,7 +205,7 @@ class UserManagementController extends Controller
             $information->designation  = $request->designation;
             $information->reports_to   = $request->reports_to;
             $information->save();
-            
+
             DB::commit();
             Toastr::success('Profile Information successfully :)','Success');
             return redirect()->back();
@@ -205,7 +215,29 @@ class UserManagementController extends Controller
             return redirect()->back();
         }
     }
-   
+
+    // new family info
+    public function createFamilyInfo(Request $request)
+    {
+        try{
+            $family = Family::updateOrCreate(['rec_id' => $request->rec_id]);
+            $family->name         = $request->name;
+            $family->rec_id       = $request->rec_id;
+            $family->relationship = $request->relationship;
+            $family->birthdate   = $request->birthdate;
+            $family->phone_number = $request->phone_number;
+            $family->save();
+
+            DB::commit();
+            Toastr::success('Family Information successfully :)','Success');
+            return redirect()->back();
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Add Family Information fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
     // save new user
     public function addNewUserSave(Request $request)
     {
@@ -226,7 +258,7 @@ class UserManagementController extends Controller
             $dt       = Carbon::now();
             $todayDate = $dt->toDayDateTimeString();
 
-            $image = time().'.'.$request->image->extension();  
+            $image = time().'.'.$request->image->extension();
             $request->image->move(public_path('assets/images'), $image);
 
             $user = new User;
@@ -250,7 +282,7 @@ class UserManagementController extends Controller
             return redirect()->back();
         }
     }
-    
+
     // update
     public function update(Request $request)
     {
@@ -278,14 +310,14 @@ class UserManagementController extends Controller
                 }
             }
             else{
-                
+
                 if($image != '')
                 {
                     $image_name = rand() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('/assets/images/'), $image_name);
                 }
             }
-            
+
             $update = [
 
                 'rec_id'       => $rec_id,
@@ -360,7 +392,7 @@ class UserManagementController extends Controller
             DB::commit();
             Toastr::success('User deleted successfully :)','Success');
             return redirect()->route('userManagement');
-            
+
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('User deleted fail :)','Error');
@@ -373,7 +405,7 @@ class UserManagementController extends Controller
     {
         return view('settings.changepassword');
     }
-    
+
     // change password in db
     public function changePasswordDB(Request $request)
     {

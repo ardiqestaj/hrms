@@ -214,8 +214,8 @@
                                         <select class="select form-control" style="width: 100%;" tabindex="-1"
                                             aria-hidden="true" id="gender" name="gender" required>
                                             <option value="" selected disabled>-- Select --</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                         </select>
                                     </div>
                                 </div>

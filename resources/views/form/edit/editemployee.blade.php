@@ -86,12 +86,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label col-md-2">Type Of Work</label>
+                                    <label class="col-form-label col-md-2">Department</label>
                                     <div class="col-md-10">
-                                        <select class="select form-control" id="type_of_work" name="type_of_work">
-                                            <option value="{{ $employees[0]->type_of_work }}"
-                                                {{ $employees[0]->type_of_work == $employees[0]->type_of_work ? 'selected' : '' }}>
-                                                {{ $employees[0]->type_of_work }} </option>
+                                        <select class="select form-control" id="department" name="department">
+                                            <option value="{{ $employees[0]->department }}"
+                                                {{ $employees[0]->department == $employees[0]->department ? 'selected' : '' }}>
+                                                {{ $employees[0]->department }} </option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
