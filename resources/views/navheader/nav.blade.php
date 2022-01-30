@@ -3,8 +3,8 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link p-0 mb-4 nav-profile"  data-toggle="dropdown">
+				<li class="nav-item dropdown has-arrow main-drop ">
+					<!-- <a href="#" class="nav-link p-0 mb-4 nav-profile"  data-toggle="dropdown">
 						<span class="user-img d-flex align-items-center justify-content-center">
 						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" class="profile-img"  style="border: 1px solid black" alt="{{ Auth::user()->name }}">
 						</span>
@@ -14,9 +14,22 @@
 						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
 						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
 						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-					</div>
+					</div> -->
 
-                          <!-- Mobile Menu -->
+					<!-- <li class="nav-item dropdown has-arrow main-drop">
+						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+							<span class="user-img"><img src="assets/img/profiles/avatar-21.jpg" alt="">
+							<span class="status online"></span></span>
+							<span>Admin</span>
+						</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item" href="settings.html">Settings</a>
+							<a class="dropdown-item" href="login.html">Logout</a>
+						</div>
+					</li> -->
+
+					<!-- mobile menu -->
                     <div class="dropdown mobile-user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-ellipsis-v"></i>
@@ -27,18 +40,17 @@
                             <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                         </div>
                     </div>
-			        <!-- /Mobile Menu -->
 				</li>
-				<!-- <a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a> -->
+				<a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);">
 				<span class="bar-icon"><span></span><span></span><span></span></span>
 			</a>
 			<!-- Header Title -->
-			<!-- <div class="page-title-box">
-				<h3 class="text-dark fw-bold">{{ Auth::user()->name }}</h3>
-			</div> -->
+			<div class="page-title-box ml-4">
+				<h3 class="text-dark">FALKONET Enterprise</h3>
+			</div>
 			<!-- /Header Title -->
 			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
 			<!-- Header Menu -->
@@ -46,26 +58,26 @@
 				<!-- Search -->
 				<li class="nav-item">
 					<div class="top-nav-search">
-						<a href="javascript:void(0);" class="responsive-search"> <i class="fa fa-search"></i> </a>
+						<a href="javascript:void(0);" class="responsive-search"> <i class="fa fa-search text-dark"></i> </a>
 						<form action="search.html">
 							<input class="form-control bg-white text-dark" type="text" placeholder="Search here">
-							<button class="btn text-muted" type="submit"><i class="fa fa-search"></i></button>
+							<button class="btn text-dark" type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
 				</li>
 				<!-- /Search -->
 				<!-- Flag -->
-				<li class="nav-item dropdown has-arrow flag-nav">
+				<!-- <li class="nav-item dropdown has-arrow flag-nav">
 					<a class="nav-link dropdown-toggle text-muted" data-toggle="dropdown" href="#" role="button"> <img src="{{ URL::to('assets/img/flags/us.png') }}" alt="" height="20"> <span class="text-muted">English</span> </a>
 					<div class="dropdown-menu dropdown-menu-right">
 						<a href="javascript:void(0);" class="dropdown-item text-muted"> <img src="{{ URL::to('assets/img/flags/us.png') }}" alt="" height="16"> English </a>
 						<a href="javascript:void(0);" class="dropdown-item text-muted"> <img src="{{ URL::to('assets/img/flags/kh.png') }}" alt="" height="16"> Khmer </a>
 					</div>
-				</li>
+				</li> -->
 				<!-- /Flag -->
 				<!-- Notifications -->
 				<li class="nav-item dropdown">
-					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-bell-o text-muted"></i> <span class="badge badge-pill bg-dark">3</span> </a>
+					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-bell-o text-dark"></i> <span class="badge badge-pill bg-dark">3</span> </a>
 					<div class="dropdown-menu notifications">
 						<div class="topnav-dropdown-header"> <span class="notification-title">Notifications</span> <a href="javascript:void(0)" class="clear-noti"> Clear All </a> </div>
 						<div class="noti-content">
@@ -137,7 +149,7 @@
 				</li>
 				<!-- /Notifications -->
 				<!-- Message Notifications -->
-				<li class="nav-item dropdown">
+				<!-- <li class="nav-item dropdown">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-comment-o text-muted fw-bold"></i> <span class="badge badge-pill bg-dark">8</span> </a>
 					<div class="dropdown-menu notifications">
 						<div class="topnav-dropdown-header"> <span class="notification-title">Messages</span> <a href="javascript:void(0)" class="clear-noti"> Clear All </a> </div>
@@ -204,21 +216,23 @@
 						</div>
 						<div class="topnav-dropdown-footer"> <a href="chat.html">View all Messages</a> </div>
 					</div>
-				</li>
+				</li> -->
 				<!-- /Message Notifications -->
-				<!-- <li class="nav-item dropdown has-arrow main-drop">
+
+				<!-- Profile -->
+				<li class="nav-item dropdown has-arrow">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 						<span class="user-img">
-						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" class="rounded-circle" width="30px" alt="{{ Auth::user()->name }}">
 						<span class="status online"></span></span>
-						<span>{{ Auth::user()->name }}</span>
+						<span class="text-dark fw-bold">{{ Auth::user()->name }}</span>
 					</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
 						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
 						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
 					</div>
-				</li> -->
+				</li>
 			</ul>
 			<!-- /Header Menu -->
 			

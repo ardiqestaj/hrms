@@ -1665,6 +1665,8 @@ table.dataTable thead>tr>td.sorting {
 .header .header-left .logo {
     display: inline-block;
     line-height: 60px;
+    margin-top: 7px;
+    transition: all .3s;
 }
 
 .profile-list-items {
@@ -1719,8 +1721,8 @@ table.dataTable thead>tr>td.sorting {
 .header .has-arrow .dropdown-toggle:after {
     border-top: 0;
     border-left: 0;
-    border-bottom: 2px solid #929AAE;
-    border-right: 2px solid #929AAE;
+    border-bottom: 2px solid #000;
+    border-right: 2px solid #000;
     content: '';
     height: 8px;
     display: inline-block;
@@ -1754,7 +1756,7 @@ table.dataTable thead>tr>td.sorting {
 .page-title-box h3 {
     color: #fff;
     font-size: 20px;
-    font-weight: normal;
+    font-weight: bold;
     margin: 0;
 }
 
@@ -1769,15 +1771,11 @@ table.dataTable thead>tr>td.sorting {
     color: #fff;
     font-size: 15px;
     line-height: 60px;
+    font-weight: 600;
     padding: 0 15px;
     height: 60px;
     /* border: 1px solid black; */
     /* border-radius: 50%; */
-}
-
-.user-menu.nav>li>a:hover,
-.user-menu.nav>li>a:focus {
-    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .flag-nav img {
@@ -1805,7 +1803,6 @@ table.dataTable thead>tr>td.sorting {
     /* width: 30px; */
     position: relative;
     z-index: 150;
-    border: 1px solid black;
 }
 
 .user-img .status {
@@ -1845,6 +1842,10 @@ table.dataTable thead>tr>td.sorting {
 .main-drop .dropdown-menu {
     min-width: 130px;
     padding: 0;
+}
+
+.nav .nav-item a {
+    background-color: transparent;
 }
 
 
@@ -8277,7 +8278,7 @@ ul.comment-list li ul.children {
     display: inline-block;
     font-size: 13px;
     min-width: 75px;
-    padding: 4px 12px;
+    padding: px 12px;
     text-align: center;
 }
 
@@ -9485,6 +9486,8 @@ ul.comment-list li ul.children {
         height: auto;
         max-height: 30px;
         width: auto;
+        margin-left: -50px;
+        transition: all .3s;
     }
     .mini-sidebar .header .header-left {
         padding: 0 5px;
@@ -9653,11 +9656,15 @@ ul.comment-list li ul.children {
 }
 
 @media only screen and (max-width: 991.98px) {
+    .main-drop .user-img img {
+        width: 10%;
+        height: 10%;
+    }
     .profile-rightbar {
         display: inline-block !important;
     }
     .sidebar {
-        top: 40px;
+        top: 59px;
     }
     .header {
         height: 60px;
@@ -9803,6 +9810,9 @@ ul.comment-list li ul.children {
 }
 
 @media only screen and (max-width: 767.98px) {
+    .page-wrapper>.content {
+        border-radius: 10px !important;
+    }
     body {
         font-size: 0.875rem;
     }
