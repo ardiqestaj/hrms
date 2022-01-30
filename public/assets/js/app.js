@@ -389,3 +389,4 @@ $(document).ready(function() {
     var activeSidebarItem = $("li.submenu").find("a.active")
         // activeSidebarItem.parent("li.submenu").css("border-left", "5px solid black");
 });
+

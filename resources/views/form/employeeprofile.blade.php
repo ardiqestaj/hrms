@@ -1350,24 +1350,29 @@
                             <div class="form-scroll">
                                 <div class="card" id="education-card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon" id="education-card-delete-btn"><i class="fa fa-trash-o"></i></a></h3>
+                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                                class="delete-icon" id="education-card-delete-btn"><i
+                                                    class="fa fa-trash-o"></i></a></h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="Oxford University" class="form-control floating">
+                                                    <input type="text" value="Oxford University"
+                                                        class="form-control floating">
                                                     <label class="focus-label">Institution</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="Computer Science" class="form-control floating">
+                                                    <input type="text" value="Computer Science"
+                                                        class="form-control floating">
                                                     <label class="focus-label">Subject</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
                                                     <div class="cal-icon">
-                                                        <input type="text" value="01/06/2002" class="form-control floating datetimepicker">
+                                                        <input type="text" value="01/06/2002"
+                                                            class="form-control floating datetimepicker">
                                                     </div>
                                                     <label class="focus-label">Starting Date</label>
                                                 </div>
@@ -1375,14 +1380,16 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
                                                     <div class="cal-icon">
-                                                        <input type="text" value="31/05/2006" class="form-control floating datetimepicker">
+                                                        <input type="text" value="31/05/2006"
+                                                            class="form-control floating datetimepicker">
                                                     </div>
                                                     <label class="focus-label">Complete Date</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
-                                                    <input type="text" value="BE Computer Science" class="form-control floating">
+                                                    <input type="text" value="BE Computer Science"
+                                                        class="form-control floating">
                                                     <label class="focus-label">Degree</label>
                                                 </div>
                                             </div>
@@ -1393,11 +1400,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </div>
-                                <div class="card"  id="education-card">
+                                <div class="card" id="education-card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon" id="education-card-delete-btn"><i class="fa fa-trash-o"></i></a></h3>
+                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                                class="delete-icon" id="education-card-delete-btn"><i
+                                                    class="fa fa-trash-o"></i></a></h3>
                                         <div class="row education-info">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
@@ -1414,7 +1423,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
                                                     <div class="cal-icon">
-                                                        <input type="text" value="" class="form-control floating edu-info3 datetimepicker">
+                                                        <input type="text" value=""
+                                                            class="form-control floating edu-info3 datetimepicker">
                                                     </div>
                                                     <label class="focus-label">Starting Date</label>
                                                 </div>
@@ -1422,7 +1432,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus focused">
                                                     <div class="cal-icon">
-                                                        <input type="text" value="" class="form-control floating edu-info4 datetimepicker">
+                                                        <input type="text" value=""
+                                                            class="form-control floating edu-info4 datetimepicker">
                                                     </div>
                                                     <label class="focus-label">Complete Date</label>
                                                 </div>
@@ -1441,9 +1452,10 @@
                                             </div>
                                         </div>
                                         <div class="add-more">
-                                            <a href="javascript:void(0);" id="education-card-add-btn"><i class="fa fa-plus-circle"></i> Add More</a>
+                                            <a href="javascript:void(0);" id="education-card-add-btn"><i
+                                                    class="fa fa-plus-circle"></i> Add More</a>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="submit-section">

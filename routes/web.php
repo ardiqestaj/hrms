@@ -84,6 +84,7 @@ Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController
 Route::get('profile_user', [App\Http\Controllers\UserManagementController::class, 'profile'])->middleware('auth')->name('profile_user');
 Route::post('profile/information/save', [App\Http\Controllers\UserManagementController::class, 'profileInformation'])->name('profile/information/save');
 Route::post('family/information/save', [App\Http\Controllers\UserManagementController::class, 'createFamilyInfo'])->name('family/information/save');
+Route::post('education/information/save', [App\Http\Controllers\UserManagementController::class, 'createEducationInfo'])->name('education/information/save');
 
 // ----------------------------- user userManagement -----------------------//
 Route::get('userManagement', [App\Http\Controllers\UserManagementController::class, 'index'])->middleware('auth')->name('userManagement');
@@ -115,7 +116,7 @@ Route::get('all/employee/delete/{employee_id}', [App\Http\Controllers\EmployeeCo
 Route::post('all/employee/search', [App\Http\Controllers\EmployeeController::class, 'employeeSearch'])->name('all/employee/search');
 Route::post('all/employee/list/search', [App\Http\Controllers\EmployeeController::class, 'employeeListSearch'])->name('all/employee/list/search');
 
-// ------------------------------ department ---------------------------------//
+// ------------------------------ form department ---------------------------------//
 Route::get('form/department/new', [App\Http\Controllers\DepartmentController::class, 'allDepartmet'])->middleware('auth')->name('form/department/new');
 Route::post('form/department/save', [App\Http\Controllers\DepartmentController::class, 'saveDepartment'])->middleware('auth')->name('form/department/save');
 Route::post('form/department/update', [App\Http\Controllers\DepartmentController::class, 'updateDepartment'])->middleware('auth')->name('form/department/update');
@@ -134,8 +135,6 @@ Route::post('form/holidays/delete', [App\Http\Controllers\HolidayController::cla
 // ----------------------------- form leaves Admin------------------------------//
 Route::get('form/leaves/new', [App\Http\Controllers\LeavesController::class, 'leaves'])->middleware('auth')->name('form/leaves/new');
 Route::get('form/leavesemployee/new', [App\Http\Controllers\LeavesController::class, 'leavesEmployee'])->middleware('auth')->name('form/leavesemployee/new');
-Route::post('form/leavesemployee/edit', [App\Http\Controllers\LeavesController::class, 'editLeavesEmployee'])->middleware('auth')->name('form/leavesemployee/edit');
-Route::post('form/leavesemployee/delete', [App\Http\Controllers\LeavesController::class, 'deleteLeavesEmployee'])->middleware('auth')->name('form/leavesemployee/delete');
 Route::post('form/leaves/save', [App\Http\Controllers\LeavesController::class, 'saveRecord'])->middleware('auth')->name('form/leaves/save');
 Route::post('form/leaves/edit', [App\Http\Controllers\LeavesController::class, 'editRecordLeave'])->middleware('auth')->name('form/leaves/edit');
 Route::post('form/leaves/edit/delete', [App\Http\Controllers\LeavesController::class, 'deleteLeave'])->middleware('auth')->name('form/leaves/edit/delete');
