@@ -287,32 +287,42 @@
                                                 class="fa fa-pencil"></i></a></h3>
                                     <div class="experience-box">
                                         <ul class="experience-list">
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">International College of Arts
-                                                            and Science (UG)</a>
-                                                        <div>Bsc Computer Science</div>
-                                                        <span class="time">2000 - 2003</span>
+                                            @if (count($education) > 0)
+                                                @foreach ($education as $edu)
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                @if (Auth::user()->rec_id == $edu->rec_id)
+                                                                    <a href="#/"
+                                                                        class="name">{{ $edu->institution }}</a>
+                                                                    <div>{{ $edu->subject }}</div>
+                                                                    <span class="time">{{ $edu->st_date }} -
+                                                                        {{ $edu->end_date }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+
+
+                                            @else
+                                                <li>
+                                                    <div class="experience-user">
+                                                        <div class="before-circle"></div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">International College of Arts
-                                                            and Science (PG)</a>
-                                                        <div>Msc Computer Science</div>
-                                                        <span class="time">2000 - 2003</span>
+                                                    <div class="experience-content">
+                                                        <div class="timeline-content">
+                                                            <a href="#/" class="name">N/A</a>
+                                                            <div>N/A</div>
+                                                            <span class="time">N/A -
+                                                                N/A</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -1435,137 +1445,303 @@
         <!-- /Emergency Contact Modal -->
 
         <!-- Education Modal -->
-        <div id="education_info" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"> Education Informations</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-scroll">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);"
-                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="Oxford University"
-                                                        class="form-control floating">
-                                                    <label class="focus-label">Institution</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="Computer Science"
-                                                        class="form-control floating">
-                                                    <label class="focus-label">Subject</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <div class="cal-icon">
-                                                        <input type="text" value="01/06/2002"
-                                                            class="form-control floating datetimepicker">
-                                                    </div>
-                                                    <label class="focus-label">Starting Date</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <div class="cal-icon">
-                                                        <input type="text" value="31/05/2006"
-                                                            class="form-control floating datetimepicker">
-                                                    </div>
-                                                    <label class="focus-label">Complete Date</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="BE Computer Science"
-                                                        class="form-control floating">
-                                                    <label class="focus-label">Degree</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="Grade A" class="form-control floating">
-                                                    <label class="focus-label">Grade</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="card" id="add_to_me">
-                                    <div class="card-body">
-                                        <h3 class="card-title">Education Informations <a href="javascript:void(0);"
-                                                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="Oxford University"
-                                                        class="form-control floating">
-                                                    <label class="focus-label">Institution</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="Computer Science"
-                                                        class="form-control floating">
-                                                    <label class="focus-label">Subject</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <div class="cal-icon">
-                                                        <input type="text" value="01/06/2002"
-                                                            class="form-control floating datetimepicker">
+        @if (count($education) > 0)
+
+            <div id="education_info" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Education Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('education/information/save') }}" method="POST" id="education-form">
+                                @csrf
+                                <div class="form-scroll">
+                                    @foreach ($education as $edu)
+                                        <div class="card" id="education-card">
+                                            <div class="card-body">
+                                                <h3 class="card-title">Education Informations <a
+                                                        href="javascript:void(0);" class="delete-icon"
+                                                        id="education-card-delete-btn"><i class="fa fa-trash-o"></i></a>
+                                                </h3>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus focused">
+                                                            <input type="hidden" class="form-control" id="rec_id"
+                                                                name="rec_id" value="{{ Auth::user()->rec_id }}">
+                                                            <input type="text" name="institution"
+                                                                value="{{ $edu->institution }}"
+                                                                class="form-control floating">
+                                                            <label class="focus-label">Institution</label>
+                                                        </div>
                                                     </div>
-                                                    <label class="focus-label">Starting Date</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <div class="cal-icon">
-                                                        <input type="text" value="31/05/2006"
-                                                            class="form-control floating datetimepicker">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus focused">
+                                                            <input type="text" name="subject" value="{{ $edu->subject }}"
+                                                                class="form-control floating">
+                                                            <label class="focus-label">Subject</label>
+                                                        </div>
                                                     </div>
-                                                    <label class="focus-label">Complete Date</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="BE Computer Science"
-                                                        class="form-control floating">
-                                                    <label class="focus-label">Degree</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-focus focused">
-                                                    <input type="text" value="Grade A" class="form-control floating">
-                                                    <label class="focus-label">Grade</label>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus focused">
+                                                            <div class="cal-icon">
+                                                                <input type="text" name="st_date"
+                                                                    value="{{ $edu->st_date }}"
+                                                                    class="form-control floating datetimepicker">
+                                                            </div>
+                                                            <label class="focus-label">Starting Date</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus focused">
+                                                            <div class="cal-icon">
+                                                                <input type="text" name="end_date"
+                                                                    value="{{ $edu->end_date }}"
+                                                                    class="form-control floating datetimepicker">
+                                                            </div>
+                                                            <label class="focus-label">Complete Date</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus focused">
+                                                            <input type="text" name="degree" value="{{ $edu->degree }}"
+                                                                class="form-control floating">
+                                                            <label class="focus-label">Degree</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus focused">
+                                                            <input type="text" name="grade" value="{{ $edu->grade }}"
+                                                                class="form-control floating">
+                                                            <label class="focus-label">Grade</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="add-more">
-                                            <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                    @endforeach
+                                    {{-- <div class="card" id="education-card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                                    class="delete-icon" id="education-card-delete-btn"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                            </h3>
+                                            <div class="row education-info">
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value=""
+                                                            class="form-control floating edu-info1">
+                                                        <label class="focus-label">Institution</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value=""
+                                                            class="form-control floating edu-info2">
+                                                        <label class="focus-label">Subject</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <div class="cal-icon">
+                                                            <input type="text" value=""
+                                                                class="form-control floating edu-info3 datetimepicker">
+                                                        </div>
+                                                        <label class="focus-label">Starting Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <div class="cal-icon">
+                                                            <input type="text" value=""
+                                                                class="form-control floating edu-info4 datetimepicker">
+                                                        </div>
+                                                        <label class="focus-label">Complete Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value=""
+                                                            class="form-control floating edu-info5">
+                                                        <label class="focus-label">Degree</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value=""
+                                                            class="form-control floating edu-info6">
+                                                        <label class="focus-label">Grade</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add-more">
+                                                <a href="javascript:void(0);" id="education-card-add-btn"><i
+                                                        class="fa fa-plus-circle"></i> Add More</a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
-                            </div>
-                            <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
-                            </div>
-                        </form>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        @else
+            <div id="education_info" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Education Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('education/information/save') }}" method="POST" id="education-form">
+                                @csrf
+                                <div class="form-scroll">
+                                    <div class="card" id="education-cad">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                                    class="delete-icon" id="education-card-delete-btn"><i
+                                                        class="fa fa-trash-o"></i></a></h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="hidden" class="form-control" id="rec_id"
+                                                            name="rec_id" value="{{ Auth::user()->rec_id }}">
+                                                        <input type="text" value="" name="institution"
+                                                            class="form-control floating">
+                                                        <label class="focus-label">Institution</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value="" name="subject"
+                                                            class="form-control floating">
+                                                        <label class="focus-label">Subject</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <div class="cal-icon">
+                                                            <input type="text" value="" name="st_date"
+                                                                class="form-control floating datetimepicker">
+                                                        </div>
+                                                        <label class="focus-label">Starting Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <div class="cal-icon">
+                                                            <input type="text" value="" name="end_date"
+                                                                class="form-control floating datetimepicker">
+                                                        </div>
+                                                        <label class="focus-label">Complete Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value="" name="degree"
+                                                            class="form-control floating">
+                                                        <label class="focus-label">Degree</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value="" name="grade"
+                                                            class="form-control floating">
+                                                        <label class="focus-label">Grade</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add-more">
+                                                <a href="javascript:void(0);" id="education-card-add-btn"><i
+                                                        class="fa fa-plus-circle"></i> Add More</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="card" id="education-card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                                    class="delete-icon" id="education-card-delete-btn"><i
+                                                        class="fa fa-trash-o"></i></a></h3>
+                                            <div class="row education-info">
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="hidden" class="form-control" id="rec_id"
+                                                            name="rec_id" value="{{ Auth::user()->rec_id }}">
+                                                        <input type="text" value="" name="institution"
+                                                            class="form-control floating edu-info1">
+                                                        <label class="focus-label">Institution</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value="" name="subject"
+                                                            class="form-control floating edu-info2">
+                                                        <label class="focus-label">Subject</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <div class="cal-icon">
+                                                            <input type="text" value="" name="st_date"
+                                                                class="form-control floating edu-info3 datetimepicker">
+                                                        </div>
+                                                        <label class="focus-label">Starting Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <div class="cal-icon">
+                                                            <input type="text" value="" name="end_date"
+                                                                class="form-control floating edu-info4 datetimepicker">
+                                                        </div>
+                                                        <label class="focus-label">Complete Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value="" name="degree"
+                                                            class="form-control floating edu-info5">
+                                                        <label class="focus-label">Degree</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus focused">
+                                                        <input type="text" value="" name="grade"
+                                                            class="form-control floating edu-info6">
+                                                        <label class="focus-label">Grade</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add-more">
+                                                <a href="javascript:void(0);" id="education-card-add-btn"><i
+                                                        class="fa fa-plus-circle"></i> Add More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- /Education Modal -->
 
         <!-- Experience Modal -->

@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\Form;
 use App\Models\ProfileInformation;
 use App\Models\Family;
+use App\Models\EducationInformation;
 use App\Rules\MatchOldPassword;
 use Carbon\Carbon;
 use Session;
@@ -131,14 +132,16 @@ class UserManagementController extends Controller
         $user = DB::table('users')->get();
         $employees = DB::table('profile_information')->where('rec_id',$profile)->first();
         $families = DB::table('families')->where('rec_id',$profile)->first();
+        // $educations = DB::table('education_information')->where('rec_id',$profile)->first();
 
         if(empty($employees))
         {
             $information = DB::table('profile_information')->where('rec_id',$profile)->first();
             $employee = DB::table('employees')->where('employee_id',$profile)->first();
             $family = DB::table('families')->where('rec_id',$profile)->first();
+            $education = DB::table('education_information')->where('rec_id',$profile)->get();
 
-            return view('usermanagement.profile_user',compact('information','user','employee', 'family'));
+            return view('usermanagement.profile_user',compact('information','user','employee', 'family', 'education'));
 
         }else{
             $rec_id = $employees->rec_id;
@@ -147,14 +150,16 @@ class UserManagementController extends Controller
                 $information = DB::table('profile_information')->where('rec_id',$profile)->first();
                 $employee = DB::table('employees')->where('employee_id',$profile)->first();
                 $family = DB::table('families')->where('rec_id',$profile)->first();
+                $education = DB::table('education_information')->where('rec_id',$profile)->get();
 
-                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family'));
+                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family', 'education'));
             }else{
                 $information = ProfileInformation::all();
                 $employee = Employee::all();
                 $family = Family::all();
+                $education = EducationInformation::all();
 
-                return view('usermanagement.profile_user',compact('information','user', 'employee','family'));
+                return view('usermanagement.profile_user',compact('information','user', 'employee','family', 'education'));
             }
         }
     }
@@ -236,6 +241,35 @@ class UserManagementController extends Controller
             Toastr::error('Add Family Information fail :)','Error');
             return redirect()->back();
         }
+    }
+
+    // new education info
+    public function createEducationInfo(Request $request)
+    {
+        foreach($request->all() as $req){
+
+            try{
+
+                $education = EducationInformation::updateOrCreate(['rec_id' => $req->rec_id]);
+                $education->rec_id          = $req->rec_id;
+                $education->institution     = $req->institution;
+                $education->subject         = $req->subject;
+                $education->st_date         = $req->st_date;
+                $education->end_date        = $req->end_date;
+                $education->degree          = $req->degree;
+                $education->grade           = $req->grade;
+                $education->save();
+
+                DB::commit();
+                Toastr::success('Family Information successfully :)','Success');
+                return redirect()->back();
+            }catch(\Exception $e){
+                DB::rollback();
+                Toastr::error('Add Family Information fail :)','Error');
+                return redirect()->back();
+            }
+        }
+
     }
 
     // save new user
