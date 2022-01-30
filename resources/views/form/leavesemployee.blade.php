@@ -8,6 +8,7 @@
         <!-- Page Content -->
         <div class="content container-fluid">
             <!-- Page Header -->
+            {!! Toastr::message() !!}
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
@@ -26,6 +27,15 @@
             <!-- Leave Statistics -->
             <div class="row">
             @foreach ($LeaveTypes as $LeaveType ) 
+                <div class="col-md-3">
+                    <div class="stats-info">
+                        <h6>{{$LeaveType->leave_names}}</h6>
+                        <h4>{{$LeaveType->leave_days}}</h4>
+                    </div>
+                </div>
+            @endforeach
+
+            <!-- @foreach ($LeaveTypes as $LeaveType ) 
             @if($LeaveType->leave_names == 'Annual Leave')
                 <div class="col-md-3">
                     <div class="stats-info">
@@ -44,7 +54,7 @@
                     </div>
                 </div>
             @endif
-            @endforeach
+            @endforeach -->
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Other Leave</h6>
@@ -59,7 +69,6 @@
                 </div>
             </div>
             <!-- /Leave Statistics -->
-            
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">

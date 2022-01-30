@@ -131,6 +131,10 @@
                                                 </h2>
                                             </td>
                                             <td hidden class="id">{{$items->leave_applies_id}}</td>
+                                            <td hidden class="rec_id">{{$items->rec_id}}</td>
+                                            <td hidden class="leave_type_id">{{$items->leave_type_id}}</td>
+                                            <td hidden class="status">{{$items->status}}</td>
+                                            <td hidden class="days">{{$items->day}}</td>
                                             <td class="leave_type">{{$items->leave_names}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
                                             <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
@@ -306,9 +310,12 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-6">
-                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <input type="hidden" name="id" id="a_id" value="">
+                                    <input type="hidden" name="leave_type_id" id="a_leave_type_id" value="">
+                                    <input type="hidden" name="rec_id" id="a_rec_id" value="">
+                                    <input type="hidden" name="day" id="a_day" value="">
                                     <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
-                                    <input type="hidden" name="status" class="" value="Approved">
+                                    <input type="hidden" name="status" id="" value="Approved">
                                         <button type="submit" class="btn btn-primary submit-btn continue-btn">Approve</button>
                                     </div>
                                     <div class="col-6">
@@ -336,7 +343,10 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-6">
-                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <input type="hidden" name="id" id="p_id" value="">
+                                    <input type="hidden" name="leave_type_id" id="p_leave_type_id" value="">
+                                    <input type="hidden" name="rec_id" id="p_rec_id" value="">
+                                    <input type="hidden" name="day" id="p_day" value="">
                                     <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                     <input type="hidden" name="status" class="" value="Pending">
                                         <button type="submit" class="btn btn-primary submit-btn continue-btn">Pending</button>
@@ -364,7 +374,10 @@
                         <div class="modal-btn delete-action">
                             <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
-                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <input type="hidden" name="id" id="d_id" value="">
+                                    <input type="hidden" name="leave_type_id" id="d_leave_type_id" value="">
+                                    <input type="hidden" name="rec_id" id="d_rec_id" value="">
+                                    <input type="hidden" name="day" id="d_day" value="">
                                     <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                     <input type="hidden" name="status" class="" value="Declined">
                                 <div class="row">
@@ -444,7 +457,11 @@
         $(document).on('click','.ApproveLeave',function()
         {
             var _this = $(this).parents('tr');
-            $('.e_id').val(_this.find('.id').text());
+            $('#a_id').val(_this.find('.id').text());
+            $('#a_leave_type_id').val(_this.find('.leave_type_id').text());
+            $('#a_rec_id').val(_this.find('.rec_id').text());
+            $('#a_day').val(_this.find('.days').text());
+
         });
     </script>
     {{-- Pending model --}}
@@ -452,7 +469,10 @@
         $(document).on('click','.PendingLeave',function()
         {
             var _this = $(this).parents('tr');
-            $('.e_id').val(_this.find('.id').text());
+            $('#p_id').val(_this.find('.id').text());
+            $('#p_leave_type_id').val(_this.find('.leave_type_id').text());
+            $('#p_rec_id').val(_this.find('.rec_id').text());
+            $('#p_day').val(_this.find('.days').text());
         });
     </script>
     {{-- Declined model --}}
@@ -460,7 +480,10 @@
         $(document).on('click','.DeclinedLeave',function()
         {
             var _this = $(this).parents('tr');
-            $('.e_id').val(_this.find('.id').text());
+            $('#d_id').val(_this.find('.id').text());
+            $('#d_leave_type_id').val(_this.find('.leave_type_id').text());
+            $('#d_rec_id').val(_this.find('.rec_id').text());
+            $('#d_day').val(_this.find('.days').text());
         });
     </script>
     @endsection
