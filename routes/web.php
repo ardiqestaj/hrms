@@ -146,11 +146,11 @@ Route::post('form/leaves/status', [App\Http\Controllers\LeavesController::class,
 // Route::get('form/leavesemployee/new', [App\Http\Controllers\LeavesController::class, 'leavesEmployee'])->middleware('auth')->name('form/leavesemployee/new');
 
 
-// ----------------------------- form leaves Settings ------------------------------//
-Route::get('form/leavesettings/page', [App\Http\Controllers\LeavesController::class, 'leaveSettings'])->middleware('auth')->name('form/leavesettings/page');
-Route::post('form/leavesettings/add', [App\Http\Controllers\LeavesController::class, 'saveLeaveSettings'])->middleware('auth')->name('form/leavesettings/add');
-Route::get('form/leavesettings/delete/{leave_id}', [App\Http\Controllers\LeavesController::class, 'deleteSetting'])->middleware('auth');
-Route::get('form/leavesettings/edit/{leave_id}', [App\Http\Controllers\LeavesController::class, 'editLeaveSetting'])->middleware('auth');
+// ----------------------------- form leaves Type ------------------------------//
+Route::get('form/leavetypes/page', [App\Http\Controllers\LeavesController::class, 'leaveTypes'])->middleware('auth')->name('form/leavetypes/page');
+Route::post('form/leavetypes/add', [App\Http\Controllers\LeavesController::class, 'saveLeaveTypes'])->middleware('auth')->name('form/leavetypes/add');
+Route::get('form/leavetypes/delete/{leave_id}', [App\Http\Controllers\LeavesController::class, 'deleteTypes'])->middleware('auth');
+Route::get('form/leavetypes/edit/{leave_id}', [App\Http\Controllers\LeavesController::class, 'editLeaveTypes'])->middleware('auth');
 
 
 

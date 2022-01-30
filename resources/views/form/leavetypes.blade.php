@@ -207,7 +207,7 @@
                                         <p>Are you sure want to delete?</p>
                                     </div>
                                     <div class="modal-btn delete-action">
-                                        <form action="{{ url('form/leavesettings/delete/' . $leave->leave_id) }}" method="GET">
+                                        <form action="{{ url('form/leavetypes/delete/' . $leave->leave_id) }}" method="GET">
                                             <!-- @csrf -->
                                             <!-- <input type="text" name="leave_id" class="e_id" value=""> -->
                                             <div class="row">
@@ -235,7 +235,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url('form/leavesettings/edit/' . $leave->leave_id) }} method="GET">
+                                    <form action="{{ url('form/leavetypes/edit/' . $leave->leave_id) }} method="GET">
                                         <!-- @csrf -->
                                         <div class="form-group">
                                             <label>Leave Name <span class="text-danger">*</span></label>
@@ -667,7 +667,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('form/leavesettings/add') }}" method="POST">
+                        <form action="{{ route('form/leavetypes/add') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label>Leave Name <span class="text-danger">*</span></label>

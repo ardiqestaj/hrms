@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Models\leaveSettings;
+use App\Models\LeaveTypes;
 use App\Models\LeaveApplies;
+use App\Models\LeavesEvidence;
 use DB;
 use DateTime;
 use Session;
@@ -21,10 +22,10 @@ class LeavesController extends Controller
     {
         $leaves = DB::table('leave_applies')
                     ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
-                    ->join('leave_settings', 'leave_settings.leave_id', '=', 'leave_applies.leave_type_id')
-                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_settings.leave_names','leave_settings.leave_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
                     ->get();
-        $LeaveTypes = DB::table('leave_settings')->get();
+        $LeaveTypes = DB::table('leave_types')->get();
 
         return view('form.leaves',compact('leaves', 'LeaveTypes'));
     }
@@ -117,15 +118,15 @@ class LeavesController extends Controller
         }
     }
     // ------------------------------------------------------------------
-    // leaveSettings
-    public function leaveSettings()
+    // leaveTypes
+    public function leaveTypes()
     {
-        $leaves = DB::table('leave_settings')
+        $leaves = DB::table('leave_types')
                     ->get();
-        return view('form.leavesettings',compact('leaves'));
+        return view('form.leavetypes',compact('leaves'));
     }
 
-    public function saveLeaveSettings(Request $request)
+    public function saveLeaveTypes(Request $request)
     {
         $request->validate([
             'leave_names' => 'required|string|max:255',
@@ -134,10 +135,10 @@ class LeavesController extends Controller
         
         DB::beginTransaction();
         try {
-            $leavesettings = new leaveSettings;
-            $leavesettings->leave_names = $request->leave_names;
-            $leavesettings->leave_days  = $request->leave_days;
-            $leavesettings->save();
+            $LeaveTypes = new LeaveTypes;
+            $LeaveTypes->leave_names = $request->leave_names;
+            $LeaveTypes->leave_days  = $request->leave_days;
+            $LeaveTypes->save();
             
             DB::commit();
             Toastr::success('Create new leave :)','Success');
@@ -149,11 +150,11 @@ class LeavesController extends Controller
             return redirect()->back();
         }
     }
-     // delete recordSetting
-     public function deleteSetting($leave_id)
+     // delete recordTypes
+     public function deleteTypes($leave_id)
      {
          try {
-            leaveSettings::where('leave_id',$leave_id)->delete();
+            LeaveTypes::where('leave_id',$leave_id)->delete();
              Toastr::success('Leaves deleted successfully :)','Success');
              return redirect()->back();
          
@@ -165,8 +166,8 @@ class LeavesController extends Controller
          }
         // return DD ('OK');
      }
-// Update leave setting -------------------------------------------------------------------------------------
-    public function editLeaveSetting(Request $request, $leave_id)
+// Update leave Types -------------------------------------------------------------------------------------
+    public function editLeaveTypes(Request $request, $leave_id)
     {
      DB::beginTransaction();
      try {
@@ -176,7 +177,7 @@ class LeavesController extends Controller
              'leave_days'  => $request->leave_days
          ];
 
-         leaveSettings::where('leave_id',$leave_id)->update($update);
+         LeaveTypes::where('leave_id',$leave_id)->update($update);
          DB::commit();
          
          DB::commit();
@@ -203,6 +204,15 @@ class LeavesController extends Controller
 
             LeaveApplies::where('leave_applies_id',$request->id)->update($update);
             DB::commit();
+
+            $LeavesEvidence = LeavesEvidence::updateOrCreate(['leave_applies_id' => $request->id]);
+            $LeavesEvidence->leave_type_id          = $request->leave_type_id;
+            $LeavesEvidence->leave_applies_id       = $request->id;
+            $LeavesEvidence->rec_id                 = $request->rec_id;
+            $LeavesEvidence->day                    = $request->day;
+            $LeavesEvidence->status                 = $request->status;
+            $LeavesEvidence->save();
+
             
             DB::commit();
             Toastr::success('Status Updated :)','Success');
@@ -212,6 +222,11 @@ class LeavesController extends Controller
             Toastr::error('Status updatet fail :)','Error');
             return redirect()->back();
         }
+
+      
+            
+        
+
     }
       // add leaves Employee -------------------------------------------------------------------------
       public function leavesEmployee()
@@ -224,12 +239,12 @@ class LeavesController extends Controller
 
 
         $leavesapplies = DB::table('leave_applies')
-                    ->join('leave_settings', 'leave_settings.leave_id', '=', 'leave_applies.leave_type_id')
-                    ->select('leave_applies.*','leave_settings.leave_names','leave_settings.leave_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*','leave_types.leave_names','leave_types.leave_id')
                     ->where('leave_applies.rec_id',$profile)
                     ->get();
         $users = DB::table('users')->get();
-        $LeaveTypes = leaveSettings::all();
+        $LeaveTypes = LeaveTypes::all();
         return view('form.leavesemployee',compact('LeaveTypes','leavesapplies','users'));
       }
       

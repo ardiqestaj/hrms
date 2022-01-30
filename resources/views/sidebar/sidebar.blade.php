@@ -144,7 +144,7 @@
                         <span> Settings </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a href="{{ route('company/settings/page') }}"> Company Settings </a></li>
-                        <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
+                        <li><a href="{{ route('form/leavetypes/page') }}">Leave Settings</a></li>
                         <li><a href="{{ route('theme/settings/page') }}"> Theme Settings </a></li>
                         <li><a href="{{ route('change/password') }} "> Change Password </a></li>
                         <li><a href="{{ route('roles/permissions/page') }}"> Role Permissions </a></li>
