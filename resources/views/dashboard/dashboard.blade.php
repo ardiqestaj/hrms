@@ -22,7 +22,7 @@
                     <div class="card dash-widget">
                         <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
                             <div class="dash-widget-info">
-                                <h3>112</h3> <span>Employees</span>
+                                <h3>{{$employees->count()}}</h3> <span>Employees</span>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="card dash-widget">
                         <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
                             <div class="dash-widget-info">
-                                <h3>44</h3> <span>Clients</span>
+                                <h3>0</h3> <span>Clients</span>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                {{-- <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
                             <div class="dash-widget-info">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="row">
                 <div class="col-md-6 d-flex">
@@ -72,7 +72,7 @@
                                             <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
@@ -252,8 +252,10 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
+                                <p class="text-center mt-4">No Clients to show</p>
+
                             </div>
                         </div>
                         <div class="card-footer"> <a href="clients.html">View all clients</a> </div>
@@ -261,6 +263,215 @@
                 </div>
                 <div class="col-md-6 d-flex">
                     <div class="card card-table flex-fill">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">All Employees</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table custom-table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    @if(count($employees) > 0)
+                                    @foreach($employees as $employee)
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="{{ url('employee/profile/' . $employee->employee_id) }}" class="avatar"><img alt="" src="assets/img/profiles/avatar-19.jpg"></a>
+                                                    <a href="{{ url('employee/profile/' . $employee->employee_id) }}">{{$employee->name}} {{$employee->lastname}}<span>{{$employee->department}}</span></a>
+                                                </h2>
+                                            </td>
+                                            <td>{{$employee->email}}</td>
+                                            <td>
+                                                <div class="dropdown action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-dot-circle-o text-success"></i> Active </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-success"></i> Active
+                                                        </a>
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action"> <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-pencil m-r-5"></i> Edit
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a> 
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                       
+                                        {{-- <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="#" class="avatar"><img alt="" src="assets/img/profiles/avatar-19.jpg"></a>
+                                                    <a href="client-profile.html">Tressa Wexler <span>Manager</span></a>
+                                                </h2>
+                                            </td>
+                                            <td>tressawexler@example.com</td>
+                                            <td>
+                                                <div class="dropdown action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-dot-circle-o text-danger"></i> Inactive </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-success"></i> Active
+                                                        </a>
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-pencil m-r-5"></i> Edit
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="client-profile.html" class="avatar">
+                                                        <img alt="" src="assets/img/profiles/avatar-07.jpg">
+                                                    </a>
+                                                    <a href="client-profile.html">Ruby Bartlett <span>CEO</span></a>
+                                                </h2>
+                                             </td>
+                                            <td>rubybartlett@example.com</td>
+                                            <td>
+                                                <div class="dropdown action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-dot-circle-o text-danger"></i> Inactive </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-success"></i> Active
+                                                        </a>
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-pencil m-r-5"></i> Edit
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="client-profile.html" class="avatar">
+                                                        <img alt="" src="assets/img/profiles/avatar-06.jpg">
+                                                    </a>
+                                                    <a href="client-profile.html"> Misty Tison <span>CEO</span></a>
+                                                </h2>
+                                            </td>
+                                            <td>mistytison@example.com</td>
+                                            <td>
+                                                <div class="dropdown action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-dot-circle-o text-success"></i> Active </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-success"></i> Active
+                                                        </a> <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-pencil m-r-5"></i> Edit
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="client-profile.html" class="avatar">
+                                                        <img alt="" src="assets/img/profiles/avatar-14.jpg">
+                                                    </a>
+                                                    <a href="client-profile.html"> Daniel Deacon <span>CEO</span></a>
+                                                </h2>
+                                            </td>
+                                            <td>danieldeacon@example.com</td>
+                                            <td>
+                                                <div class="dropdown action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-dot-circle-o text-danger"></i> Inactive </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-success"></i> Active
+                                                        </a> 
+                                                        <a class="dropdown-item" href="#">
+                                                            <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-pencil m-r-5"></i> Edit
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr> --}}
+                                    </tbody>
+                                    @endforeach
+                                    @else
+                                    <p class="text-center mt-4">No Employees to show</p>
+                                    @endif 
+                                </table>
+                                
+                            </div> 
+                        </div>
+                        <div class="card-footer"> <a href="{{ route('all/employee/card') }}">View all clients</a> </div>
+                    </div>
+                    {{-- <div class="card card-table flex-fill">
                         <div class="card-header">
                             <h3 class="card-title mb-0">Recent Projects</h3> </div>
                         <div class="card-body">
@@ -427,7 +638,7 @@
                         <div class="card-footer">
                             <a href="projects.html">View all projects</a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -454,7 +665,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-12">
                     <div class="card-group m-b-30">
                         <div class="card">
@@ -511,11 +722,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             {{-- message --}}
             {!! Toastr::message() !!}
             <!-- Statistics Widget -->
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
                     <div class="card flex-fill dash-statistics">
                         <div class="card-body">
@@ -626,7 +837,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- /Statistics Widget -->
             <!-- <div class="row">
                 <div class="col-md-6 d-flex">

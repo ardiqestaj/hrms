@@ -7,6 +7,8 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 use App\Models\User;
+use App\Models\Employee;
+
 class HomeController extends Controller
 {
     /**
@@ -29,7 +31,6 @@ class HomeController extends Controller
         $employees= Employee::all();
         return view('dashboard.dashboard', compact('employees'));
     }
-
 
 
     

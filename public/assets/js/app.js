@@ -292,7 +292,7 @@ $(document).ready(function() {
             $('body').removeClass('mini-sidebar');
             $('.subdrop + ul').slideDown();
             $(".sidebar-menu ul li").css("padding-left", "15px")
-            $(".nav-item .profile-img ").css({ "width": "60px", "height": "60px" });
+            $(".nav-item .profile-img ").css({ "width": "60px" });
             $(".nav-item h3").css({ "visibility": "visible", "opacity": "1" })
             $(".slimScrollDiv").css({ "margin-left": "0px" })
             $(".nav-profile").css({ "margin-top": "15px", "margin-left": "0px" })
@@ -389,4 +389,3 @@ $(document).ready(function() {
     var activeSidebarItem = $("li.submenu").find("a.active")
         // activeSidebarItem.parent("li.submenu").css("border-left", "5px solid black");
 });
-

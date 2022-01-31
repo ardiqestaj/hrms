@@ -41,7 +41,7 @@
                         </div>
                     </div>
 				</li>
-				<a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" height="40" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);">
@@ -49,7 +49,7 @@
 			</a>
 			<!-- Header Title -->
 			<div class="page-title-box ml-4">
-				<h3 class="text-dark">FALKONET Enterprise</h3>
+				<h3 class="text-dark">STOREPROTECT Company</h3>
 			</div>
 			<!-- /Header Title -->
 			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
