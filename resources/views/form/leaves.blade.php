@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-   
+
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -16,7 +16,8 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i
+                                class="fa fa-plus"></i> Add Leave</a>
                     </div>
                 </div>
             </div>
@@ -25,7 +26,7 @@
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>New Request</h6>
-                        <h4>{{$leaves->where('status', 'New')->count()}}</h4>
+                        <h4>{{ $leaves->where('status', 'New')->count() }}</h4>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -43,64 +44,69 @@
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Pending Requests</h6>
-                        <h4>{{$leaves->where('status', 'Pending')->count()}}</h4>
+                        <h4>{{ $leaves->where('status', 'Pending')->count() }}</h4>
                     </div>
                 </div>
             </div>
             <!-- /Leave Statistics -->
             <!-- Search Filter -->
-            <div class="row filter-row">
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+            <form action="{{ route('form/leaves/search') }}" method="POST">
+                @csrf
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
+                            <input type="text" class="form-control floating" name="name">
                             <label class="focus-label">Employee Name</label>
                         </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div class="form-group form-focus select-focus">
-                            <select class="select floating"> 
-                                <option> -- Select -- </option>
-                                <option>Casual Leave</option>
-                                <option>Medical Leave</option>
-                                <option>Loss of Pay</option>
+                            <select class="select" name="leave_names">
+                                <option selected disabled>-- Select Role Name --</option>
+                                @foreach ($LeaveTypes as $LeaveType)
+                                    <option value="{{ $LeaveType->leave_names }}">{{ $LeaveType->leave_names }}
+                                    </option>
+                                @endforeach
                             </select>
                             <label class="focus-label">Leave Type</label>
                         </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12"> 
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div class="form-group form-focus select-focus">
-                            <select class="select floating"> 
+                            <select class="select floating" name="status">
                                 <option> -- Select -- </option>
-                                <option> Pending </option>
-                                <option> Approved </option>
-                                <option> Rejected </option>
+                                <option value="Pending"> Pending </option>
+                                <option value="Approved"> Approved </option>
+                                <option value="Declined"> Declined </option>
+                                <option value="New"> New </option>
                             </select>
                             <label class="focus-label">Leave Status</label>
                         </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div class="form-group form-focus">
                             <div class="cal-icon">
-                                <input class="form-control floating datetimepicker" type="text">
+                                <input class="form-control floating datetimepicker" type="text" name="from_date">
                             </div>
                             <label class="focus-label">From</label>
                         </div>
                     </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div class="form-group form-focus">
                             <div class="cal-icon">
-                                <input class="form-control floating datetimepicker" type="text">
+                                <input class="form-control floating datetimepicker" type="text" name="to_date">
                             </div>
                             <label class="focus-label">To</label>
                         </div>
                     </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                        <a href="#" class="btn btn-success btn-block"> Search </a>  
-                </div>     
-            </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <button type="sumit" class="btn btn-success btn-block"> Search </button>
+                    </div>
+                </div>
+            </form>
             <!-- /Search Filter -->
 
-			<!-- /Page Header -->
+            <!-- /Page Header -->
             {{-- message --}}
             {!! Toastr::message() !!}
             <div class="row">
@@ -121,58 +127,74 @@
                             </thead>
 
                             <tbody>
-                                @if(!empty($leaves))
-                                    @foreach ($leaves as $items )  
+                                @if (!empty($leaves))
+                                    @foreach ($leaves as $items)
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="{{ url('employee/profile/'.$items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}" alt="{{ $items->name }}"></a>
-                                                    <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                                    <a href="{{ url('employee/profile/' . $items->rec_id) }}"
+                                                        class="avatar"><img alt=""
+                                                            src="{{ URL::to('/assets/images/' . $items->avatar) }}"
+                                                            alt="{{ $items->name }}"></a>
+                                                    <a
+                                                        href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                                 </h2>
                                             </td>
-                                            <td hidden class="id">{{$items->leave_applies_id}}</td>
-                                            <td hidden class="rec_id">{{$items->rec_id}}</td>
-                                            <td hidden class="leave_type_id">{{$items->leave_type_id}}</td>
-                                            <td hidden class="status">{{$items->status}}</td>
-                                            <td hidden class="days">{{$items->day}}</td>
-                                            <td class="leave_type">{{$items->leave_names}}</td>
+                                            <td hidden class="id">{{ $items->leave_applies_id }}</td>
+                                            <td hidden class="rec_id">{{ $items->rec_id }}</td>
+                                            <td hidden class="leave_type_id">{{ $items->leave_type_id }}</td>
+                                            <td hidden class="status">{{ $items->status }}</td>
+                                            <td hidden class="days">{{ $items->day }}</td>
+                                            <td class="leave_type">{{ $items->leave_names }}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
-                                            <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
-                                            <td hidden class="to_date">{{$items->to_date}}</td>
-                                            <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
-                                            <td class="day">{{$items->day}} Day</td>
-                                            <td class="leave_reason">{{$items->leave_reason}}</td>
+                                            <td>{{ date('d F, Y', strtotime($items->from_date)) }}</td>
+                                            <td hidden class="to_date">{{ $items->to_date }}</td>
+                                            <td>{{ date('d F, Y', strtotime($items->to_date)) }}</td>
+                                            <td class="day">{{ $items->day }} Day</td>
+                                            <td class="leave_reason">{{ $items->leave_reason }}</td>
                                             <td class="text-center">
                                                 <div class="dropdown action-label">
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        @if($items->status == 'New' )
-                                                        <i class="fa fa-dot-circle-o text-purple"></i>
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        @if ($items->status == 'New')
+                                                            <i class="fa fa-dot-circle-o text-purple"></i>
                                                             New
                                                         @elseif($items->status == 'Pending')
-                                                        <i class="fa fa-dot-circle-o text-danger"></i>
+                                                            <i class="fa fa-dot-circle-o text-danger"></i>
                                                             Pending
                                                         @elseif($items->status == 'Approved')
-                                                        <i class="fa fa-dot-circle-o text-success"></i>
+                                                            <i class="fa fa-dot-circle-o text-success"></i>
                                                             Approved
                                                         @else
-                                                        <i class="fa fa-dot-circle-o text-danger"></i>
+                                                            <i class="fa fa-dot-circle-o text-danger"></i>
                                                             Declined
                                                         @endif
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#new_leave"><i class="fa fa-dot-circle-o text-purple"></i> New</a> -->
-                                                        <a class="dropdown-item PendingLeave" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                        <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item DeclinedLeave" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                                        <a class="dropdown-item PendingLeave" href="#" data-toggle="modal"
+                                                            data-target="#pending_leave"><i
+                                                                class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                                        <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal"
+                                                            data-target="#approve_leave"><i
+                                                                class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                                        <a class="dropdown-item DeclinedLeave" href="#" data-toggle="modal"
+                                                            data-target="#declined_leave"><i
+                                                                class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item leaveUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a class="dropdown-item leaveUpdate" data-toggle="modal"
+                                                            data-id="'.$items->id.'" data-target="#edit_leave"><i
+                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal"
+                                                            data-target="#delete_approve"><i
+                                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -186,7 +208,7 @@
             </div>
         </div>
         <!-- /Page Content -->
-       
+
         <!-- Add Leave Modal -->
         <div id="add_leave" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -204,12 +226,14 @@
                                 <label>Leave Type <span class="text-danger">*</span></label>
                                 <select class="select" id="leaveType" name="leave_type_id">
                                     <option selected disabled>Select Leave Type</option>
-                                    @foreach($LeaveTypes as $LeaveType)
-                                    <option value="{{$LeaveType->leave_id}}">{{$LeaveType->leave_names}}</option>
+                                    @foreach ($LeaveTypes as $LeaveType)
+                                        <option value="{{ $LeaveType->leave_id }}">{{ $LeaveType->leave_names }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
+                            <input type="hidden" class="form-control" id="rec_id" name="rec_id"
+                                value="{{ Auth::user()->rec_id }}">
                             <div class="form-group">
                                 <label>From <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
@@ -243,7 +267,7 @@
             </div>
         </div>
         <!-- /Add Leave Modal -->
-				
+
         <!-- Edit Leave Modal -->
         <div id="edit_leave" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -261,30 +285,35 @@
                             <div class="form-group">
                                 <label>Leave Type <span class="text-danger">*</span></label>
                                 <select class="select" id="e_leave_typ" name="leave_type_id">
-                                @foreach($LeaveTypes as $LeaveType)
-                                    <option value="{{$LeaveType->leave_id}}">{{$LeaveType->leave_names}}</option>
+                                    @foreach ($LeaveTypes as $LeaveType)
+                                        <option value="{{ $LeaveType->leave_id }}">{{ $LeaveType->leave_names }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>From <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="e_from_date" name="from_date" value="">
+                                    <input type="text" class="form-control datetimepicker" id="e_from_date"
+                                        name="from_date" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>To <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date" value="">
+                                    <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date"
+                                        value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Number of days <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly type="text" id="e_number_of_days" name="number_of_days" value="">
+                                <input class="form-control" readonly type="text" id="e_number_of_days"
+                                    name="number_of_days" value="">
                             </div>
                             <div class="form-group">
                                 <label>Leave Reason <span class="text-danger">*</span></label>
-                                <textarea rows="4" class="form-control" id="e_leave_reason" name="leave_reason" value=""></textarea>
+                                <textarea rows="4" class="form-control" id="e_leave_reason" name="leave_reason"
+                                    value=""></textarea>
                             </div>
                             <div class="submit-section">
                                 <button type="submit" class="btn btn-primary submit-btn">Save</button>
@@ -306,20 +335,22 @@
                             <p>Are you sure want to approve for this leave?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                                <form action="{{ route('form/leaves/status') }}" method="POST">
+                            <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-6">
-                                    <input type="hidden" name="id" id="a_id" value="">
-                                    <input type="hidden" name="leave_type_id" id="a_leave_type_id" value="">
-                                    <input type="hidden" name="rec_id" id="a_rec_id" value="">
-                                    <input type="hidden" name="day" id="a_day" value="">
-                                    <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
-                                    <input type="hidden" name="status" id="" value="Approved">
-                                        <button type="submit" class="btn btn-primary submit-btn continue-btn">Approve</button>
+                                        <input type="hidden" name="id" id="a_id" value="">
+                                        <input type="hidden" name="leave_type_id" id="a_leave_type_id" value="">
+                                        <input type="hidden" name="rec_id" id="a_rec_id" value="">
+                                        <input type="hidden" name="day" id="a_day" value="">
+                                        <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
+                                        <input type="hidden" name="status" id="" value="Approved">
+                                        <button type="submit"
+                                            class="btn btn-primary submit-btn continue-btn">Approve</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -338,21 +369,23 @@
                             <h3>Leave Approve</h3>
                             <p>Are you sure want to pending for this leave?</p>
                         </div>
-                            <div class="modal-btn delete-action">
-                                <form action="{{ route('form/leaves/status') }}" method="POST">
+                        <div class="modal-btn delete-action">
+                            <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-6">
-                                    <input type="hidden" name="id" id="p_id" value="">
-                                    <input type="hidden" name="leave_type_id" id="p_leave_type_id" value="">
-                                    <input type="hidden" name="rec_id" id="p_rec_id" value="">
-                                    <input type="hidden" name="day" id="p_day" value="">
-                                    <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
-                                    <input type="hidden" name="status" class="" value="Pending">
-                                        <button type="submit" class="btn btn-primary submit-btn continue-btn">Pending</button>
+                                        <input type="hidden" name="id" id="p_id" value="">
+                                        <input type="hidden" name="leave_type_id" id="p_leave_type_id" value="">
+                                        <input type="hidden" name="rec_id" id="p_rec_id" value="">
+                                        <input type="hidden" name="day" id="p_day" value="">
+                                        <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
+                                        <input type="hidden" name="status" class="" value="Pending">
+                                        <button type="submit"
+                                            class="btn btn-primary submit-btn continue-btn">Pending</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -362,8 +395,8 @@
             </div>
         </div>
         <!-- /pending Leave Modal -->
-         <!-- Declined Leave Modal -->
-         <div class="modal custom-modal fade" id="declined_leave" role="dialog">
+        <!-- Declined Leave Modal -->
+        <div class="modal custom-modal fade" id="declined_leave" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -374,18 +407,20 @@
                         <div class="modal-btn delete-action">
                             <form action="{{ route('form/leaves/status') }}" method="POST">
                                 @csrf
-                                    <input type="hidden" name="id" id="d_id" value="">
-                                    <input type="hidden" name="leave_type_id" id="d_leave_type_id" value="">
-                                    <input type="hidden" name="rec_id" id="d_rec_id" value="">
-                                    <input type="hidden" name="day" id="d_day" value="">
-                                    <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
-                                    <input type="hidden" name="status" class="" value="Declined">
+                                <input type="hidden" name="id" id="d_id" value="">
+                                <input type="hidden" name="leave_type_id" id="d_leave_type_id" value="">
+                                <input type="hidden" name="rec_id" id="d_rec_id" value="">
+                                <input type="hidden" name="day" id="d_day" value="">
+                                <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
+                                <input type="hidden" name="status" class="" value="Declined">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Declined</button>
+                                        <button type="submit"
+                                            class="btn btn-primary continue-btn submit-btn">Declined</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -410,10 +445,12 @@
                                 <input type="hidden" name="id" class="e_id" value="">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit"
+                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -425,37 +462,35 @@
         <!-- /Delete Leave Modal -->
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
+@section('script')
     <script>
         document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>
     {{-- update js --}}
     <script>
-        $(document).on('click','.leaveUpdate',function()
-        {
+        $(document).on('click', '.leaveUpdate', function() {
             var _this = $(this).parents('tr');
             $('#e_id').val(_this.find('.id').text());
             $('#e_number_of_days').val(_this.find('.day').text());
-            $('#e_from_date').val(_this.find('.from_date').text());  
-            $('#e_to_date').val(_this.find('.to_date').text());  
+            $('#e_from_date').val(_this.find('.from_date').text());
+            $('#e_to_date').val(_this.find('.to_date').text());
             $('#e_leave_reason').val(_this.find('.leave_reason').text());
             var leave_type = (_this.find(".leave_type").text());
-            var _option = '<option selected value="' + leave_type+ '">' + _this.find('.leave_type').text() + '</option>'
-            $( _option).appendTo("#e_leave_type");
+            var _option = '<option selected value="' + leave_type + '">' + _this.find('.leave_type').text() +
+                '</option>'
+            $(_option).appendTo("#e_leave_type");
         });
     </script>
     {{-- delete model --}}
     <script>
-        $(document).on('click','.leaveDelete',function()
-        {
+        $(document).on('click', '.leaveDelete', function() {
             var _this = $(this).parents('tr');
             $('.e_id').val(_this.find('.id').text());
         });
     </script>
     {{-- Approve model --}}
     <script>
-        $(document).on('click','.ApproveLeave',function()
-        {
+        $(document).on('click', '.ApproveLeave', function() {
             var _this = $(this).parents('tr');
             $('#a_id').val(_this.find('.id').text());
             $('#a_leave_type_id').val(_this.find('.leave_type_id').text());
@@ -466,8 +501,7 @@
     </script>
     {{-- Pending model --}}
     <script>
-        $(document).on('click','.PendingLeave',function()
-        {
+        $(document).on('click', '.PendingLeave', function() {
             var _this = $(this).parents('tr');
             $('#p_id').val(_this.find('.id').text());
             $('#p_leave_type_id').val(_this.find('.leave_type_id').text());
@@ -477,8 +511,7 @@
     </script>
     {{-- Declined model --}}
     <script>
-        $(document).on('click','.DeclinedLeave',function()
-        {
+        $(document).on('click', '.DeclinedLeave', function() {
             var _this = $(this).parents('tr');
             $('#d_id').val(_this.find('.id').text());
             $('#d_leave_type_id').val(_this.find('.leave_type_id').text());
@@ -486,5 +519,5 @@
             $('#d_day').val(_this.find('.days').text());
         });
     </script>
-    @endsection
+@endsection
 @endsection
