@@ -213,7 +213,6 @@ class LeavesController extends Controller
             $LeavesEvidence->status                 = $request->status;
             $LeavesEvidence->save();
 
-            
             DB::commit();
             Toastr::success('Status Updated :)','Success');
             return redirect()->back();
@@ -235,7 +234,6 @@ class LeavesController extends Controller
         Session::put('user', $user);
         $user=Session::get('user');
         $profile = $user->rec_id;
-        $not = 'Not Yet';
 
 
         $leavesapplies = DB::table('leave_applies')
@@ -245,7 +243,13 @@ class LeavesController extends Controller
                     ->get();
         $users = DB::table('users')->get();
         $LeaveTypes = LeaveTypes::all();
-        return view('form.leavesemployee',compact('LeaveTypes','leavesapplies','users'));
+        $LeavesEvidence = DB::table('leaves_evidence')
+        ->where('leaves_evidence.rec_id',$profile)
+        ->where('leaves_evidence.status','Approved')
+        ->get();
+
+
+        return view('form.leavesemployee',compact('LeaveTypes','leavesapplies','users','LeavesEvidence'));
       }
       
       // edit leaves Employee record
