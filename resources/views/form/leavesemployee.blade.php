@@ -19,7 +19,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                        <a href="#" class="btn add-btn AddLeave" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
                     </div>
                 </div>
             </div>
@@ -31,40 +31,14 @@
                     <div class="stats-info">
                         <h6>{{$LeaveType->leave_names}}</h6>
                         <h4>{{$LeaveType->leave_days}}</h4>
+                        <h6>Remaining {{$LeaveType->leave_days - $LeavesEvidence->where('leave_type_id', $LeaveType->leave_id)->sum('day')}}</h6>
                     </div>
                 </div>
             @endforeach
-
-            <!-- @foreach ($LeaveTypes as $LeaveType ) 
-            @if($LeaveType->leave_names == 'Annual Leave')
-                <div class="col-md-3">
-                    <div class="stats-info">
-                        <h6>Annual Leave</h6>
-                        <h4>{{$LeaveType->leave_days}}</h4>
-                    </div>
-                </div>
-            @endif
-            @endforeach
-            @foreach ($LeaveTypes as $LeaveType ) 
-            @if($LeaveType->leave_names == 'Medical Leave')
-                <div class="col-md-3">
-                    <div class="stats-info">
-                        <h6>Medical Leave</h6>
-                        <h4>{{$LeaveType->leave_days}}</h4>
-                    </div>
-                </div>
-            @endif
-            @endforeach -->
-                <div class="col-md-3">
-                    <div class="stats-info">
-                        <h6>Other Leave</h6>
-                        <h4>{{ $LeaveTypes->sum('leave_days') - $LeaveTypes->where('leave_names', 'Medical Leave')->sum('leave_days') - $LeaveTypes->where('leave_names', 'Annual Leave')->sum('leave_days')}}</h4>
-                    </div>
-                </div>
                 <div class="col-md-3">
                     <div class="stats-info">
                         <h6>Remaining Leave</h6>
-                        <h4>{{$LeaveTypes->sum('leave_days') - $leavesapplies->where('status', 'Approved')->sum('day')}}</h4>
+                        <h4>{{$LeaveTypes->sum('leave_days') - $LeavesEvidence->where('status', 'Approved')->sum('day')}}</h4>
                     </div>
                 </div>
             </div>
@@ -298,6 +272,20 @@
     <!-- {{-- update js --}} -->
     <script>
         $(document).on('click','.leaveUpdate',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#e_id').val(_this.find('.id').text());
+            $('#e_number_of_days').val(_this.find('.day').text());
+            $('#e_from_date').val(_this.find('.from_date').text());  
+            $('#e_to_date').val(_this.find('.to_date').text());  
+            $('#e_leave_reason').val(_this.find('.leave_reason').text());
+            var leave_type = (_this.find(".leave_type").text());
+            var _option = '<option selected value="' + leave_type+ '">' + _this.find('.leave_type').text() + '</option>'
+            $( _option).appendTo("#e_leave_type");
+        });
+    </script>
+    <script>
+        $(document).on('click','.AddLeave',function()
         {
             var _this = $(this).parents('tr');
             $('#e_id').val(_this.find('.id').text());
