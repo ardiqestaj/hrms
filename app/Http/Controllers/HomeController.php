@@ -21,14 +21,18 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
-     *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     // main dashboard
     public function index()
     {
-        return view('dashboard.dashboard');
+        $employees= Employee::all();
+        return view('dashboard.dashboard', compact('employees'));
     }
+
+
+
+    
     // employee dashboard
     public function emDashboard()
     {
