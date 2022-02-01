@@ -12,7 +12,7 @@
 					</a>
 					<div class="dropdown-menu profile-list-items"  style="border: 1px solid black">
 						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
-						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
+						<a class="dropdown-item" href="{{ route('company/store') }}">Settings</a>
 						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
 					</div> -->
 
@@ -36,7 +36,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a> 
-							<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
+							<a class="dropdown-item" href="{{ route('company/store') }}">Settings</a>
                             <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                         </div>
                     </div>

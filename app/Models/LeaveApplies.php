@@ -19,6 +19,5 @@ class LeaveApplies extends Model
         'leave_reason',
         'status',
         'approved_by'
-
     ];
 }

@@ -222,12 +222,11 @@ class LeavesController extends Controller
             Toastr::error('Status updatet fail :)','Error');
             return redirect()->back();
         }
-
-
-
-
-
     }
+
+
+
+    
       // add leaves Employee -------------------------------------------------------------------------
       public function leavesEmployee()
       {

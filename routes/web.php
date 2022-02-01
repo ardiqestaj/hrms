@@ -12,6 +12,10 @@ use App\Http\Controllers\LockScreen;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ExpenseReportsController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\CompanyInfoController;
+use App\Http\Controllers\ThemeSettingsController;
+
+
 
 
 /*
@@ -205,3 +209,11 @@ Route::get('form/trainers/list/page', [App\Http\Controllers\TrainersController::
 Route::post('form/trainers/save', [App\Http\Controllers\TrainersController::class, 'saveRecord'])->middleware('auth')->name('form/trainers/save');
 Route::post('form/trainers/update', [App\Http\Controllers\TrainersController::class, 'updateRecord'])->middleware('auth')->name('form/trainers/update');
 Route::post('form/trainers/delete', [App\Http\Controllers\TrainersController::class, 'deleteRecord'])->middleware('auth')->name('form/trainers/delete');
+
+// ----------------------------- Company Settings ------------------------------//
+Route::get('company/store', [App\Http\Controllers\CompanyInfoController::class, 'CompanyStore'])->name('company/store');
+Route::post('company/settings', [App\Http\Controllers\CompanyInfoController::class, 'CompanySettings'])->name('company/settings');
+
+// ----------------------------- Theme Settings ------------------------------//
+Route::get('website/store', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteStore'])->name('website/store');
+Route::post('website/settings', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteSettings'])->name('website/settings');

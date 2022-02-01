@@ -469,7 +469,7 @@
                                 
                             </div> 
                         </div>
-                        <div class="card-footer"> <a href="{{ route('all/employee/card') }}">View all clients</a> </div>
+                        <div class="card-footer"> <a href="{{ route('all/employee/card') }}">View all employees</a> </div>
                     </div>
                     {{-- <div class="card card-table flex-fill">
                         <div class="card-header">

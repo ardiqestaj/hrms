@@ -7,6 +7,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\CompanyInfo;
 use App\Models\Form;
 use App\Models\ProfileInformation;
 use App\Models\Family;
@@ -140,8 +141,8 @@ class UserManagementController extends Controller
             $employee = DB::table('employees')->where('employee_id',$profile)->first();
             $family = DB::table('families')->where('rec_id',$profile)->first();
             $education = DB::table('education_information')->where('rec_id',$profile)->get();
-
-            return view('usermanagement.profile_user',compact('information','user','employee', 'family', 'education'));
+            $CompanyInfo = DB::table('company_infos')->where('rec_id', $profile)->first();
+            return view('usermanagement.profile_user',compact('information','user','employee', 'family', 'education', 'CompanyInfo'));
 
         }else{
             $rec_id = $employees->rec_id;
@@ -151,15 +152,16 @@ class UserManagementController extends Controller
                 $employee = DB::table('employees')->where('employee_id',$profile)->first();
                 $family = DB::table('families')->where('rec_id',$profile)->first();
                 $education = DB::table('education_information')->where('rec_id',$profile)->get();
+                $CompanyInfo = DB::table('company_infos')->where('rec_id', $profile)->first();
 
-                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family', 'education'));
+                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family', 'education', 'CompanyInfo'));
             }else{
                 $information = ProfileInformation::all();
                 $employee = Employee::all();
                 $family = Family::all();
                 $education = EducationInformation::all();
-
-                return view('usermanagement.profile_user',compact('information','user', 'employee','family', 'education'));
+                $CompanyInfo = CompanyInfo::all();
+                return view('usermanagement.profile_user',compact('information','user', 'employee','family', 'education', 'CompanyInfo'));
             }
         }
     }
