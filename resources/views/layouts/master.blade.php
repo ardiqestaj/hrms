@@ -9,7 +9,7 @@
 	<meta name="author" content="">
 	<meta name="robots" content="noindex, nofollow">
 	<title>Dashboard - HRMS</title>
-	<!-- Favicon -->
+	<!-- Favicon -->	
 	<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/favicon.png') }}">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/bootstrap.min.css') }}">
