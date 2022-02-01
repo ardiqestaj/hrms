@@ -39,6 +39,7 @@
                     <div class="stats-info">
                         <h6>Remaining Leave</h6>
                         <h4>{{$LeaveTypes->sum('leave_days') - $LeavesEvidence->where('status', 'Approved')->sum('day')}}</h4>
+                        <h6>All<h6>
                     </div>
                 </div>
             </div>
@@ -160,14 +161,14 @@
                                     <input type="text" class="form-control datetimepicker" id="to_date" name="to_date">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Number of days <span class="text-danger">*</span></label>
                                 <input class="form-control" readonly type="text">
                             </div>
                             <div class="form-group">
                                 <label>Remaining Leaves <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly value="12" type="text">
-                            </div>
+                                <input class="form-control" readonly value="14" type="text">
+                            </div> --}}
                             <div class="form-group">
                                 <label>Leave Reason <span class="text-danger">*</span></label>
                                 <textarea rows="4" class="form-control" id="leave_reason" name="leave_reason"></textarea>

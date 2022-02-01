@@ -6,12 +6,21 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Holiday;
 use DB;
+use Session;
+
+use Auth;
+
 
 class HolidayController extends Controller
 {
     // holidays
     public function holiday()
     {
+
+        $user = Auth::User();
+        Session::put('user', $user);
+        $user=Session::get('user');
+
         $holiday = Holiday::all();
         return view('form.holidays',compact('holiday'));
     }

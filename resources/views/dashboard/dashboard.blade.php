@@ -36,11 +36,21 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                     <div class="card dash-widget">
                         <div class="card-body"> <span class="dash-widget-icon"><i class="la la-map-marked-alt"></i></span>
                             <div class="dash-widget-info">
-                                <h3>37</h3> <span>Locations</span>
+                                <h3>0</h3> <span>Locations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="card dash-widget">
+                        <div class="card-body"> <span class="dash-widget-icon"><i class="la la-map-marked-alt"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>0</h3> <span>Holiday</span>
                             </div>
                         </div>
                     </div>
