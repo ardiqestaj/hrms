@@ -362,21 +362,45 @@ $(document).ready(function() {
         });
     }
 
-    var $firstForm = $("#education-card");
-    $("#education-card-add-btn").on("click", function() {
-        var $clonedForm = $(this).closest("#education-card").clone()
-        $clonedForm.insertAfter($('#education-card:last'));
-        bindRemove($clonedForm);
+//Clone form on click
+    // var $firstForm = $("#education-card");
+    // $("#education-card-add-btn").on("click", function() {
+    //     var $clonedForm = $(this).closest("#education-card").clone()
+    //     $clonedForm.insertAfter($('#education-card:last'));
+    //     bindRemove($clonedForm);
+    // });
+
+    // function bindRemove($form) {
+    //     $form.find("#education-card-delete-btn").on("click", function() {
+    //         $form.remove();
+    //     });
+    // }
+    // bindRemove($firstForm);
+});
+
+// Clone a form on click
+$(document).ready(function() {
+    $("#education-card-add-btn").click(function() {
+      $("#education-card")
+      .eq(0)
+      .clone()
+      .insertAfter("#education-card:last")
+      .show();
     });
 
-    function bindRemove($form) {
-        $form.find("#education-card-delete-btn").on("click", function() {
-            $form.remove();
-        });
-    }
-    bindRemove($firstForm);
-
-});
+    $(document).on('click', '#education-card button[type=submit]', function(e) {
+      e.preventDefault() // To make sure the form is not submitted
+      var $frm = $(this).closest('#education-card');
+      console.log($frm.serialize());
+      $.ajax(
+          $frm.attr('action'),
+          {
+            method: $frm.attr('method'),
+            data: $frm.serialize()
+          }
+      );
+    });
+  });
 
 // Loader
 

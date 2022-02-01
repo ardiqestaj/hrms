@@ -186,7 +186,7 @@
                                         <label class="col-form-label">Confirm Password <span
                                                 class="text-danger">*</span></label>
                                         <input class="form-control" type="password" id="confirmPassword"
-                                            name="password_confirmation">
+                                            name="password_confirmation" required>
                                     </div>
                                 </div>
 
@@ -194,7 +194,8 @@
                                     <div class="form-group">
                                         <label class="col-form-label">Phone Number <span
                                                 class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" id="phone_number" name="phone_number">
+                                        <input class="form-control" type="text" required id="phone_number"
+                                            name="phone_number">
                                     </div>
                                 </div>
 
@@ -225,7 +226,7 @@
                                         <label class="col-form-label">Department <span
                                                 class="text-danger">*</span></label>
                                         <select class="select @error('role_name') is-invalid @enderror" name="department"
-                                            id="department">
+                                            id="department" required>
                                             <option selected disabled>-- Select Role Name --</option>
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->department }}">
@@ -263,33 +264,35 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="wday-box">
-                                        <fieldset>
-                                            <label class="checkbox-inline"><input type="checkbox" name="monday" value="t"
-                                                    class="days recurring" checked=""> <span
-                                                    class="checkmark">M</span></label>
+                                            <fieldset>
+                                                <label class="checkbox-inline"><input type="checkbox" name="monday"
+                                                        value="t" class="days recurring" checked=""> <span
+                                                        class="checkmark">M</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="monday" value="X"
-                                                    class="days recurring" checked=""><span
-                                                    class="checkmark">T</span></label>
+                                                <label class="checkbox-inline"><input type="checkbox" name="monday"
+                                                        value="X" class="days recurring" checked=""><span
+                                                        class="checkmark">T</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="wednesday"
-                                                    value="Y" class="days recurring" checked=""><span
-                                                    class="checkmark">W</span></label>
+                                                <label class="checkbox-inline"><input type="checkbox" name="wednesday"
+                                                        value="Y" class="days recurring" checked=""><span
+                                                        class="checkmark">W</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
-                                                    class="days recurring" checked=""><span
-                                                    class="checkmark">T</span></label>
+                                                <label class="checkbox-inline"><input type="checkbox" name="thursday"
+                                                        value="Y" class="days recurring" checked=""><span
+                                                        class="checkmark">T</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
-                                                    class="days recurring" checked=""><span
-                                                    class="checkmark">F</span></label>
+                                                <label class="checkbox-inline"><input type="checkbox" name="friday"
+                                                        value="Y" class="days recurring" checked=""><span
+                                                        class="checkmark">F</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"
-                                                    class="days recurring"><span class="checkmark">S</span></label>
+                                                <label class="checkbox-inline"><input type="checkbox" name="saturday"
+                                                        value="Y" class="days recurring"><span
+                                                        class="checkmark">S</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"
-                                                    class="days recurring"><span class="checkmark">S</span></label>
-                                        </fieldset>
+                                                <label class="checkbox-inline"><input type="checkbox" name="sunday"
+                                                        value="Y" class="days recurring"><span
+                                                        class="checkmark">S</span></label>
+                                            </fieldset>
                                         </div>
                                     </div>
                                 </div>
@@ -297,14 +300,14 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                        <input class="form-control" type="time" id="time_start" name="time_start">
+                                            <input class="form-control" type="time" id="time_start" name="time_start">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                        <input class="form-control" type="time" id="time_end" name="time_end">
+                                            <input class="form-control" type="time" id="time_end" name="time_end">
                                         </div>
                                     </div>
                                 </div>

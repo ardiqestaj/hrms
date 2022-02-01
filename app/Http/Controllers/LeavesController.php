@@ -457,6 +457,110 @@ class LeavesController extends Controller
                     ->get();
         }
 
+        // search by name,leave name and status
+        if($request->name && $request->leave_names && $request->status) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('users.name', 'LIKE', '%'.$request->name.'%')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->get();
+        }
+        // search by name,leave name and start date
+        if($request->name && $request->leave_names && $request->from_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('users.name', 'LIKE', '%'.$request->name.'%')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.from_date', 'LIKE', '%'.$request->from_date.'%')
+                    ->get();
+        }
+        // search by name,leave name and end date
+        if($request->name && $request->leave_names && $request->to_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('users.name', 'LIKE', '%'.$request->name.'%')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.to_date', 'LIKE', '%'.$request->to_date.'%')
+                    ->get();
+        }
+        // search by leave name, status and start date
+        if($request->leave_names && $request->status && $request->from_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->where('leave_applies.from_date', 'LIKE', '%'.$request->from_date.'%')
+                    ->get();
+        }
+        // search by leave name, status and start date
+        if($request->leave_names && $request->status && $request->to_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->where('leave_applies.to_date', 'LIKE', '%'.$request->to_date.'%')
+                    ->get();
+        }
+        // search by name,leave name, status and start date
+        if($request->name && $request->leave_names && $request->status && $request->from_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('users.name', 'LIKE', '%'.$request->name.'%')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->where('leave_applies.from_date', 'LIKE', '%'.$request->from_date.'%')
+                    ->get();
+        }
+        // search by name,leave name, status and end date
+        if($request->name && $request->leave_names && $request->status && $request->to_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('users.name', 'LIKE', '%'.$request->name.'%')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->where('leave_applies.to_date', 'LIKE', '%'.$request->to_date.'%')
+                    ->get();
+        }
+        // search by leave name, status, start date and end date
+        if($request->leave_names && $request->status && $request->from_date && $request->to_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->where('leave_applies.from_date', 'LIKE', '%'.$request->from_date.'%')
+                    ->where('leave_applies.to_date', 'LIKE', '%'.$request->to_date.'%')
+                    ->get();
+        }
+        // search by name,leave name, status, start date and end date
+        if($request->name && $request->leave_names && $request->status && $request->from_date && $request->to_date) {
+            $leaves = DB::table('leave_applies')
+                    ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                    ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->where('users.name', 'LIKE', '%'.$request->name.'%')
+                    ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
+                    ->where('leave_applies.status', 'LIKE', '%'.$request->status.'%')
+                    ->where('leave_applies.from_date', 'LIKE', '%'.$request->from_date.'%')
+                    ->where('leave_applies.to_date', 'LIKE', '%'.$request->to_date.'%')
+                    ->get();
+        }
         return view('form.leaves',compact('leaves', 'LeaveTypes'));
     }
 
