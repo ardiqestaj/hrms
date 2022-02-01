@@ -15,10 +15,12 @@
                             <li class="breadcrumb-item active">Holidays</li>
                         </ul>
                     </div>
+                    @if(Auth::user()->role_name == 'Admin')
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i
                                 class="fa fa-plus"></i> Add Holiday</a>
                     </div>
+                    @endif
                 </div>
             </div>
             <!-- /Page Header -->
@@ -77,6 +79,7 @@
                                         <td>{{ date('d F, Y', strtotime($items->date_holiday)) }}</td>
                                         <td>{{ date('l', strtotime($items->date_holiday)) }}</td>
                                         <td class="text-right">
+                                        @if(Auth::user()->role_name == 'Admin')
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
                                                     aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -89,6 +92,7 @@
                                                         Delete</a>
                                                 </div>
                                             </div>
+                                        @endif
                                         </td>
                                     </tr>
                                     {{-- @endif --}}
@@ -101,6 +105,7 @@
         </div>
         <!-- /Page Content -->
         <!-- Add Holiday Modal -->
+        @if(Auth::user()->role_name == 'Admin')
         <div class="modal custom-modal fade" id="add_holiday" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -132,6 +137,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <!-- /Add Holiday Modal -->
 
         <!-- Edit Holiday Modal -->

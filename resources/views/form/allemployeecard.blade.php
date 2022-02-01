@@ -226,8 +226,8 @@
                                         <label class="col-form-label">Department <span
                                                 class="text-danger">*</span></label>
                                         <select class="select @error('role_name') is-invalid @enderror" name="department"
-                                            id="department" required>
-                                            <option selected disabled>-- Select Role Name --</option>
+                                            id="department">
+                                            <option selected disabled>-- Select Dapartment --</option>
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->department }}">
                                                     {{ $department->department }}</option>
