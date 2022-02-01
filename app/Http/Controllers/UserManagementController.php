@@ -248,29 +248,27 @@ class UserManagementController extends Controller
     // new education info
     public function createEducationInfo(Request $request)
     {
-        foreach($request->all() as $req){
-
             try{
 
-                $education = EducationInformation::updateOrCreate(['rec_id' => $req->rec_id]);
-                $education->rec_id          = $req->rec_id;
-                $education->institution     = $req->institution;
-                $education->subject         = $req->subject;
-                $education->st_date         = $req->st_date;
-                $education->end_date        = $req->end_date;
-                $education->degree          = $req->degree;
-                $education->grade           = $req->grade;
+                $education = EducationInformation::updateOrCreate(['id' => $request->id]);
+                $education->rec_id          = $request->rec_id;
+                $education->institution     = $request->institution;
+                $education->subject         = $request->subject;
+                $education->st_date         = $request->st_date;
+                $education->end_date        = $request->end_date;
+                $education->degree          = $request->degree;
+                $education->grade           = $request->grade;
                 $education->save();
 
                 DB::commit();
-                Toastr::success('Family Information successfully :)','Success');
+                Toastr::success('Education Information successfully :)','Success');
                 return redirect()->back();
             }catch(\Exception $e){
                 DB::rollback();
                 Toastr::error('Add Family Information fail :)','Error');
                 return redirect()->back();
             }
-        }
+
 
     }
 
