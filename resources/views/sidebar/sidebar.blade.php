@@ -146,8 +146,9 @@
                         <span> Settings </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a href="{{ route('company/store') }}"> Company Settings </a></li>
-                        <li><a href="{{ route('form/leavetypes/page') }}">Leave Settings</a></li>
+                        <li><a href="{{ route('timeclock/settings') }}"> TimeClock Settings </a></li>
                         <li><a href="{{ route('theme/settings') }}"> Theme Settings </a></li>
+                        <li><a href="{{ route('form/leavetypes/page') }}">Leave Settings</a></li>
                         <li><a href="{{ route('change/password') }} "> Change Password </a></li>
                         <li><a href="{{ route('roles/permissions/page') }}"> Role Permissions </a></li>
                     </ul>

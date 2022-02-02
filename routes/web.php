@@ -225,3 +225,8 @@ Route::post('company/settings', [App\Http\Controllers\CompanyInfoController::cla
 // ----------------------------- Theme Settings ------------------------------//
 Route::get('theme/settings', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteStore'])->middleware('auth')->name('theme/settings');
 Route::post('theme/store', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteSettings'])->middleware('auth')->name('theme/store');
+
+// ----------------------------- Clock Settings ------------------------------//
+Route::get('timeclock/settings', [App\Http\Controllers\ClockTimeSettingsController::class, 'index'])->middleware('auth')->name('timeclock/settings');
+Route::post('timeclock/update', [App\Http\Controllers\ClockTimeSettingsController::class, 'update'])->middleware('auth')->name('timeclock/update');
+

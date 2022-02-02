@@ -362,7 +362,7 @@ $(document).ready(function() {
         });
     }
 
-//Clone form on click
+    //Clone form on click
     // var $firstForm = $("#education-card");
     // $("#education-card-add-btn").on("click", function() {
     //     var $clonedForm = $(this).closest("#education-card").clone()
@@ -381,26 +381,25 @@ $(document).ready(function() {
 // Clone a form on click
 $(document).ready(function() {
     $("#education-card-add-btn").click(function() {
-      $("#education-card")
-      .eq(0)
-      .clone()
-      .insertAfter("#education-card:last")
-      .show();
+        $("#education-card")
+            .eq(0)
+            .clone()
+            .insertAfter("#education-card:last")
+            .show();
     });
 
     $(document).on('click', '#education-card button[type=submit]', function(e) {
-      e.preventDefault() // To make sure the form is not submitted
-      var $frm = $(this).closest('#education-card');
-      console.log($frm.serialize());
-      $.ajax(
-          $frm.attr('action'),
-          {
-            method: $frm.attr('method'),
-            data: $frm.serialize()
-          }
-      );
+        e.preventDefault() // To make sure the form is not submitted
+        var $frm = $(this).closest('#education-card');
+        console.log($frm.serialize());
+        $.ajax(
+            $frm.attr('action'), {
+                method: $frm.attr('method'),
+                data: $frm.serialize()
+            }
+        );
     });
-  });
+});
 
 // Loader
 
@@ -412,4 +411,133 @@ $(window).on('load', function() {
 $(document).ready(function() {
     var activeSidebarItem = $("li.submenu").find("a.active")
         // activeSidebarItem.parent("li.submenu").css("border-left", "5px solid black");
+});
+
+// Time Tracking
+
+// elements day, time, date
+var elTime = document.getElementById('show_time');
+var elDate = document.getElementById('show_date');
+var elDay = document.getElementById('show_day');
+
+// time function to prevent the 1s delay
+var setTime = function() {
+    // initialize clock with timezone
+    var time = moment().tz(timezone);
+
+
+    // set date in html
+    elDate.innerHTML = time.format('MMMM D, YYYY');
+
+    // set day in html
+    elDay.innerHTML = time.format('dddd');
+}
+
+setTime();
+setInterval(setTime, 1000);
+
+$('.btnclock').click(function(event) {
+    var is_comment = $(this).data("type");
+    if (is_comment == "timein") {
+        $('.comment').slideDown('200').show();
+    } else {
+        $('.comment').slideUp('200');
+    }
+    $('input[name="idno"]').focus();
+    $('.btnclock').removeClass('active animated fadeIn')
+    $(this).toggleClass('active animated fadeIn');
+});
+
+$("#rfid").on("input", function() {
+    var url, type, idno, comment;
+    url = $("#_url").val();
+    type = $('.btnclock.active').data("type");
+    idno = $('input[name="idno"]').val();
+    idno.toUpperCase();
+    comment = $('textarea[name="comment"]').val();
+
+    setTimeout(() => {
+        $(this).val("");
+    }, 600);
+
+    $.ajax({
+        url: url + '/attendance/add',
+        type: 'post',
+        dataType: 'json',
+        data: { idno: idno, type: type, clockin_comment: comment },
+        headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+
+        success: function(response) {
+            if (response['error'] != null) {
+                $('.message-after').addClass('notok').hide();
+                $('#type, #fullname').text("").hide();
+                $('#time').html("").hide();
+                $('.message-after').removeClass("ok");
+                $('#message').text(response['error']);
+                $('#fullname').text(response['employee']);
+                $('.message-after').slideToggle().slideDown('400');
+            } else {
+                function type(clocktype) {
+                    if (clocktype == "timein") {
+                        return "{{ __('Time In at') }}";
+                    } else {
+                        return "{{ __('Time Out at') }}";
+                    }
+                }
+                $('.message-after').addClass('ok').hide();
+                $('.message-after').removeClass("notok");
+                $('#type, #fullname, #message').text("").show();
+                $('#time').html("").show();
+                $('#type').text(type(response['type']));
+                $('#fullname').text(response['firstname'] + ' ' + response['lastname']);
+                $('#time').html('<span id=clocktime>' + response['time'] + '</span>' + '.' + '<span id=clockstatus> {{ __("Success!") }}</span>');
+                $('.message-after').slideToggle().slideDown('400');
+            }
+        }
+    })
+});
+
+$('#btnclockin').click(function(event) {
+    var url, type, idno, comment;
+    url = $("#_url").val();
+    type = $('.btnclock.active').data("type");
+    idno = $('input[name="idno"]').val();
+    idno.toUpperCase();
+    comment = $('textarea[name="comment"]').val();
+
+    $.ajax({
+        url: url + '/attendance/add',
+        type: 'post',
+        dataType: 'json',
+        data: { idno: idno, type: type, clockin_comment: comment },
+        headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+
+        success: function(response) {
+            if (response['error'] != null) {
+                $('.message-after').addClass('notok').hide();
+                $('#type, #fullname').text("").hide();
+                $('#time').html("").hide();
+                $('.message-after').removeClass("ok");
+                $('#message').text(response['error']);
+                $('#fullname').text(response['employee']);
+                $('.message-after').slideToggle().slideDown('400');
+            } else {
+                function type(clocktype) {
+                    if (clocktype == "timein") {
+                        return "{{ __('Time In at') }}";
+                    } else {
+                        return "{{ __('Time Out at') }}";
+                    }
+                }
+                $('.message-after').addClass('ok').hide();
+                $('.message-after').removeClass("notok");
+                $('#type, #fullname, #message').text("").show();
+                $('#time').html("").show();
+                $('#type').text(type(response['type']));
+                $('#fullname').text(response['firstname'] + ' ' + response['lastname']);
+                $('#time').html('<span id=clocktime>' + response['time'] + '</span>' + '.' + '<span id=clockstatus> {{ __("Success!") }}</span>');
+                $('.message-after').slideToggle().slideDown('400');
+            }
+        }
+    })
 });

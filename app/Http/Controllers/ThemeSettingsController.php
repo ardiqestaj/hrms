@@ -8,7 +8,6 @@ use App\Models\ThemeSettings;
 
 use DB;
 use Session;
-
 use Auth;
 
 
@@ -18,6 +17,7 @@ class ThemeSettingsController extends Controller
             $ThemeSettings = DB::table('theme_settings')->first();
             return view('settings.theme-settings', compact('ThemeSettings'));
     }
+
 
     // Website information settings
     public function WebsiteSettings(Request $request)
