@@ -7,6 +7,7 @@ use DB;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Employee;
 use App\Models\User;
+use App\Models\Client;
 use App\Models\module_permission;
 class ClientsController extends Controller
 {
@@ -15,20 +16,105 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  Show Clients
     public function clients()
     {
 
-        $users = DB::table('users')
-                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+        $clients = DB::table('clients')
                     ->get(); 
-        // $userList = DB::table('users')->get();
-        // $permission_lists = DB::table('permission_lists')->get();
-        // return view('form.allemployeecard',compact('users','userList','permission_lists'));
-        return view('clients.clients',compact('users'));
+
+        return view('clients.clients',compact('clients'));
         
     }
 
+           /**
+     * Show the clients in list form
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function clientsList()
+    {
+        return view('clients.clients-list');
+        //
+    }
+
+    // Save Clients
+    public function saveRecordClient(Request $request)
+    {
+        $request->validate([
+            'client_name'   => 'required|string|max:255',
+            'contact_person'    => 'required|string|max:255',
+            'client_address'      => 'required|string|max:255',
+            // 'client_mobile_phone' => 'required|string|max:255',
+            // 'client_fax_phone' => 'required|string|max:255'
+
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $client = new Client;
+            $client->client_name        = $request->client_name;
+            $client->contact_person    = $request->contact_person;
+            $client->client_address     = $request->client_address;
+            $client->client_email       = $request->client_email;
+            $client->client_mobile_phone           = $request->client_mobile_phone;
+            $client->client_fax_phone  = $request->client_fax_phone;
+            $client->save();
+
+            DB::commit();
+            Toastr::success('Create new Client successfully :)','Success');
+            return redirect()->back();
+        } catch(\Exception $e) {
+            DB::rollback();
+            Toastr::error('Add Client fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    // Edit Client
+    public function editClient(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $update = [
+            'client_name'        => $request->client_name,
+            'contact_person'    => $request->contact_person,
+            'client_address'     => $request->client_address,
+            'client_email'       => $request->client_email,
+            'client_mobile_phone'           => $request->client_mobile_phone,
+            'client_fax_phone'  => $request->client_fax_phone
+            ];
+
+            Client::where('client_id',$request->id)->update($update);
+            DB::commit();
+
+            DB::commit();
+            Toastr::success('Updated Client successfully :)','Success');
+            return redirect()->back();
+        } catch(\Exception $e) {
+            DB::rollback();
+            Toastr::error('Update Client fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    public function deleteClient(Request $request)
+    {
+        try {
+
+            Client::destroy($request->id);
+            Toastr::success('Client deleted successfully :)','Success');
+            return redirect()->back();
+
+        } catch(\Exception $e) {
+
+            DB::rollback();
+            Toastr::error('Client delete fail :)','Error');
+            return redirect()->back();
+        }
+    }
         /**
      * Show the client's profile
      *
@@ -43,16 +129,7 @@ class ClientsController extends Controller
    
 
     
-        /**
-     * Show the clients in list form
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function clientsList()
-    {
-        return view('clients.clients-list');
-        //
-    }
+ 
 
 
     /**

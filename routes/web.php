@@ -14,6 +14,8 @@ use App\Http\Controllers\ExpenseReportsController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\ThemeSettingsController;
+use App\Http\Controllers\ClientsController;
+
 
 
 
@@ -167,6 +169,12 @@ Route::get('form/shiftlist/page', [App\Http\Controllers\LeavesController::class,
 
 // ----------------------------- Clients ------------------------------//
 Route::get('clients/clients', [App\Http\Controllers\ClientsController::class, 'clients'])->middleware('auth')->name('clients/clients');
+Route::post('clients/new', [App\Http\Controllers\ClientsController::class, 'saveRecordClient'])->middleware('auth')->name('clients/new');
+Route::post('clients/delete', [App\Http\Controllers\ClientsController::class, 'deleteClient'])->middleware('auth')->name('clients/delete');
+Route::post('clients/edit', [App\Http\Controllers\ClientsController::class, 'editClient'])->middleware('auth')->name('clients/edit');
+
+
+
 Route::get('clients/client-profile', [App\Http\Controllers\ClientsController::class, 'clientProfile'])->middleware('auth')->name('clients/client-profile');
 Route::get('clients/clients-list', [App\Http\Controllers\ClientsController::class, 'clientsList'])->middleware('auth')->name('clients/clients-list');
 
