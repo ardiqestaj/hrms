@@ -211,9 +211,9 @@ Route::post('form/trainers/update', [App\Http\Controllers\TrainersController::cl
 Route::post('form/trainers/delete', [App\Http\Controllers\TrainersController::class, 'deleteRecord'])->middleware('auth')->name('form/trainers/delete');
 
 // ----------------------------- Company Settings ------------------------------//
-Route::get('company/store', [App\Http\Controllers\CompanyInfoController::class, 'CompanyStore'])->name('company/store');
-Route::post('company/settings', [App\Http\Controllers\CompanyInfoController::class, 'CompanySettings'])->name('company/settings');
+Route::get('company/store', [App\Http\Controllers\CompanyInfoController::class, 'CompanyStore'])->middleware('auth')->name('company/store');
+Route::post('company/settings', [App\Http\Controllers\CompanyInfoController::class, 'CompanySettings'])->middleware('auth')->name('company/settings');
 
 // ----------------------------- Theme Settings ------------------------------//
-Route::get('website/store', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteStore'])->name('website/store');
-Route::post('website/settings', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteSettings'])->name('website/settings');
+Route::get('theme/settings', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteStore'])->middleware('auth')->name('theme/settings');
+Route::post('theme/store', [App\Http\Controllers\ThemeSettingsController::class, 'WebsiteSettings'])->middleware('auth')->name('theme/store');

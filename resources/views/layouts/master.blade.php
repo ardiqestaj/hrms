@@ -8,9 +8,12 @@
 	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
 	<meta name="author" content="">
 	<meta name="robots" content="noindex, nofollow">
-	<title>Dashboard - HRMS</title>
+	<!-- Logo and Favicon -->	
+	@foreach (\App\Models\ThemeSettings::all() as $ThemeSettings)
+	<title>{{$ThemeSettings->website_name}}</title>
 	<!-- Favicon -->	
-	<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/favicon.png') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('/assets/images/'. $ThemeSettings->website_favicon) }}">
+	@endforeach
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/bootstrap.min.css') }}">
 	<!-- Fontawesome CSS -->

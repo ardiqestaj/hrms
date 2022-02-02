@@ -5,9 +5,12 @@
             {{-- <a href="{{ route('form/job/list') }}" class="btn btn-primary apply-btn">Apply Job</a> --}}
             <div class="container">
                 <!-- Account Logo -->
+                @foreach (\App\Models\ThemeSettings::all() as $ThemeSettings)
                 <div class="account-logo">
-                    <a href="index.html"><img src="{{ URL::to('assets/img/logo2.png') }}" alt="Soeng Souy"></a>
+                    <img src="{{ URL::to('/assets/images/'. $ThemeSettings->website_logo) }}" alt="Company Logo">
                 </div>
+                @endforeach
+
                 {{-- message --}}
                 {!! Toastr::message() !!}
                 <!-- /Account Logo -->

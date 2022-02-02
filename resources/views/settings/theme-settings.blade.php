@@ -22,20 +22,21 @@
 								{!! Toastr::message() !!}
 
 							@if(!empty($ThemeSettings))
-							<form action="{{ route('website/settings') }}" method="POST" enctype="multipart/form-data">
+							<form action="{{ route('theme/store') }}" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="form-group row">
 									<label class="col-lg-3 col-form-label">Website Name</label>
 									<div class="col-lg-9">
-										<input type="hidden" name="id">
+										<input type="hidden" name="id" value="{{$ThemeSettings->id}}">
 										<input name="website_name" class="form-control" value="{{$ThemeSettings->website_name}}" type="text">
 									</div>
 								</div>
 
+								{{-- Website Logo --}}
 								<div class="form-group row">
 									<label class="col-lg-3 col-form-label">Light Logo</label>
 									<div class="col-lg-7">
-										<input type="file" class="form-control" name="website_logo">
+										<input type="file" class="form-control" name="website_logo" value="{{$ThemeSettings->website_logo }}">
 										<span class="form-text text-muted">Recommended image size is 40px x 40px</span>
 									</div>
 									<div class="col-lg-2">
@@ -43,10 +44,11 @@
 									</div>
 								</div>
 
+								{{-- Website Favicon --}}
 								<div class="form-group row">
 									<label class="col-lg-3 col-form-label">Favicon</label>
 									<div class="col-lg-7">
-										<input type="file" class="form-control" name="website_favicon">
+										<input type="file" class="form-control" name="website_favicon" value="{{$ThemeSettings->website_favicon }}">
 										<span class="form-text text-muted">Recommended image size is 16px x 16px</span>
 									</div>
 									<div class="col-lg-2">
@@ -60,7 +62,7 @@
 							</form>
 
 							@else 
-							<form action="{{ route('website/settings') }}" method="POST"  enctype="multipart/form-data">
+							<form action="{{ route('theme/store') }}" method="POST"  enctype="multipart/form-data">
 								@csrf
 								<div class="form-group row">
 									<label class="col-lg-3 col-form-label">Website Name</label>
@@ -76,7 +78,7 @@
 										<span class="form-text text-muted">Recommended image size is 40px x 40px</span>
 									</div>
 									<div class="col-lg-2">
-										<div class="img-thumbnail float-right"><img src="" alt="" width="40" height="40"></div>
+										<div class="img-thumbnail float-right"><img src="{{ URL::to('/assets/images/photo_defaults.jpg') }}" alt="" width="40" height="40"></div>
 									</div>
 								</div>
 
@@ -87,7 +89,9 @@
 										<span class="form-text text-muted">Recommended image size is 16px x 16px</span>
 									</div>
 									<div class="col-lg-2">
-										<div class="settings-image img-thumbnail float-right"><img src="" class="img-fluid" width="16" height="16" alt=""></div>
+										<div class="settings-image img-thumbnail float-right">
+											<img src="{{ URL::to('/assets/images/photo_defaults.jpg') }}" class="img-fluid" width="16" height="16" alt="">
+										</div>
 									</div>
 								</div>
 
