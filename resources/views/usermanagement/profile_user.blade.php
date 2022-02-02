@@ -56,16 +56,16 @@
                                                     </div>
                                                 </li>
                                                 @if (!empty($information))
-                                                <li>
-                                                    @if (Auth::user()->rec_id == $information->rec_id)
+                                                    <li>
+                                                        @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Phone:</div>
                                                             <div class="text"><a
-                                                            href="">{{ $information->phone_number }}</a></div>
-                                                            @else
+                                                                    href="">{{ $information->phone_number }}</a></div>
+                                                        @else
                                                             <div class="title">Phone:</div>
                                                             <div class="text">N/A</div>
-                                                            @endif
-                                                </li>
+                                                        @endif
+                                                    </li>
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Birthday:</div>
@@ -95,20 +95,23 @@
                                                             <div class="text">N/A</div>
                                                         @endif
                                                     </li>
-                                                    <li>
-                                                        <div class="title">Reports to:</div>
-                                                        <div class="text">
-                                                            <div class="avatar-box">
-                                                                <div class="avatar avatar-xs">
-                                                                    <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
-                                                                        alt="{{ Auth::user()->name }}">
+                                                    {{-- @if (Auth::user()->role_name != 'Admin')
+                                                        <li>
+                                                            <div class="title">Reports to:</div>
+                                                            <div class="text">
+                                                                <div class="avatar-box">
+                                                                    <div class="avatar avatar-xs">
+                                                                        <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
+                                                                            alt="{{ Auth::user()->name }}">
+                                                                    </div>
                                                                 </div>
+                                                                <a href="profile.html">
+                                                                    {{ Auth::user()->name }}
+                                                                </a>
                                                             </div>
-                                                            <a href="profile.html">
-                                                                {{ Auth::user()->name }}
-                                                            </a>
-                                                        </div>
-                                                    </li>
+                                                        </li>
+                                                    @else
+                                                    @endif --}}
                                                 @else
                                                     <li>
                                                         <div class="title">Birthday:</div>
@@ -122,7 +125,7 @@
                                                         <div class="title">Gender:</div>
                                                         <div class="text">N/A</div>
                                                     </li>
-                                                    <li>
+                                                    {{-- <li>
                                                         <div class="title">Reports to:</div>
                                                         <div class="text">
                                                             <div class="avatar-box">
@@ -135,7 +138,7 @@
                                                                 {{ Auth::user()->name }}
                                                             </a>
                                                         </div>
-                                                    </li>
+                                                    </li> --}}
                                                 @endif
                                             </ul>
                                         </div>
@@ -336,7 +339,8 @@
                                                                             class="end_date">{{ $edu->end_date }}</span>
                                                                     </span>
 
-                                                                    <span hidden class="degree">{{ $edu->degree }}
+                                                                    <span hidden
+                                                                        class="degree">{{ $edu->degree }}
                                                                     </span>
 
                                                                     <div hidden class="grade">{{ $edu->grade }}
@@ -1044,23 +1048,23 @@
                                                 <div class="form-group">
                                                     <label>Phone Number</label>
                                                     <input type="text" class="form-control" id="phone_number"
-                                                        name="phone_number" value="{{ $information->phone_number }}"
-                                                    >
+                                                        name="phone_number" value="{{ $information->phone_number }}">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Department <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="department"
-                                                        name="department" value="{{ $information->department }}"
-                                                        readonly>
+                                            @if (Auth::user()->role_name != 'Admin')
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Department <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="department"
+                                                            name="department" value="{{ $information->department }}"
+                                                            readonly>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Address</label>
@@ -1089,27 +1093,31 @@
                                                 value="{{ $information->pin_code }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Reports To <span class="text-danger">*</span></label>
-                                            <select class="select" id="" name="reports_to">
-                                                <option value="{{ $information->reports_to }}"
-                                                    {{ $information->reports_to == $information->reports_to ? 'selected' : '' }}
-                                                    disabled>
-                                                    {{ $information->reports_to }} </option>
-                                                @foreach ($user as $users)
-                                                    @if ($users->role_name == 'Admin')
-                                                        <option value="{{ $users->name }}">{{ $users->name }}
-                                                        </option>
-                                                    @elseif ($users->role_name == 'Super Admin')
-                                                        <option value="{{ $users->name }}">{{ $users->name }}
-                                                        </option>
+                                    {{-- @if (Auth::user()->role_name != 'Admin')
 
-                                                    @endif
-                                                @endforeach
-                                            </select>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Reports To <span class="text-danger">*</span></label>
+                                                <select class="select" id="" name="reports_to">
+                                                    <option value="{{ $information->reports_to }}"
+                                                        {{ $information->reports_to == $information->reports_to ? 'selected' : '' }}
+                                                        disabled>
+                                                        {{ $information->reports_to }} </option>
+                                                    @foreach ($user as $users)
+                                                        @if ($users->role_name == 'Admin')
+                                                            <option value="{{ $users->name }}">{{ $users->name }}
+                                                            </option>
+                                                        @elseif ($users->role_name == 'Super Admin')
+                                                            <option value="{{ $users->name }}">{{ $users->name }}
+                                                            </option>
+
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif --}}
+
                                 </div>
                                 <div class="submit-section">
                                     <button type="submit" class="btn btn-primary submit-btn">Submit</button>
