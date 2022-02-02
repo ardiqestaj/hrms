@@ -54,7 +54,8 @@
                                                         @if ($user->rec_id == $information->rec_id)
                                                             <div class="title">Email:</div>
                                                             <div class="text"><a
-                                                                    href="">{{ $information->email }}</a></div>
+                                                                    href="mailto:{{ $information->email }}">{{ $information->email }}</a>
+                                                            </div>
                                                         @else
                                                             <div class="title">Email:</div>
                                                             <div class="text">N/A</div>
@@ -64,7 +65,8 @@
                                                         @if ($user->rec_id == $information->rec_id)
                                                             <div class="title">Phone:</div>
                                                             <div class="text"><a
-                                                                    href="">{{ $information->phone_number }}</a></div>
+                                                                    href="tel:{{ $information->phone_number }}">{{ $information->phone_number }}</a>
+                                                            </div>
                                                         @else
                                                             <div class="title">Phone:</div>
                                                             <div class="text">N/A</div>

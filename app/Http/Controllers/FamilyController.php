@@ -30,7 +30,7 @@ class FamilyController extends Controller
             $family->name         = $request->name;
             $family->rec_id       = $request->rec_id;
             $family->relationship = $request->relationship;
-            $family->birth_date   = $request->birth_date;
+            $family->birthdate    = $request->birthdate;
             $family->phone_number = $request->phone_number;
             $family->save();
 

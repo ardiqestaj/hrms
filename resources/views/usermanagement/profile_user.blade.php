@@ -230,7 +230,7 @@
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title">Family Informations <a href="#" class="edit-icon"
-                                            data-toggle="modal" data-target="#family_info_modal"><i
+                                            data-toggle="modal" data-target="#emergency_contact_modal"><i
                                                 class="fa fa-pencil"></i></a></h3>
                                     <div class="table-responsive">
                                         <table class="table table-nowrap">
@@ -260,7 +260,7 @@
                                                         @endif
 
                                                         @if (Auth::user()->rec_id == $family->rec_id)
-                                                            <td>{{ $family->birthdate }}</td>
+                                                            <td>{{ date('d F, Y', strtotime($family->birthdate)) }}</td>
                                                         @else
                                                             <td>N/A</td>
                                                         @endif
@@ -1217,41 +1217,21 @@
                                             <input type="text" class="form-control" id="phoneNumber" name="phone_number">
                                         </div>
                                     </div>
+                                    @if (Auth::user()->role_name != 'Admin')
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Department <span class="text-danger">*</span></label>
+                                                <select class="select" id="department" name="department">
+                                                    <option selected disabled>Select Department</option>
+                                                    <option value="Web Development">Web Development</option>
+                                                    <option value="IT Management">IT Management</option>
+                                                    <option value="Marketing">Marketing</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Department <span class="text-danger">*</span></label>
-                                            <select class="select" id="department" name="department">
-                                                <option selected disabled>Select Department</option>
-                                                <option value="Web Development">Web Development</option>
-                                                <option value="IT Management">IT Management</option>
-                                                <option value="Marketing">Marketing</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Designation <span class="text-danger">*</span></label>
-
-                                            <select class="select" id="" name="designation">
-                                                <option selected disabled>Select Designation</option>
-                                                <option value="Web Designer">Web Designer</option>
-                                                <option value="Web Developer">Web Developer</option>
-                                                <option value="Android Developer">Android Developer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Reports To <span class="text-danger">*</span></label>
-                                            <select class="select" id="" name="reports_to">
-                                                <option selected disabled>-- select --</option>
-                                                @foreach ($user as $users)
-                                                    <option value="{{ $users->name }}">{{ $users->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="submit-section">
                                     <button type="submit" class="btn btn-primary submit-btn">Submit</button>
@@ -1265,7 +1245,7 @@
         @endif
 
         <!-- Family Info Modal -->
-        @if (!empty($family))
+        {{-- @if (!empty($family))
             <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
@@ -1379,7 +1359,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <!-- /Family Info Modal -->
 
@@ -1389,7 +1369,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Personal Information</h5>
+                            <h5 class="modal-title">Family Member Information</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -1426,6 +1406,16 @@
                                                         value="{{ $family->phone_number }}">
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Date of birth <span class="text-danger">*</span></label>
+                                                    <div class="cal-icon">
+                                                        <input class="form-control datetimepicker" type="text"
+                                                            id="birthdate" name="birthdate"
+                                                            value="{{ $family->birthdate }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1445,7 +1435,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Personal Information</h5>
+                            <h5 class="modal-title">Family Member Information</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -1477,6 +1467,13 @@
                                                 <div class="form-group">
                                                     <label>Phone <span class="text-danger">*</span></label>
                                                     <input class="form-control" type="text" name="phone_number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Date of birth <span class="text-danger">*</span></label>
+                                                <div class="cal-icon">
+                                                    <input class="form-control datetimepicker" type="text" id="birthdate"
+                                                        name="birthdate">
                                                 </div>
                                             </div>
                                         </div>
