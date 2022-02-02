@@ -30,7 +30,7 @@
 										<div class="profile-img-wrap">
 											<div class="profile-img">
 												<a href="">
-													<img src="assets/img/profiles/avatar-19.jpg" alt="">
+													<img src={{ URL::to('/assets/images/photo_defaults.jpg')}} alt="">
 												</a>
 											</div>
 										</div>
@@ -38,35 +38,35 @@
 											<div class="row">
 												<div class="col-md-5">
 													<div class="profile-info-left">
-														<h3 class="user-name">Global Technologies</h3>
-														<h5 class="company-role m-t-0 mb-0">Barry Cuda</h5>
-														<small class="text-muted">CEO</small>
-														<div class="staff-id">Employee ID : CLT-0001</div>
+														<h3 class="user-name">{{$client->client_name}}</h3>
+														<h5 class="company-role m-t-0 mb-0">{{$client->contact_person}}</h5>
+														<small class="text-muted"></small>
+														<div class="staff-id">Client ID : {{$client->rec_client_id}}</div>
 														<div class="staff-msg"><a href="chat.html" class="btn btn-custom">Send Message</a></div>
 													</div>
 												</div>
 												<div class="col-md-7">
 													<ul class="personal-info">
 														<li>
-															<span class="title">Phone:</span>
-															<span class="text"><a href="">9876543210</a></span>
+															<span class="title">Mobile Phone:</span>
+															<span class="text"><a href="">{{$client->client_mobile_phone}}</a></span>
+														</li>
+														<li>
+															<span class="title">Fax Phone:</span>
+															<span class="text">{{$client->client_fax_phone}}</span>
 														</li>
 														<li>
 															<span class="title">Email:</span>
-															<span class="text"><a href="">barrycuda@example.com</a></span>
+															<span class="text"><a href="mailto: {{$client->client_email}}">{{$client->client_email}}</a></span>
 														</li>
 														<li>
-															<span class="title">Birthday:</span>
-															<span class="text">2nd August</span>
+															<span class="title">Address</span>
+															<span class="text">{{$client->client_address}}</span>
 														</li>
-														<li>
+														{{-- <li>
 															<span class="title">Address:</span>
 															<span class="text">5754 Airport Rd, Coosada, AL, 36020</span>
-														</li>
-														<li>
-															<span class="title">Gender:</span>
-															<span class="text">Male</span>
-														</li>
+														</li> --}}
 													</ul>
 												</div>
 											</div>
