@@ -20,6 +20,9 @@ class CreateThemeSettingsTable extends Migration
             $table->string('website_favicon')->nullable();
             $table->timestamps();
         });
+        DB::table('theme_settings')->insert([
+            ['website_name' => 'Company Name', 'website_logo' => 'photo_defaults.jpg','website_favicon' => 'photo_defaults.jpg' ]
+        ]);
     }
 
     /**

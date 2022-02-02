@@ -404,7 +404,6 @@ class UserManagementController extends Controller
             $todayDate = $dt->toDayDateTimeString();
 
             $activityLog = [
-
                 'user_name'    => $fullName,
                 'email'        => $email,
                 'phone_number' => $phone_number,
