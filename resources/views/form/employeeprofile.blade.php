@@ -29,19 +29,19 @@
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
                                         <a href="#"><img alt="" class=""
-                                                src="{{ URL::to('/assets/images/' . $user[0]->avatar) }}"
-                                                alt="{{ $user[0]->name }}"></a>
+                                                src="{{ URL::to('/assets/images/' . $user->avatar) }}"
+                                                alt="{{ $user->name }}"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name mt-0 mt-md-5 mb-0">{{ $user[0]->name }}</h3>
-                                                <h6 class="text-muted"> {{ $user[0]->department }}</h6>
-                                                <small class="text-muted">{{ $user[0]->position }}</small>
-                                                <div class="staff-id">Employee ID : {{ $user[0]->rec_id }}</div>
-                                                <div class="small doj text-muted">Date of Join : {{ $user[0]->join_date }}
+                                                <h3 class="user-name mt-0 mt-md-5 mb-0">{{ $user->name }}</h3>
+                                                <h6 class="text-muted"> {{ $user->department }}</h6>
+                                                <small class="text-muted">{{ $user->position }}</small>
+                                                <div class="staff-id">Employee ID : {{ $user->rec_id }}</div>
+                                                <div class="small doj text-muted">Date of Join : {{ $user->join_date }}
                                                 </div>
                                                 <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send
                                                         Message</a></div>
@@ -49,54 +49,104 @@
                                         </div>
                                         <div class="col-md-7">
                                             <ul class="personal-info" style="list-style-type: disc;">
-                                                <li>
-                                                    <div class="title">Phone:</div>
-                                                    <div class="text"><a
-                                                            href="">{{ Auth::user()->phone_number }}</a></div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Email:</div>
-                                                    <div class="text"><a href="">{{ Auth::user()->email }}</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Birthday:</div>
-                                                    @if (!empty($users))
-                                                        <div class="text">{{ $users->birth_date }}</div>
-                                                    @endif
-                                                </li>
-                                                <li>
-                                                    <div class="title">Address:</div>
-                                                    @if (!empty($users))
-                                                        <div class="text">{{ $users->address }}</div>
-                                                    @endif
-                                                </li>
-                                                <li>
-                                                    <div class="title">Gender:</div>
-                                                    @if (!empty($users))
-                                                        <div class="text">{{ $users->gender }}</div>
-                                                    @endif
-                                                </li>
-                                                <li>
-                                                    <div class="title">Reports to:</div>
-                                                    <div class="text">
-                                                        <div class="avatar-box">
-                                                            <div class="avatar avatar-xs">
-                                                                <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
-                                                                    alt="{{ Auth::user()->name }}">
+                                                @if (!empty($information))
+                                                    <li>
+                                                        @if ($user->rec_id == $information->rec_id)
+                                                            <div class="title">Email:</div>
+                                                            <div class="text"><a
+                                                                    href="">{{ $information->email }}</a></div>
+                                                        @else
+                                                            <div class="title">Email:</div>
+                                                            <div class="text">N/A</div>
+                                                        @endif
+                                                    </li>
+                                                    <li>
+                                                        @if ($user->rec_id == $information->rec_id)
+                                                            <div class="title">Phone:</div>
+                                                            <div class="text"><a
+                                                                    href="">{{ $information->phone_number }}</a></div>
+                                                        @else
+                                                            <div class="title">Phone:</div>
+                                                            <div class="text">N/A</div>
+                                                        @endif
+                                                    </li>
+                                                    <li>
+                                                        @if ($user->rec_id == $information->rec_id)
+                                                            <div class="title">Birthday:</div>
+                                                            <div class="text">
+                                                                {{ date('d F, Y', strtotime($information->birth_date)) }}
                                                             </div>
+                                                        @else
+                                                            <div class="title">Birthday:</div>
+                                                            <div class="text">N/A</div>
+                                                        @endif
+                                                    </li>
+                                                    <li>
+                                                        @if ($user->rec_id == $information->rec_id)
+                                                            <div class="title">Address:</div>
+                                                            <div class="text">{{ $information->address }}</div>
+                                                        @else
+                                                            <div class="title">Address:</div>
+                                                            <div class="text">N/A</div>
+                                                        @endif
+                                                    </li>
+                                                    <li>
+                                                        @if ($user->rec_id == $information->rec_id)
+                                                            <div class="title">Gender:</div>
+                                                            <div class="text">{{ $information->gender }}</div>
+                                                        @else
+                                                            <div class="title">Gender:</div>
+                                                            <div class="text">N/A</div>
+                                                        @endif
+                                                    </li>
+                                                    {{-- <li>
+                                                        <div class="title">Reports to:</div>
+                                                        <div class="text">
+                                                            <div class="avatar-box">
+                                                                <div class="avatar avatar-xs">
+                                                                    <img src="{{ URL::to('/assets/images/' . $user->avatar) }}"
+                                                                        alt="{{ $user->name }}">
+                                                                </div>
+                                                            </div>
+                                                            <a href="profile.html">
+                                                                {{ $user->name }}
+                                                            </a>
                                                         </div>
-                                                        <a href="profile.html">
-                                                            {{ Auth::user()->name }}
-                                                        </a>
-                                                    </div>
-                                                </li>
+                                                    </li> --}}
+                                                @else
+                                                    <li>
+                                                        <div class="title">Birthday:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Gender:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    {{-- <li>
+                                                        <div class="title">Reports to:</div>
+                                                        <div class="text">
+                                                            <div class="avatar-box">
+                                                                <div class="avatar avatar-xs">
+                                                                    <img src="{{ URL::to('/assets/images/' . $user->avatar) }}"
+                                                                        alt="{{ $user->name }}">
+                                                                </div>
+                                                            </div>
+                                                            <a href="profile.html">
+                                                                {{ $user->name }}
+                                                            </a>
+                                                        </div>
+                                                    </li> --}}
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal"
-                                        class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                                {{-- <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal"
+                                        class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div> --}}
                             </div>
                         </div>
                     </div>
@@ -126,119 +176,67 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Personal Informations <a href="#" class="edit-icon"
-                                            data-toggle="modal" data-target="#personal_info_modal"><i
-                                                class="fa fa-pencil"></i></a></h3>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Passport No.</div>
-                                            <div class="text">9876543210</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Passport Exp Date.</div>
-                                            <div class="text">9876543210</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Tel</div>
-                                            <div class="text"><a href="">9876543210</a></div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Nationality</div>
-                                            <div class="text">Indian</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Religion</div>
-                                            <div class="text">Christian</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Marital status</div>
-                                            <div class="text">Married</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Employment of spouse</div>
-                                            <div class="text">No</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">No. of children</div>
-                                            <div class="text">2</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon"
+                                    <h3 class="card-title">Emergency Contact
+                                        {{-- <a href="#" class="edit-icon"
                                             data-toggle="modal" data-target="#emergency_contact_modal"><i
-                                                class="fa fa-pencil"></i></a></h3>
-                                    <h5 class="section-title">Primary</h5>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Name</div>
-                                            <div class="text">John Doe</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Relationship</div>
-                                            <div class="text">Father</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Phone </div>
-                                            <div class="text">9876543210, 9876543210</div>
-                                        </li>
-                                    </ul>
+                                                class="fa fa-pencil"></i></a> --}}
+                                    </h3>
                                     <hr>
-                                    <h5 class="section-title">Secondary</h5>
                                     <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Name</div>
-                                            <div class="text">Karen Wills</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Relationship</div>
-                                            <div class="text">Brother</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Phone </div>
-                                            <div class="text">9876543210, 9876543210</div>
-                                        </li>
+                                        @if (!empty($families))
+                                            <li>
+                                                @if ($user->rec_id == $families->rec_id)
+                                                    <div class="title">Full Name</div>
+                                                    <div class="text">{{ $families->name }}</div>
+                                                @else
+                                                    <div class="title">Full Name</div>
+                                                    <div class="text">N/A</div>
+                                                @endif
+                                            </li>
+                                            <li>
+                                                @if ($user->rec_id == $families->rec_id)
+                                                    <div class="title">Relationship</div>
+                                                    <div class="text">{{ $families->relationship }}</div>
+                                                @else
+                                                    <div class="title">Relationship</div>
+                                                    <div class="text">N/A</div>
+                                                @endif
+                                            </li>
+                                            <li>
+                                                @if ($user->rec_id == $families->rec_id)
+                                                    <div class="title">Phone </div>
+                                                    <div class="text">{{ $families->phone_number }}</div>
+                                                @else
+                                                    <div class="title">Phone </div>
+                                                    <div class="text">N/A</div>
+                                                @endif
+                                            </li>
+                                        @else
+                                            <li>
+                                                <div class="title">Full Name</div>
+                                                <div class="text">N/A</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Relationship</div>
+                                                <div class="text">N/A</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Phone </div>
+                                                <div class="text">N/A</div>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Bank information</h3>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Bank name</div>
-                                            <div class="text">ICICI Bank</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Bank account No.</div>
-                                            <div class="text">159843014641</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">IFSC Code</div>
-                                            <div class="text">ICI24504</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">PAN No</div>
-                                            <div class="text">TC000Y56</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Family Informations <a href="#" class="edit-icon"
+                                    <h3 class="card-title">Family Informations
+                                        {{-- <a href="#" class="edit-icon"
                                             data-toggle="modal" data-target="#family_info_modal"><i
-                                                class="fa fa-pencil"></i></a></h3>
+                                                class="fa fa-pencil"></i></a> --}}
+                                    </h3>
                                     <div class="table-responsive">
                                         <table class="table table-nowrap">
                                             <thead>
@@ -251,25 +249,40 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Leo</td>
-                                                    <td>Brother</td>
-                                                    <td>Feb 16th, 2019</td>
-                                                    <td>9876543210</td>
-                                                    <td class="text-right">
-                                                        <div class="dropdown dropdown-action">
-                                                            <a aria-expanded="false" data-toggle="dropdown"
-                                                                class="action-icon dropdown-toggle" href="#"><i
-                                                                    class="material-icons">more_vert</i></a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a href="#" class="dropdown-item"><i
-                                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                <a href="#" class="dropdown-item"><i
-                                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                @if (!empty($families))
+
+                                                    <tr>
+                                                        @if ($user->rec_id == $families->rec_id)
+                                                            <td>{{ $families->name }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+
+                                                        @if ($user->rec_id == $families->rec_id)
+                                                            <td>{{ $families->relationship }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+
+                                                        @if ($user->rec_id == $families->rec_id)
+                                                            <td>{{ $families->birthdate }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+
+                                                        @if ($user->rec_id == $families->rec_id)
+                                                            <td>{{ $families->phone_number }}</td>
+                                                        @else
+                                                            <td>N/A</td>
+                                                        @endif
+                                                    @else
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+                                                    </tr>
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -277,41 +290,82 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Education Informations <a href="#" class="edit-icon"
-                                            data-toggle="modal" data-target="#education_info"><i
-                                                class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Education Informations
+                                        {{-- <a href="#" class="edit-icon ml-2" data-toggle="modal" data-target="#education_info">
+                                            <i class="fa fa-pencil"></i>
+                                            </a> --}}
+                                        {{-- <a href="javascript:void(0);" class="edit-icon" data-toggle="modal"
+                                            data-target="#education_info1" id="education-card-add-btn"><i
+                                                class="fa fa-plus"></i> --}}
+                                        </a>
+                                    </h3>
+
+                                    {{-- </div> --}}
                                     <div class="experience-box">
                                         <ul class="experience-list">
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">International College of Arts
-                                                            and Science (UG)</a>
-                                                        <div>Bsc Computer Science</div>
-                                                        <span class="time">2000 - 2003</span>
+                                            @if (!empty($education))
+                                                @foreach ($education as $edu)
+
+                                                    <li>
+
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+
+                                                            <div class="timeline-content">
+                                                                {{-- <a href="#" class="edit-icon eduUpdate" data-toggle="modal"
+                                                                    data-target="#education_info">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a> --}}
+                                                                @if ($edu->id)
+
+                                                                    <div hidden class="id">
+                                                                        {{ $edu->id }}
+                                                                    </div>
+
+                                                                    <a href="#/"
+                                                                        class="institution name">{{ $edu->institution }}</a>
+
+                                                                    <div class="subject">{{ $edu->subject }}
+                                                                    </div>
+
+
+                                                                    <span class="time"><span
+                                                                            class="st_date">{{ $edu->st_date }}
+                                                                        </span>
+                                                                        -
+                                                                        <span
+                                                                            class="end_date">{{ $edu->end_date }}</span>
+                                                                    </span>
+
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <hr>
+                                                @endforeach
+
+                                            @else
+                                                <li>
+                                                    <div class="experience-user">
+                                                        <div class="before-circle"></div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">International College of Arts
-                                                            and Science (PG)</a>
-                                                        <div>Msc Computer Science</div>
-                                                        <span class="time">2000 - 2003</span>
+                                                    <div class="experience-content">
+                                                        <div class="timeline-content">
+                                                            <a href="#/" class="name">N/A</a>
+                                                            <div>N/A</div>
+                                                            <span class="time">N/A -
+                                                                N/A</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -902,7 +956,7 @@
         <!-- /Page Content -->
 
         <!-- Profile Modal -->
-        <div id="profile_info" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="profile_info" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1075,11 +1129,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Profile Modal -->
 
         <!-- Personal Info Modal -->
-        <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1155,11 +1209,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Personal Info Modal -->
 
         <!-- Family Info Modal -->
-        <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1247,11 +1301,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Family Info Modal -->
 
         <!-- Emergency Contact Modal -->
-        <div id="emergency_contact_modal" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="emergency_contact_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1332,11 +1386,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Emergency Contact Modal -->
 
         <!-- Education Modal -->
-        <div id="education_info" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="education_info" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1465,11 +1519,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Education Modal -->
 
         <!-- Experience Modal -->
-        <div id="experience_info" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="experience_info" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1583,7 +1637,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Experience Modal -->
 
         <!-- /Page Content -->

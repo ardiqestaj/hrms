@@ -61,8 +61,12 @@
             {{-- message --}}
             <div class="row staff-grid-row">
                 @foreach ($users as $lists)
-                    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 employeeclass">
+
                         <div class="profile-widget">
+                            <div hidden class="id">{{ $lists->rec_id }}</div>
+                            {{-- <input type="text" class="id" value="{{ $lists->rec_id }}"> --}}
+
                             <div class="profile-img">
                                 <a href="{{ url('employee/profile/' . $lists->rec_id) }}" class="avatar"><img
                                         src="{{ URL::to('/assets/images/' . $lists->avatar) }}"
@@ -75,9 +79,8 @@
                                     <a class="dropdown-item"
                                         href="{{ url('all/employee/view/edit/' . $lists->rec_id) }}"><i
                                             class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="{{ url('all/employee/delete/' . $lists->rec_id) }}"
-                                        onclick="return confirm('Are you sure to want to delete it?')"><i
-                                            class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item employeeDelete" href="#" data-toggle="modal"
+                                        data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="profile.html">{{ $lists->name }}</a>
@@ -223,7 +226,7 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Department <span
+                                        <label class="col-form-label">Type Of Work <span
                                                 class="text-danger">*</span></label>
                                         <select class="select @error('role_name') is-invalid @enderror" name="department"
                                             id="department">
@@ -262,38 +265,27 @@
                                     class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="wday-box">
-                                            <fieldset>
-                                                <label class="checkbox-inline"><input type="checkbox" name="monday"
-                                                        value="t" class="days recurring" checked=""> <span
-                                                        class="checkmark">M</span></label>
+                                    <div class="form-group wday-box">
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
+                                                checked=""> <span class="checkmark">M</span></label>
 
-                                                <label class="checkbox-inline"><input type="checkbox" name="monday"
-                                                        value="X" class="days recurring" checked=""><span
-                                                        class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
+                                                checked=""><span class="checkmark">T</span></label>
 
-                                                <label class="checkbox-inline"><input type="checkbox" name="wednesday"
-                                                        value="Y" class="days recurring" checked=""><span
-                                                        class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y"
+                                                checked=""><span class="checkmark">W</span></label>
 
-                                                <label class="checkbox-inline"><input type="checkbox" name="thursday"
-                                                        value="Y" class="days recurring" checked=""><span
-                                                        class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
+                                                checked=""><span class="checkmark">T</span></label>
 
-                                                <label class="checkbox-inline"><input type="checkbox" name="friday"
-                                                        value="Y" class="days recurring" checked=""><span
-                                                        class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
+                                                checked=""><span class="checkmark">F</span></label>
 
-                                                <label class="checkbox-inline"><input type="checkbox" name="saturday"
-                                                        value="Y" class="days recurring"><span
-                                                        class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday"
+                                                value="Y"><span class="checkmark">S</span></label>
 
-                                                <label class="checkbox-inline"><input type="checkbox" name="sunday"
-                                                        value="Y" class="days recurring"><span
-                                                        class="checkmark">S</span></label>
-                                            </fieldset>
-                                        </div>
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"><span
+                                                class="checkmark">S</span></label>
                                     </div>
                                 </div>
 
@@ -395,20 +387,43 @@
             </div>
         </div>
         <!-- /Add Employee Modal -->
-
+        <!-- Delete Leave Modal -->
+        <div class="modal custom-modal fade" id="delete_approve" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-header">
+                            <h3>Delete Employee</h3>
+                            <p>Are you sure want to delete this employee?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                            <form action="{{ route('all/employee/delete') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="employee_id" id="e_id" value="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit"
+                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Delete Leave Modal -->
     </div>
     <!-- /Page Wrapper -->
 @section('script')
     <script>
-        $("input:checkbox").on('click', function() {
-            var $box = $(this);
-            if ($box.is(":checked")) {
-                var group = "input:checkbox[class='" + $box.attr("class") + "']";
-                $(group).prop("checked", false);
-                $box.prop("checked", true);
-            } else {
-                $box.prop("checked", false);
-            }
+        $(document).on('click', '.employeeDelete', function() {
+            var _this = $(this).parents('.profile-widget');
+            $('#e_id').val(_this.find('.id').text());
         });
     </script>
     <script>

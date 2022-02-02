@@ -78,7 +78,8 @@
                                     <div class="col-md-10">
                                         <select class="select form-control" id="gender" name="gender">
                                             <option value="{{ $employees[0]->gender }}"
-                                                {{ $employees[0]->gender == $employees[0]->gender ? 'selected' : '' }}>
+                                                {{ $employees[0]->gender == $employees[0]->gender ? 'selected' : '' }}
+                                                disabled>
                                                 {{ $employees[0]->gender }} </option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -90,10 +91,13 @@
                                     <div class="col-md-10">
                                         <select class="select form-control" id="department" name="department">
                                             <option value="{{ $employees[0]->department }}"
-                                                {{ $employees[0]->department == $employees[0]->department ? 'selected' : '' }}>
+                                                {{ $employees[0]->department == $employees[0]->department ? 'selected' : '' }}
+                                                disabled>
                                                 {{ $employees[0]->department }} </option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->department }}">
+                                                    {{ $department->department }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -115,37 +119,30 @@
                                 <div class="form-group row">
                                     <div class="form-group wday-box">
                                         <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->monday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">M</span></label>
 
                                         <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->tuesday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">T</span></label>
 
                                         <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->wednesday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">W</span></label>
 
                                         <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->thursday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">T</span></label>
 
                                         <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->friday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">F</span></label>
 
                                         <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->saturday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">S</span></label>
 
                                         <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"
-                                                class="days recurring"
                                                 {{ $employees[0]->sunday == 'Y' ? 'checked' : '' }}><span
                                                 class="checkmark">S</span></label>
                                     </div>

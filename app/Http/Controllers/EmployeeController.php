@@ -103,7 +103,8 @@ class EmployeeController extends Controller
             ->where('employees.employee_id','=',$employee_id)
             ->get();
         $employees = DB::table('employees')->where('employee_id',$employee_id)->get();
-        return view('form.edit.editemployee',compact('employees','permission'));
+        $departments = DB::table('departments')->get();
+        return view('form.edit.editemployee',compact('employees','permission','departments'));
     }
     // update record employee
     public function updateRecord( Request $request)
@@ -169,13 +170,13 @@ class EmployeeController extends Controller
         }
     }
     // delete record
-    public function deleteRecord($employee_id)
+    public function deleteRecord(Request $request)
     {
         DB::beginTransaction();
         try{
 
-            Employee::where('employee_id',$employee_id)->delete();
-            User::where('rec_id',$employee_id)->delete();
+            Employee::where('employee_id',$request->employee_id)->delete();
+            User::where('rec_id',$request->employee_id)->delete();
             // module_permission::where('employee_id',$employee_id)->delete();
 
             DB::commit();
@@ -354,13 +355,14 @@ class EmployeeController extends Controller
     // employee profile
     public function profileEmployee($rec_id)
     {
-        $users = DB::table('profile_information')
-                ->join('users', 'users.rec_id', '=', 'profile_information.rec_id')
-                ->select('profile_information.*', 'users.*')
-                ->where('profile_information.rec_id','=',$rec_id)
+        $information = DB::table('profile_information')
+
+                ->where('rec_id','=',$rec_id)
                 ->first();
-        $user = DB::table('users')->where('rec_id',$rec_id)->get();
-        return view('form.employeeprofile',compact('user','users'));
+        $user = DB::table('users')->where('rec_id',$rec_id)->first();
+        $education = DB::table('education_information')->where('rec_id',$rec_id)->get();
+        $families = DB::table('families')->where('rec_id',$rec_id)->first();
+        return view('form.employeeprofile',compact('user','information', 'education', 'families'));
     }
 }
 

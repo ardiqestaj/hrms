@@ -443,7 +443,7 @@
                         <div class="modal-btn delete-action">
                             <form action="{{ route('form/leaves/edit/delete') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="id" class="e_id" value="">
+                                <input type="text" name="id" class="e_id" value="">
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="submit"

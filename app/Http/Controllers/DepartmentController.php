@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use DB;
-
+use App\Views\Composers\MultiComposer;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
@@ -20,6 +20,8 @@ class DepartmentController extends Controller
     {
         $departments = Department::all();
         return view('form.departments',compact('departments'));
+
+
     }
 
     // new department
