@@ -26,11 +26,14 @@
 	<link rel="stylesheet" href="{{ URL::to('assets/css/select2.min.css') }}">
 	<!-- Datetimepicker CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/bootstrap-datetimepicker.min.css') }}">
+	<!-- Semantic CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/semantic.min.css') }}">
 	<!-- Chart CSS -->
 	<link rel="stylesheet" href="{{ URL::to('ssets/plugins/morris/morris.css') }}">
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ URL::to('css/app.css') }}">
+
 
 
 	{{-- message toastr --}}
@@ -77,13 +80,20 @@
 	<!-- Datetimepicker JS -->
 	<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/moment-timezone-with-data.js') }}"></script>	
 	<!-- Datatable JS -->
 	<script src="{{ URL::to('assets/js/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/dataTables.bootstrap4.min.js') }}"></script>
 	<!-- Multiselect JS -->
-	<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>		
+	<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>	
+	<!-- Semantic JS -->
+	<script src="{{ URL::to('assets/js/semantic.min.js') }}"></script>		
 	<!-- Custom JS -->
 	<script src="{{ URL::to('assets/js/app.js') }}"></script>
+
+	<script>
+        var timezone = "@isset($tz){{ $tz }}@endisset";
+    </script>
 	
 	@yield('script')
 </body>
