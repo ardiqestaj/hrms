@@ -35,7 +35,9 @@ class ClientsController extends Controller
      */
     public function clientsList()
     {
-        return view('clients.clients-list');
+        $clients = DB::table('clients')
+                    ->get(); 
+        return view('clients.clients-list', compact('clients'));
         //
     }
 
@@ -46,8 +48,6 @@ class ClientsController extends Controller
             'client_name'   => 'required|string|max:255',
             'contact_person'    => 'required|string|max:255',
             'client_address'      => 'required|string|max:255',
-            // 'client_mobile_phone' => 'required|string|max:255',
-            // 'client_fax_phone' => 'required|string|max:255'
 
         ]);
 
@@ -99,7 +99,7 @@ class ClientsController extends Controller
             return redirect()->back();
         }
     }
-
+// Delete Client
     public function deleteClient(Request $request)
     {
         try {
@@ -120,9 +120,10 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function clientProfile()
+    public function clientProfile($client_id)
     {
-        return view('clients.client-profile');
+        $client = DB::table('clients')->where('client_id',$client_id)->first();
+        return view('clients.client-profile', compact('client'));
         //
     }
 
