@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-   
+
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -16,40 +16,43 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
+                                class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link  active"><i class="fa fa-bars"></i></a>
+                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link"><i
+                                    class="fa fa-th"></i></a>
+                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link  active"><i
+                                    class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-			<!-- /Page Header -->
+            <!-- /Page Header -->
 
             <!-- Search Filter -->
             <form action="{{ route('all/employee/list/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating" name="employee_id">
                             <label class="focus-label">Employee ID</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating">
                             <label class="focus-label">Employee Name</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3"> 
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating">
-                            <label class="focus-label">Position</label>
+                            <label class="focus-label">Department</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <button type="sumit" class="btn btn-success btn-block"> Search </button>  
+                    <div class="col-sm-6 col-md-3">
+                        <button type="sumit" class="btn btn-success btn-block"> Search </button>
                     </div>
                 </div>
             </form>
@@ -73,29 +76,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $items )
-                                <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}"></a>
-                                            <a href="{{ url('employee/profile/'.$items->rec_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $items->rec_id }}</td>
-                                    <td>{{ $items->email }}</td>
-                                    <td>{{ $items->phone_number }}</td>
-                                    <td>{{ $items->join_date }}</td>
-                                    <td>{{ $items->role_name }}</td>
-                                    <td class="text-right">
-                                        <div class="dropdown dropdown-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->rec_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->rec_id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                @foreach ($users as $items)
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{{ url('employee/profile/' . $items->rec_id) }}"
+                                                    class="avatar"><img alt=""
+                                                        src="{{ URL::to('/assets/images/' . $items->avatar) }}"></a>
+                                                <a
+                                                    href="{{ url('employee/profile/' . $items->rec_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $items->rec_id }}</td>
+                                        <td><a href="mailto: {{ $items->email }}">{{ $items->email }}</a></td>
+                                        <td>{{ $items->phone_number }}</td>
+                                        <td>{{ $items->join_date }}</td>
+                                        <td>{{ $items->role_name }}</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item"
+                                                        href="{{ url('all/employee/view/edit/' . $items->rec_id) }}"><i
+                                                            class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ url('all/employee/delete/' . $items->rec_id) }}"
+                                                        onclick="return confirm('Are you sure to want to delete it?')"><i
+                                                            class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -104,7 +116,8 @@
             </div>
         </div>
         <!-- /Page Content -->
-      
+
+        <!-- Add Employee Modal -->
         <!-- Add Employee Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -116,62 +129,261 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/save') }}" method="POST">
+                        <form action="{{ route('register/user') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Full Name</label>
-                                        <select class="select" id="name" name="name">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->name }}" data-employee_id={{ $user->rec_id }} data-email={{ $user->email }}>{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label class="col-form-label">Name <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('name') is-invalid @enderror" type="text"
+                                            id="name" name="name" value="{{ old('name') }}" required>
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                            
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Last Name <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" id="lastname" name="lastname" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">User Name <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" id="username" name="username" required>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" id="email" name="email" placeholder="Auto email" readonly>
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email"
+                                            id="email" value="{{ old('email') }}" name="email" required>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Birth Date</label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate">
-                                        </div>
+                                        <label class="col-form-label">Employee ID <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="rec_id" name=""
+                                            placeholder="Auto id employee" readonly>
                                     </div>
                                 </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Role <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="role_name" name="role_name"
+                                            placeholder="Employee" value="Employee" readonly>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" class="image" name="image" value="photo_defaults.jpg">
+
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label" @error('password') is-invalid @enderror"
+                                            name="password">Password <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" id="password" name="password"
+                                            required>
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Confirm Password <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" id="confirmPassword"
+                                            name="password_confirmation" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Phone Number <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" required id="phone_number"
+                                            name="phone_number">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Gender</label>
-                                        <select class="select form-control" id="gender" name="gender">
+                                        <label class="col-form-label">Birthday <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control datetimepicker" type="text" id="birthDate"
+                                            name="birth_date" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gender <span class="text-danger">*</span></label>
+                                        <select class="select form-control" style="width: 100%;" tabindex="-1"
+                                            aria-hidden="true" id="gender" name="gender" required>
+                                            <option value="" selected disabled>-- Select --</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">  
-                                    <div class="form-group">
-                                        <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Auto id employee" readonly>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Company</label>
-                                        <select class="select" id="company" name="company">
+                                        <label class="col-form-label">Type Of Work <span
+                                                class="text-danger">*</span></label>
+                                        <select class="select @error('role_name') is-invalid @enderror" name="department"
+                                            id="department">
+                                            <option selected disabled>-- Select Dapartment --</option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->department }}">
+                                                    {{ $department->department }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('role_name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Payment Method <span
+                                                class="text-danger">*</span></label>
+                                        <select class="select select2s-hidden-accessible" style="width: 100%;"
+                                            tabindex="-1" aria-hidden="true" id="payment_method" name="payment_method"
+                                            required>
                                             <option value="">-- Select --</option>
-                                            <option value="Soeng Souy">Soeng Souy</option>
-                                            <option value="StarGame Kh">StarGame Kh</option>
+                                            <option value="Hourly">Hourly</option>
+                                            <option value="Parttime">Parttime</option>
+                                            <option value="Fulltime">Fulltime</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive m-t-15">
+
+
+                            <label for="col-form-label">Possible working days and hours <span
+                                    class="text-danger">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group wday-box">
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
+                                                checked=""> <span class="checkmark">M</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
+                                                checked=""><span class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y"
+                                                checked=""><span class="checkmark">W</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
+                                                checked=""><span class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
+                                                checked=""><span class="checkmark">F</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday"
+                                                value="Y"><span class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"><span
+                                                class="checkmark">S</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="input-group time timepicker">
+                                            <input class="form-control" type="time" id="time_start" name="time_start">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="input-group time timepicker">
+                                            <input class="form-control" type="time" id="time_end" name="time_end">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                    id="switch_hospitalisation">
+                                <label class="onoffswitch-label" for="switch_hospitalisation">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+
+                            <label for="col-form-label">Possible working days and hours <span
+                                    class="text-danger">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group wday-box">
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday_opt" value="Y">
+                                            <span class="checkmark">M</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday_opt"
+                                                value="Y"><span class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday_opt"
+                                                value="Y"><span class="checkmark">W</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday_opt"
+                                                value="Y"><span class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday_opt"
+                                                value="Y"><span class="checkmark">F</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday_opt"
+                                                value="Y"><span class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday_opt"
+                                                value="Y"><span class="checkmark">S</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="input-group time timepicker">
+                                            <input class="form-control" type="time" id="time_start"
+                                                name="time_start_opt">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="input-group time timepicker">
+                                            <input class="form-control" type="time" id="time_end" name="time_end_opt">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- <div class="table-responsive m-t-15">
                                 <table class="table table-striped custom-table">
                                     <thead>
                                         <tr>
@@ -185,46 +397,67 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                            $key = 0;
-                                            $key1 = 0;
-                                        ?>
-                                        @foreach ($permission_lists as $lists )
-                                        <tr>
-                                            <td>{{ $lists->permission_name }}</td>
-                                            <input type="hidden" name="permission[]" value="{{ $lists->permission_name }}">
-                                            <input type="hidden" name="id_count[]" value="{{ $lists->id }}">
-                                            <td class="text-center">
-                                                <input type="checkbox" class="read{{ ++$key }}" id="read" name="read[]" value="Y"{{ $lists->read =="Y" ? 'checked' : ''}} >
-                                                <input type="checkbox" class="read{{ ++$key1 }}" id="read" name="read[]" value="N" {{ $lists->read =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="write{{ ++$key }}" id="write" name="write[]" value="Y" {{ $lists->write =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="write{{ ++$key1 }}" id="write" name="write[]" value="N" {{ $lists->write =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="create{{ ++$key }}" id="create" name="create[]" value="Y" {{ $lists->create =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="create{{ ++$key1 }}" id="create" name="create[]" value="N" {{ $lists->create =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="delete{{ ++$key }}" id="delete" name="delete[]" value="Y" {{ $lists->delete =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="delete{{ ++$key1 }}" id="delete" name="delete[]" value="N" {{ $lists->delete =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="import{{ ++$key }}" id="import" name="import[]" value="Y" {{ $lists->import =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="import{{ ++$key1 }}" id="import" name="import[]" value="N" {{ $lists->import =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="export{{ ++$key }}" id="export" name="export[]" value="Y" {{ $lists->export =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $lists->export =="N" ? 'checked' : ''}}>
-                                            </td>
-                                        </tr>
+                                        @foreach ($permission_lists as $lists)
+                                            <tr>
+                                                <td>{{ $lists->permission_name }}</td>
+                                                <input type="hidden" name="permission[]"
+                                                    value="{{ $lists->permission_name }}">
+                                                <input type="hidden" name="id_count[]" value="{{ $lists->id }}">
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="read{{ ++$key }}" id="read"
+                                                        name="read[]" value="Y"
+                                                        {{ $lists->read == 'Y' ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="read{{ ++$key1 }}" id="read"
+                                                        name="read[]" value="N"
+                                                        {{ $lists->read == 'N' ? 'checked' : '' }}>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="write{{ ++$key }}" id="write"
+                                                        name="write[]" value="Y"
+                                                        {{ $lists->write == 'Y' ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="write{{ ++$key1 }}" id="write"
+                                                        name="write[]" value="N"
+                                                        {{ $lists->write == 'N' ? 'checked' : '' }}>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="create{{ ++$key }}" id="create"
+                                                        name="create[]" value="Y"
+                                                        {{ $lists->create == 'Y' ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="create{{ ++$key1 }}" id="create"
+                                                        name="create[]" value="N"
+                                                        {{ $lists->create == 'N' ? 'checked' : '' }}>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="delete{{ ++$key }}" id="delete"
+                                                        name="delete[]" value="Y"
+                                                        {{ $lists->delete == 'Y' ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="delete{{ ++$key1 }}" id="delete"
+                                                        name="delete[]" value="N"
+                                                        {{ $lists->delete == 'N' ? 'checked' : '' }}>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="import{{ ++$key }}" id="import"
+                                                        name="import[]" value="Y"
+                                                        {{ $lists->import == 'Y' ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="import{{ ++$key1 }}" id="import"
+                                                        name="import[]" value="N"
+                                                        {{ $lists->import == 'N' ? 'checked' : '' }}>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="export{{ ++$key }}" id="export"
+                                                        name="export[]" value="Y"
+                                                        {{ $lists->export == 'Y' ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="export{{ ++$key1 }}" id="export"
+                                                        name="export[]" value="N"
+                                                        {{ $lists->export == 'N' ? 'checked' : '' }}>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -232,32 +465,28 @@
             </div>
         </div>
         <!-- /Add Employee Modal -->
+        <!-- /Add Employee Modal -->
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
+@section('script')
     <script>
-        $("input:checkbox").on('click', function()
-        {
+        $("input:checkbox").on('click', function() {
             var $box = $(this);
-            if ($box.is(":checked"))
-            {
+            if ($box.is(":checked")) {
                 var group = "input:checkbox[class='" + $box.attr("class") + "']";
                 $(group).prop("checked", false);
                 $box.prop("checked", true);
-            }
-            else
-            {
+            } else {
                 $box.prop("checked", false);
             }
         });
     </script>
     <script>
         // select auto id and email
-        $('#name').on('change',function()
-        {
+        $('#name').on('change', function() {
             $('#employee_id').val($(this).find(':selected').data('employee_id'));
             $('#email').val($(this).find(':selected').data('email'));
         });
     </script>
-    @endsection
+@endsection
 @endsection

@@ -21,8 +21,8 @@ class EmployeeController extends Controller
                     ->get();
         $userList = DB::table('users')->get();
         $departments = DB::table('departments')->get();
-        $permission_lists = DB::table('permission_lists')->get();
-        return view('form.allemployeecard',compact('users','userList','permission_lists', 'departments'));
+        // $permission_lists = DB::table('permission_lists')->get();
+        return view('form.allemployeecard',compact('users','userList', 'departments'));
     }
     // all employee list
     public function listAllEmployee()
@@ -32,8 +32,9 @@ class EmployeeController extends Controller
                     ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
                     ->get();
         $userList = DB::table('users')->get();
-        $permission_lists = DB::table('permission_lists')->get();
-        return view('form.employeelist',compact('users','userList','permission_lists'));
+        $departments = DB::table('departments')->get();
+        // $permission_lists = DB::table('permission_lists')->get();
+        return view('form.employeelist',compact('users','userList', 'departments'));
     }
 
     // save data employee
@@ -132,6 +133,15 @@ class EmployeeController extends Controller
                 'sunday'=>$request->sunday,
                 'time_start'=>$request->time_start,
                 'time_end'=>$request->time_end,
+                'monday_opt'=>$request->monday_opt,
+                'tuesday_opt'=>$request->tuesday_opt,
+                'wednesday_opt'=>$request->wednesday_opt,
+                'thursday_opt'=>$request->thursday_opt,
+                'friday_opt'=>$request->friday_opt,
+                'saturday_opt'=>$request->saturday_opt,
+                'sunday_opt'=>$request->sunday_opt,
+                'time_start_opt'=>$request->time_start_opt,
+                'time_end_opt'=>$request->time_end_opt,
             ];
             // update table user
             $updateUser = [

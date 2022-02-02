@@ -30,5 +30,14 @@ class Employee extends Model
         'sunday',
         'time_start',
         'time_end',
+        'monday_opt',
+        'tuesday_opt',
+        'wednesday_opt',
+        'thursday_opt',
+        'friday_opt',
+        'saturday_opt',
+        'sunday_opt',
+        'time_start_opt',
+        'time_end_opt',
     ];
 }

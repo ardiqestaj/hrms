@@ -35,6 +35,15 @@ class CreateEmployeesTable extends Migration
             $table->string('sunday')->nullable();
             $table->string('time_start')->nullable();
             $table->string('time_end')->nullable();
+            $table->string('monday_opt')->nullable();
+            $table->string('tuesday_opt')->nullable();
+            $table->string('wednesday_opt')->nullable();
+            $table->string('thursday_opt')->nullable();
+            $table->string('friday_opt')->nullable();
+            $table->string('saturday_opt')->nullable();
+            $table->string('sunday_opt')->nullable();
+            $table->string('time_start_opt')->nullable();
+            $table->string('time_end_opt')->nullable();
             $table->string('company')->nullable();
             $table->timestamps();
         });

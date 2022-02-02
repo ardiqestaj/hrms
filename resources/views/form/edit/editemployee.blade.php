@@ -13,10 +13,12 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Employee View Edit</li>
+
                         </ul>
                     </div>
                 </div>
             </div>
+
             <!-- /Page Header -->
             {{-- message --}}
             {!! Toastr::message() !!}
@@ -37,6 +39,7 @@
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="{{ $employees[0]->name }}">
                                     </div>
+
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Lastname</label>
@@ -77,24 +80,25 @@
                                     <label class="col-form-label col-md-2">Gender</label>
                                     <div class="col-md-10">
                                         <select class="select form-control" id="gender" name="gender">
-                                            <option value="{{ $employees[0]->gender }}"
-                                                {{ $employees[0]->gender == $employees[0]->gender ? 'selected' : '' }}
-                                                disabled>
+                                            <option value="{{ $employees[0]->gender }}" selected>
                                                 {{ $employees[0]->gender }} </option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            @if ($employees[0]->gender == 'Male')
+                                                <option value="Female">Female</option>
+                                            @else
+                                                <option value="Male">Male</option>
+
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Department</label>
                                     <div class="col-md-10">
-                                        <select class="select form-control" id="department" name="department">
-                                            <option value="{{ $employees[0]->department }}"
-                                                {{ $employees[0]->department == $employees[0]->department ? 'selected' : '' }}
-                                                disabled>
+                                        <select class="select form-control" name="department">
+                                            <option value="{{ $employees[0]->department }}" selected>
                                                 {{ $employees[0]->department }} </option>
                                             @foreach ($departments as $department)
+
                                                 <option value="{{ $department->department }}">
                                                     {{ $department->department }}</option>
                                             @endforeach
@@ -105,13 +109,18 @@
                                     <label class="col-form-label col-md-2">Payment Method</label>
                                     <div class="col-md-10">
                                         <select class="select form-control" id="payment_method" name="payment_method">
-                                            <option value="{{ $employees[0]->payment_method }}"
-                                                {{ $employees[0]->payment_method == $employees[0]->payment_method ? 'selected' : '' }}
-                                                disabled>
+                                            <option value="{{ $employees[0]->payment_method }}" selected>
                                                 {{ $employees[0]->payment_method }} </option>
-                                            <option value="Hourly">Hourly</option>
-                                            <option value="Parttime">Parttime</option>
-                                            <option value="Fulltime">Fulltime</option>
+                                            @if ($employees[0]->payment_method == 'Hourly')
+                                                <option value="Parttime">Parttime</option>
+                                                <option value="Fulltime">Fulltime</option>
+                                            @elseif ($employees[0]->payment_method == 'Parttime')
+                                                <option value="Hourly">Hourly</option>
+                                                <option value="Fulltime">Fulltime</option>
+                                            @else
+                                                <option value="Hourly">Hourly</option>
+                                                <option value="Parttime">Parttime</option>
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -174,6 +183,74 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                        id="switch_hospitalisation">
+                                    <label class="onoffswitch-label" for="switch_hospitalisation">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="form-group wday-box">
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday_opt" value="Y"
+                                                {{ $employees[0]->monday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">M</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday_opt" value="Y"
+                                                {{ $employees[0]->tuesday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday_opt" value="Y"
+                                                {{ $employees[0]->wednesday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">W</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday_opt" value="Y"
+                                                {{ $employees[0]->thursday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">T</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday_opt" value="Y"
+                                                {{ $employees[0]->friday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">F</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday_opt" value="Y"
+                                                {{ $employees[0]->saturday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday_opt" value="Y"
+                                                {{ $employees[0]->sunday_opt == 'Y' ? 'checked' : '' }}><span
+                                                class="checkmark">S</span></label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <label class="col-form-label col-md-2">Possible Working Hours</label>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="text" name="time_start_opt"
+                                                    value="{{ $employees[0]->time_start_opt }}"><span
+                                                    class="input-group-append input-group-addon"><span
+                                                        class="input-group-text"><i
+                                                            class="fa fa-clock-o"></i></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="text" name="time_end_opt"
+                                                    value="{{ $employees[0]->time_end_opt }}"><span
+                                                    class="input-group-append input-group-addon"><span
+                                                        class="input-group-text"><i
+                                                            class="fa fa-clock-o"></i></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {{-- <div class="form-group row">
                                     <label class="col-form-label col-md-2">Employee Permission</label>
                                     <div class="col-md-10">
@@ -191,10 +268,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
-                                                    $key = 0;
-                                                    $key1 = 0;
-                                                    ?>
+
                                                     @foreach ($permission as $items)
                                                         <tr>
                                                             <td>{{ $items->module_permission }}</td>
@@ -286,6 +360,7 @@
             }
         });
     </script>
+
 @endsection
 
 @endsection
