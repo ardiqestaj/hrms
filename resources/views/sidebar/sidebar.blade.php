@@ -72,7 +72,7 @@
                     @if (Auth::user()->role_name == 'Employee')
                         <li><a href="{{ route('form/leavesemployee/new') }}">Leaves</a></li>
                         <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
-                        <li><a href="{{ route('attendance/employee/page') }}">Attendance</a></li>
+                        <li><a href="{{ route('employee/attendance') }}">Attendance</a></li>
 
                         <!-- <li><a href="designations.html">Designations</a></li>
                             <li><a href="timesheet.html">Timesheet</a></li>

@@ -8,6 +8,7 @@
 	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
 	<meta name="author" content="">
 	<meta name="robots" content="noindex, nofollow">
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
 	<!-- Logo and Favicon -->	
 	@foreach (\App\Models\ThemeSettings::all() as $ThemeSettings)
 	<title>{{$ThemeSettings->website_name}}</title>
@@ -78,8 +79,8 @@
 	<!-- Select2 JS -->
 	<script src="{{ URL::to('assets/js/select2.min.js') }}"></script>
 	<!-- Datetimepicker JS -->
-	<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/moment-timezone-with-data.js') }}"></script>	
 	<!-- Datatable JS -->
 	<script src="{{ URL::to('assets/js/jquery.dataTables.min.js') }}"></script>

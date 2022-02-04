@@ -15,6 +15,8 @@ use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\ThemeSettingsController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\TimeClockController;
+
 
 
 
@@ -230,3 +232,10 @@ Route::post('theme/store', [App\Http\Controllers\ThemeSettingsController::class,
 Route::get('timeclock/settings', [App\Http\Controllers\ClockTimeSettingsController::class, 'index'])->middleware('auth')->name('timeclock/settings');
 Route::post('timeclock/update', [App\Http\Controllers\ClockTimeSettingsController::class, 'update'])->middleware('auth')->name('timeclock/update');
 
+// ----------------------------- TimeClock ----- ------------------------------//
+Route::get('employee/attendance', [App\Http\Controllers\TimeClockController::class, 'clock'])->middleware('auth')->name('employee/attendance');
+Route::post('attendance/add', [App\Http\Controllers\TimeClockController::class, 'add'])->middleware('auth')->name('attendance/add');
+
+// ----------------------------- Schedule ----- ------------------------------//
+// Route::get('schedules', [App\Http\Controllers\ScheduleController::class, 'index'])->middleware('auth')->name('schedules');
+// Route::post('schedules/add', [App\Http\Controllers\TimeClockController::class, 'add'])->middleware('auth')->name('schedules/add');
