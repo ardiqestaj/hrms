@@ -97,8 +97,8 @@
 
                 <!--Admin - Locations -->
                 @if (Auth::user()->role_name == 'Admin')
-                    <li class="submenu">
-                        <a href="{{ url('location/locations') }}" class="">
+                    <li class="submenu-click">
+                        <a href="{{ route('location/locations') }}" class="">
                             <i class="las la-map-marked-alt"></i>
                             <span class="dash-category">Locations</span>
                             <!-- <span class="menu-arrow"></span> -->

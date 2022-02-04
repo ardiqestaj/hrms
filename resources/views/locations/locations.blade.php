@@ -21,13 +21,13 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i
                                 class="fa fa-plus"></i> Add Location</a>
                         <div class="view-icons">
-                            <a href="{{ route('clients/clients') }}" class="grid-view btn btn-link active"><i
+                            <a href="{{ route('location/locations') }}" class="grid-view btn btn-link active"><i
                                     class="fa fa-th"></i></a>
-                            <a href="{{ route('clients/clients-list') }}" class="list-view btn btn-link"><i
-                                    class="fa fa-bars"></i></a>
+                            {{-- <a href="{{ route('location/locations-list') }}" class="list-view btn btn-link"><i
+                                    class="fa fa-bars"></i></a> --}}
                         </div>
                     </div>
                 </div>
@@ -65,40 +65,48 @@
             <!-- Search Filter -->
 
             <div class="row staff-grid-row">
-                {{-- @foreach ($clients as $client)
-			<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 more">
-				<div class="profile-widget">
-				<div hidden class="id">{{$client->client_id}}</div>
-				<div hidden class="client_address">{{$client->client_address}}</div>
-				<div hidden class="client_email">{{$client->client_email}}</div>
-				<div hidden class="client_mobile_phone">{{$client->client_mobile_phone}}</div>
-				<div hidden class="client_fax_phone">{{$client->client_fax_phone}}</div>
-				<div hidden class="rec_client_id">{{$client->rec_client_id}}</div>
+                @foreach ($locations as $location)
+                    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 more">
+                        <div class="profile-widget">
+                            <div hidden class="id">{{ $location->id }}</div>
+                            <div hidden class="client_address">{{ $location->location_name }}</div>
+                            <div hidden class="client_email">{{ $location->location_address }}</div>
+                            <div hidden class="client_mobile_phone">{{ $location->location_email }}</div>
+                            <div hidden class="client_fax_phone">{{ $location->location_phone_number }}</div>
+                            <div hidden class="rec_client_id">{{ $location->rec_client_id }}</div>
 
-					<div class="profile-img">
-						<a href="{{ url('clients/client-profile/' . $client->client_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/photo_defaults.jpg') }}"></a>
-					</div>
-					<div class="dropdown profile-action">
-						<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item clientUpdate" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-						<a class="dropdown-item clientDelete" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-					</div>
-					</div>
-					<h4 class="user-name m-t-10 mb-0 text-ellipsis client_name"><a href="client-profile.html">{{$client->client_name}}</a></h4>
-					<h5 class="user-name m-t-10 mb-0 text-ellipsis contact_person"><a href="client-profile.html">{{$client->contact_person}}</a></h5>
-					<div class="small text-muted"></div>
-					<a href="chat.html" class="btn btn-white btn-sm m-t-10 client-msg">Message</a>
-					<a href="{{ url('clients/client-profile/' . $client->client_id) }}" class="btn btn-white btn-sm m-t-10">View Profile</a>
-				</div>
-			</div>
-			@endforeach --}}
+                            <div class="profile-img">
+                                <a href="{{ url('location/locations/profile/' . $location->id) }}"
+                                    class="avatar"><img alt=""
+                                        src="{{ URL::to('/assets/images/photo_defaults.jpg') }}"></a>
+                            </div>
+                            <div class="dropdown profile-action">
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item clientUpdate" href="#" data-toggle="modal"
+                                        data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a class="dropdown-item clientDelete" href="#" data-toggle="modal"
+                                        data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                </div>
+                            </div>
+                            <h4 class="user-name m-t-10 mb-0 text-ellipsis client_name"><a
+                                    href="client-profile.html">{{ $location->location_name }}</a></h4>
+                            {{-- <h5 class="user-name m-t-10 mb-0 text-ellipsis contact_person"><a
+                                    href="client-profile.html">{{ $location->contact_person }}</a></h5> --}}
+                            <div class="small text-muted"></div>
+                            <a href="chat.html" class="btn btn-white btn-sm m-t-10 client-msg">Message</a>
+                            <a href="{{ url('location/locations/profile/' . $location->id) }}"
+                                class="btn btn-white btn-sm m-t-10">View Location</a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
         <!-- /Page Content -->
 
         <!-- Add Location Modal -->
-        <div id="add_client" class="modal custom-modal fade" role="dialog">
+        <div id="add_location" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -108,200 +116,125 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('clients/new') }}" method="POST">
+                        <form action="{{ route('location/new') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Name <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="client_name">
+                                        <label class="col-form-label">Client <span class="text-danger">*</span></label>
+                                        <select class="select" name="rec_client_id" id="rec_cli_id">
+                                            <option selected disabled>-- Select Client --</option>
+                                            @foreach ($clients as $client)
+                                                <option value="{{ $client->rec_client_id }}">
+                                                    {{ $client->client_name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Contact Person</label>
-                                        <input class="form-control" name="contact_person" type="text">
+                                        <label class="col-form-label">Location Name <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="location_name">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="col-form-label">Location Address <span
                                                 class="text-danger">*</span></label>
-                                        <input class="form-control" name="client_address" type="text">
+                                        <input class="form-control" name="location_address" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Location Email <span
                                                 class="text-danger">*</span></label>
-                                        <input class="form-control floating" name="client_email" type="email">
+                                        <input class="form-control floating" name="location_email" type="email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Mobile Phone</label>
-                                        <input class="form-control" name="client_mobile_phone" type="text">
+                                        <label class="col-form-label">Location Phone Number</label>
+                                        <input class="form-control" name="location_phone_number" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Billing Address</h5>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Address identifier</label>
+                                        <input class="form-control" name="address_identifier" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Fax Phone</label>
-                                        <input class="form-control" name="client_fax_phone" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Location ID <span
+                                        <label class="col-form-label">Firstname <span
                                                 class="text-danger">*</span></label>
-                                        <input class="form-control floating" placeholder="Auto Generatet" readonly
-                                            type="text">
+                                        <input class="form-control floating" type="text" name="firstname">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Lastname <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="lastname">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Street Address <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="street_address">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">City <span class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="city">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">State/Province <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="state">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Country/Region <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="country">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Zip/Postal Code <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="zip_code">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Phone Number <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="phone_number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" name="email">
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="table-responsive m-t-15">
-							<table class="table table-striped custom-table">
-								<thead>
-									<tr>
-										<th>Module Permission</th>
-										<th class="text-center">Read</th>
-										<th class="text-center">Write</th>
-										<th class="text-center">Create</th>
-										<th class="text-center">Delete</th>
-										<th class="text-center">Import</th>
-										<th class="text-center">Export</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Projects</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-									</tr>
-									<tr>
-										<td>Tasks</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-									</tr>
-									<tr>
-										<td>Chat</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-									</tr>
-									<tr>
-										<td>Estimates</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-									</tr>
-									<tr>
-										<td>Invoices</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-									</tr>
-									<tr>
-										<td>Timing Sheets</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-										<td class="text-center">
-											<input checked="" type="checkbox">
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div> --}}
+
                             <div class="submit-section">
                                 <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                             </div>
