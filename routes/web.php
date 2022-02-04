@@ -178,7 +178,9 @@ Route::get('clients/client-profile/{client_id}', [App\Http\Controllers\ClientsCo
 Route::get('clients/clients-list', [App\Http\Controllers\ClientsController::class, 'clientsList'])->middleware('auth')->name('clients/clients-list');
 
 // ----------------------------- Locations ------------------------------//
-Route::view('location/locations', 'locations.locations');
+Route::get('location/locations', [App\Http\Controllers\LocationController::class, 'locationList'])->middleware('auth')->name('location/locations');
+Route::post('/location/new', [App\Http\Controllers\LocationController::class, 'storeLocation'])->middleware('auth')->name('location/new');
+Route::get('location/locations/profile/{id}', [App\Http\Controllers\LocationController::class, 'locationProfile'])->middleware('auth')->name('location/locations/profile');
 
 // ----------------------------- form payroll  ------------------------------//
 Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');

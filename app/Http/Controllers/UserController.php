@@ -92,7 +92,7 @@ class UserController extends Controller
 
         ProfileInformation::create([
             'name'          => $request->name,
-            'rec_id'   => $users->rec_id,
+            'rec_id'        => $users->rec_id,
             'phone_number'  => $request->phone_number,
             'birth_date'    => $request->birth_date,
             'department'    => $request->department,
