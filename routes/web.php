@@ -174,12 +174,11 @@ Route::get('clients/clients', [App\Http\Controllers\ClientsController::class, 'c
 Route::post('clients/new', [App\Http\Controllers\ClientsController::class, 'saveRecordClient'])->middleware('auth')->name('clients/new');
 Route::post('clients/delete', [App\Http\Controllers\ClientsController::class, 'deleteClient'])->middleware('auth')->name('clients/delete');
 Route::post('clients/edit', [App\Http\Controllers\ClientsController::class, 'editClient'])->middleware('auth')->name('clients/edit');
-
-
-
 Route::get('clients/client-profile/{client_id}', [App\Http\Controllers\ClientsController::class, 'clientProfile'])->middleware('auth')->name('clients/client-profile');
 Route::get('clients/clients-list', [App\Http\Controllers\ClientsController::class, 'clientsList'])->middleware('auth')->name('clients/clients-list');
 
+// ----------------------------- Locations ------------------------------//
+Route::view('location/locations', 'locations.locations');
 
 // ----------------------------- form payroll  ------------------------------//
 Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');

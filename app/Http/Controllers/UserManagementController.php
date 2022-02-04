@@ -453,12 +453,3 @@ class UserManagementController extends Controller
         return redirect()->intended('home');
     }
 }
-
-
-
-
-
-
-
-
-
