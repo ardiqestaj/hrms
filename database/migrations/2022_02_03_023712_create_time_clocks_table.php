@@ -15,31 +15,31 @@ class CreateTimeClocksTable extends Migration
     {
         Schema::create('time_clocks', function (Blueprint $table) {
             $table->id();
-            $table->integer('reference')->nullable();
-            $table->string('idno');
+            $table->string('reference')->nullable();
+            $table->string('idno')->nullable();
             $table->date('date')->nullable();
-            $table->string('employee');
+            $table->string('employee')->nullable();
             $table->string('timein')->nullable();
             $table->string('timeout')->nullable();
-            $table->string('totalhours');
-            $table->string('status_timein');
-            $table->string('status_timeout');
-            $table->string('reason');
-            $table->string('comment');
+            $table->string('totalhours')->nullable();
+            $table->string('status_timein')->nullable();
+            $table->string('status_timeout')->nullable();
+            $table->string('reason')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
         DB::table('time_clocks')->insert([
             [
              'reference' => NULL,
-             'idno' => '', 
-             'date' => NULL, 
-             'employee' => '', 
-             'timein' => NULL, 
-             'timeout' => NULL, 
-             'totalhours' => '', 
-             'status_timein' => '', 
-             'status_timeout' => '', 
-             'reason' => '', 
+             'idno' => '',
+             'date' => NULL,
+             'employee' => '',
+             'timein' => NULL,
+             'timeout' => NULL,
+             'totalhours' => '',
+             'status_timein' => '',
+             'status_timeout' => '',
+             'reason' => '',
              'comment' =>  '']
         ]);
     }

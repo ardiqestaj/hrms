@@ -74,14 +74,24 @@ class LoginController extends Controller
             'description' => 'has log in',
             'date_time'   => $todayDate,
         ];
-        if (Auth::attempt(['email'=>$email,'password'=>$password,'status'=>'Active'])) {
+        if (Auth::attempt(['email'=>$email,'password'=>$password,'status'=>'Active', 'role_name'=>'Admin'])) {
             DB::table('activity_logs')->insert($activityLog);
             Toastr::success('Login successfully :)','Success');
             return redirect()->intended('home');
-        }elseif (Auth::attempt(['email'=>$email,'password'=>$password,'status'=> null])) {
+        }elseif (Auth::attempt(['email'=>$email,'password'=>$password,'status'=> null, 'role_name'=>'Admin'])) {
             DB::table('activity_logs')->insert($activityLog);
             Toastr::success('Login successfully :)','Success');
             return redirect()->intended('home');
+        }
+        elseif (Auth::attempt(['email'=>$email,'password'=>$password,'status'=> null, 'role_name'=>'Employee'])) {
+            DB::table('activity_logs')->insert($activityLog);
+            Toastr::success('Login successfully :)','Success');
+            return redirect()->intended('em/dashboard');
+        }
+        elseif (Auth::attempt(['email'=>$email,'password'=>$password, 'role_name'=>'Employee'])) {
+            DB::table('activity_logs')->insert($activityLog);
+            Toastr::success('Login successfully :)','Success');
+            return redirect()->intended('em/dashboard');
         }
         else{
             Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');

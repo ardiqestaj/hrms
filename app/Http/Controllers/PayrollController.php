@@ -16,7 +16,7 @@ class PayrollController extends Controller
         $users = DB::table('users')
                     ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
                     ->select('users.*', 'staff_salaries.*')
-                    ->get(); 
+                    ->get();
         $userList = DB::table('users')->get();
         $permission_lists = DB::table('permission_lists')->get();
         return view('payroll.employeesalary',compact('users','userList','permission_lists'));
@@ -61,7 +61,7 @@ class PayrollController extends Controller
             $salary->prof_tax          = $request->prof_tax;
             $salary->labour_welfare    = $request->labour_welfare;
             $salary->save();
-    
+
             DB::commit();
             Toastr::success('Create new Salary successfully :)','Success');
             return redirect()->back();
@@ -81,6 +81,12 @@ class PayrollController extends Controller
                 ->select('users.*', 'staff_salaries.*','profile_information.*')
                 ->where('staff_salaries.rec_id',$rec_id)
                 ->first();
+        // $users = DB::table('users')
+        //         // ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
+        //         ->join('profile_information', 'users.rec_id', '=', 'profile_information.rec_id')
+        //         ->select('users.*','profile_information.*')
+        //         ->where('=.rec_id',$rec_id)
+        //         ->first();
         return view('payroll.salaryview',compact('users'));
     }
 
@@ -132,7 +138,7 @@ class PayrollController extends Controller
             DB::commit();
             Toastr::success('Salary deleted successfully :)','Success');
             return redirect()->back();
-            
+
         } catch(\Exception $e) {
             DB::rollback();
             Toastr::error('Salary deleted fail :)','Error');

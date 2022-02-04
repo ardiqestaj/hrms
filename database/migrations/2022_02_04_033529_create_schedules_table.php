@@ -18,8 +18,8 @@ class CreateSchedulesTable extends Migration
             $table->integer('reference')->nullable();
             $table->string('idno')->nullable();
             $table->string('employee')->nullable();
-            $table->string('intime');
-            $table->string('outime');
+            $table->string('intime')->nullable();
+            $table->string('outime')->nullable();
             $table->date('datefrom')->nullable();
             $table->date('dateto')->nullable();
             $table->integer('hours')->nullable();
@@ -27,7 +27,7 @@ class CreateSchedulesTable extends Migration
             $table->integer('archive')->nullable();
             $table->timestamps();
         });
- 
+
     }
 
     /**
