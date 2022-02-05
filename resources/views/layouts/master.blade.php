@@ -30,12 +30,10 @@
 	<!-- Semantic CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/semantic.min.css') }}">
 	<!-- Chart CSS -->
-	<link rel="stylesheet" href="{{ URL::to('ssets/plugins/morris/morris.css') }}">
+	<link rel="stylesheet" href="{{ URL::to('assets/plugins/morris/morris.css') }}">
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
-	<link rel="stylesheet" href="{{ URL::to('css/app.css') }}">
-
-
+	{{-- <link rel="stylesheet" href="{{ URL::to('css/app.css') }}"> --}}
 
 	{{-- message toastr --}}
 	<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">

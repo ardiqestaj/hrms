@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
 
+    {{-- message --}}
+    {!! Toastr::message() !!}
 
     <!-- Page Wrapper -->
     <div class="page-wrapper">
@@ -75,6 +77,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="card tab-box">
                 <div class="row user-tabs">
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
@@ -87,7 +90,128 @@
                     </div>
                 </div>
             </div>
+            {{-- Add Departament button --}}
+            <div class="col-auto float-right ml-auto">
+                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i
+                        class="fa fa-plus"></i> Add Sector </a>
+            </div>
+            <div id="add_client" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Client</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('location/type/add') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="hidden" name="id" value="{{ $locations->id }}">
+                                            <label class="col-form-label">Dapartament <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="select" name="type_of_work" id="rec_cli_id">
+                                                <option selected disabled>-- Select type of work --</option>
+                                                @foreach ($departments as $department)
+                                                    <option value="{{ $department->id }}">
+                                                        {{ $department->department }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Number of Employeer <span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="number_of_employees">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Start Time</label>
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="time" id="time_start" name="intime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">End Time <span
+                                                    class="text-danger">*</span></label>
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="time" id="time_start" name="outime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>From <span class="text-danger">*</span></label>
+                                            <div class="cal-icon">
+                                                <input type="text" class="form-control datetimepicker" id="to_date"
+                                                    name="datefrom">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>To <span class="text-danger">*</span></label>
+                                            <div class="cal-icon">
+                                                <input type="text" class="form-control datetimepicker" id="to_date"
+                                                    name="dateto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Total Hours</label>
+                                            <input class="form-control" name="hours" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{-- <div class="form-group"> --}}
+                                        <label class="col-form-label">Choose Rest days</label>
+                                        <div class="form-group wday-box mb-4">
 
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Monday">
+                                                <span class="checkmark">M</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Tuesday"><span class="checkmark">T</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Wednesday"><span class="checkmark">W</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Thursday"><span class="checkmark">T</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Friday"><span class="checkmark">F</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Saturday "><span class="checkmark">S</span></label>
+
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
+                                                    value="Sunday"><span class="checkmark">S</span></label>
+                                        </div>
+                                        {{-- </div> --}}
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Add Client Modal -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tab-content profile-tab-content">
@@ -159,8 +283,8 @@
                                                                 src="assets/img/profiles/avatar-05.jpg"></a>
                                                     </li>
                                                     <li class="dropdown avatar-dropdown">
-                                                        <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown"
-                                                            aria-expanded="false">+15</a>
+                                                        <a href="#" class="all-users dropdown-toggle"
+                                                            data-toggle="dropdown" aria-expanded="false">+15</a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <div class="avatar-group">
                                                                 <a class="avatar avatar-xs" href="#">
@@ -227,7 +351,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                                {{-- <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="dropdown profile-action">
@@ -621,7 +745,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <!-- /Projects Tab -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use App\Models\BillingAddress;
 use App\Models\Client;
+use App\Models\department;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Validator;
@@ -28,8 +29,10 @@ class LocationController extends Controller
 
     public function locationProfile($id)
     {
+        $departments = DB::table('departments')->get();
         $locations = DB::table('locations')->where('id',$id)->first();
-        return view('locations.locationprofile', compact('locations'));
+        return view('locations.locationprofile', compact('locations', 'departments'));
+        
         //
     }
 
@@ -77,7 +80,7 @@ class LocationController extends Controller
             'email'                 =>$request->email,
         ]);
         Toastr::success('Create new location successfully :)','Success');
-        return redirect('all/employee/card');
+        return redirect('location/locations/profile/'. $location->id);
    }
     public function locationEdit(Request $request)
     {

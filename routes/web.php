@@ -16,6 +16,7 @@ use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\ThemeSettingsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\TimeClockController;
+use App\Http\Controllers\LocationTypeWorkController;
 
 
 
@@ -184,6 +185,9 @@ Route::get('location/locations/profile/{id}', [App\Http\Controllers\LocationCont
 Route::post('location/edit', [App\Http\Controllers\LocationController::class, 'locationEdit'])->middleware('auth')->name('location/edit');
 Route::post('location/delete', [App\Http\Controllers\locationController::class, 'locationDelete'])->middleware('auth')->name('location/delete');
 Route::get('location/locations/list', [App\Http\Controllers\LocationController::class, 'locationList'])->middleware('auth')->name('location/locations/list');
+// ----------------------------- Locations Dapartament------------------------------//
+Route::post('location/type/add', [App\Http\Controllers\LocationTypeWorkController::class, 'create'])->middleware('auth')->name('location/type/add');
+
 
 // ----------------------------- form payroll  ------------------------------//
 Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');
