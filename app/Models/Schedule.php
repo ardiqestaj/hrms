@@ -13,7 +13,7 @@ class Schedule extends Model
     public $primaryKey = 'id';
     protected $fillable = [     
         'reference',       
-        'idno',     
+        'idno',
         'employee',           
         'intime',           
         'outime',   
