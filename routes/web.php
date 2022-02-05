@@ -240,6 +240,6 @@ Route::post('timeclock/update', [App\Http\Controllers\ClockTimeSettingsControlle
 Route::get('employee/attendance', [App\Http\Controllers\TimeClockController::class, 'clock'])->middleware('auth')->name('employee/attendance');
 Route::post('attendance/add', [App\Http\Controllers\TimeClockController::class, 'add'])->middleware('auth')->name('attendance/add');
 
-// ----------------------------- Schedule ----- ------------------------------//
-// Route::get('schedules', [App\Http\Controllers\ScheduleController::class, 'index'])->middleware('auth')->name('schedules');
-// Route::post('schedules/add', [App\Http\Controllers\TimeClockController::class, 'add'])->middleware('auth')->name('schedules/add');
+// ----------------------------- Attendance ----- ------------------------------//
+// Route::get('employee/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->middleware('auth')->name('employee/attendance');
+// Route::get('personal/attendance', [App\Http\Controllers\AttendanceController::class, 'getPA'])->middleware('auth')->name('personal/attendance');

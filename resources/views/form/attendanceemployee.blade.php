@@ -18,6 +18,7 @@
             </div>
             <!-- /Page Header -->
 
+            {{-- ----Time Clock---- --}}
             <div class="row">
                 <div class="col-md-4">
                     <div class="card punch-status">
@@ -28,9 +29,9 @@
                                     <div class="clockwrapper">
                                         <div class="clockinout">
                                             <button class="btnclock timein active"
-                                                data-type="timein">{{ __('Time In') }}</button>
+                                                data-type="timein">{{ __('Punch In') }}</button>
                                             <button class="btnclock timeout"
-                                                data-type="timeout">{{ __('Time Out') }}</button>
+                                                data-type="timeout">{{ __('Punch Out') }}</button>
                                         </div>
                                     </div>
                                     <div class="clockwrapper">
@@ -80,26 +81,50 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- </div>
-                            </div> --}}
-
                         </div>
                     </div>
                 </div>
+            {{-- ----End Time Clock---- --}}
+
+            {{-- ----Statistics---- --}}
                 <div class="col-md-4">
                     <div class="card att-statistics">
                         <div class="card-body">
                             <h5 class="card-title">Statistics</h5>
                             <div class="stats-list">
                                 <div class="stats-info">
-                                    <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
+                                    <p>Today <strong>
+                                        @foreach ($attendance as $key=>$attend)
+                                        @isset($attend->totalhours)
+                                        @if($attend->totalhours != null) 
+                                            @php
+                                                if(stripos($attend->totalhours, ".") === false) {
+                                                    $h = $attend->totalhours;
+                                                } else {
+                                                    $HM = explode('.', $attend->totalhours); 
+                                                    $h = $HM[0]; 
+                                                    $m = $HM[1];
+                                                } 
+                                            @endphp
+                                        @endif 
+                                        @if($attend->totalhours != NULL)
+                                            @if(stripos($attend->totalhours, ".") === false) 
+                                                {{ $h }} hr
+                                            @else 
+                                                {{ $h }} hr {{ $m }} mins
+                                            @endif 
+                                        @endif
+                                        @else --
+                                        @endisset 
+                                        @endforeach
+                                    <small>/{{$workDays}} hrs</small></strong></p>
                                     <div class="progress">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: 31%"
                                             aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
-                                    <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
+                                    <p>This Week <strong>28 <small>/ {{$workWeekDays}} hrs</small></strong></p>
                                     <div class="progress">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 31%"
                                             aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
@@ -130,6 +155,9 @@
                         </div>
                     </div>
                 </div>
+            {{-- ----Statistics---- --}}
+
+            {{-- ----Today CheckIn/CheckOut---- --}}
                 <div class="col-md-4">
                     <div class="card recent-activity">
                         <div class="card-body">
@@ -139,42 +167,34 @@
                                     <p class="mb-0">Punch In at</p>
                                     <p class="res-activity-time">
                                         <i class="fa fa-clock-o"></i>
-                                        10.00 AM.
+                                        @foreach ($attendance as $key=>$attend)
+                                        @php
+                                        if($attend->timein != null) {
+                                            if ($timeFormat == 1) {
+                                                echo e(date('h:i:s A', strtotime($attend->timein)));
+                                            } else {
+                                                echo e(date('H:i:s', strtotime($attend->timein)));
+                                            }
+                                        }
+                                        @endphp
+                                        @endforeach
                                     </p>
                                 </li>
                                 <li>
                                     <p class="mb-0">Punch Out at</p>
                                     <p class="res-activity-time">
                                         <i class="fa fa-clock-o"></i>
-                                        11.00 AM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch In at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        11.15 AM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch Out at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        1.30 PM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch In at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        2.00 PM.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="mb-0">Punch Out at</p>
-                                    <p class="res-activity-time">
-                                        <i class="fa fa-clock-o"></i>
-                                        7.30 PM.
+                                        @foreach ($attendance as $key=>$attend)
+                                        @php
+                                        if($attend->timeout != null) {
+                                            if ($timeFormat == 1) {
+                                                echo e(date('h:i:s A', strtotime($attend->timeout)));
+                                            } else {
+                                                echo e(date('H:i:s', strtotime($attend->timeout)));
+                                            }
+                                        } else echo "--"
+                                        @endphp
+                                        @endforeach
                                     </p>
                                 </li>
                             </ul>
@@ -182,6 +202,8 @@
                     </div>
                 </div>
             </div>
+            {{-- ----End Today CheckIn/CheckOut---- --}}
+
 
             <!-- Search Filter -->
             <div class="row filter-row">
@@ -232,6 +254,8 @@
             </div>
             <!-- /Search Filter -->
 
+
+            {{-- --Personal Attendence --}}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-responsive">
@@ -243,34 +267,95 @@
                                     <th>Punch In</th>
                                     <th>Punch Out</th>
                                     <th>Production</th>
-                                    <th>Break</th>
+                                    <th>Status (In/Out)</th>
                                     <th>Overtime</th>
+                                    <th>Missed Hours</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @isset($attendance)
+                                @foreach ($attendance as $key=>$attend)
                                 <tr>
-                                    <td>1</td>
-                                    <td>19 Feb 2019</td>
-                                    <td>10 AM</td>
-                                    <td>7 PM</td>
-                                    <td>9 hrs</td>
-                                    <td>1 hrs</td>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$attend->date}}</td>
+                                    {{-- Punch In --}}
+                                    <td>
+                                        @php
+                                        if($attend->timein != null) {
+                                            if ($timeFormat == 1) {
+                                                echo e(date('h:i:s A', strtotime($attend->timein)));
+                                            } else {
+                                                echo e(date('H:i:s', strtotime($attend->timein)));
+                                            }
+                                        }
+                                    @endphp
+                                    </td>
+
+                                    {{-- Punch Out --}}
+                                    <td>
+                                        @php
+                                        if($attend->timeout != null) {
+                                            if ($timeFormat == 1) {
+                                                echo e(date('h:i:s A', strtotime($attend->timeout)));
+                                            } else {
+                                                echo e(date('H:i:s', strtotime($attend->timeout)));
+                                            }
+                                        } else echo "--"
+                                        @endphp
+                                    </td>
+
+                                    {{-- Total Hours --}}
+                                    <td>
+                                        @isset($attend->totalhours)
+                                        @if($attend->totalhours != null) 
+                                            @php
+                                                if(stripos($attend->totalhours, ".") === false) {
+                                                    $h = $attend->totalhours;
+                                                } else {
+                                                    $HM = explode('.', $attend->totalhours); 
+                                                    $h = $HM[0]; 
+                                                    $m = $HM[1];
+                                                } 
+                                            @endphp
+                                        @endif 
+                                        @if($attend->totalhours != NULL)
+                                            @if(stripos($attend->totalhours, ".") === false) 
+                                                {{ $h }} hr
+                                            @else 
+                                                {{ $h }} hr {{ $m }} mins
+                                            @endif 
+                                        @endif
+                                        @else --
+                                    @endisset
+                                    </td>
+
+                                    {{-- Status In/Out --}}
+                                    <td>
+                                        @if($attend->status_timein != '' && $attend->status_timeout != '') 
+                                        <span class="@if($attend->status_timein == 'Late In') orange @else blue @endif">{{ $attend->status_timein }}</span> / 
+                                        <span class="@if($attend->status_timeout == 'Early Out') red @else green @endif">{{ $attend->status_timeout }}</span> 
+                                    @elseif($attend->status_timein == 'Late In') 
+                                        <span class="orange">{{ $attend->status_timein }}</span>
+                                    @else 
+                                        <span class="blue">{{ $attend->status_timein }}</span>
+                                    @endif 
+                                    </td>
+
+                                    {{-- Overtme Hours --}}
+                                    <td>0</td>
+
+                                    {{-- Short Time  Hours --}}
                                     <td>0</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>20 Feb 2019</td>
-                                    <td>10 AM</td>
-                                    <td>7 PM</td>
-                                    <td>9 hrs</td>
-                                    <td>1 hrs</td>
-                                    <td>0</td>
-                                </tr>
+                                @endforeach
+                                @endisset
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            {{-- --End Personal Attendence --}}
+
         </div>
         <!-- /Page Content -->
     </div>
