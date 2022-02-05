@@ -64,54 +64,72 @@
             </div>
             <!-- Search Filter -->
 
-            <div class="row staff-grid-row">
-                @foreach ($locations as $location)
-                    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 more">
-                        <div class="profile-widget more">
-                            <div hidden class="id">{{ $location->id }}</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Location Name</th>
+                                    <th>Client Name</th>
+                                    <th>Location Address</th>
+                                    <th>Location Email</th>
+                                    <th>Location Phone Number</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($locations as $location)
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{{ url('location/locations/profile/' . $location->id) }}"
+                                                    class="avatar"><img
+                                                        src={{ URL::to('/assets/images/photo_defaults.jpg') }} alt=""></a>
+                                                <a class="client_name"
+                                                    href={{ url('location/locations/profile/' . $location->id) }}>{{ $location->location_name }}</a>
+                                            </h2>
+                                        </td>
+                                        <td hidden class="id">{{ $location->id }}</td>
+                                        <td hidden class="location_name">{{ $location->location_name }}</td>
+                                        <td class="rec_client_id">{{ $location->client_name }}</td>
+                                        {{-- <td class="contact_person">{{$location->contact_person}}</td> --}}
+                                        <td class="location_address">{{ $location->location_address }}</td>
+                                        <td> <a href="mailto: {{ $location->location_email }}"
+                                                class="location_email">{{ $location->location_email }} </a></td>
+                                        <td class="location_phone_number">{{ $location->location_phone_number }}</td>
+                                        <td hidden class="address_identifier">{{ $location->address_identifier }}</td>
+                                        <td hidden class="firstname">{{ $location->firstname }}</td>
+                                        <td hidden class="lastname">{{ $location->lastname }}</td>
+                                        <td hidden class="street_address">{{ $location->street_address }}</td>
+                                        <td hidden class="city">{{ $location->city }}</td>
+                                        <td hidden class="state">{{ $location->state }}</td>
+                                        <td hidden class="country">{{ $location->country }}</td>
+                                        <td hidden class="zip_code">{{ $location->zip_code }}</td>
+                                        <td hidden class="phone_number">{{ $location->phone_number }}</td>
+                                        <td hidden class="email">{{ $location->email }}</td>
 
-                            <div hidden class="location_name">{{ $location->location_name }}</div>
-                            <div hidden class="location_address">{{ $location->location_address }}</div>
-                            <div hidden class="location_email">{{ $location->location_email }}</div>
-                            <div hidden class="location_phone_number">{{ $location->location_phone_number }}</div>
-                            <div hidden class="address_identifier">{{ $location->address_identifier }}</div>
-                            <div hidden class="firstname">{{ $location->firstname }}</div>
-                            <div hidden class="lastname">{{ $location->lastname }}</div>
-                            <div hidden class="street_address">{{ $location->street_address }}</div>
-                            <div hidden class="city">{{ $location->city }}</div>
-                            <div hidden class="state">{{ $location->state }}</div>
-                            <div hidden class="country">{{ $location->country }}</div>
-                            <div hidden class="zip_code">{{ $location->zip_code }}</div>
-                            <div hidden class="phone_number">{{ $location->phone_number }}</div>
-                            <div hidden class="email">{{ $location->email }}</div>
-                            {{-- <div hidden class="rec_client_id">{{ $location->rec_client_id }}</div> --}}
 
-                            <div class="profile-img">
-                                <a href="{{ url('location/locations/profile/' . $location->id) }}"
-                                    class="avatar"><img alt=""
-                                        src="{{ URL::to('/assets/images/photo_defaults.jpg') }}"></a>
-                            </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item locationUpdate" href="#" data-toggle="modal"
-                                        data-target="#edit_location"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item locationDelete" href="#" data-toggle="modal"
-                                        data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
-                            <h4 class="user-name m-t-10 mb-0 text-ellipsis client_name"><a
-                                    href="client-profile.html">{{ $location->location_name }}</a></h4>
-                            {{-- <h5 class="user-name m-t-10 mb-0 text-ellipsis contact_person"><a
-                                    href="client-profile.html">{{ $location->contact_person }}</a></h5> --}}
-                            <div class="small text-muted"></div>
-                            <a href="chat.html" class="btn btn-white btn-sm m-t-10 client-msg">Message</a>
-                            <a href="{{ url('location/locations/profile/' . $location->id) }}"
-                                class="btn btn-white btn-sm m-t-10">View Location</a>
-                        </div>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item locationUpdate" href="#" data-toggle="modal"
+                                                        data-target="#edit_location"><i class="fa fa-pencil m-r-5"></i>
+                                                        Edit</a>
+                                                    <a class="dropdown-item locationDelete" href="#" data-toggle="modal"
+                                                        data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i>
+                                                        Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
         <!-- /Page Content -->
@@ -571,14 +589,14 @@
     {{-- Delete Modal --}}
     <script>
         $(document).on('click', '.locationDelete', function() {
-            var _this = $(this).parents('.more');
+            var _this = $(this).parents('tr');
             $('#d_id').val(_this.find('.id').text());
         });
     </script>
     {{-- Edit Modal --}}
     <script>
         $(document).on('click', '.locationUpdate', function() {
-            var _this = $(this).parents('.more');
+            var _this = $(this).parents('tr');
             $('#e_id').val(_this.find('.id').text());
             $('#e_location_name').val(_this.find('.location_name').text());
             $('#e_location_address').val(_this.find('.location_address').text());
