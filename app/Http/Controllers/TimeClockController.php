@@ -15,7 +15,8 @@ class TimeClockController extends Controller
 {
     public function clock()
     {
-        // Time Clock Settings
+        // Time Clock 
+        $timeFormat = DB::table('clock_time_settings')->value("time_format");
         $data = DB::table('clock_time_settings')->where('id', 1)->first();
         $cc = $data->clock_comment;
         $tz = $data->timezone;
@@ -25,17 +26,94 @@ class TimeClockController extends Controller
         // Attendance Table
         $i = Auth::user()->rec_id;
         $attendance = DB::table('time_clocks')->where('idno', $i)->get();
-        $timeFormat = DB::table('clock_time_settings')->value("time_format");
 
         // Schedule Table
         $schedules = DB::table('schedules')->where('idno', $i)->first();
-        $workingHrs = $schedules->hours;
         $restDays = $schedules->restday;
-        $workDays = 7 - count(explode(',',$restDays));
-        $workWeekDays = 7 * $workDays; 
+        $days = explode(',',$restDays);
+
+        $d = 0;
+        foreach($days as $day){
+            ${'restday'.$d} = $day;
+            $d++;
+        }
+
+        if(!empty($restday0)){
+            $restday0 = $restday0;
+        } else {
+            $restday0 = 0;
+        }
+        if(!empty($restday1)){
+            $restday1 = $restday1;
+        } else {
+            $restday1 = 0;
+        }
+
+        // Number of working hours in a day
+        // $workingHrs = $schedules->hours;
+
+        // number of working Days in a week
+        // $workDays = 7 - count(explode(',',$restDays));
+
+        // Total days in the current month
+        $now = Carbon::now();
+        $totalMonthDay = Carbon::now()->daysInMonth;
+        $startOfMont = $now->startOfMonth()->format('Y-m-d');
+
+        // Function to count reccurring days in a month
+        function workingDays( $startOfMonth, $totalMonthDays ) {
+        $date_array = explode('-', $startOfMonth );
+        $day = $date_array[0];
+        $month = $date_array[1];
+        $year = $date_array[2];
+        $working_date = array();
+
+        for ( $p = 1; $p <= $totalMonthDays; $p++ ) {
+        $working_date[] = date('l', mktime(0, 0, 0,$month,$day +(int)$p,$year));
+
+        }
+        return $working_date;
+        }
+
+        $getDays = workingDays($startOfMont, $totalMonthDay);
+        $getWorkingDays = workingDays($startOfMont, $totalMonthDay);
+
+         // trick to check the occurrence of week days
+        $day1 = str_replace(array($restday0),array($restday0), $getDays, $dupweekDays);
+        $day2 = str_replace(array($restday1),array($restday1), $getDays, $dupweekDays);
+        // str_replace(array($restday1),array($restday1), $getDays, $dupweekDays);
+        echo $dupweekDays;
+
+        // Explanation of the above code:
+
+
+
+        // /Some Experment
+        // $now = Carbon::now();
+        // $startOfMonth = $now->startOfMonth()->format('Y-m-d');
+        // $endOfMonth = $now->endOfMonth()->format('Y-m-d');
+
+        // $date = new BusinessDays();
+
+        // $Bdays = $date->daysBetween(
+        // Carbon::createFromDate($startOfMonth), // This is a Monday
+        // Carbon::createFromDate($endOfMonth)
+        // );
+
+        // $mondays = $this->getMondays();
+        // $now = Carbon::now();
+        // $endOfMonth = $now->endOfMonth()->format('Y-m-d');
+        // // Days in the current month
+        // $totalMonthDays = Carbon::parse( $startOfMonth )->diffInDays( $endOfMonth );
+
+        // // Start and End of current week
+        // $now = Carbon::now();
+        // $startOfWeek = $now->startOfWeek()->format('Y-m-d');
+        // $endOfWeek = $now->endOfWeek()->format('Y-m-d');
+        // $totalWeekDays = Carbon::parse( $startOfWeek )->diffInDays( $endOfWeek );
 
         // Returning Data to Employee Atttendance Page
-        return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'timeFormat', 'workingHrs', 'workDays', 'workWeekDays'));
+        return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'timeFormat'));
     }
 
     // Clock In/Clock Out

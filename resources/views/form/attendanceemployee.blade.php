@@ -117,14 +117,14 @@
                                         @else --
                                         @endisset 
                                         @endforeach
-                                    <small>/{{$workDays}} hrs</small></strong></p>
+                                    <small>/ hrs</small></strong></p>
                                     <div class="progress">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: 31%"
                                             aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
-                                    <p>This Week <strong>28 <small>/ {{$workWeekDays}} hrs</small></strong></p>
+                                    <p>This Week <strong>28 <small>/  hrs</small></strong></p>
                                     <div class="progress">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 31%"
                                             aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
@@ -361,11 +361,13 @@
     </div>
     <!-- /Page Wrapper -->
     </div>
+
 @endsection
 
 
 @section('script')
     <script type="text/javascript">
+        // TimeClock javascript
         // elements day, time, date
         var elTime = document.getElementById('show_time');
         var elDate = document.getElementById('show_date');
@@ -512,6 +514,59 @@
                 }
             })
         });
-    </script>
 
+
+    // JavaScript program to count
+    // occurrence of days in a month
+	function occurrenceDays(n, firstday)
+	{
+		// stores days in a week
+		let days = [ "Monday",
+				"Tuesday", "Wednesday",
+				"Thursday", "Friday",
+				"Saturday", "Sunday" ];
+		
+		// Initialize all counts as 4.
+		let count = [];
+		for (let i = 0; i < 7; i++)
+			count[i] = 4;
+		
+		// find index of the first day
+		let pos = 0;
+		for (let i = 0; i < 7; i++)
+		{
+			if (firstday == days[i])
+			{
+				pos = i;
+				break;
+			}
+		}
+		// number of days whose occurrence
+		// will be 5
+		let inc = n - 28;
+		
+		// mark the occurrence to be 5 of n-28 days
+		for (let i = pos; i < pos + inc; i++)
+		{
+			if (i > 6)
+				count[i % 7] = 5;
+			else
+				count[i] = 5;
+		}
+		
+		// print the days
+		for (let i = 0; i < 7; i++)
+		{
+			document.write(days[i] + " " + count[i] + "<br/>");
+		}
+	}
+        var totalMonthDays = document.getElementsByClassName('CurrentMonthDays').val();
+        var MonthStartDay = document.getElementsByClassName('MonthStartDay').val();
+
+        // Driver code
+		let n = totalMonthDays;
+		let firstday = MonthStartDay;
+		occurrenceDays(n, firstday);
+
+    </script>
 @endsection
