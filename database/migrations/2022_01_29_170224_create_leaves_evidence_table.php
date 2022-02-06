@@ -20,6 +20,10 @@ class CreateLeavesEvidenceTable extends Migration
             $table->string('rec_id')->nullable();
             $table->string('day')->nullable();
             $table->string('status')->nullable();
+            $table->string('from_date')->nullable();
+            $table->string('to_date')->nullable();
+            
+            
             $table->timestamps();
         });
     }

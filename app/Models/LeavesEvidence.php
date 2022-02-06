@@ -15,6 +15,8 @@ class LeavesEvidence extends Model
         'leave_type_id',
         'rec_id',
         'day',
-        'status'
+        'status',
+        'from_date',
+        'to_date'
     ];
 }

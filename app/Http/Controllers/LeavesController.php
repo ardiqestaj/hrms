@@ -212,6 +212,8 @@ class LeavesController extends Controller
             $LeavesEvidence->rec_id                 = $request->rec_id;
             $LeavesEvidence->day                    = $request->day;
             $LeavesEvidence->status                 = $request->status;
+            $LeavesEvidence->from_date                 = $request->from_date;
+            $LeavesEvidence->to_date                 = $request->to_date;
             $LeavesEvidence->save();
 
             DB::commit();
