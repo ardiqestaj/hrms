@@ -91,4 +91,5 @@ class HolidayController extends Controller
             return redirect()->back();
         }
     }
+
 }

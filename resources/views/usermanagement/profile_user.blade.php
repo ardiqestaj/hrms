@@ -1728,11 +1728,11 @@
                             <div class="form-scroll">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Experience Informations</h3>
+                                        <h3 class="card-title">Experience Informationsss</h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group form-focus">
-                                                    <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
+                                                    <input type="hidden" class="form-control" name="rec_id" value="{{ Auth::user()->rec_id }}">
                                                     <input type="text" class="form-control floating" name="work_company_name" value="">
                                                     <label class="focus-label">Company Name</label>
                                                 </div>
@@ -1770,7 +1770,7 @@
                                 </div>
                             </div>
                             <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Submittt</button>
                             </div>
                         </form>
                     </div>
@@ -1857,6 +1857,7 @@
             $('#to-be-cloned').clone().insertAfter($('#to-be-cloned:last'));
         }
     </script> --}}
+
     <script>
         $(document).on('click', '.eduUpdate', function() {
             var _this = $(this).parents('li');
