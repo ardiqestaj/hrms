@@ -7,6 +7,7 @@ use Carbon\Carbon;
 
 use App\Models\TimeClock;
 use App\Models\Schedule;
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests;
@@ -15,7 +16,7 @@ class TimeClockController extends Controller
 {
     public function clock()
     {
-        // Time Clock 
+        // TmeClock Settings Table
         $timeFormat = DB::table('clock_time_settings')->value("time_format");
         $data = DB::table('clock_time_settings')->where('id', 1)->first();
         $cc = $data->clock_comment;
@@ -29,91 +30,113 @@ class TimeClockController extends Controller
 
         // Schedule Table
         $schedules = DB::table('schedules')->where('idno', $i)->first();
+        $workingHrs = $schedules->hours;
         $restDays = $schedules->restday;
-        $days = explode(',',$restDays);
+        $days = explode(', ',$restDays);
+        $numOfRestDays = count($days);
 
+        // Leaves Table 
+        $now = Carbon::now();
+        
+
+        
+        // Holidays Table
+        $now = Carbon::now();
+        $monthHolidays = Holiday::whereMonth('date_holiday', '=', $now->month)->get();
+        $weekHolidayss = Holiday::where('date_holiday', '>', Carbon::now()->startOfWeek())->where('date_holiday', '<', Carbon::now()->endOfWeek())->get();
+        $monthHolidaysNo = count($monthHolidays);
+        $weekHolidays = count($weekHolidayss);
+
+
+
+        // Total days in the current month
+        $now = Carbon::now();
+        $totalMonthDay = Carbon::now()->daysInMonth;
+        $startOfMonth = $now->startOfMonth()->format('Y-m-d');
+
+        // Start of current Week
+        $now = Carbon::now();
+        $startOfWeek = $now->startOfWeek()->format('Y-m-d');
+
+        // array of rest day names
         $d = 0;
         foreach($days as $day){
             ${'restday'.$d} = $day;
             $d++;
         }
 
-        if(!empty($restday0)){
-            $restday0 = $restday0;
-        } else {
-            $restday0 = 0;
-        }
-        if(!empty($restday1)){
-            $restday1 = $restday1;
-        } else {
-            $restday1 = 0;
-        }
-
-        // Number of working hours in a day
-        // $workingHrs = $schedules->hours;
-
-        // number of working Days in a week
-        // $workDays = 7 - count(explode(',',$restDays));
-
-        // Total days in the current month
-        $now = Carbon::now();
-        $totalMonthDay = Carbon::now()->daysInMonth;
-        $startOfMont = $now->startOfMonth()->format('Y-m-d');
-
         // Function to count reccurring days in a month
-        function workingDays( $startOfMonth, $totalMonthDays ) {
-        $date_array = explode('-', $startOfMonth );
-        $day = $date_array[0];
-        $month = $date_array[1];
-        $year = $date_array[2];
-        $working_date = array();
-
-        for ( $p = 1; $p <= $totalMonthDays; $p++ ) {
-        $working_date[] = date('l', mktime(0, 0, 0,$month,$day +(int)$p,$year));
-
+        function workingDays( $startDate, $totalDays ) {
+            $date_array = explode('-', $startDate );
+            $day = $date_array[0];
+            $month = $date_array[1];
+            $year = $date_array[2];
+            $working_date = array();
+    
+            for ( $p = 1; $p <= $totalDays; $p++ ) {
+            $working_date[] = date('l', mktime(0, 0, 0,$month,$day +(int)$p,$year));
+    
+            }
+            return $working_date;
         }
-        return $working_date;
+    
+        // Total days in a month and start date of month
+        $getDays = workingDays($startOfMonth, $totalMonthDay);
+        $getWorkingDays = workingDays($startOfMonth, $totalMonthDay);
+        // Number of Month Recurring days
+        $totalRestDaysInMonth = 0;
+        for ($j=0; $j<$numOfRestDays; $j++){
+        str_replace(array(${'restday'.$j}),array(${'restday'.$j}), $getDays, ${'dupMonthDays'.$j});
+        $totalRestDaysInMonth += ${'dupMonthDays'.$j};
         }
 
-        $getDays = workingDays($startOfMont, $totalMonthDay);
-        $getWorkingDays = workingDays($startOfMont, $totalMonthDay);
+        // Total days in a week and start date of week
+        $getDays = workingDays($startOfWeek, 6);
+        $getWorkingDays = workingDays($startOfWeek, 6);
+        // Number of Month Recurring days
+        $totalRestDaysInWeek = 0;
+        for ($j=0; $j<$numOfRestDays; $j++){
+        str_replace(array(${'restday'.$j}),array(${'restday'.$j}), $getDays, ${'dupWeekDays'.$j});
+        $totalRestDaysInWeek += ${'dupWeekDays'.$j};
+        }
 
-         // trick to check the occurrence of week days
-        $day1 = str_replace(array($restday0),array($restday0), $getDays, $dupweekDays);
-        $day2 = str_replace(array($restday1),array($restday1), $getDays, $dupweekDays);
-        // str_replace(array($restday1),array($restday1), $getDays, $dupweekDays);
-        echo $dupweekDays;
+        // Total rest days in a week
+        $totalRestDaysInWeek;
+        // Total rest days in a month
+        $totalRestDaysInMonth;
 
-        // Explanation of the above code:
+        // Check if Holidays of the current month are rest days also
+        for ($j=0; $j<$numOfRestDays; $j++) {
+            $totalMonthHolidays = 0;
+            foreach ($monthHolidays as $monthHoli) {
+                if (date('l', strtotime($monthHoli->date_holiday)) != ${'restday'.$j}) {
+                    $weekdayHolid1 = 1;
+                } else {
+                    $weekdayHolid1 = 0;
+                }
+                $totalMonthHolidays += $weekdayHolid1;
+            }
+        }
+        //Month Holidays that are not Rest Days
+        $totalMonthHolidays;
+
+        // Week Holidays that are rest days
+        for ($j=0; $j<$numOfRestDays; $j++) {
+            $totalWeekHolidays = 0;
+            foreach ($weekHolidayss as $weekHoli) {
+                if (date('l', strtotime($weekHoli->date_holiday)) != ${'restday'.$j}) {
+                    $weekdayHolid1 = 1;
+                } else {
+                    $weekdayHolid1 = 0;
+                }
+                $totalWeekHolidays += $weekdayHolid1;
+            }
+        }
+        //Week Holiday Days that are not Rest Days
+        $totalWeekHolidays;
 
 
-
-        // /Some Experment
-        // $now = Carbon::now();
-        // $startOfMonth = $now->startOfMonth()->format('Y-m-d');
-        // $endOfMonth = $now->endOfMonth()->format('Y-m-d');
-
-        // $date = new BusinessDays();
-
-        // $Bdays = $date->daysBetween(
-        // Carbon::createFromDate($startOfMonth), // This is a Monday
-        // Carbon::createFromDate($endOfMonth)
-        // );
-
-        // $mondays = $this->getMondays();
-        // $now = Carbon::now();
-        // $endOfMonth = $now->endOfMonth()->format('Y-m-d');
-        // // Days in the current month
-        // $totalMonthDays = Carbon::parse( $startOfMonth )->diffInDays( $endOfMonth );
-
-        // // Start and End of current week
-        // $now = Carbon::now();
-        // $startOfWeek = $now->startOfWeek()->format('Y-m-d');
-        // $endOfWeek = $now->endOfWeek()->format('Y-m-d');
-        // $totalWeekDays = Carbon::parse( $startOfWeek )->diffInDays( $endOfWeek );
-
-        // Returning Data to Employee Atttendance Page
-        return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'timeFormat'));
+        return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'timeFormat', 'totalWeekHolidays'));
     }
 
     // Clock In/Clock Out

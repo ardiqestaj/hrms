@@ -90,7 +90,13 @@
                 <div class="col-md-4">
                     <div class="card att-statistics">
                         <div class="card-body">
-                            <h5 class="card-title">Statistics</h5>
+                            {{-- @foreach ($monthHolidays as $monthHoli)
+                          
+                                <h5 class="card-title">Statistics {{date('l', strtotime($monthHoli->date_holiday))}}</h5>
+                          
+                            @endforeach --}}
+
+                            <h5 class="card-title">Statistics {{$totalWeekHolidays}}</h5>
                             <div class="stats-list">
                                 <div class="stats-info">
                                     <p>Today <strong>

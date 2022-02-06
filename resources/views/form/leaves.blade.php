@@ -324,6 +324,8 @@
                                         <input type="hidden" name="day" id="a_day" value="">
                                         <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                         <input type="hidden" name="status" id="" value="Approved">
+                                        <input type="hidden" name="from_date" id="a_from_date" value="">
+                                        <input type="hidden" name="to_date" id="a_to_date" value="">
                                         <button type="submit" class="btn btn-primary submit-btn continue-btn">Approve</button>
                                     </div>
                                     <div class="col-6">
@@ -357,6 +359,8 @@
                                         <input type="hidden" name="day" id="p_day" value="">
                                         <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                         <input type="hidden" name="status" class="" value="Pending">
+                                        <input type="hidden" name="from_date" id="p_from_date" value="">
+                                        <input type="hidden" name="to_date" id="p_to_date" value="">
                                         <button type="submit" class="btn btn-primary submit-btn continue-btn">Pending</button>
                                     </div>
                                     <div class="col-6">
@@ -388,6 +392,8 @@
                                 <input type="hidden" name="day" id="d_day" value="">
                                 <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                 <input type="hidden" name="status" class="" value="Declined">
+                                <input type="hidden" name="from_date" id="d_from_date" value="">
+                                <input type="hidden" name="to_date" id="d_to_date" value="">
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary continue-btn submit-btn">Declined</button>
@@ -467,6 +473,9 @@
             $('#a_leave_type_id').val(_this.find('.leave_type_id').text());
             $('#a_rec_id').val(_this.find('.rec_id').text());
             $('#a_day').val(_this.find('.days').text());
+            $('#a_from_date').val(_this.find('.from_date').text());
+            $('#a_to_date').val(_this.find('.to_date').text());
+
 
         });
     </script>
@@ -478,6 +487,8 @@
             $('#p_leave_type_id').val(_this.find('.leave_type_id').text());
             $('#p_rec_id').val(_this.find('.rec_id').text());
             $('#p_day').val(_this.find('.days').text());
+            $('#p_from_date').val(_this.find('.from_date').text());
+            $('#p_to_date').val(_this.find('.to_date').text());
         });
     </script>
     {{-- Declined model --}}
@@ -488,6 +499,8 @@
             $('#d_leave_type_id').val(_this.find('.leave_type_id').text());
             $('#d_rec_id').val(_this.find('.rec_id').text());
             $('#d_day').val(_this.find('.days').text());
+            $('#d_from_date').val(_this.find('.from_date').text());
+            $('#d_to_date').val(_this.find('.to_date').text());
         });
     </script>
 @endsection
