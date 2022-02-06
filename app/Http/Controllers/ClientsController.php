@@ -22,10 +22,10 @@ class ClientsController extends Controller
     {
 
         $clients = DB::table('clients')
-                    ->get(); 
+                    ->get();
 
         return view('clients.clients',compact('clients'));
-        
+
     }
 
            /**
@@ -36,8 +36,15 @@ class ClientsController extends Controller
     public function clientsList()
     {
         $clients = DB::table('clients')
-                    ->get(); 
+                    ->get();
         return view('clients.clients-list', compact('clients'));
+        //
+    }
+    public function clientsListProfile()
+    {
+        $clients = DB::table('clients')
+                    ->get();
+        return view('clients.clients-profile', compact('clients'));
         //
     }
 
@@ -122,19 +129,22 @@ class ClientsController extends Controller
      */
     public function clientProfile($client_id)
     {
-        $client = DB::table('clients')->where('client_id',$client_id)->first();
+        $client = DB::table('clients')->where('client_id',$client_id)->first();        //
 
-        $location = DB::table('clients')->where('client_id',$client_id)->first();
+        $clients = DB::table('clients')
+                    ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
+                    ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
+                    ->select('clients.*', 'locations.*', 'billing_addresses.*')
+                    ->get();
 
+        return view('clients.client-profile', compact('client', 'clients'));
 
-        return view('clients.client-profile', compact('client'));
-        //
     }
 
-   
 
-    
- 
+
+
+
 
 
     /**

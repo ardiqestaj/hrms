@@ -86,10 +86,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Add Departament button --}}
-            <div class="col-auto float-right ml-auto">
-                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location_type"><i class="fa fa-plus"></i> Add Sector </a>
-            </div>
+
 
             <!-- Add Client Modal -->
             <div id="add_location_type" class="modal custom-modal fade" role="dialog">
@@ -199,6 +196,10 @@
             </div>
             <!-- /Add Client Modal -->
             <div class="row">
+                {{-- Add Departament button --}}
+                <div class="col-auto float-right ml-auto">
+                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location_type"><i class="fa fa-plus"></i> Add Sector </a>
+                </div>
                 <div class="col-lg-12">
                     <div class="tab-content profile-tab-content">
                         <!-- Projects Tab -->
@@ -224,7 +225,7 @@
                                                 <small class="block text-ellipsis m-b-15">
                                                     <span class="text-xs">{{ $locations_type->number_of_employees }}</span>
                                                     <span class="text-muted"> Employees needed. With
-                                                        {{ $locations_type->hours }}hours work</span>
+                                                        {{ $locations_type->hours }} hours work</span>
                                                     {{-- <span class="text-xs">9</span> <span
                                                         class="text-muted">tasks
                                                         completed</span> --}}

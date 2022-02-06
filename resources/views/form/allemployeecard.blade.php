@@ -16,13 +16,10 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
-                                class="fa fa-plus"></i> Add Employee</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i
-                                    class="fa fa-th"></i></a>
-                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i
-                                    class="fa fa-bars"></i></a>
+                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -68,19 +65,13 @@
                             {{-- <input type="text" class="id" value="{{ $lists->rec_id }}"> --}}
 
                             <div class="profile-img">
-                                <a href="{{ url('employee/profile/' . $lists->rec_id) }}" class="avatar"><img
-                                        src="{{ URL::to('/assets/images/' . $lists->avatar) }}"
-                                        alt="{{ $lists->avatar }}" alt="{{ $lists->avatar }}"></a>
+                                <a href="{{ url('employee/profile/' . $lists->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/images/' . $lists->avatar) }}" alt="{{ $lists->avatar }}" alt="{{ $lists->avatar }}"></a>
                             </div>
                             <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item"
-                                        href="{{ url('all/employee/view/edit/' . $lists->rec_id) }}"><i
-                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item employeeDelete" href="#" data-toggle="modal"
-                                        data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{ url('all/employee/view/edit/' . $lists->rec_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a class="dropdown-item employeeDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="profile.html">{{ $lists->name }}</a>
@@ -110,8 +101,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Name <span class="text-danger">*</span></label>
-                                        <input class="form-control @error('name') is-invalid @enderror" type="text"
-                                            id="name" name="name" value="{{ old('name') }}" required>
+                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name') }}" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -122,16 +112,14 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Last Name <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" id="lastname" name="lastname" required>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">User Name <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">User Name <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" id="username" name="username" required>
                                     </div>
                                 </div>
@@ -140,8 +128,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control @error('email') is-invalid @enderror" type="email"
-                                            id="email" value="{{ old('email') }}" name="email" required>
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email" id="email" value="{{ old('email') }}" name="email" required>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -152,18 +139,15 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Employee ID <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="rec_id" name=""
-                                            placeholder="Auto id employee" readonly>
+                                        <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="rec_id" name="" placeholder="Auto id employee" readonly>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Role <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="role_name" name="role_name"
-                                            placeholder="Employee" value="Employee" readonly>
+                                        <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Employee" value="Employee" readonly>
                                     </div>
                                 </div>
 
@@ -172,10 +156,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label" @error('password') is-invalid @enderror"
-                                            name="password">Password <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="password" id="password" name="password"
-                                            required>
+                                        <label class="col-form-label" @error('password') is-invalid @enderror" name="password">Password <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" id="password" name="password" required>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -186,28 +168,22 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Confirm Password <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="password" id="confirmPassword"
-                                            name="password_confirmation" required>
+                                        <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="password" id="confirmPassword" name="password_confirmation" required>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Phone Number <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" required id="phone_number"
-                                            name="phone_number">
+                                        <label class="col-form-label">Phone Number <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" required id="phone_number" name="phone_number">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Birthday <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control datetimepicker" type="text" id="birthDate"
-                                            name="birth_date" required>
+                                        <label class="col-form-label">Birthday <span class="text-danger">*</span></label>
+                                        <input class="form-control datetimepicker" type="text" id="birthDate" name="birth_date" required>
 
                                     </div>
                                 </div>
@@ -215,8 +191,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Gender <span class="text-danger">*</span></label>
-                                        <select class="select form-control" style="width: 100%;" tabindex="-1"
-                                            aria-hidden="true" id="gender" name="gender" required>
+                                        <select class="select form-control" style="width: 100%;" tabindex="-1" aria-hidden="true" id="gender" name="gender" required>
                                             <option value="" selected disabled>-- Select --</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -226,10 +201,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Type Of Work <span
-                                                class="text-danger">*</span></label>
-                                        <select class="select @error('role_name') is-invalid @enderror" name="department"
-                                            id="department">
+                                        <label class="col-form-label">Type Of Work <span class="text-danger">*</span></label>
+                                        <select class="select @error('role_name') is-invalid @enderror" name="department" id="department">
                                             <option selected disabled>-- Select Dapartment --</option>
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->department }}">
@@ -246,11 +219,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Payment Method <span
-                                                class="text-danger">*</span></label>
-                                        <select class="select select2s-hidden-accessible" style="width: 100%;"
-                                            tabindex="-1" aria-hidden="true" id="payment_method" name="payment_method"
-                                            required>
+                                        <label class="col-form-label">Payment Method <span class="text-danger">*</span></label>
+                                        <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="payment_method" name="payment_method" required>
                                             <option value="">-- Select --</option>
                                             <option value="Hourly">Hourly</option>
                                             <option value="Parttime">Parttime</option>
@@ -261,38 +231,30 @@
                             </div>
 
 
-                            <label for="col-form-label">Possible working days and hours <span
-                                    class="text-danger">*</span></label>
+                            <label for="col-form-label">Possible working days and hours <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group wday-box">
-                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
-                                                checked=""> <span class="checkmark">M</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y" checked=""> <span class="checkmark">M</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
-                                                checked=""><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y" checked=""><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y"
-                                                checked=""><span class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y" checked=""><span class="checkmark">W</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
-                                                checked=""><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y" checked=""><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
-                                                checked=""><span class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y" checked=""><span class="checkmark">F</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="saturday"
-                                                value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"><span class="checkmark">S</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"><span
-                                                class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"><span class="checkmark">S</span></label>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                            <input class="form-control" type="time" id="time_start" name="time_start">
+                                            <input class="form-control" type="time" step="1.0" id="time_start" name="time_start">
                                         </div>
                                     </div>
                                 </div>
@@ -306,47 +268,38 @@
                             </div>
 
                             <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
-                                    id="switch_hospitalisation">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_hospitalisation">
                                 <label class="onoffswitch-label" for="switch_hospitalisation">
                                     <span class="onoffswitch-inner"></span>
                                     <span class="onoffswitch-switch"></span>
                                 </label>
                             </div>
 
-                            <label for="col-form-label">Possible working days and hours <span
-                                    class="text-danger">*</span></label>
+                            <label for="col-form-label">Possible working days and hours <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group wday-box">
                                         <label class="checkbox-inline"><input type="checkbox" name="monday_opt" value="Y">
                                             <span class="checkmark">M</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday_opt"
-                                                value="Y"><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday_opt" value="Y"><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday_opt"
-                                                value="Y"><span class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday_opt" value="Y"><span class="checkmark">W</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="thursday_opt"
-                                                value="Y"><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="thursday_opt" value="Y"><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="friday_opt"
-                                                value="Y"><span class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="friday_opt" value="Y"><span class="checkmark">F</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="saturday_opt"
-                                                value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="saturday_opt" value="Y"><span class="checkmark">S</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="sunday_opt"
-                                                value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="sunday_opt" value="Y"><span class="checkmark">S</span></label>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                            <input class="form-control" type="time" id="time_start"
-                                                name="time_start_opt">
+                                            <input class="form-control" type="time" id="time_start" name="time_start_opt">
                                         </div>
                                     </div>
                                 </div>
@@ -456,12 +409,10 @@
                                 <input type="hidden" name="employee_id" id="e_id" value="">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
