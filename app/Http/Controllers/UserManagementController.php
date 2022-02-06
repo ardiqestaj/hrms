@@ -141,7 +141,8 @@ class UserManagementController extends Controller
             $employee = DB::table('employees')->where('employee_id',$profile)->first();
             $family = DB::table('families')->where('rec_id',$profile)->first();
             $education = DB::table('education_information')->where('rec_id',$profile)->get();
-            return view('usermanagement.profile_user',compact('information','user','employee', 'family', 'education'));
+            $experience = DB::table('experience_information')->where('rec_id',$profile)->get();
+            return view('usermanagement.profile_user',compact('information','user','employee', 'family', 'education', 'experience'));
 
         }else{
             $rec_id = $employees->rec_id;
@@ -151,16 +152,17 @@ class UserManagementController extends Controller
                 $employee = DB::table('employees')->where('employee_id',$profile)->first();
                 $family = DB::table('families')->where('rec_id',$profile)->first();
                 $education = DB::table('education_information')->where('rec_id',$profile)->get();
+                $experience = DB::table('experience_information')->where('rec_id',$profile)->get();
 
 
-                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family', 'education' ));
+                return view('usermanagement.profile_user',compact('information','user', 'employee', 'family', 'education', 'experience'));
             }else{
                 $information = ProfileInformation::all();
                 $employee = Employee::all();
                 $family = Family::all();
                 $education = EducationInformation::all();
-
-                return view('usermanagement.profile_user',compact('information','user', 'employee','family', 'education' ));
+                $experience = ExperienceInformation::all();
+                return view('usermanagement.profile_user',compact('information','user', 'employee','family', 'education', 'experience' ));
             }
         }
     }
@@ -267,6 +269,31 @@ class UserManagementController extends Controller
                 Toastr::error('Add Family Information fail :)','Error');
                 return redirect()->back();
             }
+
+
+    }
+    // new experience info
+    public function createExperienceInfo(Request $request)
+    {
+        try{
+
+            $experience = ExperienceInformation::updateOrCreate(['exp_id' => $request->exp_id]);
+            $experience->rec_id             = $request->rec_id;
+            $experience->work_company_name  = $request->work_company_name;
+            $experience->work_address       = $request->work_address;
+            $experience->work_position      = $request->work_position;
+            $experience->work_period_from   = $request->work_period_from;
+            $experience->work_period_to     = $request->work_period_to;
+            $experience->save();
+
+            DB::commit();
+            Toastr::success('Education Information successfully :)','Success');
+            return redirect()->back();
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Add Family Information fail :)','Error');
+            return redirect()->back();
+        }
 
 
     }
