@@ -52,13 +52,11 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <span class="title">Mobile Phone:</span>
-                                                    <span class="text"><a
-                                                            href="">{{ $locations->location_phone_number }}</a></span>
+                                                    <span class="text"><a href="">{{ $locations->location_phone_number }}</a></span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Email:</span>
-                                                    <span class="text"><a
-                                                            href="mailto: {{ $locations->location_email }}">{{ $locations->location_email }}</a></span>
+                                                    <span class="text"><a href="mailto: {{ $locations->location_email }}">{{ $locations->location_email }}</a></span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Address</span>
@@ -82,18 +80,15 @@
                 <div class="row user-tabs">
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab"
-                                    href="#myprojects">Projects</a></li>
-                            <li class="nav-item col-sm-3"><a class="nav-link" data-toggle="tab"
-                                    href="#tasks">Tasks</a></li>
+                            <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab" href="#myprojects">Projects</a></li>
+                            <li class="nav-item col-sm-3"><a class="nav-link" data-toggle="tab" href="#tasks">Tasks</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             {{-- Add Departament button --}}
             <div class="col-auto float-right ml-auto">
-                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i
-                        class="fa fa-plus"></i> Add Sector </a>
+                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Sector </a>
             </div>
             <div id="add_client" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -111,8 +106,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="hidden" name="id" value="{{ $locations->id }}">
-                                            <label class="col-form-label">Dapartament <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">Dapartament <span class="text-danger">*</span></label>
                                             <select class="select" name="type_of_work" id="rec_cli_id">
                                                 <option selected disabled>-- Select type of work --</option>
                                                 @foreach ($departments as $department)
@@ -124,8 +118,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-form-label">Number of Employeer <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">Number of Employeer <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="number_of_employees">
                                         </div>
                                     </div>
@@ -142,8 +135,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-form-label">End Time <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">End Time <span class="text-danger">*</span></label>
                                             <div class="input-group time timepicker">
                                                 <input class="form-control" type="time" id="time_start" name="outime">
                                             </div>
@@ -153,8 +145,7 @@
                                         <div class="form-group">
                                             <label>From <span class="text-danger">*</span></label>
                                             <div class="cal-icon">
-                                                <input type="text" class="form-control datetimepicker" id="to_date"
-                                                    name="datefrom">
+                                                <input type="text" class="form-control datetimepicker" id="to_date" name="datefrom">
                                             </div>
                                         </div>
                                     </div>
@@ -162,8 +153,7 @@
                                         <div class="form-group">
                                             <label>To <span class="text-danger">*</span></label>
                                             <div class="cal-icon">
-                                                <input type="text" class="form-control datetimepicker" id="to_date"
-                                                    name="dateto">
+                                                <input type="text" class="form-control datetimepicker" id="to_date" name="dateto">
                                             </div>
                                         </div>
                                     </div>
@@ -178,27 +168,20 @@
                                         <label class="col-form-label">Choose Rest days</label>
                                         <div class="form-group wday-box mb-4">
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Monday">
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Monday">
                                                 <span class="checkmark">M</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Tuesday"><span class="checkmark">T</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Tuesday"><span class="checkmark">T</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Wednesday"><span class="checkmark">W</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Wednesday"><span class="checkmark">W</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Thursday"><span class="checkmark">T</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Thursday"><span class="checkmark">T</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Friday"><span class="checkmark">F</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Friday"><span class="checkmark">F</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Saturday "><span class="checkmark">S</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Saturday "><span class="checkmark">S</span></label>
 
-                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]"
-                                                    value="Sunday"><span class="checkmark">S</span></label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="restday[]" value="Sunday"><span class="checkmark">S</span></label>
                                         </div>
                                         {{-- </div> --}}
                                     </div>
@@ -223,14 +206,11 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="dropdown profile-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#" data-toggle="modal"
-                                                        data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i>
                                                         Edit</a>
-                                                    <a class="dropdown-item" href="#" data-toggle="modal"
-                                                        data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i>
                                                         Delete</a>
                                                 </div>
                                             </div>
@@ -258,8 +238,7 @@
                                                 <div>Project Leader :</div>
                                                 <ul class="team-members">
                                                     <li>
-                                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                                src="assets/img/profiles/avatar-16.jpg"></a>
+                                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -267,24 +246,19 @@
                                                 <div>Team :</div>
                                                 <ul class="team-members">
                                                     <li>
-                                                        <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                                src="assets/img/profiles/avatar-02.jpg"></a>
+                                                        <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                                src="assets/img/profiles/avatar-09.jpg"></a>
+                                                        <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                                src="assets/img/profiles/avatar-10.jpg"></a>
+                                                        <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                                src="assets/img/profiles/avatar-05.jpg"></a>
+                                                        <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
                                                     </li>
                                                     <li class="dropdown avatar-dropdown">
-                                                        <a href="#" class="all-users dropdown-toggle"
-                                                            data-toggle="dropdown" aria-expanded="false">+15</a>
+                                                        <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+15</a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <div class="avatar-group">
                                                                 <a class="avatar avatar-xs" href="#">
@@ -318,19 +292,15 @@
                                                             <div class="avatar-pagination">
                                                                 <ul class="pagination">
                                                                     <li class="page-item">
-                                                                        <a class="page-link" href="#"
-                                                                            aria-label="Previous">
+                                                                        <a class="page-link" href="#" aria-label="Previous">
                                                                             <span aria-hidden="true">«</span>
                                                                             <span class="sr-only">Previous</span>
                                                                         </a>
                                                                     </li>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="#">1</a></li>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="#">2</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
                                                                     <li class="page-item">
-                                                                        <a class="page-link" href="#"
-                                                                            aria-label="Next">
+                                                                        <a class="page-link" href="#" aria-label="Next">
                                                                             <span aria-hidden="true">»</span>
                                                                             <span class="sr-only">Next</span>
                                                                         </a>
@@ -341,11 +311,9 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <p class="m-b-5">Progress <span
-                                                    class="text-success float-right">40%</span></p>
+                                            <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
                                             <div class="progress progress-xs mb-0">
-                                                <div class="progress-bar bg-success" role="progressbar"
-                                                    data-toggle="tooltip" title="40%" style="width: 40%"></div>
+                                                <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -754,12 +722,9 @@
                         <div id="tasks" class="tab-pane fade">
                             <div class="project-task">
                                 <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
-                                    <li class="nav-item"><a class="nav-link active" href="#all_tasks"
-                                            data-toggle="tab" aria-expanded="true">All Tasks</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#pending_tasks"
-                                            data-toggle="tab" aria-expanded="false">Pending Tasks</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#completed_tasks"
-                                            data-toggle="tab" aria-expanded="false">Completed Tasks</a></li>
+                                    <li class="nav-item"><a class="nav-link active" href="#all_tasks" data-toggle="tab" aria-expanded="true">All Tasks</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#pending_tasks" data-toggle="tab" aria-expanded="false">Pending Tasks</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#completed_tasks" data-toggle="tab" aria-expanded="false">Completed Tasks</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="all_tasks">
@@ -770,8 +735,7 @@
                                                         <li class="task">
                                                             <div class="task-container">
                                                                 <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn"
-                                                                        title="Mark Complete">
+                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
                                                                         <i class="material-icons">check</i>
                                                                     </span>
                                                                 </span>
@@ -781,8 +745,7 @@
                                                                     <span class="action-circle large" title="Assign">
                                                                         <i class="material-icons">person_add</i>
                                                                     </span>
-                                                                    <span class="action-circle large delete-btn"
-                                                                        title="Delete Task">
+                                                                    <span class="action-circle large delete-btn" title="Delete Task">
                                                                         <i class="material-icons">delete</i>
                                                                     </span>
                                                                 </span>
@@ -791,20 +754,17 @@
                                                         <li class="task">
                                                             <div class="task-container">
                                                                 <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn"
-                                                                        title="Mark Complete">
+                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
                                                                         <i class="material-icons">check</i>
                                                                     </span>
                                                                 </span>
-                                                                <span class="task-label"
-                                                                    contenteditable="true">Appointment booking with payment
+                                                                <span class="task-label" contenteditable="true">Appointment booking with payment
                                                                     gateway</span>
                                                                 <span class="task-action-btn task-btn-right">
                                                                     <span class="action-circle large" title="Assign">
                                                                         <i class="material-icons">person_add</i>
                                                                     </span>
-                                                                    <span class="action-circle large delete-btn"
-                                                                        title="Delete Task">
+                                                                    <span class="action-circle large delete-btn" title="Delete Task">
                                                                         <i class="material-icons">delete</i>
                                                                     </span>
                                                                 </span>
@@ -813,8 +773,7 @@
                                                         <li class="completed task">
                                                             <div class="task-container">
                                                                 <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn"
-                                                                        title="Mark Complete">
+                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
                                                                         <i class="material-icons">check</i>
                                                                     </span>
                                                                 </span>
@@ -823,8 +782,7 @@
                                                                     <span class="action-circle large" title="Assign">
                                                                         <i class="material-icons">person_add</i>
                                                                     </span>
-                                                                    <span class="action-circle large delete-btn"
-                                                                        title="Delete Task">
+                                                                    <span class="action-circle large delete-btn" title="Delete Task">
                                                                         <i class="material-icons">delete</i>
                                                                     </span>
                                                                 </span>
@@ -833,8 +791,7 @@
                                                         <li class="task">
                                                             <div class="task-container">
                                                                 <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn"
-                                                                        title="Mark Complete">
+                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
                                                                         <i class="material-icons">check</i>
                                                                     </span>
                                                                 </span>
@@ -844,8 +801,7 @@
                                                                     <span class="action-circle large" title="Assign">
                                                                         <i class="material-icons">person_add</i>
                                                                     </span>
-                                                                    <span class="action-circle large delete-btn"
-                                                                        title="Delete Task">
+                                                                    <span class="action-circle large delete-btn" title="Delete Task">
                                                                         <i class="material-icons">delete</i>
                                                                     </span>
                                                                 </span>
@@ -854,8 +810,7 @@
                                                         <li class="task">
                                                             <div class="task-container">
                                                                 <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn"
-                                                                        title="Mark Complete">
+                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
                                                                         <i class="material-icons">check</i>
                                                                     </span>
                                                                 </span>
@@ -865,8 +820,7 @@
                                                                     <span class="action-circle large" title="Assign">
                                                                         <i class="material-icons">person_add</i>
                                                                     </span>
-                                                                    <span class="action-circle large delete-btn"
-                                                                        title="Delete Task">
+                                                                    <span class="action-circle large delete-btn" title="Delete Task">
                                                                         <i class="material-icons">delete</i>
                                                                     </span>
                                                                 </span>
@@ -875,8 +829,7 @@
                                                         <li class="task">
                                                             <div class="task-container">
                                                                 <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn"
-                                                                        title="Mark Complete">
+                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
                                                                         <i class="material-icons">check</i>
                                                                     </span>
                                                                 </span>
@@ -886,8 +839,7 @@
                                                                     <span class="action-circle large" title="Assign">
                                                                         <i class="material-icons">person_add</i>
                                                                     </span>
-                                                                    <span class="action-circle large delete-btn"
-                                                                        title="Delete Task">
+                                                                    <span class="action-circle large delete-btn" title="Delete Task">
                                                                         <i class="material-icons">delete</i>
                                                                     </span>
                                                                 </span>
@@ -897,8 +849,7 @@
                                                 </div>
                                                 <div class="task-list-footer">
                                                     <div class="new-task-wrapper">
-                                                        <textarea id="new-task"
-                                                            placeholder="Enter new task here. . ."></textarea>
+                                                        <textarea id="new-task" placeholder="Enter new task here. . ."></textarea>
                                                         <span class="error-message hidden">You need to enter a task
                                                             first</span>
                                                         <span class="add-new-task-btn btn" id="add-task">Add Task</span>
@@ -921,7 +872,7 @@
         </div>
         <!-- /Page Content -->
 
-    </div>
+
     </div>
     <!-- /Main Wrapper -->
 @endsection

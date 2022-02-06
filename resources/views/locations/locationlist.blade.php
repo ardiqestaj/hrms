@@ -24,9 +24,9 @@
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i
                                 class="fa fa-plus"></i> Add Location</a>
                         <div class="view-icons">
-                            <a href="{{ route('location/locations') }}" class="grid-view btn btn-link active"><i
+                            <a href="{{ route('location/locations') }}" class="grid-view btn btn-link"><i
                                     class="fa fa-th"></i></a>
-                            <a href="{{ route('location/locations/list') }}" class="list-view btn btn-link"><i
+                            <a href="{{ route('location/locations/list') }}" class="list-view btn btn-link active"><i
                                     class="fa fa-bars"></i></a>
                         </div>
                     </div>
