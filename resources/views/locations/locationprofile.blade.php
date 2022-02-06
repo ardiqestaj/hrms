@@ -201,7 +201,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tab-content profile-tab-content">
-
                         <!-- Projects Tab -->
                         <div id="myprojects" class="tab-pane fade show active">
                             <div class="row">
@@ -330,9 +329,15 @@
                                                 <div class="progress progress-xs mb-0">
                                                     <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
                                                 </div>
+                                                <div class="project-members m-b-10 m-t-15">
+                                                    <h4 class="project-title"><a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_location_type{{ $locations_type->location_type_work_id }}"><i style="font-size: 20px" class="las la-search-plus"></i>
+                                                            Find Employees</a>
+                                                    </h4>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     {{-- Edit Location Modal --}}
                                     <div id="edit_location_type{{ $locations_type->location_type_work_id }}" class="modal custom-modal fade" role="dialog">
                                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

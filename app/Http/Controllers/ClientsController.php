@@ -123,6 +123,10 @@ class ClientsController extends Controller
     public function clientProfile($client_id)
     {
         $client = DB::table('clients')->where('client_id',$client_id)->first();
+
+        $location = DB::table('clients')->where('client_id',$client_id)->first();
+
+
         return view('clients.client-profile', compact('client'));
         //
     }
