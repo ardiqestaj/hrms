@@ -379,19 +379,19 @@
                                                         </div>
                                                         <div class="experience-content">
                                                             <div class="timeline-content">
-                                                                <a href="#" class="edit-icon expUpdates" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a>
+                                                                <a href="#" class="edit-icon expUpdate" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a>
                                                                 <span>
-                                                                    <a href="#/" class="name company_name">{{ $exp->work_company_name }}
-                                                                    </a> at <a href="#/" class="name company_address">{{ $exp->work_address }}</a>
+                                                                    <a href="#/" class="name work_company_name">{{ $exp->work_company_name }}
+                                                                    </a> at <a href="#/" class="name work_address">{{ $exp->work_address }}</a>
                                                                 </span>
 
                                                                 <span class="time">
-                                                                    <span class="period_from">{{ $exp->work_periode_from }}</span>
+                                                                    <span class="work_period_from">{{ $exp->work_period_from }}</span>
                                                                     -
-                                                                    <span class="period_to">{{ $exp->work_periode_to }}</span>
+                                                                    <span class="work_period_to">{{ $exp->work_period_to }}</span>
                                                                 </span>
 
-                                                                <span class="position" hidden>{{ $exp->work_position }}</span>
+                                                                <span class="work_position" hidden>{{ $exp->work_position }}</span>
                                                                 <span class="exp_id" hidden>{{ $exp->exp_id }}</span>
                                                             </div>
                                                         </div>
@@ -1711,6 +1711,73 @@
 
         <!-- /Education Modal -->
 
+
+        <!-- Experience Modal -->
+        <div id="experience_info1" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Experience Informations</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('experience/information/save') }}" method="POST">
+                            @csrf
+                            <div class="form-scroll">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Experience Informations</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group form-focus">
+                                                    <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
+                                                    <input type="text" class="form-control floating" name="work_company_name" value="">
+                                                    <label class="focus-label">Company Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-focus">
+                                                    <input type="text" class="form-control floating" name="work_address" value="">
+                                                    <label class="focus-label">Location</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-focus">
+                                                    <input type="text" class="form-control floating" name="work_position" value="">
+                                                    <label class="focus-label">Job Position</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-focus">
+                                                    <div class="cal-icon">
+                                                        <input type="text" class="form-control floating datetimepicker" name="work_period_from" value="">
+                                                    </div>
+                                                    <label class="focus-label">Period From</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group form-focus">
+                                                    <div class="cal-icon">
+                                                        <input type="text" class="form-control floating datetimepicker" name="work_period_to" value="">
+                                                    </div>
+                                                    <label class="focus-label">Period To</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section">
+                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @if (!empty($experience))
             <!-- Experience Modal -->
             <div id="experience_info" class="modal custom-modal fade" role="dialog">
@@ -1723,7 +1790,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('experience/information/save') }}">
+                            <form action="{{ route('experience/information/save') }}" method="POST" id="experience_modal">
                                 @csrf
                                 <div class="form-scroll">
                                     <div class="card">
@@ -1734,26 +1801,26 @@
                                                     <div class="form-group form-focus">
                                                         <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
                                                         <input type="hidden" name="exp_id" id="exp_id">
-                                                        <input type="text" name="work_company_name" id="company_name" class="form-control floating" value="">
+                                                        <input type="text" name="work_company_name" id="work_company_name" class="form-control floating" value="">
                                                         <label class="focus-label">Company Name</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
-                                                        <input type="text" name="work_address" id="company_address" class="form-control floating" value="">
+                                                        <input type="text" name="work_address" id="work_address" class="form-control floating" value="">
                                                         <label class="focus-label">Location</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" id="position" name="work_position" value="">
+                                                        <input type="text" class="form-control floating" id="work_position" name="work_position" value="">
                                                         <label class="focus-label">Job Position</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <div class="cal-icon">
-                                                            <input type="text" id="period_from" name="work_period_from" class="form-control floating datetimepicker" value="">
+                                                            <input type="text" id="work_period_from" name="work_period_from" class="form-control floating datetimepicker" value="">
                                                         </div>
                                                         <label class="focus-label">Period From</label>
                                                     </div>
@@ -1761,7 +1828,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <div class="cal-icon">
-                                                            <input type="text" id="period_to" name="period_to" class="form-control floating datetimepicker" value="">
+                                                            <input type="text" id="work_period_to" name="work_period_to" class="form-control floating datetimepicker" value="">
                                                         </div>
                                                         <label class="focus-label">Period To</label>
                                                     </div>
@@ -1771,73 +1838,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        @else
-            <div id="experience_info1" class="modal custom-modal fade" role="dialog">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Experience Informations</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('experience/information/save') }}">
-                                @csrf
-                                <div class="form-scroll">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
-                                                        <input type="text" class="form-control floating" name="work_company_name" value="">
-                                                        <label class="focus-label">Company Name</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" name="work_company_address" value="">
-                                                        <label class="focus-label">Location</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" name="work_position" value="">
-                                                        <label class="focus-label">Job Position</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control floating datetimepicker" name="work_period_from" value="">
-                                                        </div>
-                                                        <label class="focus-label">Period From</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control floating datetimepicker" name="work_period_to" value="">
-                                                        </div>
-                                                        <label class="focus-label">Period To</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -1845,15 +1846,17 @@
                 </div>
             </div>
         @endif
+
+
         <!-- /Experience Modal -->
 
         <!-- /Page Content -->
     </div>
-    <script>
+    {{-- <script>
         document.getElementById("add-div").onclick = function() {
             $('#to-be-cloned').clone().insertAfter($('#to-be-cloned:last'));
         }
-    </script>
+    </script> --}}
     <script>
         $(document).on('click', '.eduUpdate', function() {
             var _this = $(this).parents('li');
@@ -1864,6 +1867,17 @@
             $('#end_date').val(_this.find('.end_date').text());
             $('#grade').val(_this.find('.grade').text());
             $('#degree').val(_this.find('.degree').text());
+        });
+    </script>
+    <script>
+        $(document).on('click', '.expUpdate', function() {
+            var _this = $(this).parents('li');
+            $('#exp_id').val(_this.find('.exp_id').text());
+            $('#work_company_name').val(_this.find('.work_company_name').text());
+            $('#work_address').val(_this.find('.work_address').text());
+            $('#work_period_from').val(_this.find('.work_period_from').text());
+            $('#work_period_to').val(_this.find('.work_period_to').text());
+            $('#work_position').val(_this.find('.work_position').text());
         });
     </script>
 @endsection

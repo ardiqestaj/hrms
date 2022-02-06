@@ -379,27 +379,27 @@ $(document).ready(function() {
 });
 
 // Clone a form on click
-$(document).ready(function() {
-    $("#education-card-add-btn").click(function() {
-        $("#education-card")
-            .eq(0)
-            .clone()
-            .insertAfter("#education-card:last")
-            .show();
-    });
+// $(document).ready(function() {
+//     $("#education-card-add-btn").click(function() {
+//         $("#education-card")
+//             .eq(0)
+//             .clone()
+//             .insertAfter("#education-card:last")
+//             .show();
+//     });
 
-    $(document).on('click', '#education-card button[type=submit]', function(e) {
-        e.preventDefault() // To make sure the form is not submitted
-        var $frm = $(this).closest('#education-card');
-        console.log($frm.serialize());
-        $.ajax(
-            $frm.attr('action'), {
-                method: $frm.attr('method'),
-                data: $frm.serialize()
-            }
-        );
-    });
-});
+//     $(document).on('click', '#education-card button[type=submit]', function(e) {
+//         e.preventDefault() // To make sure the form is not submitted
+//         var $frm = $(this).closest('#education-card');
+//         console.log($frm.serialize());
+//         $.ajax(
+//             $frm.attr('action'), {
+//                 method: $frm.attr('method'),
+//                 data: $frm.serialize()
+//             }
+//         );
+//     });
+// });
 
 // Loader
 
