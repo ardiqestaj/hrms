@@ -16,8 +16,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i
-                                class="fa fa-plus"></i> Add Leave</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
                     </div>
                 </div>
             </div>
@@ -133,12 +132,8 @@
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="{{ url('employee/profile/' . $items->rec_id) }}"
-                                                        class="avatar"><img alt=""
-                                                            src="{{ URL::to('/assets/images/' . $items->avatar) }}"
-                                                            alt="{{ $items->name }}"></a>
-                                                    <a
-                                                        href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                                    <a href="{{ url('employee/profile/' . $items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/' . $items->avatar) }}" alt="{{ $items->name }}"></a>
+                                                    <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                                 </h2>
                                             </td>
                                             <td hidden class="id">{{ $items->leave_applies_id }}</td>
@@ -155,8 +150,7 @@
                                             <td class="leave_reason">{{ $items->leave_reason }}</td>
                                             <td class="text-center">
                                                 <div class="dropdown action-label">
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                         @if ($items->status == 'New')
                                                             <i class="fa fa-dot-circle-o text-purple"></i>
                                                             New
@@ -173,29 +167,18 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#new_leave"><i class="fa fa-dot-circle-o text-purple"></i> New</a> -->
-                                                        <a class="dropdown-item PendingLeave" href="#" data-toggle="modal"
-                                                            data-target="#pending_leave"><i
-                                                                class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                        <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal"
-                                                            data-target="#approve_leave"><i
-                                                                class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item DeclinedLeave" href="#" data-toggle="modal"
-                                                            data-target="#declined_leave"><i
-                                                                class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                                        <a class="dropdown-item PendingLeave" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                                        <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                                        <a class="dropdown-item DeclinedLeave" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item leaveUpdate" data-toggle="modal"
-                                                            data-id="'.$items->id.'" data-target="#edit_leave"><i
-                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal"
-                                                            data-target="#delete_approve"><i
-                                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a class="dropdown-item leaveUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -233,8 +216,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="hidden" class="form-control" id="rec_id" name="rec_id"
-                                value="{{ Auth::user()->rec_id }}">
+                            <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
                             <div class="form-group">
                                 <label>From <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
@@ -295,26 +277,22 @@
                             <div class="form-group">
                                 <label>From <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="e_from_date"
-                                        name="from_date" value="">
+                                    <input type="text" class="form-control datetimepicker" id="e_from_date" name="from_date" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>To <span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date"
-                                        value="">
+                                    <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Number of days <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly type="text" id="e_number_of_days"
-                                    name="number_of_days" value="">
+                                <input class="form-control" readonly type="text" id="e_number_of_days" name="number_of_days" value="">
                             </div>
                             <div class="form-group">
                                 <label>Leave Reason <span class="text-danger">*</span></label>
-                                <textarea rows="4" class="form-control" id="e_leave_reason" name="leave_reason"
-                                    value=""></textarea>
+                                <textarea rows="4" class="form-control" id="e_leave_reason" name="leave_reason" value=""></textarea>
                             </div>
                             <div class="submit-section">
                                 <button type="submit" class="btn btn-primary submit-btn">Save</button>
@@ -346,12 +324,10 @@
                                         <input type="hidden" name="day" id="a_day" value="">
                                         <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                         <input type="hidden" name="status" id="" value="Approved">
-                                        <button type="submit"
-                                            class="btn btn-primary submit-btn continue-btn">Approve</button>
+                                        <button type="submit" class="btn btn-primary submit-btn continue-btn">Approve</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -381,12 +357,10 @@
                                         <input type="hidden" name="day" id="p_day" value="">
                                         <input type="hidden" name="approved_by" value="{{ Auth::user()->rec_id }}">
                                         <input type="hidden" name="status" class="" value="Pending">
-                                        <button type="submit"
-                                            class="btn btn-primary submit-btn continue-btn">Pending</button>
+                                        <button type="submit" class="btn btn-primary submit-btn continue-btn">Pending</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -416,12 +390,10 @@
                                 <input type="hidden" name="status" class="" value="Declined">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Declined</button>
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Declined</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -443,15 +415,13 @@
                         <div class="modal-btn delete-action">
                             <form action="{{ route('form/leaves/edit/delete') }}" method="POST">
                                 @csrf
-                                <input type="text" name="id" class="e_id" value="">
+                                <input type="hidden" name="id" class="e_id" value="">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
