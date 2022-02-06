@@ -12,6 +12,7 @@ use App\Models\Form;
 use App\Models\ProfileInformation;
 use App\Models\Family;
 use App\Models\EducationInformation;
+use App\Models\ExperienceInformation;
 use App\Rules\MatchOldPassword;
 use Carbon\Carbon;
 use Session;
@@ -227,6 +228,8 @@ class UserManagementController extends Controller
     // new family info
     public function createFamilyInfo(Request $request)
     {
+        DB::beginTransaction();
+
         try{
             $family = Family::updateOrCreate(['rec_id' => $request->rec_id]);
             $family->name         = $request->name;
@@ -249,6 +252,8 @@ class UserManagementController extends Controller
     // new education info
     public function createEducationInfo(Request $request)
     {
+        DB::beginTransaction();
+
             try{
 
                 $education = EducationInformation::updateOrCreate(['id' => $request->id]);
@@ -275,6 +280,8 @@ class UserManagementController extends Controller
     // new experience info
     public function createExperienceInfo(Request $request)
     {
+        // DB::beginTransaction();
+
         try{
 
             $experience = ExperienceInformation::updateOrCreate(['exp_id' => $request->exp_id]);
@@ -287,11 +294,11 @@ class UserManagementController extends Controller
             $experience->save();
 
             DB::commit();
-            Toastr::success('Education Information successfully :)','Success');
+            Toastr::success('Experience Information successfully :)','Success');
             return redirect()->back();
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('Add Family Information fail :)','Error');
+            Toastr::error('Add Experience Information fail :)','Error');
             return redirect()->back();
         }
 

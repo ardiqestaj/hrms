@@ -15,12 +15,12 @@ class CreateExperienceInformationTable extends Migration
     {
         Schema::create('experience_information', function (Blueprint $table) {
             $table->id('exp_id');
-            $table->string('rec_id');
-            $table->string('work_company_name');
-            $table->string('work_address');
-            $table->string('work_position');
-            $table->string('work_period_from');
-            $table->string('work_period_to');
+            $table->string('rec_id')->nullable();
+            $table->string('work_company_name')->nullable();
+            $table->string('work_address')->nullable();
+            $table->string('work_position')->nullable();
+            $table->string('work_period_from')->nullable();
+            $table->string('work_period_to')->nullable();
             $table->timestamps();
         });
     }
