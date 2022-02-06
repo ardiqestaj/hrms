@@ -27,11 +27,19 @@ class LocationController extends Controller
         return view('locations.locations' ,compact('clients', 'locations'));
     }
 
+    // Location Profile
     public function locationProfile($id)
     {
         $departments = DB::table('departments')->get();
         $locations = DB::table('locations')->where('id',$id)->first();
-        return view('locations.locationprofile', compact('locations', 'departments'));
+
+        $locations_types = DB::table('location_type_works')
+                        ->join('departments', 'location_type_works.type_work_id', '=', 'departments.id')
+                        ->join('schedules', 'location_type_works.location_type_work_id', '=', 'schedules.idno')
+                        ->select('location_type_works.number_of_employees', 'location_type_works.location_type_work_id', 'departments.department', 'departments.id as did', 'schedules.*')
+                        ->where('location_id',$id)->get();
+
+        return view('locations.locationprofile', compact('locations', 'departments', 'locations_types'));
         
         //
     }

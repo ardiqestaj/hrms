@@ -188,6 +188,10 @@ Route::post('location/delete', [App\Http\Controllers\locationController::class, 
 Route::get('location/locations/list', [App\Http\Controllers\LocationController::class, 'locationList'])->middleware('auth')->name('location/locations/list');
 // ----------------------------- Locations Dapartament------------------------------//
 Route::post('location/type/add', [App\Http\Controllers\LocationTypeWorkController::class, 'create'])->middleware('auth')->name('location/type/add');
+Route::post('location/type/edit', [App\Http\Controllers\LocationTypeWorkController::class, 'edit'])->middleware('auth')->name('location/type/edit');
+Route::post('location/type/delete', [App\Http\Controllers\LocationTypeWorkController::class, 'delete'])->middleware('auth')->name('location/type/delete');
+
+
 
 
 // ----------------------------- form payroll  ------------------------------//
