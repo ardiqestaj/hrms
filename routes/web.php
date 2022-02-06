@@ -95,7 +95,7 @@ Route::get('profile_user', [App\Http\Controllers\UserManagementController::class
 Route::post('profile/information/save', [App\Http\Controllers\UserManagementController::class, 'profileInformation'])->name('profile/information/save');
 Route::post('family/information/save', [App\Http\Controllers\UserManagementController::class, 'createFamilyInfo'])->name('family/information/save');
 Route::post('education/information/save', [App\Http\Controllers\UserManagementController::class, 'createEducationInfo'])->name('education/information/save');
-Route::post('experience/information/save', [App\Http\Controllers\UserManagementController::class, 'createExperienceInfo'])->name('experience/information/save');
+Route::post('experience/information/save', [App\Http\Controllers\UserManagementController::class, 'createExperienceInfo'])->middleware('auth')->name('experience/information/save');
 
 // ----------------------------- user userManagement -----------------------//
 Route::get('userManagement', [App\Http\Controllers\UserManagementController::class, 'index'])->middleware('auth')->name('userManagement');

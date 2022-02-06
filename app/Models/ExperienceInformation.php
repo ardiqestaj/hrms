@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ExperienceInformation extends Model
 {
     use HasFactory;
-    // protected $table = 'experience_information';s
+    protected $table = 'experience_information';
+    public $primaryKey = 'exp_id';
     protected $fillable = [
         'rec_id',
         'work_company_name',
