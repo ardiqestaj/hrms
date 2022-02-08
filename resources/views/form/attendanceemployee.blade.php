@@ -90,13 +90,13 @@
                 <div class="col-md-4">
                     <div class="card att-statistics">
                         <div class="card-body">
-                            {{-- @foreach ($monthHolidays as $monthHoli)
+                            @foreach ($getWeekRestDays as $restDa)
                           
-                                <h5 class="card-title">Statistics {{date('l', strtotime($monthHoli->date_holiday))}}</h5>
+                                <h5 class="card-title">Statistics {{$restDa}},</h5>
                           
-                            @endforeach --}}
+                            @endforeach
 
-                            <h5 class="card-title">Statistics {{$totalWeekHolidays}}</h5>
+                            {{-- <h5 class="card-title">Statistics {{$leavess}}</h5> --}}
                             <div class="stats-list">
                                 <div class="stats-info">
                                     <p>Today <strong>

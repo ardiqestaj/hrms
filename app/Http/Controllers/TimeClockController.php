@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\TimeClock;
 use App\Models\Schedule;
 use App\Models\Holiday;
+use App\Models\LeavesEvidence;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests;
@@ -37,13 +38,40 @@ class TimeClockController extends Controller
 
         // Leaves Table 
         $now = Carbon::now();
-        
+
+        $from = date('2022-02-07');
+        $to = date('2022-03-03');
+
+        $date_arra = [];
+
+        $monthLeaves = LeavesEvidence::select('from_date', 'day')->where('rec_id', Auth::user()->rec_id)->get();
+        // return $monthLeaves->attributesToArray();
+        // $leaveStart = $monthLeaves->from_date;
+        // $leaveEnd = $monthLeaves->to_date;
+        $monthLeavesCount = count($monthLeaves);
+
+        // $date_arra = [];
+        // foreach($monthLeaves as $leave){
+        //     $leaveStart = $leave->from_date;
+        //     $leaveEnd = $leave->to_date;
+        //     array_push($date_arra, $leaveStart);
+        // }
+
+        // array_push($date_arra, $leaveStart, $leaveEnd);
+        // $leaveStart = $monthLeaves->from_date;
+        // $leaveEnd = $monthLeaves->to_date;
+
+
+
+        // ->whereMonth('from_date', Carbon::now()->month)
+        // ->WhereBetween('to_date', [$from, $to])
+        // ->get();
+        // $monthLeavesCount = count($monthLeaves);
 
         
         // Holidays Table
-        $now = Carbon::now();
-        $monthHolidays = Holiday::whereMonth('date_holiday', '=', $now->month)->get();
         $weekHolidayss = Holiday::where('date_holiday', '>', Carbon::now()->startOfWeek())->where('date_holiday', '<', Carbon::now()->endOfWeek())->get();
+        $monthHolidays = Holiday::where('date_holiday', '>', Carbon::now()->startOfMonth())->where('date_holiday', '<', Carbon::now()->endOfMonth())->get();
         $monthHolidaysNo = count($monthHolidays);
         $weekHolidays = count($weekHolidayss);
 
@@ -58,12 +86,14 @@ class TimeClockController extends Controller
         $now = Carbon::now();
         $startOfWeek = $now->startOfWeek()->format('Y-m-d');
 
+        // $getMonthAllDays3 = $monthLeaves;
+
         // array of rest day names
-        $d = 0;
-        foreach($days as $day){
-            ${'restday'.$d} = $day;
-            $d++;
-        }
+        // $d = 0;
+        // foreach($days as $day){
+        //     ${'restday'.$d} = $day;
+        //     $d++;
+        // }
 
         // Function to count reccurring days in a month
         function workingDays( $startDate, $totalDays ) {
@@ -73,70 +103,177 @@ class TimeClockController extends Controller
             $year = $date_array[2];
             $working_date = array();
     
-            for ( $p = 1; $p <= $totalDays; $p++ ) {
+            for ( $p = 0; $p < $totalDays; $p++ ) {
             $working_date[] = date('l', mktime(0, 0, 0,$month,$day +(int)$p,$year));
-    
             }
             return $working_date;
         }
-    
-        // Total days in a month and start date of month
-        $getDays = workingDays($startOfMonth, $totalMonthDay);
-        $getWorkingDays = workingDays($startOfMonth, $totalMonthDay);
-        // Number of Month Recurring days
-        $totalRestDaysInMonth = 0;
-        for ($j=0; $j<$numOfRestDays; $j++){
-        str_replace(array(${'restday'.$j}),array(${'restday'.$j}), $getDays, ${'dupMonthDays'.$j});
-        $totalRestDaysInMonth += ${'dupMonthDays'.$j};
-        }
-
+        // All days in a month
+        $getMonthAllDays = workingDays($startOfMonth, $totalMonthDay);
         // Total days in a week and start date of week
-        $getDays = workingDays($startOfWeek, 6);
-        $getWorkingDays = workingDays($startOfWeek, 6);
-        // Number of Month Recurring days
-        $totalRestDaysInWeek = 0;
-        for ($j=0; $j<$numOfRestDays; $j++){
-        str_replace(array(${'restday'.$j}),array(${'restday'.$j}), $getDays, ${'dupWeekDays'.$j});
-        $totalRestDaysInWeek += ${'dupWeekDays'.$j};
-        }
 
-        // Total rest days in a week
-        $totalRestDaysInWeek;
-        // Total rest days in a month
-        $totalRestDaysInMonth;
+
+
+        foreach ($monthLeaves as $leave) {
+            // $getWeekRestDays = workingDays($leave, $leaveLength);
+                $getWeekRestDays = workingDays($leave->from_date, $leave->day);
+        // return $getWeekRestDays;
+        }
+        // for ($v=0; $v<$monthLeavesCount; $v++) {
+        //     for($i=0; $i<$monthLeavesCount; $i++){
+        //         foreach ($monthLeaves as ${'leave'.$i}) {
+        //             ${'getWeekRestDays'.$v} = workingDays(${'leave'.$i}->from_date, ${'leave'.$i}->day);
+        //         }
+        //     }
+        // }
+
+
+        // Number of Month Recurring 
+        // function totalRestDays($restDaysNum, $duplicateDays, $restdays, $getDays){
+        //     $totalRestDaysInMonth = 0;
+        //     for ($j=0; $j<$restDaysNum; $j++) {
+        //         global ${'restday'.$j};
+
+        //         str_replace(array(${$restdays.$j}), array(${$restdays.$j}), $getDays, ${$duplicateDays.$j});
+        //         $totalRestDaysInMonth += ${$duplicateDays.$j};
+        //     }
+        //     return ($totalRestDaysInMonth);
+        // }
+        // // funksion per numrin e RestDay per month
+        // $totRestDaysInMonth = totalRestDays($numOfRestDays, 'dupMonthDays', 'restday', $getMonthAllDays);
+
+        // // funksion per numrin e RestDay per Week
+        // $totRestDaysInWeek = totalRestDays($numOfRestDays, 'dupWeekDays', 'restday', $getWeekRestDays);
+
+
+
+        // // Number of Month Recurring days
+        // $totalRestDaysInMonth = 0;
+        // for ($j=0; $j<$numOfRestDays; $j++){
+        //     str_replace(array(${'restday'.$j}),array(${'restday'.$j}), $getMonthAllDays, ${'dupMonthDays'.$j});
+        //     $totalRestDaysInMonth += ${'dupMonthDays'.$j};
+        // }
+        // // // Total rest days in a month
+        // $totalRestDaysInMonth;
+
+        // // Number of Month Recurring days
+        // $totalRestDaysInWeek = 0;
+        // for ($j=0; $j<$numOfRestDays; $j++){
+        //     str_replace(array(${'restday'.$j}),array(${'restday'.$j}), $getDays, ${'dupWeekDays'.$j});
+        //     $totalRestDaysInWeek += ${'dupWeekDays'.$j};
+        // }
+
+        // // Total rest days in a week
+        // $totalRestDaysInWeek;
+     
+
+
 
         // Check if Holidays of the current month are rest days also
-        for ($j=0; $j<$numOfRestDays; $j++) {
-            $totalMonthHolidays = 0;
-            foreach ($monthHolidays as $monthHoli) {
-                if (date('l', strtotime($monthHoli->date_holiday)) != ${'restday'.$j}) {
-                    $weekdayHolid1 = 1;
-                } else {
-                    $weekdayHolid1 = 0;
+        // function countDayOverleap($maxNumFirstLoop, $tableVar, $columnName, $firstLoopItemVar){
+        //     for ($j=0; $j<$maxNumFirstLoop; $j++) {
+        //     global ${'restday'.$j};
+        //         $totalMonthHolidays = 0;
+        //         foreach ($tableVar as $monthHoli) {
+        //             if (date('l', strtotime($monthHoli->$columnName)) != ${$firstLoopItemVar.$j}) {
+        //                 $weekdayHolid1 = 1;
+        //             } else {
+        //                 $weekdayHolid1 = 0;
+        //             }
+        //             $totalMonthHolidays += $weekdayHolid1;
+        //         }
+        //     }
+        //     return ($totalMonthHolidays);
+        // }
+
+        // //Month Holidays that are not Rest Days
+        // $monthHolidaysNotRestDays = countDayOverleap($numOfRestDays, $monthHolidays, 'date_holiday', 'restday');
+        // // Week Holdays that are not rest days
+        // $weekHolidaysNotRestDays = countDayOverleap($numOfRestDays, $weekHolidayss, 'date_holiday', 'restday');
+
+
+        // Number of Rest Days in a month
+        // function countDayOverleap2($maxNumFirstLoop, $tableVar, $firstLoopItemVar){
+        //     for ($j=0; $j<$maxNumFirstLoop; $j++) {
+        //     global ${'restday'.$j};
+        //         $totalMonthHolidays = 0;
+        //         foreach ($tableVar as $monthHoli) {
+        //             if (date('l', strtotime($monthHoli)) != ${$firstLoopItemVar.$j}  ) {
+        //                 $weekdayHolid1 = 0;
+        //             } else {
+        //                 $weekdayHolid1 = 1;
+        //             }
+        //             $totalMonthHolidays += $weekdayHolid1;
+        //         }
+        //     }
+        //     return ($totalMonthHolidays);
+        // }
+        // $weekHolidaysNotRestDays = countDayOverleap2($numOfRestDays, $getMonthAllDays, 'restday');
+
+
+
+
+
+
+
+
+                // Number of Holidays that are Rest Days
+                function countDayOverleap($tableVar, $restD){
+                        $totalMonthHolidays = 0;
+                        foreach ($restD as $day) {
+                            foreach ($tableVar as $var) {
+                                if (date('l', strtotime($var->date_holiday)) == $day) {
+                                    $sum = 1;
+                                } else {
+                                    $sum = 0;
+                                }
+                            $totalMonthHolidays += $sum;
+                            }
+                        }
+                    return $totalMonthHolidays;
                 }
-                $totalMonthHolidays += $weekdayHolid1;
+                $monthHolidaysEqualRestDay = countDayOverleap($monthHolidays, $days);
+
+
+
+                // Number of Month Days that are rest days
+                function countDayOverleap2($tableVar, $restD){
+                    $totalMonthHolidays = 0;
+                    foreach ($restD as $day) {
+                        foreach ($tableVar as $var) {
+                            if (date('l', strtotime($var)) == $day) {
+                                $sum = 1;
+                            } else {
+                                $sum = 0;
+                            }
+                        $totalMonthHolidays += $sum;
+                        }
+                    }
+                return $totalMonthHolidays;
             }
-        }
-        //Month Holidays that are not Rest Days
-        $totalMonthHolidays;
+            $monthDaysEqualRestDays = countDayOverleap2($getMonthAllDays, $days);
+
+
+
+            // Number of Leaves that are Rest Days
 
         // Week Holidays that are rest days
-        for ($j=0; $j<$numOfRestDays; $j++) {
-            $totalWeekHolidays = 0;
-            foreach ($weekHolidayss as $weekHoli) {
-                if (date('l', strtotime($weekHoli->date_holiday)) != ${'restday'.$j}) {
-                    $weekdayHolid1 = 1;
-                } else {
-                    $weekdayHolid1 = 0;
-                }
-                $totalWeekHolidays += $weekdayHolid1;
-            }
-        }
-        //Week Holiday Days that are not Rest Days
-        $totalWeekHolidays;
+        // for ($j=0; $j<$numOfRestDays; $j++) {
+        //     $totalWeekHolidays = 0;
+        //     foreach ($weekHolidayss as $weekHoli) {
+        //         if (date('l', strtotime($weekHoli->date_holiday)) != ${'restday'.$j}) {
+        //             $weekdayHolid1 = 1;
+        //         } else {
+        //             $weekdayHolid1 = 0;
+        //         }
+        //         $totalWeekHolidays += $weekdayHolid1;
+        //     }
+        // }
+        // //Week Holiday Days that are not Rest Days
+        // $totalWeekHolidays;
 
 
-        return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'timeFormat', 'totalWeekHolidays'));
+        return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'timeFormat', 'getWeekRestDays'));
     }
 
     // Clock In/Clock Out
