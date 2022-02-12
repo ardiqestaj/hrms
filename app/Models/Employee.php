@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    public $primaryKey = 'id';
     protected $fillable = [
         'name',
         'lastname',
@@ -21,22 +22,10 @@ class Employee extends Model
         'gender',
         'department',
         'payment_method',
-        'monday',
-        'tuesday',
-        'wednesday',
-        'thursday',
-        'friday',
-        'saturday',
-        'sunday',
+        'restdays',
         'time_start',
         'time_end',
-        'monday_opt',
-        'tuesday_opt',
-        'wednesday_opt',
-        'thursday_opt',
-        'friday_opt',
-        'saturday_opt',
-        'sunday_opt',
+        'restdays_opt',
         'time_start_opt',
         'time_end_opt',
     ];

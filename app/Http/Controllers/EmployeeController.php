@@ -112,6 +112,10 @@ class EmployeeController extends Controller
     {
         DB::beginTransaction();
         try{
+        $restdays = ($request->restdays != null) ? implode(', ', $request->restdays) : null ;
+        $restdays_opt = ($request->restdays_opt != null) ? implode(', ', $request->restdays_opt) : null ;
+
+
             // update table Employee
             $updateEmployee = [
                 'employee_id'=>$request->id,
@@ -124,22 +128,10 @@ class EmployeeController extends Controller
                 'gender'=>$request->gender,
                 'department'=>$request->department,
                 'payment_method'=>$request->payment_method,
-                'monday'=>$request->monday,
-                'tuesday'=>$request->tuesday,
-                'wednesday'=>$request->wednesday,
-                'thursday'=>$request->thursday,
-                'friday'=>$request->friday,
-                'saturday'=>$request->saturday,
-                'sunday'=>$request->sunday,
+                'restdays'=>$restdays,
                 'time_start'=>$request->time_start,
                 'time_end'=>$request->time_end,
-                'monday_opt'=>$request->monday_opt,
-                'tuesday_opt'=>$request->tuesday_opt,
-                'wednesday_opt'=>$request->wednesday_opt,
-                'thursday_opt'=>$request->thursday_opt,
-                'friday_opt'=>$request->friday_opt,
-                'saturday_opt'=>$request->saturday_opt,
-                'sunday_opt'=>$request->sunday_opt,
+                'restdays_opt'=>$restdays_opt,
                 'time_start_opt'=>$request->time_start_opt,
                 'time_end_opt'=>$request->time_end_opt,
             ];
