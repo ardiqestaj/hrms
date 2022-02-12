@@ -234,20 +234,23 @@
                             <label for="col-form-label">Possible working days and hours <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group wday-box">
-                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y" checked=""> <span class="checkmark">M</span></label>
+                                    <label class="col-form-label">Choose Rest days</label>
+                                    <div class="form-group wday-box mb-4">
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y" checked=""><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Monday">
+                                            <span class="checkmark">M</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y" checked=""><span class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Tuesday"><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y" checked=""><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Wednesday"><span class="checkmark">W</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y" checked=""><span class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Thursday"><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Friday"><span class="checkmark">F</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Saturday "><span class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Sunday"><span class="checkmark">S</span></label>
                                     </div>
                                 </div>
 
@@ -278,21 +281,23 @@
                             <label for="col-form-label">Possible working days and hours <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group wday-box">
-                                        <label class="checkbox-inline"><input type="checkbox" name="monday_opt" value="Y">
+                                    <label class="col-form-label">Choose Rest days</label>
+                                    <div class="form-group wday-box mb-4">
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Monday">
                                             <span class="checkmark">M</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday_opt" value="Y"><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Tuesday"><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday_opt" value="Y"><span class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Wednesday"><span class="checkmark">W</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="thursday_opt" value="Y"><span class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Thursday"><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="friday_opt" value="Y"><span class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Friday"><span class="checkmark">F</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="saturday_opt" value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Saturday "><span class="checkmark">S</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="sunday_opt" value="Y"><span class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Sunday"><span class="checkmark">S</span></label>
                                     </div>
                                 </div>
 

@@ -31,49 +31,42 @@
                         <div class="card-body">
                             <form action="{{ route('all/employee/update') }}" method="POST">
                                 @csrf
-                                <input type="hidden" class="form-control" id="id" name="id"
-                                    value="{{ $employees[0]->employee_id }}">
+                                <input type="hidden" class="form-control" id="id" name="id" value="{{ $employees[0]->employee_id }}">
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="{{ $employees[0]->name }}">
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ $employees[0]->name }}">
                                     </div>
 
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Lastname</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="lastname" name="lastname"
-                                            value="{{ $employees[0]->lastname }}">
+                                        <input type="text" class="form-control" id="lastname" name="lastname" value="{{ $employees[0]->lastname }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Username</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="username" name="username"
-                                            value="{{ $employees[0]->username }}">
+                                        <input type="text" class="form-control" id="username" name="username" value="{{ $employees[0]->username }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Email</label>
                                     <div class="col-md-10">
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            value="{{ $employees[0]->email }}">
+                                        <input type="email" class="form-control" id="email" name="email" value="{{ $employees[0]->email }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Phone Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                            value="{{ $employees[0]->phone_number }}">
+                                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $employees[0]->phone_number }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Birth Date</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control datetimepicker" id="birthDate"
-                                            name="birth_date" value="{{ $employees[0]->birth_date }}">
+                                        <input type="text" class="form-control datetimepicker" id="birthDate" name="birth_date" value="{{ $employees[0]->birth_date }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -86,7 +79,6 @@
                                                 <option value="Female">Female</option>
                                             @else
                                                 <option value="Male">Male</option>
-
                                             @endif
                                         </select>
                                     </div>
@@ -98,7 +90,6 @@
                                             <option value="{{ $employees[0]->department }}" selected>
                                                 {{ $employees[0]->department }} </option>
                                             @foreach ($departments as $department)
-
                                                 <option value="{{ $department->department }}">
                                                     {{ $department->department }}</option>
                                             @endforeach
@@ -125,35 +116,24 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="form-group wday-box">
-                                        <label class="checkbox-inline"><input type="checkbox" name="monday" value="Y"
-                                                {{ $employees[0]->monday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">M</span></label>
+                                <div class="row">
+                                    <label class="col-form-label">Choose Rest days</label>
+                                    <div class="form-group wday-box mb-4">
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday" value="Y"
-                                                {{ $employees[0]->tuesday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Monday" @if (in_array('Monday', explode(', ', $employees[0]->restdays)) == true) checked @endif>
+                                            <span class="checkmark">M</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday" value="Y"
-                                                {{ $employees[0]->wednesday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Tuesday" @if (in_array('Tuesday', explode(', ', $employees[0]->restdays))) == true) checked @endif><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="thursday" value="Y"
-                                                {{ $employees[0]->thursday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Wednesday" @if (in_array('Wednesday', explode(', ', $employees[0]->restdays))) == true) checked @endif><span class="checkmark">W</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="friday" value="Y"
-                                                {{ $employees[0]->friday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Thursday" @if (in_array('Thursday', explode(', ', $employees[0]->restdays))) == true) checked @endif><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="saturday" value="Y"
-                                                {{ $employees[0]->saturday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Friday" @if (in_array('Friday', explode(', ', $employees[0]->restdays))) == true) checked @endif><span class="checkmark">F</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="sunday" value="Y"
-                                                {{ $employees[0]->sunday == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Saturday" @if (in_array('Saturday', explode(', ', $employees[0]->restdays))) == true) checked @endif><span class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Sunday" @if (in_array('Sunday', explode(', ', $employees[0]->restdays))) == true) checked @endif><span class="checkmark">S</span></label>
                                     </div>
                                 </div>
 
@@ -163,65 +143,45 @@
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <div class="input-group time timepicker">
-                                                <input class="form-control" type="text" name="time_start"
-                                                    value="{{ $employees[0]->time_start }}"><span
-                                                    class="input-group-append input-group-addon"><span
-                                                        class="input-group-text"><i
-                                                            class="fa fa-clock-o"></i></span></span>
+                                                <input class="form-control" type="text" name="time_start" value="{{ $employees[0]->time_start }}"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <div class="input-group time timepicker">
-                                                <input class="form-control" type="text" name="time_end"
-                                                    value="{{ $employees[0]->time_end }}"><span
-                                                    class="input-group-append input-group-addon"><span
-                                                        class="input-group-text"><i
-                                                            class="fa fa-clock-o"></i></span></span>
+                                                <input class="form-control" type="text" name="time_end" value="{{ $employees[0]->time_end }}"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
-                                        id="switch_hospitalisation">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_hospitalisation">
                                     <label class="onoffswitch-label" for="switch_hospitalisation">
                                         <span class="onoffswitch-inner"></span>
                                         <span class="onoffswitch-switch"></span>
                                     </label>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="form-group wday-box">
-                                        <label class="checkbox-inline"><input type="checkbox" name="monday_opt" value="Y"
-                                                {{ $employees[0]->monday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">M</span></label>
+                                <div class="row">
+                                    <label class="col-form-label">Choose Rest days</label>
+                                    <div class="form-group wday-box mb-4">
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="tuesday_opt" value="Y"
-                                                {{ $employees[0]->tuesday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Monday" @if (in_array('Monday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif>
+                                            <span class="checkmark">M</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="wednesday_opt" value="Y"
-                                                {{ $employees[0]->wednesday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">W</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Tuesday" @if (in_array('Tuesday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="thursday_opt" value="Y"
-                                                {{ $employees[0]->thursday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">T</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Wednesday" @if (in_array('Wednesday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif><span class="checkmark">W</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="friday_opt" value="Y"
-                                                {{ $employees[0]->friday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">F</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Thursday" @if (in_array('Thursday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif><span class="checkmark">T</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="saturday_opt" value="Y"
-                                                {{ $employees[0]->saturday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Friday" @if (in_array('Friday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif><span class="checkmark">F</span></label>
 
-                                        <label class="checkbox-inline"><input type="checkbox" name="sunday_opt" value="Y"
-                                                {{ $employees[0]->sunday_opt == 'Y' ? 'checked' : '' }}><span
-                                                class="checkmark">S</span></label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Saturday" @if (in_array('Saturday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif><span class="checkmark">S</span></label>
+
+                                        <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Sunday" @if (in_array('Sunday', explode(', ', $employees[0]->restdays_opt))) == true) checked @endif><span class="checkmark">S</span></label>
                                     </div>
                                 </div>
 
@@ -231,22 +191,14 @@
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <div class="input-group time timepicker">
-                                                <input class="form-control" type="text" name="time_start_opt"
-                                                    value="{{ $employees[0]->time_start_opt }}"><span
-                                                    class="input-group-append input-group-addon"><span
-                                                        class="input-group-text"><i
-                                                            class="fa fa-clock-o"></i></span></span>
+                                                <input class="form-control" type="text" name="time_start_opt" value="{{ $employees[0]->time_start_opt }}"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <div class="input-group time timepicker">
-                                                <input class="form-control" type="text" name="time_end_opt"
-                                                    value="{{ $employees[0]->time_end_opt }}"><span
-                                                    class="input-group-append input-group-addon"><span
-                                                        class="input-group-text"><i
-                                                            class="fa fa-clock-o"></i></span></span>
+                                                <input class="form-control" type="text" name="time_end_opt" value="{{ $employees[0]->time_end_opt }}"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -348,18 +300,7 @@
     </div>
     <!-- /Page Wrapper -->
 @section('script')
-    <script>
-        $("input:checkbox").on('click', function() {
-            var $box = $(this);
-            if ($box.is(":checked")) {
-                var group = "input:checkbox[class='" + $box.attr("class") + "']";
-                $(group).prop("checked", false);
-                $box.prop("checked", true);
-            } else {
-                $box.prop("checked", false);
-            }
-        });
-    </script>
+
 
 @endsection
 
