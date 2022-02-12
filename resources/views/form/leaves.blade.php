@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                        <button type="sumit" class="btn btn-success btn-block"> Search </button>
+                        <button type="submit" class="btn btn-success btn-block"> Search </button>
                     </div>
                 </div>
             </form>

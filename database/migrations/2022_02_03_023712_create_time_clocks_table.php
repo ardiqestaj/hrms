@@ -22,6 +22,8 @@ class CreateTimeClocksTable extends Migration
             $table->string('timein')->nullable();
             $table->string('timeout')->nullable();
             $table->string('totalhours')->nullable();
+            $table->string('overtime')->nullable();
+            $table->string('missedhours')->nullable();
             $table->string('status_timein')->nullable();
             $table->string('status_timeout')->nullable();
             $table->string('reason')->nullable();
