@@ -90,17 +90,19 @@
                 <div class="col-md-4">
                     <div class="card att-statistics">
                         <div class="card-body">
-                            @foreach ($getWeekRestDays as $restDa)
-                          
-                                <h5 class="card-title">Statistics {{$restDa}},</h5>
-                          
-                            @endforeach
+                            {{-- @foreach ($daysThroughLeaves as $restDa) --}}
+                            
+                                {{-- @foreach ($leave as $date)
+                                        <h5 class="card-title">Statistics {{date('Y-m-d', strtotime($date))}}</h5>
+                                @endforeach --}}
+                            {{-- @endforeach --}}
 
-                            {{-- <h5 class="card-title">Statistics {{$leavess}}</h5> --}}
+
+                            <h5 class="card-title">Statistics {{$workingHrs}}</h5>
                             <div class="stats-list">
                                 <div class="stats-info">
                                     <p>Today <strong>
-                                        @foreach ($attendance as $key=>$attend)
+                                        @foreach ($todayAttendance as $key=>$attend)
                                         @isset($attend->totalhours)
                                         @if($attend->totalhours != null) 
                                             @php
@@ -123,40 +125,42 @@
                                         @else --
                                         @endisset 
                                         @endforeach
-                                    <small>/ hrs</small></strong></p>
+                                    <small>/ {{$schedules->hours}} hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 31%"
-                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
+                                            aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
+                               
                                 <div class="stats-info">
-                                    <p>This Week <strong>28 <small>/  hrs</small></strong></p>
+                                    <p>This Month <strong>{{$monthAttendance->sum('totalhours')}} <small>/ {{$monthWorkingHrs}} hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 31%"
-                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="stats-info">
-                                    <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 62%"
+                                        <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg"
                                             aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
-                                    <p>Remaining <strong>90 <small>/ 160 hrs</small></strong></p>
+                                    <p>Remaining this Month<strong>{{$monthWorkingHrs - $monthAttendance->sum('totalhours')}} <small> hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 62%"
+                                        <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth"
                                             aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
-                                    <p>Overtime <strong>4</strong></p>
+                                    <p>Missed Hours this Month<strong>{{$monthAttendance->sum('missedhours')}} <small>  hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 22%"
+                                        <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
+                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="stats-info">
+                                    <p>Overtime this Month<strong>{{$monthAttendance->sum('overtime')}} <small>  hrs</small></strong></p>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" id="overtime"
                                             aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -173,7 +177,7 @@
                                     <p class="mb-0">Punch In at</p>
                                     <p class="res-activity-time">
                                         <i class="fa fa-clock-o"></i>
-                                        @foreach ($attendance as $key=>$attend)
+                                        @foreach ($todayAttendance as $key=>$attend)
                                         @php
                                         if($attend->timein != null) {
                                             if ($timeFormat == 1) {
@@ -190,7 +194,7 @@
                                     <p class="mb-0">Punch Out at</p>
                                     <p class="res-activity-time">
                                         <i class="fa fa-clock-o"></i>
-                                        @foreach ($attendance as $key=>$attend)
+                                        @foreach ($todayAttendance as $key=>$attend)
                                         @php
                                         if($attend->timeout != null) {
                                             if ($timeFormat == 1) {
@@ -198,7 +202,7 @@
                                             } else {
                                                 echo e(date('H:i:s', strtotime($attend->timeout)));
                                             }
-                                        } else echo "--"
+                                        } else 
                                         @endphp
                                         @endforeach
                                     </p>
@@ -212,52 +216,60 @@
 
 
             <!-- Search Filter -->
-            <div class="row filter-row">
-                <div class="col-sm-3">
-                    <div class="form-group form-focus">
-                        <div class="cal-icon">
-                            <input type="text" class="form-control floating datetimepicker">
+            <form action="{{ route('attendance/search') }}" method="POST">
+                @csrf
+                <div class="row filter-row">
+                    <div class="col-sm-3">
+                        <div class="focused form-group form-focus focus focused">
+                            <div class="cal-icon">
+                                <input type="text" class="form-control floating datetimepicker" name="date">
+                            </div>
+                            <label class="focus-label">Date</label>
                         </div>
-                        <label class="focus-label">Date</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating" name="month">
+                                {{-- @if(isset($month))
+                                <option> {{$month}} </option>
+                                @else 
+                                <option> - </option>
+                                @endif --}}
+                                <option> - </option>
+                                <option value="-01-">Jan</option>
+                                <option value="-02-">Feb</option>
+                                <option value="-03-">Mar</option>
+                                <option value="-04-">Apr</option>
+                                <option value="-05-">May</option>
+                                <option value="-06-">Jun</option>
+                                <option value="-07-">Jul</option>
+                                <option value="-08-">Aug</option>
+                                <option value="-09-">Sep</option>
+                                <option value="-10-">Oct</option>
+                                <option value="-11-">Nov</option>
+                                <option value="-12-">Dec</option>
+                            </select>
+                            <label class="focus-label">Select Month</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating" name="year">
+                                <option> - </option>
+                                <?php
+                                for ($year = 2021; $year <= 2030; $year++) {
+                                echo "<option value='{$year}-'>$year</option>";
+                                }
+                                ?>
+                            </select>
+                            <label class="focus-label">Select Year</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-success btn-block"> Search </button>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating">
-                            <option>-</option>
-                            <option>Jan</option>
-                            <option>Feb</option>
-                            <option>Mar</option>
-                            <option>Apr</option>
-                            <option>May</option>
-                            <option>Jun</option>
-                            <option>Jul</option>
-                            <option>Aug</option>
-                            <option>Sep</option>
-                            <option>Oct</option>
-                            <option>Nov</option>
-                            <option>Dec</option>
-                        </select>
-                        <label class="focus-label">Select Month</label>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating">
-                            <option>-</option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                            <option>2016</option>
-                            <option>2015</option>
-                        </select>
-                        <label class="focus-label">Select Year</label>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <a href="#" class="btn btn-success btn-block"> Search </a>
-                </div>
-            </div>
+            </form>
             <!-- /Search Filter -->
 
 
@@ -284,6 +296,7 @@
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$attend->date}}</td>
+                                    
                                     {{-- Punch In --}}
                                     <td>
                                         @php
@@ -348,10 +361,14 @@
                                     </td>
 
                                     {{-- Overtme Hours --}}
-                                    <td>0</td>
+                                    <td>
+                                        {{$attend->overtime}} hrs
+                                    </td>
 
                                     {{-- Short Time  Hours --}}
-                                    <td>0</td>
+                                    <td>
+                                        {{$attend->missedhours}} hrs
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @endisset
@@ -522,57 +539,19 @@
         });
 
 
-    // JavaScript program to count
-    // occurrence of days in a month
-	function occurrenceDays(n, firstday)
-	{
-		// stores days in a week
-		let days = [ "Monday",
-				"Tuesday", "Wednesday",
-				"Thursday", "Friday",
-				"Saturday", "Sunday" ];
-		
-		// Initialize all counts as 4.
-		let count = [];
-		for (let i = 0; i < 7; i++)
-			count[i] = 4;
-		
-		// find index of the first day
-		let pos = 0;
-		for (let i = 0; i < 7; i++)
-		{
-			if (firstday == days[i])
-			{
-				pos = i;
-				break;
-			}
-		}
-		// number of days whose occurrence
-		// will be 5
-		let inc = n - 28;
-		
-		// mark the occurrence to be 5 of n-28 days
-		for (let i = pos; i < pos + inc; i++)
-		{
-			if (i > 6)
-				count[i % 7] = 5;
-			else
-				count[i] = 5;
-		}
-		
-		// print the days
-		for (let i = 0; i < 7; i++)
-		{
-			document.write(days[i] + " " + count[i] + "<br/>");
-		}
-	}
-        var totalMonthDays = document.getElementsByClassName('CurrentMonthDays').val();
-        var MonthStartDay = document.getElementsByClassName('MonthStartDay').val();
+        var productionHrs = '{{$monthAttendance->sum('totalhours')}}';
+        var scheduledHrs = '{{$schedules->hours}}';
+        var totalMonthHrs = '{{$monthWorkingHrs}}';
+        var remainingThisMonth = '{{$monthWorkingHrs - $monthAttendance->sum('totalhours')}}';
+        var missedHrs = '{{$monthAttendance->sum('missedhours')}}';
+        var overtime = '{{$monthAttendance->sum('overtime')}}';
 
-        // Driver code
-		let n = totalMonthDays;
-		let firstday = MonthStartDay;
-		occurrenceDays(n, firstday);
+        document.getElementById("todayPrg").style.width = (productionHrs/scheduledHrs)*100 + "%";
+        document.getElementById("thismonthPrg").style.width = 100*(productionHrs/totalMonthHrs) + "%";
+        document.getElementById("remainthismonth").style.width = totalMonthHrs-productionHrs + "%";
+        document.getElementById("missedHrs").style.width = missedHrs + "%";
+        document.getElementById("overtime").style.width = overtime + "%";
+
 
     </script>
 @endsection

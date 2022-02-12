@@ -166,8 +166,6 @@ Route::get('form/leavetypes/edit/{leave_id}', [App\Http\Controllers\LeavesContro
 
 
 // ----------------------------- form attendance  ------------------------------//
-Route::get('attendance/page', [App\Http\Controllers\LeavesController::class, 'attendanceIndex'])->middleware('auth')->name('attendance/page');
-Route::get('attendance/employee/page', [App\Http\Controllers\LeavesController::class, 'AttendanceEmployee'])->middleware('auth')->name('attendance/employee/page');
 Route::get('form/shiftscheduling/page', [App\Http\Controllers\LeavesController::class, 'shiftScheduLing'])->middleware('auth')->name('form/shiftscheduling/page');
 Route::get('form/shiftlist/page', [App\Http\Controllers\LeavesController::class, 'shiftList'])->middleware('auth')->name('form/shiftlist/page');
 
@@ -245,10 +243,10 @@ Route::post('theme/store', [App\Http\Controllers\ThemeSettingsController::class,
 Route::get('timeclock/settings', [App\Http\Controllers\ClockTimeSettingsController::class, 'index'])->middleware('auth')->name('timeclock/settings');
 Route::post('timeclock/update', [App\Http\Controllers\ClockTimeSettingsController::class, 'update'])->middleware('auth')->name('timeclock/update');
 
-// ----------------------------- TimeClock ----- ------------------------------//
+// ----------------------------- TimeClock/Attendance -----------------------------------//
 Route::get('employee/attendance', [App\Http\Controllers\TimeClockController::class, 'clock'])->middleware('auth')->name('employee/attendance');
 Route::post('attendance/add', [App\Http\Controllers\TimeClockController::class, 'add'])->middleware('auth')->name('attendance/add');
+Route::post('attendance/search', [App\Http\Controllers\TimeClockController::class, 'search'])->middleware('auth')->name('attendance/search');
+Route::get('attendance/page', [App\Http\Controllers\AdminAttendance::class, 'AdminAttendance'])->middleware('auth')->name('attendance/page');
 
-// ----------------------------- Attendance ----- ------------------------------//
-// Route::get('employee/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->middleware('auth')->name('employee/attendance');
-// Route::get('personal/attendance', [App\Http\Controllers\AttendanceController::class, 'getPA'])->middleware('auth')->name('personal/attendance');
+

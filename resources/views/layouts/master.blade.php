@@ -77,7 +77,6 @@
 	<!-- Select2 JS -->
 	<script src="{{ URL::to('assets/js/select2.min.js') }}"></script>
 	<!-- Datetimepicker JS -->
-	<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/moment-timezone-with-data.js') }}"></script>	
 	<!-- Datatable JS -->
@@ -86,7 +85,9 @@
 	<!-- Multiselect JS -->
 	<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>	
 	<!-- Semantic JS -->
-	<script src="{{ URL::to('assets/js/semantic.min.js') }}"></script>		
+	<script src="{{ URL::to('assets/js/semantic.min.js') }}"></script>	
+	<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+		
 	<!-- Custom JS -->
 	<script src="{{ URL::to('assets/js/app.js') }}"></script>
 
