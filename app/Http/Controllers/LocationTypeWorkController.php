@@ -91,6 +91,7 @@ class LocationTypeWorkController extends Controller
             return redirect()->back();
         }
     }
+    
     // Delete Location Type
     public function delete(Request $request)
     {

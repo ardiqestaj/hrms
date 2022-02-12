@@ -17,6 +17,8 @@ use App\Http\Controllers\ThemeSettingsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\TimeClockController;
 use App\Http\Controllers\LocationTypeWorkController;
+use App\Http\Controllers\FindEmployees;
+
 
 
 
@@ -188,6 +190,11 @@ Route::get('location/locations/list', [App\Http\Controllers\LocationController::
 Route::post('location/type/add', [App\Http\Controllers\LocationTypeWorkController::class, 'create'])->middleware('auth')->name('location/type/add');
 Route::post('location/type/edit', [App\Http\Controllers\LocationTypeWorkController::class, 'edit'])->middleware('auth')->name('location/type/edit');
 Route::post('location/type/delete', [App\Http\Controllers\LocationTypeWorkController::class, 'delete'])->middleware('auth')->name('location/type/delete');
+// ----------------------------- Find Possible Employees------------------------------//
+Route::get('location/profile/find/{id}', [App\Http\Controllers\FindEmployees::class, 'find'])->middleware('auth')->name('location/profile/find');
+Route::post('location/profile/assignment', [App\Http\Controllers\FindEmployees::class, 'assignment'])->middleware('auth')->name('location/profile/assignment');
+
+
 
 
 
