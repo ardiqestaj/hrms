@@ -210,11 +210,11 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="dropdown profile-action more">
-                                                    <div hidden class="idd">{{ $locations_type->location_type_work_id }}</div>
+                                                    <div hidden class="idd">{{ $locations_type->tid }}</div>
 
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_location_type{{ $locations_type->location_type_work_id }}"><i class="fa fa-pencil m-r-5"></i>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_location_type{{ $locations_type->tid }}"><i class="fa fa-pencil m-r-5"></i>
                                                             Edit</a>
                                                         <a class="dropdown-item deleteLocation" href="#" data-toggle="modal" data-target="#delete_location_type"><i class="fa fa-trash-o m-r-5"></i>
                                                             Delete</a>
@@ -331,16 +331,17 @@
                                                     <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
                                                 </div>
                                                 <div class="project-members m-b-10 m-t-15">
-                                                    <h4 class="project-title"><a class="dropdown-item" href="#" data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->location_type_work_id }}"><i style="font-size: 20px" class="las la-search-plus"></i>
+                                                    <h4 class="project-title"><a class="dropdown-item" href="{{ url('location/profile/find/' . $locations_type->location_id) }}"><i style="font-size: 20px" class="las la-search-plus"></i>
                                                             Find Employees</a>
                                                     </h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    {{-- data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->tid }}" --}}
+                                    {{-- data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->location_type_work_id }}" --}}
                                     {{-- Edit Location Modal --}}
-                                    <div id="edit_location_type{{ $locations_type->location_type_work_id }}" class="modal custom-modal fade" role="dialog">
+                                    <div id="edit_location_type{{ $locations_type->tid }}" class="modal custom-modal fade" role="dialog">
                                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -448,7 +449,7 @@
                                     </div>
                                     {{-- Edit Location Modal --}}
                                     {{-- Find Employees Modal --}}
-                                    <div id="find_employees_modal{{ $locations_type->location_type_work_id }}" class="modal custom-modal fade" role="dialog">
+                                    <div id="find_employees_modal{{ $locations_type->tid }}" class="modal custom-modal fade" role="dialog">
                                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -460,7 +461,7 @@
                                                 <div class="modal-body">
                                                     <form>
                                                         <div class="form-group">
-                                                            <label>Policy Name <span class="text-danger">*</span></label>
+                                                            <label>Policy Name {{ $locations_type->number_of_employees }} <span class="text-danger">*</span></label>
                                                             <input type="text" class="form-control">
                                                         </div>
                                                         <div class="form-group">
@@ -696,5 +697,13 @@
             var _this = $(this).parents('.more');
             $('#e_id').val(_this.find('.idd').text());
         });
+
+        // var submitbtn = ducument.getElementByClassName('reloadModal');
+        // $(submitbtn).on('click', function() {
+        //     $(this).attr('data-toggle', 'modal');
+        //     $(this).attr('data-target', '#find_employees_modal{{ $locations_type->location_type_work_id }}');
+        // });
+
+        // {{-- data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->location_type_work_id }}" --}}
     </script>
 @endsection
