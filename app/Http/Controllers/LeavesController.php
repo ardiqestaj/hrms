@@ -228,7 +228,7 @@ class LeavesController extends Controller
 
 
 
-    
+
       // add leaves Employee -------------------------------------------------------------------------
       public function leavesEmployee()
       {
@@ -310,9 +310,10 @@ class LeavesController extends Controller
         $leaves = DB::table('leave_applies')
                     ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
                     ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
-                    ->select('leave_applies.*', 'users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
+                    ->select('leave_applies.*','users.position','users.name','users.avatar','leave_types.leave_names','leave_types.leave_id')
                     ->get();
         $LeaveTypes = LeaveTypes::all();
+
         // search by name
         if($request->name) {
             $leaves = DB::table('leave_applies')
@@ -333,6 +334,7 @@ class LeavesController extends Controller
         }
         // search by status
         if($request->status) {
+
             $leaves = DB::table('leave_applies')
                     ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
                     ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
@@ -358,6 +360,7 @@ class LeavesController extends Controller
                     ->where('leave_applies.to_date', 'LIKE', '%'.$request->to_date.'%')
                     ->get();
         }
+
         // search by name and leave name
         if($request->name && $request->leave_names) {
             $leaves = DB::table('leave_applies')
@@ -368,8 +371,9 @@ class LeavesController extends Controller
                     ->where('leave_types.leave_names', 'LIKE', '%'.$request->leave_names.'%')
                     ->get();
         }
-        // search by name and status
+        // // search by name and status
         if($request->name && $request->status) {
+
             $leaves = DB::table('leave_applies')
                     ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
                     ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
@@ -568,7 +572,18 @@ class LeavesController extends Controller
 
 
     //   ----------------------------------------------------------------------------------------------------------
-   
+    // attendance admin
+    public function attendanceIndex()
+    {
+        return view('form.attendance');
+    }
+
+    // attendance employee
+    public function AttendanceEmployee()
+    {
+        return view('form.attendanceemployee');
+    }
+
 
 
     // shiftscheduling

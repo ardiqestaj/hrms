@@ -100,10 +100,14 @@ class EmployeeController extends Controller
     {
         $permission = DB::table('employees')
             ->join('module_permissions', 'employees.employee_id', '=', 'module_permissions.employee_id')
-            ->select('employees.*', 'module_permissions.*')
+            ->select('employees.*', 'module_permissions.*',)
             ->where('employees.employee_id','=',$employee_id)
             ->get();
-        $employees = DB::table('employees')->where('employee_id',$employee_id)->get();
+
+        $employees = DB::table('employees')
+                        ->join('departments', 'employees.department', '=', 'departments.id')
+                        ->select('employees.*','employees.department as dep_id','departments.department as dep')
+                        ->where('employee_id',$employee_id)->get();
         $departments = DB::table('departments')->get();
         return view('form.edit.editemployee',compact('employees','permission','departments'));
     }

@@ -227,7 +227,7 @@
                                         <select class="select @error('role_name') is-invalid @enderror" name="department" id="department">
                                             <option selected disabled>-- Select Dapartment --</option>
                                             @foreach ($departments as $department)
-                                                <option value="{{ $department->department }}">
+                                                <option value="{{ $department->id }}">
                                                     {{ $department->department }}</option>
                                             @endforeach
                                         </select>
