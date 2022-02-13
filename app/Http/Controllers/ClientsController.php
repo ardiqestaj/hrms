@@ -136,8 +136,14 @@ class ClientsController extends Controller
                     ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
                     ->select('clients.*', 'locations.*', 'billing_addresses.*')
                     ->get();
+        $typeOfWorks = DB::table('clients')
+                    ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
+                    ->join('location_type_works', 'location_type_works.location_id', '=', 'locations.id')
+                    ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
+                    ->where('client_id',$client_id)
+                    ->get();
 
-        return view('clients.client-profile', compact('client', 'clients', 'client_list'));
+        return view('clients.client-profile', compact('client', 'clients', 'client_list', 'typeOfWorks'));
 
     }
 

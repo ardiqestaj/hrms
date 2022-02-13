@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use PDF;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\Location;
+use App\Models\Client;
+
 
 class HomeController extends Controller
 {
@@ -29,7 +32,9 @@ class HomeController extends Controller
     public function index()
     {
         $employees= Employee::all();
-        return view('dashboard.dashboard', compact('employees'));
+        $locations = Location::all();
+        $clients = Client::all();
+        return view('dashboard.dashboard', compact('employees', 'locations', 'clients'));
     }
 
 

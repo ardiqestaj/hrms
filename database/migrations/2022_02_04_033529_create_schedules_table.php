@@ -17,7 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->integer('reference')->nullable();
             $table->string('idno')->nullable();
-            $table->integer('location_type_work_id')->nullable();
+            $table->integer('location_type_works_id')->nullable();
             $table->string('employee')->nullable();
             $table->string('intime')->nullable();
             $table->string('outime')->nullable();
