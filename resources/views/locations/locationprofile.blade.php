@@ -38,9 +38,10 @@
                                 </div>
                                 <div class="profile-basic">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-2">
+                                            <p class="text-lg">{{ $locations->location_name }}</p>
+
                                             <div class="profile-info-left">
-                                                <h3 class="user-name">{{ $locations->location_name }}</h3>
                                                 {{-- <h5 class="company-role m-t-0 mb-0">{{$client->contact_person}}</h5> --}}
                                                 <small class="text-muted"></small>
                                                 <div class="staff-id">Location ID : {{ $locations->id }}</div>
@@ -48,8 +49,9 @@
                                                         Message</a></div>
                                             </div>
                                         </div>
-                                        <div class="col-md-7">
-                                            <ul class="personal-info">
+                                        <div class="col-md-5">
+                                            <p class="text-lg">Client Information</p>
+                                            <ul class="profile-info-left personal-info">
                                                 <li>
                                                     <span class="title">Mobile Phone:</span>
                                                     <span class="text"><a href="">{{ $locations->location_phone_number }}</a></span>
@@ -66,6 +68,29 @@
 															<span class="title">Address:</span>
 															<span class="text">5754 Airport Rd, Coosada, AL, 36020</span>
 														</li> --}}
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p class="text-lg">Billing Information</p>
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">Name:</span>
+                                                    <span class="text">{{ $billings->firstname }} {{ $billings->lastname }}</span>
+                                                </li>
+
+                                                <li>
+                                                    <span class="title">Mobile Phone:</span>
+                                                    <span class="text"><a href="tel: {{ $billings->phone_number }}">{{ $billings->phone_number }}</a></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Email:</span>
+                                                    <span class="text"><a href="mailto: {{ $billings->email }}">{{ $billings->email }}</a></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Address</span>
+                                                    <span class="text">{{ $billings->street_address }}, {{ $billings->city }}, {{ $billings->zip_code }} - {{ $billings->state }}, {{ $billings->country }}</span>
+                                                </li>
+
                                             </ul>
                                         </div>
                                     </div>
