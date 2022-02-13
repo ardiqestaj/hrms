@@ -11,17 +11,17 @@ class Schedule extends Model
 
     protected $table = 'schedules';
     public $primaryKey = 'id';
-    protected $fillable = [     
-        'reference',       
+    protected $fillable = [
+        'reference',
         'idno',
-        'location_type_work_id',
-        'employee',           
-        'intime',           
-        'outime',   
-        'datefrom',  
-        'dateto',           
-        'hours',           
-        'restday',           
-        'archive',           
+        // 'location_type_work_id',
+        'employee',
+        'intime',
+        'outime',
+        'datefrom',
+        'dateto',
+        'hours',
+        'restday',
+        'archive',
     ];
 }

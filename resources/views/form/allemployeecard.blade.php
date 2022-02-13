@@ -257,7 +257,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="input-group time timepicker">
-                                            <input class="form-control" type="time" step="1.0" id="time_start" name="time_start">
+                                            <input class="form-control" type="time" id="time_start" name="time_start">
                                         </div>
                                     </div>
                                 </div>
