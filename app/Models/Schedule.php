@@ -14,6 +14,7 @@ class Schedule extends Model
     protected $fillable = [     
         'reference',       
         'idno',
+        'location_type_work_id',
         'employee',           
         'intime',           
         'outime',   

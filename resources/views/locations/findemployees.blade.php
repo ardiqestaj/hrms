@@ -40,32 +40,55 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name">{{ $locations->location_name }}</h3>
+                                                <h3 class="user-name">{{ $location_type_work->location_name }}</h3>
                                                 {{-- <h5 class="company-role m-t-0 mb-0">{{$client->contact_person}}</h5> --}}
                                                 <small class="text-muted"></small>
-                                                <div class="staff-id">Location ID : {{ $locations->id }}</div>
+                                                <div class="staff-id">Location ID : {{ $location_type_work->id }}</div>
                                                 <div class="staff-msg"><a href="chat.html" class="btn btn-custom">Send
                                                         Message</a></div>
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <span class="title">Mobile Phone:</span>
+                                                        <span class="text"><a href="">{{ $location_type_work->location_phone_number }}</a></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Email:</span>
+                                                        <span class="text"><a href="mailto: {{ $location_type_work->location_email }}">{{ $location_type_work->location_email }}</a></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Address</span>
+                                                        <span class="text">{{ $location_type_work->location_address }}</span>
+                                                    </li>
+                                                    {{-- <li>
+                                                                        <span class="title">Address:</span>
+                                                                        <span class="text">5754 Airport Rd, Coosada, AL, 36020</span>
+                                                                    </li> --}}
+                                                </ul>
+
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <ul class="personal-info">
                                                 <li>
-                                                    <span class="title">Mobile Phone:</span>
-                                                    <span class="text"><a href="">{{ $locations->location_phone_number }}</a></span>
+                                                    <span class="title">Type Of Work</span>
+                                                    <span class="text"><a href="">{{ $location_type_work->department }}</a></span>
                                                 </li>
                                                 <li>
-                                                    <span class="title">Email:</span>
-                                                    <span class="text"><a href="mailto: {{ $locations->location_email }}">{{ $locations->location_email }}</a></span>
+                                                    <span class="title">No. of Employees</span>
+                                                    <span class="text"><a href="">{{ $location_type_work->number_of_employees }}</a></span>
                                                 </li>
                                                 <li>
-                                                    <span class="title">Address</span>
-                                                    <span class="text">{{ $locations->location_address }}</span>
+                                                    <span class="title">In Time/ Out Time</span>
+                                                    <span class="text">{{ $location_type_work->intime }} - {{ $location_type_work->outime }}</span>
                                                 </li>
-                                                {{-- <li>
-															<span class="title">Address:</span>
-															<span class="text">5754 Airport Rd, Coosada, AL, 36020</span>
-														</li> --}}
+                                                <li>
+                                                    <span class="title">Hours</span>
+                                                    <span class="text">{{ $location_type_work->hours }} </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Restdays</span>
+                                                    <span class="text">{{ $location_type_work->restday }} </span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -91,16 +114,22 @@
 
             <div class="row">
                 <div class="col-md-12 mt-5">
-                    <form>
+                    <form action="{{ url('location/profile/assignment/' . $location_type_work->location_type_work_id) }}" method="POST">
+                        @csrf
                         <div class="form-group leave-duallist">
                             <label>Posible employees</label>
                             <div class="row">
                                 <div class="col-lg-5 col-sm-5">
                                     <select name="customleave_from" id="customleave_select" class="form-control" size="5" multiple="multiple">
                                         @foreach ($employees as $employee)
-                                            <option value="{{ $employee->employee_id }}">{{ $employee->name }} {{ $employee->lastname }} </option>
+                                            <option value="{{ $employee->employee_id }}">{{ $employee->name }} {{ $employee->lastname }} -
+                                                <span style="color: blue;" id="text-muted-employees">{{ $location_type_work->intime }} - {{ $location_type_work->outime }} / {{ $location_type_work->restday }}</span>
+
+                                            </option>
                                         @endforeach
                                     </select>
+
+
                                 </div>
                                 <div class="multiselect-controls col-lg-2 col-sm-2">
                                     <button type="button" id="customleave_select_rightAll" class="btn btn-block btn-white"><i class="fa fa-forward"></i></button>
@@ -109,13 +138,18 @@
                                     <button type="button" id="customleave_select_leftAll" class="btn btn-block btn-white"><i class="fa fa-backward"></i></button>
                                 </div>
                                 <div class="col-lg-5 col-sm-5">
-                                    <select name="customleave_to" id="customleave_select_to" class="form-control" size="8" multiple="multiple">
+                                    <select name="customleave_to[]" id="customleave_select_to" class="form-control" size="8" multiple="multiple">
+                                        @foreach ($assignments as $assignment)
+                                            <option value="{{ $assignment->em_id }}">{{ $assignment->name }} {{ $assignment->lastname }} -
+                                                <span style="color: blue;" id="text-muted-employees">{{ $assignment->time_start }} - {{ $assignment->time_end }} / {{ $assignment->restdays }}</span>
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Add &nbsp; </button>
+                            <button class="btn btn-primary submit-btn">Save</button>
                         </div>
                     </form>
                 </div>

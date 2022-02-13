@@ -26,27 +26,29 @@ class LocationTypeWorkController extends Controller
         ]);
         $restday = ($request->restday != null) ? implode(', ', $request->restday) : null ;
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try {
 
-            $leaves = new LocationTypeWork;
-            $leaves->location_id        = $request->id;
-            $leaves->type_work_id    = $request->type_work_id;
-            $leaves->number_of_employees     = $request->number_of_employees;
-            $leaves->save();
+            $location = new LocationTypeWork;
+            $location->location_id        = $request->id;
+            $location->type_work_id    = $request->type_work_id;
+            $location->number_of_employees     = $request->number_of_employees;
+            $location->save();
+            $locationType = LocationTypeWork::latest('location_type_work_id')->first();
 
-            $location = LocationTypeWork::latest('location_type_work_id')->first();
+            $schedule = new Schedule;
+            $schedule->idno    = $locationType->location_type_work_id;
+            $schedule->intime    = date("h:i A", strtotime($request->intime)) ;
+            $schedule->outime     = date("h:i A", strtotime($request->outime)) ;
+            $schedule->datefrom     = date('Y-m-d', strtotime($request->datefrom));
+            $schedule->dateto     = date('Y-m-d', strtotime($request->dateto));
+            $schedule->hours     = $request->hours;
+            $schedule->restday     = $restday;
+            // return dd($schedule);
 
-            $leaves = new Schedule;
-            $leaves->idno    = $location->location_type_work_id;
-            $leaves->intime    = date("h:i A", strtotime($request->intime)) ;
-            $leaves->outime     = date("h:i A", strtotime($request->outime)) ;
-            $leaves->datefrom     = $request->datefrom;
-            $leaves->dateto     = $request->dateto;
-            $leaves->hours     = $request->hours;
-            $leaves->restday     = $restday;
-            $leaves->save();
+            $schedule->save();
 
+    //   return dd($leaves);
             DB::commit();
             Toastr::success('Create new Sector successfully :)','Success');
             return redirect()->back();
@@ -72,8 +74,8 @@ class LocationTypeWorkController extends Controller
             $updateSchedule = [
             'intime'       => date("h:i A", strtotime($request->intime)),
             'outime'       => date("h:i A", strtotime($request->outime)),
-            'datefrom'     => $request->datefrom,
-            'dateto'       => $request->dateto,
+            'datefrom'     => date('Y-m-d', strtotime($request->datefrom)),
+            'dateto'       => date('Y-m-d', strtotime($request->dateto)),
             'hours'        => $request->hours,
             'restday'      =>$restday
             ];
