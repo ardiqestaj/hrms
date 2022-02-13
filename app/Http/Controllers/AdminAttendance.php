@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use DB;
 use App\Models\TimeClock;
+use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -13,23 +14,52 @@ class AdminAttendance extends Controller
 {
     public function AdminAttendance(){
 
-    // attendance, employee and users table
-    $employees = DB::table('employees')
-    ->select('employees.employee_id', 'employees.name', 'employees.lastname')
-    ->get();
+    // employees
+    $users = User::select('rec_id', 'name')
+                ->where('role_name', 'LIKE', 'employee')
+                ->get();
 
-    $attendance = DB::table('time_clocks')
-                    ->select('time_clocks.*')
-                    // ->groupBy('time_clocks.idno')
+    // Attendance
+    $now = Carbon::now();
+    $attendances = TimeClock::whereBetween('date', ['2022-02-01', $now])
                     ->get();
 
+
+    foreach($users as $user)
+    {
+        $employee['rec_id'] = $user->rec_id;
+        $employee['name'] = $user->name;
+        $attend = [];
+
+        foreach($attendances as $attendance)
+        {
+            if($attendance->idno == $user->rec_id)
+            {
+                $attend_2['idno'] = $attendance->idno;
+                $attend_2['date'] = $attendance->date;
+                $attend_2['timein'] = $attendance->timein;
+                $attend_2['timeout'] = $attendance->timeout;
+                $attend_2['totalhours'] = $attendance->totalhours;
+                $attend[] = $attend_2;
+            }
+        }
+        $employee['attendance'] = $attend;
+        $final[] = $employee;
+    }
+
+    // dd($final);
+
+
+
+
+
+                    
+    // $name = $request->name;
     $month = Carbon::now()->format('m');
     $years = Carbon::now()->format('Y');
-
     $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
-    // dd($daysInMonth);
 
-     return view('form.attendance', compact('employees', 'attendance', 'month', 'years', 'daysInMonth'));
+     return view('form.attendance', compact('users', 'attendance', 'month', 'years', 'daysInMonth', 'final'));
 
 
 
