@@ -129,15 +129,15 @@ class ClientsController extends Controller
      */
     public function clientProfile($client_id)
     {
-        $client = DB::table('clients')->where('client_id',$client_id)->first();        //
-
+        $client = DB::table('clients')->where('client_id',$client_id)->first();
+        $client_list = DB::table('clients')->get();
         $clients = DB::table('clients')
                     ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
                     ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
                     ->select('clients.*', 'locations.*', 'billing_addresses.*')
                     ->get();
 
-        return view('clients.client-profile', compact('client', 'clients'));
+        return view('clients.client-profile', compact('client', 'clients', 'client_list'));
 
     }
 

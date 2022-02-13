@@ -108,9 +108,9 @@
                                             <label class="col-form-label">Client <span class="text-danger">*</span></label>
                                             <select class="select" name="rec_client_id" id="rec_cli_id">
                                                 <option selected disabled>-- Select Client --</option>
-                                                @foreach ($clients as $client)
-                                                    <option value="{{ $client->rec_client_id }}">
-                                                        {{ $client->client_name }}</option>
+                                                @foreach ($client_list as $cli)
+                                                    <option value="{{ $cli->rec_client_id }}">
+                                                        {{ $cli->client_name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

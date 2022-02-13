@@ -87,10 +87,10 @@
                                     <label class="col-form-label col-md-2">Department</label>
                                     <div class="col-md-10">
                                         <select class="select form-control" name="department">
-                                            <option value="{{ $employees[0]->department }}" selected>
-                                                {{ $employees[0]->department }} </option>
+                                            <option value="{{ $employees[0]->dep_id }}" selected>
+                                                {{ $employees[0]->dep }} </option>
                                             @foreach ($departments as $department)
-                                                <option value="{{ $department->department }}">
+                                                <option value="{{ $department->id }}">
                                                     {{ $department->department }}</option>
                                             @endforeach
                                         </select>

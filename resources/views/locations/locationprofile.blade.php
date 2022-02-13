@@ -697,13 +697,5 @@
             var _this = $(this).parents('.more');
             $('#e_id').val(_this.find('.idd').text());
         });
-
-        // var submitbtn = ducument.getElementByClassName('reloadModal');
-        // $(submitbtn).on('click', function() {
-        //     $(this).attr('data-toggle', 'modal');
-        //     $(this).attr('data-target', '#find_employees_modal{{ $locations_type->location_type_work_id }}');
-        // });
-
-        // {{-- data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->location_type_work_id }}" --}}
     </script>
 @endsection
