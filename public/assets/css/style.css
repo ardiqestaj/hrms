@@ -10463,6 +10463,11 @@ img.wave {
     z-index: -10;
 }
 
+#text-muted-employees {
+    font-size: 5px!important;
+    color: #0ba408!important;
+}
+
 @media (max-width: 390px) {
     .timeclock {
         margin-top: 30px;

@@ -88,7 +88,7 @@
             </div>
 
 
-            <!-- Add Client Modal -->
+            <!-- Add Sector Modal -->
             <div id="add_location_type" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
@@ -331,7 +331,7 @@
                                                     <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
                                                 </div>
                                                 <div class="project-members m-b-10 m-t-15">
-                                                    <h4 class="project-title"><a class="dropdown-item" href="{{ url('location/profile/find/' . $locations_type->location_id) }}"><i style="font-size: 20px" class="las la-search-plus"></i>
+                                                    <h4 class="project-title"><a class="dropdown-item" href="{{ url('location/profile/find/' . $locations_type->tid) }}"><i style="font-size: 20px" class="las la-search-plus"></i>
                                                             Find Employees</a>
                                                     </h4>
                                                 </div>
@@ -356,7 +356,7 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <input type="hidden" name="id" value="{{ $locations_type->location_type_work_id }}">
+                                                                    <input type="hidden" name="id" value="{{ $locations_type->tid }}">
                                                                     <label class="col-form-label">Dapartament <span class="text-danger">*</span></label>
                                                                     <select class="select" name="type_work_id">
                                                                         <option value="{{ $locations_type->did }}" selected>

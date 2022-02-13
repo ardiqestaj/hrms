@@ -192,7 +192,7 @@ Route::post('location/type/edit', [App\Http\Controllers\LocationTypeWorkControll
 Route::post('location/type/delete', [App\Http\Controllers\LocationTypeWorkController::class, 'delete'])->middleware('auth')->name('location/type/delete');
 // ----------------------------- Find Possible Employees------------------------------//
 Route::get('location/profile/find/{id}', [App\Http\Controllers\FindEmployees::class, 'find'])->middleware('auth')->name('location/profile/find');
-Route::post('location/profile/assignment', [App\Http\Controllers\FindEmployees::class, 'assignment'])->middleware('auth')->name('location/profile/assignment');
+Route::post('location/profile/assignment/{id}', [App\Http\Controllers\FindEmployees::class, 'assignment'])->middleware('auth')->name('location/profile/assignment');
 
 
 
