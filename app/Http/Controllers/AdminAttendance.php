@@ -40,6 +40,8 @@ class AdminAttendance extends Controller
                 $attend_2['timein'] = $attendance->timein;
                 $attend_2['timeout'] = $attendance->timeout;
                 $attend_2['totalhours'] = $attendance->totalhours;
+                $attend_2['overtime'] = $attendance->overtime;
+                $attend_2['missedhours'] = $attendance->missedhours;
                 $attend[] = $attend_2;
             }
         }
@@ -52,7 +54,7 @@ class AdminAttendance extends Controller
 
 
 
-
+    // $att1 = DB::table('time_clocks')->get();
                     
     // $name = $request->name;
     $month = Carbon::now()->format('m');

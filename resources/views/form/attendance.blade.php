@@ -92,7 +92,7 @@
 
 
                                 @forelse($final as $attend)
-                                <tr class="modalParent">
+                                <tr>
                                     <td>
                                         <h2 class="table-avatar">
                                             <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
@@ -113,15 +113,53 @@
                                       $set_attendance_for_day = false;
                                       $attendance_for_day = "<i class='fa fa-close text-danger'></i> ";
                                       $daysattendance = "";
-
+                                      $daysattendance2 = "";
                                       foreach($attend['attendance'] as $att){
                                         if($att['date'] == $make_date){
-                                           $daysattendance = $att['date'];
-                                           $attendance_for_day = '<a href="javascript:void(0);" class="adminattendancebtn" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a';
+                                            
+                                            // CheckOut
+                                            if(empty($att['timeout'])){
+                                                $daysattendance2 = "N/A";
+                                            }else {
+                                                $daysattendance2 = date('d F Y, h:i:s A', strtotime($att['timeout']));
+                                            }
+
+                                             // TotalHours
+                                            if(empty($att['totalhours'])){
+                                                $totHrs = "N/A";
+                                            }else {
+                                                $totHrs = $att['totalhours'];
+                                            }
+
+                                             // Overtime
+                                             if(empty($att['overtime'])){
+                                                $overtime = "N/A";
+                                            }else {
+                                                $overtime = $att['overtime'];
+                                            }
+
+                                              // Missed Hours
+                                            if(empty($att['missedhours'])){
+                                                $missedHrs = "N/A";
+                                            }else {
+                                                $missedHrs = $att['missedhours'];
+                                            }
+
+                                           $daysattendance = date('d F Y, h:i:s A', strtotime($att['timein']));
+                                           $titleDate = date('d F Y', strtotime($att['date']));
+
+                                           $attendance_for_day = '<div class="modalParent"> 
+                                            <div hidden class="takeInfo">'  . $daysattendance . '</div>
+                                            <div hidden class="takeInfo2">' . $daysattendance2 .  '</div>
+                                            <div hidden class="takeInfo3">' . $titleDate . '</div>
+                                            <div hidden class="takeInfo4">' . $totHrs .' <small>hrs</small>'. '</div>
+                                            <div hidden class="takeInfo5">' . $overtime .' <small>hrs</small>'. '</div>
+                                            <div hidden class="takeInfo6">' . $missedHrs .' <small>hrs</small>'. '</div>
+                                            <a href="javascript:void(0);" class="adminattendancebtn" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></div>';
                                         } 
                                       } 
                                   ?>
-                                  <p class='takeInfo' hidden><?php echo $daysattendance; ?></p>
+
                                   <td><?php echo $attendance_for_day; ?> </td>
 
                                   <?php }?>
@@ -155,33 +193,35 @@
                             <div class="col-md-6">
                                 <div class="card punch-status">
                                     <div class="card-body">
-                                        <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
+                                        <h5 class="card-title">Timesheet <small class="text-muted" id="bringInfo3"></small></h5>
                                         <div class="punch-det">
                                             <h6>Punch In at</h6>
-                                            {{-- <p id="attbtn"></p> --}}
-                                            <input type="text" id="bringInfo" value="evdvdv">
+                                            <p id="bringInfo"></p>
                                         </div>
                                         <div class="punch-info">
                                             <div class="punch-hours">
-                                                <span>3.45 hrs</span>
+                                                <span id="bringInfo4"></span>
                                             </div>
                                         </div>
+                                       
                                         <div class="punch-det">
                                             <h6>Punch Out at</h6>
-                                            <p>Wed, 20th Feb 2019 9.00 PM</p>
+                                            <p id="bringInfo2"></p>
                                         </div>
+                                        
+
                                         <div class="statistics">
                                             <div class="row">
                                                 <div class="col-md-6 col-6 text-center">
                                                     <div class="stats-box">
-                                                        <p>Break</p>
-                                                        <h6>1.21 hrs</h6>
+                                                        <p>Overtime</p>
+                                                        <h6 id="bringInfo5"></h6>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-6 text-center">
                                                     <div class="stats-box">
-                                                        <p>Overtime</p>
-                                                        <h6>3 hrs</h6>
+                                                        <p>Missed Hours</p>
+                                                        <h6 id="bringInfo6"></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,7 +293,12 @@
     <script>
         $(document).on('click', '.adminattendancebtn', function(){
             var _this = $(this).parents('.modalParent');
-            $('#bringInfo').val(_this.find('.takeInfo').text());
+            $('#bringInfo').text(_this.find('.takeInfo').text());
+            $('#bringInfo2').text(_this.find('.takeInfo2').text());
+            $('#bringInfo3').text(_this.find('.takeInfo3').text());
+            $('#bringInfo4').text(_this.find('.takeInfo4').text());
+            $('#bringInfo5').text(_this.find('.takeInfo5').text());
+            $('#bringInfo6').text(_this.find('.takeInfo6').text());
         });
     </script>
 @endsection
