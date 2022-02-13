@@ -289,7 +289,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="project-members m-b-15">
-                                                    <div>Type of work : <span class="text-danger text-xl"> ARD MOS HARRO</span></div>
+                                                    <div>Type of work : <div class="text-danger">
+                                                            {{-- @foreach ($typeOfWorks as $typeOfWork)
+                                                                {{ $typeOfWork->department }}
+                                                            @endforeach --}}
+                                                        </div>
+                                                    </div>
                                                     <ul class="team-members">
                                                         <li>
                                                             <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>

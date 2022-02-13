@@ -14,14 +14,14 @@ class Schedule extends Model
     protected $fillable = [
         'reference',
         'idno',
-        // 'location_type_work_id',
-        'employee',
-        'intime',
-        'outime',
-        'datefrom',
-        'dateto',
-        'hours',
-        'restday',
-        'archive',
+        'location_type_works_id',
+        'employee',           
+        'intime',           
+        'outime',   
+        'datefrom',  
+        'dateto',           
+        'hours',           
+        'restday',           
+        'archive',           
     ];
 }
