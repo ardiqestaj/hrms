@@ -120,10 +120,10 @@
                             <label>Posible employees</label>
                             <div class="row">
                                 <div class="col-lg-5 col-sm-5">
-                                    <select name="customleave_from" id="customleave_select" class="form-control" size="5" multiple="multiple">
+                                    <select name="customleave_from" id="customleave_select" class="form-control" size="{{ count($employees) }}" multiple="multiple">
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->employee_id }}">{{ $employee->name }} {{ $employee->lastname }} -
-                                                <span style="color: blue;" id="text-muted-employees">{{ $location_type_work->intime }} - {{ $location_type_work->outime }} / {{ $location_type_work->restday }}</span>
+                                                <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span>
 
                                             </option>
                                         @endforeach
@@ -138,7 +138,7 @@
                                     <button type="button" id="customleave_select_leftAll" class="btn btn-block btn-white"><i class="fa fa-backward"></i></button>
                                 </div>
                                 <div class="col-lg-5 col-sm-5">
-                                    <select name="customleave_to[]" id="customleave_select_to" class="form-control" size="8" multiple="multiple">
+                                    <select name="customleave_to[]" id="customleave_select_to" class="form-control" size="{{ $location_type_work->number_of_employees }}" multiple="multiple">
                                         @foreach ($assignments as $assignment)
                                             <option value="{{ $assignment->em_id }}">{{ $assignment->name }} {{ $assignment->lastname }} -
                                                 <span style="color: blue;" id="text-muted-employees">{{ $assignment->time_start }} - {{ $assignment->time_end }} / {{ $assignment->restdays }}</span>
