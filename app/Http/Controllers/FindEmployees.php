@@ -17,16 +17,100 @@ class FindEmployees extends Controller
                         ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
                         ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
                         ->join('schedules', 'schedules.idno', '=', 'location_type_works.location_type_work_id')
-                        ->select('location_type_works.location_type_work_id', 'location_type_works.number_of_employees', 'locations.*', 'departments.department', 'schedules.intime', 'schedules.outime', 'schedules.hours', 'schedules.restday')
+                        ->select('location_type_works.location_type_work_id','location_type_works.type_work_id', 'location_type_works.number_of_employees', 'locations.*', 'departments.department', 'schedules.intime', 'schedules.outime', 'schedules.hours', 'schedules.restday')
                         ->where('location_type_work_id',$id)
                         ->first();
-        $employees = DB::table('employees')->select('employees.name', 'employees.lastname', 'employees.employee_id',)->get();
-
         $assignments = DB::table('assignment_employees')
                     ->join('employees', 'employees.employee_id', '=', 'assignment_employees.employee_id')
                     ->select('employees.name', 'employees.lastname', 'employees.employee_id as em_id', 'employees.restdays', 'employees.time_start', 'employees.time_end')
                     ->where('assignment_employees.location_type_work_id',$id)
                     ->get();
+
+        // $locSchedule = DB::table('location_type_works')
+        //             ->join('schedules', 'schedules.idno', '=', 'location_type_works.location_type_work_id')
+        $days = explode(', ', $location_type_work->restday);
+        // $numOfRestDays = count($days);
+        for ($i=0; $i < count($days); $i++) { 
+
+        $employees = DB::table('employees')->select('employees.*')
+                    ->where('employees.department', 'LIKE', '%'.$location_type_work->type_work_id.'%')
+                    ->where('employees.restdays','LIKE','%'.$days[$i].'%')
+                    ->where('employees.time_start', 'LIKE', '%'.$location_type_work->intime.'%')
+                    ->where('employees.time_end', 'LIKE', '%'.$location_type_work->outime.'%')
+                    ->get();
+        }
+        // foreach ($employees1 as $employee) {
+            // foreach ($days as $day) {
+                # code...
+                // for ($i=0; $i < count($days); $i++) { 
+                    # code...
+                // }
+            
+        //     if ($employee->department == $location_type_work->type_work_id && $employee->restdays == $days[$i]) {
+        //         $employees[] = $employee;
+        //     }
+        // }
+            
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    // $employeess = DB::table('employees')->get();
+
+
+        // foreach ($employeess as $employees1) {
+            // for ($i=0; $i < count($employeess); $i++) { 
+              
+
+        // $employees = DB::table('employees')
+        // ->join('departments', 'employees.department', '=', 'departments.id')
+        // ->join('location_type_works','location_type_works.type_work_id', '=', 'departments.id' )
+        // ->join('schedules', 'schedules.idno', '=', 'location_type_works.location_type_work_id')
+        // ->select('employees.*', 'schedules.*','location_type_works.*', 'departments.*' )
+        // ->where('schedules.restday', 'LIKE', '%' .'employees.restdays'.'%' )
+        // ->where('schedules.intime', 'LIKE', '%'.$employeess[$i]->time_start.'%')
+        // ->where('schedules.outime', 'LIKE', '%'.$employeess[$i]->time_end.'%')
+        // ->where('departments.id', 'LIKE', '%'.$employeess[$i]->department.'%')
+        // ->get();
+    // }
+    // dd($employees);
+    // }
+
+
+
+
+    // for ($i=0; $i < count($employeess); $i++) { 
+
+    //     $employees = DB::table('location_type_works')
+    //     ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
+    //     ->join('schedules', 'schedules.idno', '=', 'location_type_works.location_type_work_id')
+    //     ->where('schedules.restday', 'LIKE', '%' .$employees1->restdays.'%' )
+    //     ->where('schedules.intime', 'LIKE', '%'.$employees1->time_start.'%')
+    //     ->where('schedules.outime', 'LIKE', '%'.$employees1->time_end.'%')
+    //     ->where('departments.id', 'LIKE', '%'.$employees1->department.'%')
+    //     ->where('location_type_work_id',$id)
+    //     ->get();
+    // }
+    // dd($employees);
+
+    // $employees = DB::table('employees')->select('employees.*')
+    // ->where('employees.department', 'LIKE', '%'.$location_type_work->type_work_id.'%')
+    // ->where('employees.restdays','LIKE','%'.$location_type_work->restday.'%')
+    // ->where('employees.time_start', 'LIKE', '%'.$location_type_work->intime.'%')
+    // ->where('employees.time_end', 'LIKE', '%'.$location_type_work->outime.'%')
+    // ->get();
 
         return view('locations.findemployees', compact('employees', 'location_type_work', 'assignments'));
 
