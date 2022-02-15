@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Employee;
 use App\Models\Location;
 use App\Models\Client;
+use App\Models\Department;
 
 
 class HomeController extends Controller
@@ -31,14 +32,20 @@ class HomeController extends Controller
     // main dashboard
     public function index()
     {
-        $employees= Employee::all();
+        // $employees= Employee::all();
         $locations = Location::all();
         $clients = Client::all();
+
+        $employees = DB::table('employees')
+                        ->join('departments', 'employees.department', '=', 'departments.id')
+                        ->select('employees.*', 'departments.department as dep')
+                        ->get();
+        $department = Department::all();
         return view('dashboard.dashboard', compact('employees', 'locations', 'clients'));
     }
 
 
-    
+
     // employee dashboard
     public function emDashboard()
     {
