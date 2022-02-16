@@ -90,14 +90,6 @@
                 <div class="col-md-4">
                     <div class="card att-statistics">
                         <div class="card-body">
-                            {{-- @foreach ($daysThroughLeaves as $restDa) --}}
-                            
-                                {{-- @foreach ($leave as $date)
-                                        <h5 class="card-title">Statistics {{date('Y-m-d', strtotime($date))}}</h5>
-                                @endforeach --}}
-                            {{-- @endforeach --}}
-
-
                             <h5 class="card-title">Statistics {{$workingHrs}}</h5>
                             <div class="stats-list">
                                 <div class="stats-info">
@@ -160,7 +152,6 @@
                                             aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

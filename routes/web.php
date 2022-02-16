@@ -255,5 +255,7 @@ Route::get('employee/attendance', [App\Http\Controllers\TimeClockController::cla
 Route::post('attendance/add', [App\Http\Controllers\TimeClockController::class, 'add'])->middleware('auth')->name('attendance/add');
 Route::post('attendance/search', [App\Http\Controllers\TimeClockController::class, 'search'])->middleware('auth')->name('attendance/search');
 Route::get('attendance/page', [App\Http\Controllers\AdminAttendance::class, 'AdminAttendance'])->middleware('auth')->name('attendance/page');
+Route::post('attendance/page/search', [App\Http\Controllers\AdminAttendance::class, 'attSearch'])->middleware('auth')->name('attendance/page/search');
+
 
 
