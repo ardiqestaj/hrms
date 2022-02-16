@@ -21,61 +21,59 @@
             <!-- /Page Header -->
             
             <!-- Search Filter -->
-            <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">  
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating" name="name">
-                        <label class="focus-label">Employee Name</label>
+            <form action="{{ route('attendance/page/search') }}" method="POST">
+                @csrf
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3">  
+                        <div class="form-group form-focus">
+                            <input type="text" class="form-control floating" name="name">
+                            @if(isset($name))
+                            <label class="focus-label">{{$name}}</label>
+                            @else
+                            <label class="focus-label">Employee Name</label>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-3"> 
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating"> 
-                              @if(isset($month))
-                                <option> {{$month}} </option>
-                                @else 
-                                <option> {{$month}} </option>
-                                @endif
-                                <option> - </option>
-                                <option value="-01-">Jan</option>
-                                <option value="-02-">Feb</option>
-                                <option value="-03-">Mar</option>
-                                <option value="-04-">Apr</option>
-                                <option value="-05-">May</option>
-                                <option value="-06-">Jun</option>
-                                <option value="-07-">Jul</option>
-                                <option value="-08-">Aug</option>
-                                <option value="-09-">Sep</option>
-                                <option value="-10-">Oct</option>
-                                <option value="-11-">Nov</option>
-                                <option value="-12-">Dec</option>
-                        </select>
-                        <label class="focus-label">Select Month</label>
+                    <div class="col-sm-6 col-md-3"> 
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating" name="month"> 
+                                    <option> {{$month}} </option>
+                                    <option value="-01-">Jan</option>
+                                    <option value="-02-">Feb</option>
+                                    <option value="-03-">Mar</option>
+                                    <option value="-04-">Apr</option>
+                                    <option value="-05-">May</option>
+                                    <option value="-06-">Jun</option>
+                                    <option value="-07-">Jul</option>
+                                    <option value="-08-">Aug</option>
+                                    <option value="-09-">Sep</option>
+                                    <option value="-10-">Oct</option>
+                                    <option value="-11-">Nov</option>
+                                    <option value="-12-">Dec</option>
+                            </select>
+                            <label class="focus-label">Select Month</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-3"> 
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating"> 
-                            <option> {{$years}} </option>
-                            <option> - </option>
-                            @for ($year = 2021; $year <= 2030; $year++) 
-                            <option value='{{$year}}-'>{{$year}}</option>;
-                            @endfor
-                        </select>
-                        <label class="focus-label">Select Year</label>
+                    <div class="col-sm-6 col-md-3"> 
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating" name="year"> 
+                                <option> {{$years}} </option>
+                                @for ($year = 2021; $year <= 2030; $year++) 
+                                <option value='{{$year}}-'>{{$year}}</option>;
+                                @endfor
+                            </select>
+                            <label class="focus-label">Select Year</label>
+                        </div>
                     </div>
+                    <div class="col-sm-6 col-md-3">  
+                        <button type="submit" class="btn btn-success btn-block"> Search </button>  
+                    </div>     
                 </div>
-                <div class="col-sm-6 col-md-3">  
-                    <a href="#" class="btn btn-success btn-block"> Search </a>  
-                </div>     
-            </div>
+            </form>
             <!-- /Search Filter -->
             
             <div class="row">
                 <div class="col-lg-12">
-                    {{-- @foreach ($attendance as $attend)
-                        <h1>{{$attend->date}}</h1>
-                    @endforeach --}}
                     <div class="table-responsive">
                         <table class="table table-striped custom-table table-nowrap mb-0">
                             <thead>
@@ -87,10 +85,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                
-
-
                                 @forelse($final as $attend)
                                 <tr>
                                     <td>
@@ -161,18 +155,20 @@
                                   ?>
 
                                   <td><?php echo $attendance_for_day; ?> </td>
-
                                   <?php }?>
                                 </tr>
                                 @empty
                                 <tr><td>No Employees to show</td></tr>
                                 @endforelse
-
-
-
                             </tbody>
                         </table>
+                        
                     </div>
+                </div>
+                <div class="mx-auto mt-5">
+                    @if(count($users) >= 8)
+                    {{$users->links('vendor.pagination.bootstrap-4')}}
+                    @endif
                 </div>
             </div>
         </div>
@@ -229,54 +225,74 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- ----Statistics---- --}}
                             <div class="col-md-6">
-                                <div class="card recent-activity">
+                                <div class="card att-statistics">
                                     <div class="card-body">
-                                        <h5 class="card-title">Activity</h5>
-                                        <ul class="res-activity-list">
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    10.00 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    11.00 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    11.15 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    1.30 PM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    2.00 PM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    7.30 PM.
-                                                </p>
-                                            </li>
-                                        </ul>
+                                        <h5 class="card-title">Statistics</h5>
+                                        <div class="stats-list">
+                                            <div class="stats-info">
+                                                <p>Today <strong>
+                                                    @foreach ($todayAttendances as $key=>$attend)
+                                                    @isset($attend->totalhours)
+                                                    @if($attend->totalhours != null) 
+                                                        @php
+                                                            if(stripos($attend->totalhours, ".") === false) {
+                                                                $h = $attend->totalhours;
+                                                            } else {
+                                                                $HM = explode('.', $attend->totalhours); 
+                                                                $h = $HM[0]; 
+                                                                $m = $HM[1];
+                                                            } 
+                                                        @endphp
+                                                    @endif 
+                                                    @if($attend->totalhours != NULL)
+                                                        @if(stripos($attend->totalhours, ".") === false) 
+                                                            {{ $h }} hr
+                                                        @else 
+                                                            {{ $h }} hr {{ $m }} mins
+                                                        @endif 
+                                                    @endif
+                                                    @else --
+                                                    @endisset 
+                                                    @endforeach
+                                                <small>/ {{$schedules->hours}} hrs</small></strong></p>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
+                                                        aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="stats-info">
+                                                <p>This Month <strong>{{$monthAttendances->sum('totalhours')}} <small>/ {{$monthWorkingHrs}} hrs</small></strong></p>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg"
+                                                        aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="stats-info">
+                                                <p>Remaining this Month<strong>{{$monthWorkingHrs - $monthAttendances->sum('totalhours')}} <small> hrs</small></strong></p>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth"
+                                                        aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="stats-info">
+                                                <p>Missed Hours this Month<strong>{{$monthAttendances->sum('missedhours')}} <small>  hrs</small></strong></p>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
+                                                        aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="stats-info">
+                                                <p>Overtime this Month<strong>{{$monthAttendances->sum('overtime')}} <small>  hrs</small></strong></p>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-info" role="progressbar" id="overtime"
+                                                        aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -300,5 +316,18 @@
             $('#bringInfo5').text(_this.find('.takeInfo5').text());
             $('#bringInfo6').text(_this.find('.takeInfo6').text());
         });
+
+        var productionHrs = '{{$monthAttendances->sum('totalhours')}}';
+        var scheduledHrs = '{{$schedules->hours}}';
+        var totalMonthHrs = '{{$monthWorkingHrs}}';
+        var remainingThisMonth = '{{$monthWorkingHrs - $monthAttendances->sum('totalhours')}}';
+        var missedHrs = '{{$monthAttendances->sum('missedhours')}}';
+        var overtime = '{{$monthAttendances->sum('overtime')}}';
+
+        document.getElementById("todayPrg").style.width = (productionHrs/scheduledHrs)*100 + "%";
+        document.getElementById("thismonthPrg").style.width = 100*(productionHrs/totalMonthHrs) + "%";
+        document.getElementById("remainthismonth").style.width = totalMonthHrs-productionHrs + "%";
+        document.getElementById("missedHrs").style.width = missedHrs + "%";
+        document.getElementById("overtime").style.width = overtime + "%";
     </script>
 @endsection
