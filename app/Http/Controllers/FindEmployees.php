@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\AssignmentEmployees;
 use DB;
+use App\Models\Employee;
 
 
 class FindEmployees extends Controller
@@ -26,33 +27,45 @@ class FindEmployees extends Controller
                     ->where('assignment_employees.location_type_work_id',$id)
                     ->get();
 
-        // $locSchedule = DB::table('location_type_works')
-        //             ->join('schedules', 'schedules.idno', '=', 'location_type_works.location_type_work_id')
-        $days = explode(', ', $location_type_work->restday);
-        // $numOfRestDays = count($days);
-        for ($i=0; $i < count($days); $i++) { 
 
-        $employees = DB::table('employees')->select('employees.*')
+        // $schedRestDays = preg_split('/\s+/', $location_type_work->restday);
+        $employees = Employee::select('employee_id', 'name', 'restdays')
                     ->where('employees.department', 'LIKE', '%'.$location_type_work->type_work_id.'%')
-                    ->where('employees.restdays','LIKE','%'.$days[$i].'%')
-                    ->where('employees.time_start', 'LIKE', '%'.$location_type_work->intime.'%')
-                    ->where('employees.time_end', 'LIKE', '%'.$location_type_work->outime.'%')
                     ->get();
-        }
-        // foreach ($employees1 as $employee) {
-            // foreach ($days as $day) {
-                # code...
-                // for ($i=0; $i < count($days); $i++) { 
-                    # code...
-                // }
-            
-        //     if ($employee->department == $location_type_work->type_work_id && $employee->restdays == $days[$i]) {
-        //         $employees[] = $employee;
-        //     }
-        // }
-            
-        // }
 
+        $finale = [];
+        foreach ($employees as $employee) {
+            $final = [];
+            $foundEmployees['employee_id'] = $employee->employee_id;
+            $foundEmployees['name'] = $employee->name;
+            $foundEmployees['restdays'] = $employee->restdays;
+
+            $foundEmployees['schedule'] = $location_type_work->restday;
+
+            $final[] = $foundEmployees;
+
+            $fin = [];
+            foreach ($final as $fin) {
+                $restDays = $foundEmployees['restdays'];
+                $empRestDays = explode(', ', $restDays);
+                $numEmpRestDays = count($empRestDays);
+
+                $locSched = $foundEmployees['schedule'];
+                $schedRestDays = explode(', ', $locSched);
+
+                $common = array_intersect($empRestDays, $schedRestDays);
+                $countCommon = count($common);
+                if($countCommon == $numEmpRestDays){
+                    $fin['equalDays'] = $countCommon;
+                    $finale[] = $fin; 
+                } 
+            }
+        }
+
+
+
+    
+       
 
 
 
@@ -112,7 +125,7 @@ class FindEmployees extends Controller
     // ->where('employees.time_end', 'LIKE', '%'.$location_type_work->outime.'%')
     // ->get();
 
-        return view('locations.findemployees', compact('employees', 'location_type_work', 'assignments'));
+        return view('locations.findemployees', compact('finale', 'location_type_work', 'assignments'));
 
     }
 

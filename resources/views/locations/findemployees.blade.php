@@ -120,13 +120,25 @@
                             <label>Posible employees</label>
                             <div class="row">
                                 <div class="col-lg-5 col-sm-5">
-                                    <select name="customleave_from" id="customleave_select" class="form-control" size="{{ count($employees) }}" multiple="multiple">
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->employee_id }}">{{ $employee->name }} {{ $employee->lastname }} -
-                                                <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span>
+                                    <select name="customleave_from" id="customleave_select" class="form-control" size="{{ count($finale) }}" multiple="multiple">
+                                        @if (isset($finale))
+                                            
+                                            @foreach ($finale as $employee)
+                                                <option value="{{ $employee['employee_id'] }}">{{ $employee['name']}} 
+                                                    {{-- {{ $employee->lastname }} -
+                                                    <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span> --}}
+
+                                                </option>
+                                            @endforeach
+
+                                            @else
+                                            <option value="">NO EMPLOYEES 
+                                                {{-- {{ $employee->lastname }} -
+                                                <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span> --}}
 
                                             </option>
-                                        @endforeach
+                                        @endif
+
                                     </select>
 
 

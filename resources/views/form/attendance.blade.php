@@ -179,7 +179,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Attendance Info</h5>
+                        <h5 class="modal-title">Attendance Info  <small class="text-muted" id="bringInfo3"></small></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -189,20 +189,20 @@
                             <div class="col-md-6">
                                 <div class="card punch-status">
                                     <div class="card-body">
-                                        <h5 class="card-title">Timesheet <small class="text-muted" id="bringInfo3"></small></h5>
+                                        <h5 class="card-title">Timesheet</h5>
                                         <div class="punch-det">
                                             <h6>Punch In at</h6>
-                                            <p id="bringInfo"></p>
+                                            <p class="bringInfo"></p>
                                         </div>
                                         <div class="punch-info">
                                             <div class="punch-hours">
-                                                <span id="bringInfo4"></span>
+                                                <span class="bringInfo4"></span>
                                             </div>
                                         </div>
                                        
                                         <div class="punch-det">
                                             <h6>Punch Out at</h6>
-                                            <p id="bringInfo2"></p>
+                                            <p class="bringInfo2"></p>
                                         </div>
                                         
 
@@ -211,13 +211,13 @@
                                                 <div class="col-md-6 col-6 text-center">
                                                     <div class="stats-box">
                                                         <p>Overtime</p>
-                                                        <h6 id="bringInfo5"></h6>
+                                                        <h6 class="bringInfo5"></h6>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-6 text-center">
                                                     <div class="stats-box">
                                                         <p>Missed Hours</p>
-                                                        <h6 id="bringInfo6"></h6>
+                                                        <h6 class="bringInfo6"></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,7 +234,7 @@
                                         <div class="stats-list">
                                             <div class="stats-info">
                                                 <p>Today <strong>
-                                                    @foreach ($todayAttendances as $key=>$attend)
+                                                    {{-- @foreach ($todayAttendances as $key=>$attend)
                                                     @isset($attend->totalhours)
                                                     @if($attend->totalhours != null) 
                                                         @php
@@ -256,8 +256,9 @@
                                                     @endif
                                                     @else --
                                                     @endisset 
-                                                    @endforeach
-                                                <small>/ {{$schedules->hours}} hrs</small></strong></p>
+                                                    @endforeach --}}
+
+                                                <small><strong> <span class="bringInfo4"></span></strong> / 8 hrs</small></strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
                                                         aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -309,22 +310,22 @@
     <script>
         $(document).on('click', '.adminattendancebtn', function(){
             var _this = $(this).parents('.modalParent');
-            $('#bringInfo').text(_this.find('.takeInfo').text());
-            $('#bringInfo2').text(_this.find('.takeInfo2').text());
+            $('.bringInfo').text(_this.find('.takeInfo').text());
+            $('.bringInfo2').text(_this.find('.takeInfo2').text());
             $('#bringInfo3').text(_this.find('.takeInfo3').text());
-            $('#bringInfo4').text(_this.find('.takeInfo4').text());
-            $('#bringInfo5').text(_this.find('.takeInfo5').text());
-            $('#bringInfo6').text(_this.find('.takeInfo6').text());
+            $('.bringInfo4').text(_this.find('.takeInfo4').text());
+            $('.bringInfo5').text(_this.find('.takeInfo5').text());
+            $('.bringInfo6').text(_this.find('.takeInfo6').text());
         });
 
         var productionHrs = '{{$monthAttendances->sum('totalhours')}}';
-        var scheduledHrs = '{{$schedules->hours}}';
+        // {{-- var scheduledHrs = '{{$schedules->hours}}';--}}
         var totalMonthHrs = '{{$monthWorkingHrs}}';
         var remainingThisMonth = '{{$monthWorkingHrs - $monthAttendances->sum('totalhours')}}';
         var missedHrs = '{{$monthAttendances->sum('missedhours')}}';
         var overtime = '{{$monthAttendances->sum('overtime')}}';
 
-        document.getElementById("todayPrg").style.width = (productionHrs/scheduledHrs)*100 + "%";
+        // {{-- document.getElementById("todayPrg").style.width = (productionHrs/scheduledHrs)*100 + "%"; --}}
         document.getElementById("thismonthPrg").style.width = 100*(productionHrs/totalMonthHrs) + "%";
         document.getElementById("remainthismonth").style.width = totalMonthHrs-productionHrs + "%";
         document.getElementById("missedHrs").style.width = missedHrs + "%";
