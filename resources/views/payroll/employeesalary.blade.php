@@ -1,9 +1,8 @@
-
 @extends('layouts.master')
 @section('content')
     {{-- message --}}
     {!! Toastr::message() !!}
-    
+
 
     <!-- Page Wrapper -->
     <div class="page-wrapper">
@@ -27,15 +26,15 @@
 
             <!-- Search Filter -->
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus">
                         <input type="text" class="form-control floating">
                         <label class="focus-label">Employee Name</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus select-focus">
-                        <select class="select floating"> 
+                        <select class="select floating">
                             <option value=""> -- Select -- </option>
                             <option value="">Employee</option>
                             <option value="1">Manager</option>
@@ -43,9 +42,9 @@
                         <label class="focus-label">Role</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12"> 
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus select-focus">
-                        <select class="select floating"> 
+                        <select class="select floating">
                             <option> -- Select -- </option>
                             <option> Pending </option>
                             <option> Approved </option>
@@ -54,7 +53,7 @@
                         <label class="focus-label">Leave Status</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus">
                         <div class="cal-icon">
                             <input class="form-control floating datetimepicker" type="text">
@@ -62,7 +61,7 @@
                         <label class="focus-label">From</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus">
                         <div class="cal-icon">
                             <input class="form-control floating datetimepicker" type="text">
@@ -70,11 +69,11 @@
                         <label class="focus-label">To</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                    <a href="#" class="btn btn-success btn-block"> Search </a>  
-                </div>     
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                    <a href="#" class="btn btn-success btn-block"> Search </a>
+                </div>
             </div>
-            <!-- /Search Filter -->  
+            <!-- /Search Filter -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
@@ -93,44 +92,44 @@
                             </thead>
                             <tbody>
                                 @foreach ($users as $items)
-                                <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}"></a>
-                                            <a href="{{ url('employee/profile/'.$items->rec_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $items->rec_id }}</td>
-                                    <td hidden class="id">{{ $items->id }}</td>
-                                    <td hidden class="name">{{ $items->name }}</td>
-                                    <td hidden class="basic">{{ $items->basic }}</td>
-                                    <td hidden class="da">{{ $items->da }}</td>
-                                    <td hidden class="hra">{{ $items->hra }}</td>
-                                    <td hidden class="conveyance">{{ $items->conveyance }}</td>
-                                    <td hidden class="allowance">{{ $items->allowance }}</td>
-                                    <td hidden class="medical_allowance">{{ $items->medical_allowance }}</td>
-                                    <td hidden class="tds">{{ $items->tds }}</td>
-                                    <td hidden class="esi">{{ $items->esi }}</td>
-                                    <td hidden class="pf">{{ $items->pf }}</td>
-                                    <td hidden class="leave">{{ $items->leave }}</td>
-                                    <td hidden class="prof_tax">{{ $items->prof_tax }}</td>
-                                    <td hidden class="labour_welfare">{{ $items->labour_welfare }}</td>
-                                    <td>{{ $items->email }}</td>
-                                    <td>{{ $items->join_date }}</td>
-                                    <td>{{ $items->role_name }}</td>
-                                    <td>${{ $items->salary }}</td>
-                                    <td hidden class="salary">{{ $items->salary }}</td>
-                                    <td><a class="btn btn-sm btn-primary" href="{{ url('form/salary/view/'.$items->rec_id) }}">Generate Slip</a></td>
-                                    <td class="text-right">
-                                        <div class="dropdown dropdown-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item userSalary" href="#" data-toggle="modal" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item salaryDelete" href="#" data-toggle="modal" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{{ url('employee/profile/' . $items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/' . $items->avatar) }}"></a>
+                                                <a href="{{ url('employee/profile/' . $items->rec_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $items->rec_id }}</td>
+                                        <td hidden class="id">{{ $items->id }}</td>
+                                        <td hidden class="name">{{ $items->name }}</td>
+                                        <td hidden class="basic">{{ $items->basic }}</td>
+                                        <td hidden class="da">{{ $items->da }}</td>
+                                        <td hidden class="hra">{{ $items->hra }}</td>
+                                        <td hidden class="conveyance">{{ $items->conveyance }}</td>
+                                        <td hidden class="allowance">{{ $items->allowance }}</td>
+                                        <td hidden class="medical_allowance">{{ $items->medical_allowance }}</td>
+                                        <td hidden class="tds">{{ $items->tds }}</td>
+                                        <td hidden class="esi">{{ $items->esi }}</td>
+                                        <td hidden class="pf">{{ $items->pf }}</td>
+                                        <td hidden class="leave">{{ $items->leave }}</td>
+                                        <td hidden class="prof_tax">{{ $items->prof_tax }}</td>
+                                        <td hidden class="labour_welfare">{{ $items->labour_welfare }}</td>
+                                        <td>{{ $items->email }}</td>
+                                        <td>{{ $items->join_date }}</td>
+                                        <td>{{ $items->role_name }}</td>
+                                        <td>${{ $items->salary }}</td>
+                                        <td hidden class="salary">{{ $items->salary }}</td>
+                                        <td><a class="btn btn-sm btn-primary" href="{{ url('form/salary/view/' . $items->rec_id) }}">Generate Slip</a></td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item userSalary" href="#" data-toggle="modal" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item salaryDelete" href="#" data-toggle="modal" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -154,13 +153,13 @@
                     <div class="modal-body">
                         <form action="{{ route('form/salary/save') }}" method="POST">
                             @csrf
-                            <div class="row"> 
-                                <div class="col-sm-6"> 
+                            <div class="row">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Select Staff</label>
                                         <select class="select select2s-hidden-accessible @error('name') is-invalid @enderror" style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
                                             <option value="">-- Select --</option>
-                                            @foreach ($userList as $key=>$user )
+                                            @foreach ($userList as $key => $user)
                                                 <option value="{{ $user->name }}" data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
@@ -172,7 +171,7 @@
                                     @enderror
                                 </div>
                                 <input class="form-control" type="hidden" name="rec_id" id="employee_id" readonly>
-                                <div class="col-sm-6"> 
+                                <div class="col-sm-6">
                                     <label>Net Salary</label>
                                     <input class="form-control @error('salary') is-invalid @enderror" type="number" name="salary" id="salary" value="{{ old('salary') }}" placeholder="Enter net salary">
                                     @error('salary')
@@ -182,8 +181,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row"> 
-                                <div class="col-sm-6"> 
+                            <div class="row">
+                                <div class="col-sm-6">
                                     <h4 class="text-primary">Earnings</h4>
                                     <div class="form-group">
                                         <label>Basic</label>
@@ -196,7 +195,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>DA(40%)</label>
-                                        <input class="form-control @error('da') is-invalid @enderror" type="number"  name="da" id="da" value="{{ old('da') }}" placeholder="Enter DA(40%)">
+                                        <input class="form-control @error('da') is-invalid @enderror" type="number" name="da" id="da" value="{{ old('da') }}" placeholder="Enter DA(40%)">
                                         @error('da')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -205,7 +204,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>HRA(15%)</label>
-                                        <input class="form-control @error('hra') is-invalid @enderror" type="number"  name="hra" id="hra" value="{{ old('hra') }}" placeholder="Enter HRA(15%)">
+                                        <input class="form-control @error('hra') is-invalid @enderror" type="number" name="hra" id="hra" value="{{ old('hra') }}" placeholder="Enter HRA(15%)">
                                         @error('hra')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -214,7 +213,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Conveyance</label>
-                                        <input class="form-control @error('conveyance') is-invalid @enderror" type="number"  name="conveyance" id="conveyance" value="{{ old('conveyance') }}" placeholder="Enter conveyance">
+                                        <input class="form-control @error('conveyance') is-invalid @enderror" type="number" name="conveyance" id="conveyance" value="{{ old('conveyance') }}" placeholder="Enter conveyance">
                                         @error('conveyance')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -223,7 +222,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Allowance</label>
-                                        <input class="form-control @error('allowance') is-invalid @enderror" type="number"  name="allowance" id="allowance" value="{{ old('allowance') }}" placeholder="Enter allowance">
+                                        <input class="form-control @error('allowance') is-invalid @enderror" type="number" name="allowance" id="allowance" value="{{ old('allowance') }}" placeholder="Enter allowance">
                                         @error('allowance')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -231,7 +230,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label>Medical  Allowance</label>
+                                        <label>Medical Allowance</label>
                                         <input class="form-control @error('medical_allowance') is-invalid @enderror" type="number" name="medical_allowance" id="medical_allowance" value="{{ old('medical_allowance') }}" placeholder="Enter medical  allowance">
                                         @error('medical_allowance')
                                             <span class="invalid-feedback" role="alert">
@@ -240,7 +239,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-sm-6">  
+                                <div class="col-sm-6">
                                     <h4 class="text-primary">Deductions</h4>
                                     <div class="form-group">
                                         <label>TDS</label>
@@ -250,7 +249,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div> 
+                                    </div>
                                     <div class="form-group">
                                         <label>ESI</label>
                                         <input class="form-control @error('esi') is-invalid @enderror" type="number" name="esi" id="esi" value="{{ old('esi') }}" placeholder="Enter ESI">
@@ -307,7 +306,7 @@
             </div>
         </div>
         <!-- /Add Salary Modal -->
-        
+
         <!-- Edit Salary Modal -->
         <div id="edit_salary" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -322,8 +321,8 @@
                         <form action="{{ route('form/salary/update') }}" method="POST">
                             @csrf
                             <input class="form-control" type="hidden" name="id" id="e_id" value="" readonly>
-                            <div class="row"> 
-                                <div class="col-sm-6"> 
+                            <div class="row">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Name Staff</label>
                                         <input class="form-control " type="text" name="name" id="e_name" value="" readonly>
@@ -334,13 +333,13 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6"> 
+                                <div class="col-sm-6">
                                     <label>Net Salary</label>
                                     <input class="form-control" type="text" name="salary" id="e_salary" value="">
                                 </div>
                             </div>
-                            <div class="row"> 
-                                <div class="col-sm-6"> 
+                            <div class="row">
+                                <div class="col-sm-6">
                                     <h4 class="text-primary">Earnings</h4>
                                     <div class="form-group">
                                         <label>Basic</label>
@@ -348,31 +347,31 @@
                                     </div>
                                     <div class="form-group">
                                         <label>DA(40%)</label>
-                                        <input class="form-control" type="text"  name="da" id="e_da" value="">
+                                        <input class="form-control" type="text" name="da" id="e_da" value="">
                                     </div>
                                     <div class="form-group">
                                         <label>HRA(15%)</label>
-                                        <input class="form-control" type="text"  name="hra" id="e_hra" value="">
+                                        <input class="form-control" type="text" name="hra" id="e_hra" value="">
                                     </div>
                                     <div class="form-group">
                                         <label>Conveyance</label>
-                                        <input class="form-control" type="text"  name="conveyance" id="e_conveyance" value="">
+                                        <input class="form-control" type="text" name="conveyance" id="e_conveyance" value="">
                                     </div>
                                     <div class="form-group">
                                         <label>Allowance</label>
-                                        <input class="form-control" type="text"  name="allowance" id="e_allowance" value="">
+                                        <input class="form-control" type="text" name="allowance" id="e_allowance" value="">
                                     </div>
                                     <div class="form-group">
-                                        <label>Medical  Allowance</label>
+                                        <label>Medical Allowance</label>
                                         <input class="form-control" type="text" name="medical_allowance" id="e_medical_allowance" value="">
                                     </div>
                                 </div>
-                                <div class="col-sm-6">  
+                                <div class="col-sm-6">
                                     <h4 class="text-primary">Deductions</h4>
                                     <div class="form-group">
                                         <label>TDS</label>
                                         <input class="form-control" type="text" name="tds" id="e_tds" value="">
-                                    </div> 
+                                    </div>
                                     <div class="form-group">
                                         <label>ESI</label>
                                         <input class="form-control" type="text" name="esi" id="e_esi" value="">
@@ -404,7 +403,7 @@
             </div>
         </div>
         <!-- /Edit Salary Modal -->
-        
+
         <!-- Delete Salary Modal -->
         <div class="modal custom-modal fade" id="delete_salary" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
@@ -433,53 +432,50 @@
             </div>
         </div>
         <!-- /Delete Salary Modal -->
-     
+
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
-        <script>
-            $(document).ready(function() {
-                $('.select2s-hidden-accessible').select2({
-                    closeOnSelect: false
-                });
-            });
-        </script>
-        <script>
-            // select auto id and email
-            $('#name').on('change',function()
-            {
-                $('#employee_id').val($(this).find(':selected').data('employee_id'));
-            });
-        </script>
-        {{-- update js --}}
-        <script>
-            $(document).on('click','.userSalary',function()
-            {
-                var _this = $(this).parents('tr');
-                $('#e_id').val(_this.find('.id').text());
-                $('#e_name').val(_this.find('.name').text());
-                $('#e_salary').val(_this.find('.salary').text());
-                $('#e_basic').val(_this.find('.basic').text());
-                $('#e_da').val(_this.find('.da').text());
-                $('#e_hra').val(_this.find('.hra').text());
-                $('#e_conveyance').val(_this.find('.conveyance').text());
-                $('#e_allowance').val(_this.find('.allowance').text());
-                $('#e_medical_allowance').val(_this.find('.medical_allowance').text());
-                $('#e_tds').val(_this.find('.tds').text());
-                $('#e_esi').val(_this.find('.esi').text());
-                $('#e_pf').val(_this.find('.pf').text());
-                $('#e_leave').val(_this.find('.leave').text());
-                $('#e_prof_tax').val(_this.find('.prof_tax').text());
-                $('#e_labour_welfare').val(_this.find('.labour_welfare').text());
-            });
-        </script>
-         {{-- delete js --}}
+@section('script')
     <script>
-        $(document).on('click','.salaryDelete',function()
-        {
+        $(document).ready(function() {
+            $('.select2s-hidden-accessible').select2({
+                closeOnSelect: false
+            });
+        });
+    </script>
+    <script>
+        // select auto id and email
+        $('#name').on('change', function() {
+            $('#employee_id').val($(this).find(':selected').data('employee_id'));
+        });
+    </script>
+    {{-- update js --}}
+    <script>
+        $(document).on('click', '.userSalary', function() {
+            var _this = $(this).parents('tr');
+            $('#e_id').val(_this.find('.id').text());
+            $('#e_name').val(_this.find('.name').text());
+            $('#e_salary').val(_this.find('.salary').text());
+            $('#e_basic').val(_this.find('.basic').text());
+            $('#e_da').val(_this.find('.da').text());
+            $('#e_hra').val(_this.find('.hra').text());
+            $('#e_conveyance').val(_this.find('.conveyance').text());
+            $('#e_allowance').val(_this.find('.allowance').text());
+            $('#e_medical_allowance').val(_this.find('.medical_allowance').text());
+            $('#e_tds').val(_this.find('.tds').text());
+            $('#e_esi').val(_this.find('.esi').text());
+            $('#e_pf').val(_this.find('.pf').text());
+            $('#e_leave').val(_this.find('.leave').text());
+            $('#e_prof_tax').val(_this.find('.prof_tax').text());
+            $('#e_labour_welfare').val(_this.find('.labour_welfare').text());
+        });
+    </script>
+    {{-- delete js --}}
+    <script>
+        $(document).on('click', '.salaryDelete', function() {
             var _this = $(this).parents('tr');
             $('.e_id').val(_this.find('.id').text());
         });
     </script>
-    @endsection
+@endsection
 @endsection

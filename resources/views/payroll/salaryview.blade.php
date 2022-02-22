@@ -1,42 +1,38 @@
 @extends('layouts.master')
 @section('content')
     <!-- Page Wrapper -->
-
-    <div class="page-wrapper">
-        <!-- Page Content -->
-        <div class="content container-fluid" id="app">
-            <!-- Page Header -->
-            <div class="page-header">
-                <div class="row align-items-center">
-                    <div class="col" style="margin-left: -222px;">
-                        <h3 class="page-title">Payslip</h3>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('form/salary/page') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Payslip</li>
-                        </ul>
-                    </div>
-                    <div class="col-auto float-right ml-auto">
-                        <div class="btn-group btn-group-sm">
-                            <button class="btn btn-white">CSV</button>
-                            <button class="btn btn-white"><a href="" @click.prevent="printme"
-                                    target="_blank">PDF</a></button>
-                            <button class="btn btn-white"><i class="fa fa-print fa-lg"></i><a href=""
-                                    @click.prevent="printme" target="_blank"> Print</a></button>
+    <div class="">
+        <div class="page-wrapper">
+            <!-- Page Content -->
+            <div class="content container-fluid" id="app">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col" style="margin-left: -222px;">
+                            <h3 class="page-title">Payslip</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('form/salary/page') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Payslip</li>
+                            </ul>
+                        </div>
+                        <div class="col-auto float-right ml-auto">
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-white">CSV</button>
+                                <button class="btn btn-white"><a href="" @click.prevent="printme" target="_blank">PDF</a></button>
+                                <button class="btn btn-white"><i class="fa fa-print fa-lg"></i><a href="" @click.prevent="printme" target="_blank"> Print</a></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="row" style="margin-left: -240px;">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="payslip-title">Payslip for the month of
-                                    {{ \Carbon\Carbon::now()->format('M') }} {{ \Carbon\Carbon::now()->year }} </h4>
+                                <h4 class="payslip-title">Payslip for the month of {{ \Carbon\Carbon::now()->format('M') }} {{ \Carbon\Carbon::now()->year }} </h4>
                                 <div class="row">
                                     <div class="col-sm-6 m-b-20">
                                         @if (!empty($users->avatar))
-                                            <img src="{{ URL::to('/assets/images/' . $users->avatar) }}"
-                                                class="inv-logo" alt="{{ $users->name }}">
+                                            <img src="{{ URL::to('/assets/images/' . $users->avatar) }}" class="inv-logo" alt="{{ $users->name }}">
                                         @endif
                                         <ul class="list-unstyled mb-0">
                                             <li>{{ $users->name }}</li>
@@ -48,8 +44,7 @@
                                         <div class="invoice-details">
                                             <h3 class="text-uppercase">Payslip #49029</h3>
                                             <ul class="list-unstyled">
-                                                <li>Salary Month: <span>{{ \Carbon\Carbon::now()->format('M') }} ,
-                                                        {{ \Carbon\Carbon::now()->year }} </span></li>
+                                                <li>Salary Month: <span>{{ \Carbon\Carbon::now()->format('M') }} , {{ \Carbon\Carbon::now()->year }} </span></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -80,28 +75,19 @@
                                                     $Total_Earnings = $a + $b + $c + $e;
                                                     ?>
                                                     <tr>
-                                                        <td><strong>Basic Salary</strong> <span
-                                                                class="float-right">${{ $users->basic }}</span>
-                                                        </td>
+                                                        <td><strong>Basic Salary</strong> <span class="float-right">${{ $users->basic }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>House Rent Allowance (H.R.A.)</strong> <span
-                                                                class="float-right">${{ $users->hra }}</span></td>
+                                                        <td><strong>House Rent Allowance (H.R.A.)</strong> <span class="float-right">${{ $users->hra }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Conveyance</strong> <span
-                                                                class="float-right">${{ $users->conveyance }}</span>
-                                                        </td>
+                                                        <td><strong>Conveyance</strong> <span class="float-right">${{ $users->conveyance }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Other Allowance</strong> <span
-                                                                class="float-right">${{ $users->allowance }}</span>
-                                                        </td>
+                                                        <td><strong>Other Allowance</strong> <span class="float-right">${{ $users->allowance }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Total Earnings</strong> <span
-                                                                class="float-right"><strong>$
-                                                                    <?php echo $Total_Earnings; ?></strong></span></td>
+                                                        <td><strong>Total Earnings</strong> <span class="float-right"><strong>$ <?php echo $Total_Earnings; ?></strong></span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -120,35 +106,26 @@
                                                     $Total_Deductions = $a + $b + $c + $e;
                                                     ?>
                                                     <tr>
-                                                        <td><strong>Tax Deducted at Source (T.D.S.)</strong> <span
-                                                                class="float-right">${{ $users->tds }}</span></td>
+                                                        <td><strong>Tax Deducted at Source (T.D.S.)</strong> <span class="float-right">${{ $users->tds }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Provident Fund</strong> <span
-                                                                class="float-right">${{ $users->prof_tax }}</span>
-                                                        </td>
+                                                        <td><strong>Provident Fund</strong> <span class="float-right">${{ $users->prof_tax }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>ESI</strong> <span
-                                                                class="float-right">${{ $users->esi }}</span></td>
+                                                        <td><strong>ESI</strong> <span class="float-right">${{ $users->esi }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Loan</strong> <span
-                                                                class="float-right">${{ $users->labour_welfare }}</span>
-                                                        </td>
+                                                        <td><strong>Loan</strong> <span class="float-right">${{ $users->labour_welfare }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Total Deductions</strong> <span
-                                                                class="float-right"><strong>$<?php echo $Total_Deductions; ?></strong></span>
-                                                        </td>
+                                                        <td><strong>Total Deductions</strong> <span class="float-right"><strong>$<?php echo $Total_Deductions; ?></strong></span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <p><strong>Net Salary: ${{ $users->salary }}</strong> (Fifty nine thousand
-                                            six hundred and ninety eight only.)</p>
+                                        <p><strong>Net Salary: ${{ $users->salary }}</strong> (Fifty nine thousand six hundred and ninety eight only.)</p>
                                     </div>
                                 </div>
                             </div>
@@ -159,5 +136,5 @@
             <!-- /Page Content -->
         </div>
         <!-- /Page Wrapper -->
-
-    @endsection
+    </div>
+@endsection
