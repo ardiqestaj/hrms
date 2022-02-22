@@ -83,18 +83,34 @@
                                         <td>{{$day}}</td>
                                     @endfor
                                 </tr>
+                                
                             </thead>
                             <tbody>
-                                @forelse($final as $attend)
+                                @forelse($finale as $attend)
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
                                             <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
-                                            <a href="profile.html">{{ $attend['name'] }}</a>
+                                            <a href="profile.html">{{ $attend['name'] }} </a>
                                         </h2>
                                     </td>
 
+
                                   <?php 
+                                    $monthWorkingHrs = $attend['monthWorkingHrs'];
+                                    $monthAttendences = $attend['totalMonthProductivity'];
+                                    $monthMissedHrs = $attend['monthMissedHrs'];
+                                    $monthOvertimeHrs = $attend['monthOvertimeHrs'];
+
+
+
+                                    // dd($monthAttendences);
+
+
+                                    foreach ($attend['schedule'] as $sched) {
+                                        $workingHrsPerDay = $sched['hours'];
+                                    }
+
                                     for($i = 1; $i <= $daysInMonth; $i++){
                                         $value = strlen($i);
                                         if($value==1){
@@ -108,6 +124,7 @@
                                       $attendance_for_day = "<i class='fa fa-close text-danger'></i> ";
                                       $daysattendance = "";
                                       $daysattendance2 = "";
+                                      $totalMonthWorkDays = '';
                                       foreach($attend['attendance'] as $att){
                                         if($att['date'] == $make_date){
                                             
@@ -127,14 +144,14 @@
 
                                              // Overtime
                                              if(empty($att['overtime'])){
-                                                $overtime = "N/A";
+                                                $overtime = "0";
                                             }else {
                                                 $overtime = $att['overtime'];
                                             }
 
                                               // Missed Hours
                                             if(empty($att['missedhours'])){
-                                                $missedHrs = "N/A";
+                                                $missedHrs = "0";
                                             }else {
                                                 $missedHrs = $att['missedhours'];
                                             }
@@ -142,20 +159,37 @@
                                            $daysattendance = date('d F Y, h:i:s A', strtotime($att['timein']));
                                            $titleDate = date('d F Y', strtotime($att['date']));
 
+                                           if ($monthWorkingHrs > $monthAttendences){
+                                                $remainInMonth = ($monthWorkingHrs - $monthAttendences);
+                                           } else {
+                                            $remainInMonth = 0;
+                                           }
+                                        //    dd($remainInMonth);
+
+
+
+
                                            $attendance_for_day = '<div class="modalParent"> 
                                             <div hidden class="takeInfo">'  . $daysattendance . '</div>
                                             <div hidden class="takeInfo2">' . $daysattendance2 .  '</div>
                                             <div hidden class="takeInfo3">' . $titleDate . '</div>
-                                            <div hidden class="takeInfo4">' . $totHrs .' <small>hrs</small>'. '</div>
+                                            <div hidden class="takeInfo4">' . $totHrs . '</div>
                                             <div hidden class="takeInfo5">' . $overtime .' <small>hrs</small>'. '</div>
                                             <div hidden class="takeInfo6">' . $missedHrs .' <small>hrs</small>'. '</div>
+                                            <div hidden class="takeInfo7">' . $monthWorkingHrs . '</div>
+                                            <div hidden class="takeInfo8">' . $workingHrsPerDay . '</div>
+                                            <div hidden class="takeInfo9">' . $monthAttendences . '</div>
+                                            <div hidden class="takeInfo11">' . $monthMissedHrs . '</div>
+                                            <div hidden class="takeInfo12">' . $monthOvertimeHrs . '</div>
+                                            <div hidden class="takeInfo13">' . $remainInMonth . '</div>
                                             <a href="javascript:void(0);" class="adminattendancebtn" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></div>';
+
                                         } 
                                       } 
                                   ?>
-
                                   <td><?php echo $attendance_for_day; ?> </td>
                                   <?php }?>
+                                  
                                 </tr>
                                 @empty
                                 <tr><td>No Employees to show</td></tr>
@@ -205,7 +239,6 @@
                                             <p class="bringInfo2"></p>
                                         </div>
                                         
-
                                         <div class="statistics">
                                             <div class="row">
                                                 <div class="col-md-6 col-6 text-center">
@@ -234,60 +267,40 @@
                                         <div class="stats-list">
                                             <div class="stats-info">
                                                 <p>Today <strong>
-                                                    {{-- @foreach ($todayAttendances as $key=>$attend)
-                                                    @isset($attend->totalhours)
-                                                    @if($attend->totalhours != null) 
-                                                        @php
-                                                            if(stripos($attend->totalhours, ".") === false) {
-                                                                $h = $attend->totalhours;
-                                                            } else {
-                                                                $HM = explode('.', $attend->totalhours); 
-                                                                $h = $HM[0]; 
-                                                                $m = $HM[1];
-                                                            } 
-                                                        @endphp
-                                                    @endif 
-                                                    @if($attend->totalhours != NULL)
-                                                        @if(stripos($attend->totalhours, ".") === false) 
-                                                            {{ $h }} hr
-                                                        @else 
-                                                            {{ $h }} hr {{ $m }} mins
-                                                        @endif 
-                                                    @endif
-                                                    @else --
-                                                    @endisset 
-                                                    @endforeach --}}
-
-                                                <small><strong> <span class="bringInfo4"></span></strong> / 8 hrs</small></strong></p>
+                                                    <small><strong> <span class="bringInfo4"></span></strong> /<span class="bringInfo8"></span> hrs</small></strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
-                                                        aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        aria-valuenow="25%" aria-valuemin="0" aria-valuemax=""></div>
                                                 </div>
                                             </div>
                                         
                                             <div class="stats-info">
-                                                <p>This Month <strong>{{$monthAttendances->sum('totalhours')}} <small>/ {{$monthWorkingHrs}} hrs</small></strong></p>
+                                                <p>This Month <strong>
+                                                    <small><strong> <span class="bringInfo9"></span></strong> /<span class="bringInfo7"></span> hrs</small></strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg"
                                                         aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
-                                                <p>Remaining this Month<strong>{{$monthWorkingHrs - $monthAttendances->sum('totalhours')}} <small> hrs</small></strong></p>
+                                                <p>Remaining this Month<strong> 
+                                                    <small><strong><span class="bringInfo13"></span> hrs</small></strong> </strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth"
                                                         aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
-                                                <p>Missed Hours this Month<strong>{{$monthAttendances->sum('missedhours')}} <small>  hrs</small></strong></p>
+                                                <p>Missed Hours this Month<strong>
+                                                    <small><strong><span class="bringInfo11"></span> hrs</small></strong> </strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
                                                         aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
-                                                <p>Overtime this Month<strong>{{$monthAttendances->sum('overtime')}} <small>  hrs</small></strong></p>
+                                                <p>Overtime this Month<strong>
+                                                    <small><strong><span class="bringInfo12"></span> hrs</small></strong> </strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-info" role="progressbar" id="overtime"
                                                         aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
@@ -316,19 +329,37 @@
             $('.bringInfo4').text(_this.find('.takeInfo4').text());
             $('.bringInfo5').text(_this.find('.takeInfo5').text());
             $('.bringInfo6').text(_this.find('.takeInfo6').text());
+            $('.bringInfo7').text(_this.find('.takeInfo7').text());
+            $('.bringInfo8').text(_this.find('.takeInfo8').text());
+            $('.bringInfo9').text(_this.find('.takeInfo9').text());
+            $('.bringInfo10').text(_this.find('.takeInfo10').text());
+            $('.bringInfo11').text(_this.find('.takeInfo11').text());
+            $('.bringInfo12').text(_this.find('.takeInfo12').text());
+            $('.bringInfo13').text(_this.find('.takeInfo13').text());
+
+
+            var thisDay = _this.find('.takeInfo4').text();
+            var totDay = _this.find('.takeInfo8').text();
+
+            var thisMonth = _this.find('.takeInfo9').text();
+            var totMonth = _this.find('.takeInfo7').text();
+
+            var remainMonth = _this.find('.takeInfo13').text();
+
+            var missedHrs = _this.find('.takeInfo11').text();
+            var overtimeHrs = _this.find('.takeInfo12').text();
+
+            document.getElementById("todayPrg").style.width = 100*thisDay/totDay + "%";
+            document.getElementById("todayPrg").setAttribute('aria-valuemax', totDay);
+
+            document.getElementById("thismonthPrg").style.width = 100*thisMonth/totMonth + "%";
+            document.getElementById("thismonthPrg").setAttribute('aria-valuemax', totMonth);
+
+            document.getElementById("remainthismonth").style.width = remainMonth + "%";
+            document.getElementById("remainthismonth").setAttribute('aria-valuemax', totMonth);
+
+            document.getElementById("missedHrs").style.width = missedHrs + "%";
+            document.getElementById("overtime").style.width = overtimeHrs + "%";
         });
-
-        var productionHrs = '{{$monthAttendances->sum('totalhours')}}';
-        // {{-- var scheduledHrs = '{{$schedules->hours}}';--}}
-        var totalMonthHrs = '{{$monthWorkingHrs}}';
-        var remainingThisMonth = '{{$monthWorkingHrs - $monthAttendances->sum('totalhours')}}';
-        var missedHrs = '{{$monthAttendances->sum('missedhours')}}';
-        var overtime = '{{$monthAttendances->sum('overtime')}}';
-
-        // {{-- document.getElementById("todayPrg").style.width = (productionHrs/scheduledHrs)*100 + "%"; --}}
-        document.getElementById("thismonthPrg").style.width = 100*(productionHrs/totalMonthHrs) + "%";
-        document.getElementById("remainthismonth").style.width = totalMonthHrs-productionHrs + "%";
-        document.getElementById("missedHrs").style.width = missedHrs + "%";
-        document.getElementById("overtime").style.width = overtime + "%";
     </script>
 @endsection
