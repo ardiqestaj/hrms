@@ -34,14 +34,20 @@ class HomeController extends Controller
     {
         // $employees= Employee::all();
         $locations = Location::all();
-        $clients = Client::all();
+        $clients = Client::take(6)->get();
+        $clientsCount = Client::all();
+
 
         $employees = DB::table('employees')
                         ->join('departments', 'employees.department', '=', 'departments.id')
                         ->select('employees.*', 'departments.department as dep')
-                        ->get();
+                        ->take(6)->get();
+        $employeesCount = DB::table('employees')
+        ->join('departments', 'employees.department', '=', 'departments.id')
+        ->select('employees.*', 'departments.department as dep')
+        ->get();
         $department = Department::all();
-        return view('dashboard.dashboard', compact('employees', 'locations', 'clients'));
+        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients'));
     }
 
 

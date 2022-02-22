@@ -35,7 +35,9 @@ class TimeClockController extends Controller
 
 
         // Schedule Table
-        $schedules = DB::table('schedules')->where('idno', $i)->first();
+        $schedules = DB::table('assignment_employees')
+                        ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')      
+                        ->where('assignment_employees.employee_id', $i)->first();
         $workingHrs = $schedules->hours;
         $restDays = $schedules->restday;
         $days = explode(', ', $restDays);
@@ -299,8 +301,17 @@ class TimeClockController extends Controller
 
                 } else {
 
-                    $sched_in_time = DB::table('schedules')->where([['idno', $idno], ['archive', 0]])->value('intime');
+                    // DB::table('assignment_employees')
+                    //     ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')      
+                    //     ->where('assignment_employees.employee_id', $i)->first();
 
+                    $sched_in_time = DB::table('assignment_employees')
+                                     ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')  
+                                    //  ->where('schedules.archive', 0)
+                                     ->where('assignment_employees.employee_id', $idno)->value('schedules.intime');
+                    
+                    // DB::table('schedules')->where([['idno', $idno], ['archive', 0]])->value('intime');
+                    
                     if($sched_in_time == NULL)
                     {
                         $status_in = "Ok";
@@ -380,9 +391,17 @@ class TimeClockController extends Controller
                 ]);
 
             } else {
-                $sched_out_time = DB::table('schedules')->where([['idno', $idno], ['archive', 0]])->value('outime');
+                $sched_out_time = DB::table('assignment_employees')
+                                ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')  
+                            //  ->where('schedules.archive', 0)
+                                ->where('assignment_employees.employee_id', $idno)->value('schedules.intime');
 
-                if($sched_out_time == NULL)
+                
+                
+                
+                // DB::table('schedules')->where([['idno', $idno], ['archive', 0]])->value('outime');
+                
+                if($sched_out_time == NULL) 
                 {
                     $status_out = "Ok";
                 } else {
@@ -404,7 +423,13 @@ class TimeClockController extends Controller
                 $totalhour = $th.".".$tm;
 
 
-                $scheduless = DB::table('schedules')->where('idno', $idno)->first();
+                $scheduless =DB::table('assignment_employees')
+                ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')  
+                ->where('assignment_employees.employee_id', $idno)->first();
+                
+                
+                
+                // DB::table('schedules')->where('idno', $idno)->first();
                 $overtime = '';
                 if ($scheduless->hours < $totalhour) {
                     $overtime = ($totalhour - $scheduless->hours);
@@ -461,7 +486,11 @@ class TimeClockController extends Controller
 
 
         // Schedule Table
-        $schedules = DB::table('schedules')->where('idno', $i)->first();
+        $schedules = DB::table('assignment_employees')
+        ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')      
+        ->where('assignment_employees.employee_id', $i)->first();
+        
+        // DB::table('schedules')->where('idno', $i)->first();
         $workingHrs = $schedules->hours;
         $restDays = $schedules->restday;
         $days = explode(', ', $restDays);
@@ -682,5 +711,5 @@ class TimeClockController extends Controller
             return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'year', 'month', 'now', 'date'));
          }
 
-     }
+     
 }

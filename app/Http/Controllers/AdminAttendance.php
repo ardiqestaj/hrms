@@ -42,7 +42,10 @@ class AdminAttendance extends Controller
     $attendances = TimeClock::whereBetween('date', [$startOfMonth, $now])->get();
     $todayAttendances = DB::table('time_clocks')->where('date', Carbon::today())->get();
 
-    $schedules = DB::table('schedules')->select('idno', 'hours', 'restday')->get();
+    $schedules = DB::table('assignment_employees')
+                ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')  
+                ->select('employee_id', 'idno', 'hours', 'restday')->get();
+    //  DB::table('schedules')->select('idno', 'hours', 'restday')->get();
 
     $monthHolidays = Holiday::where('date_holiday', '>', Carbon::now()->startOfMonth())->where('date_holiday', '<', Carbon::now()->endOfMonth())->get();
     $monthHolidaysNo = count($monthHolidays);
@@ -92,7 +95,7 @@ class AdminAttendance extends Controller
             // Schedules
         foreach($schedules as $schedule)
         {
-            if($schedule->idno == $user->rec_id)
+            if($schedule->employee_id == $user->rec_id)
             {
                 $schedule_2['hours'] = $schedule->hours;
                 $schedule_2['restday'] = $schedule->restday;

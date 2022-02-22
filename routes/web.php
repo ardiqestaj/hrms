@@ -18,6 +18,8 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\TimeClockController;
 use App\Http\Controllers\LocationTypeWorkController;
 use App\Http\Controllers\FindEmployees;
+use App\Http\Controllers\EventController;
+
 
 
 
@@ -258,4 +260,13 @@ Route::get('attendance/page', [App\Http\Controllers\AdminAttendance::class, 'Adm
 Route::post('attendance/page/search', [App\Http\Controllers\AdminAttendance::class, 'attSearch'])->middleware('auth')->name('attendance/page/search');
 
 
+// ---------------------------------- App--------------------------------------------------------//
+// Route::get('/show-event-calendar', [EventController::class, 'index']);
+// Route::post('/manage-events', [EventController::class, 'manageEvents']);
+// Route::get('ckeditor', [EventController::class, 'index']);
+// Route::post('fullcalendar/create', [EventController::class, 'create']);
+// Route::post('fullcalendar/update', [EventController::class, 'update']);
+// Route::post('fullcalendar/delete', [EventController::class, 'destroy']);
 
+Route::get('fullcalender', [EventController::class, 'index']);
+Route::post('fullcalenderAjax', [EventController::class, 'ajax']);

@@ -87,7 +87,7 @@ class PayrollController extends Controller
         //         ->select('users.*','profile_information.*')
         //         ->where('=.rec_id',$rec_id)
         //         ->first();
-        return view('payroll.salaryview',compact('users'));
+        return view('payroll.salaryview', compact('users'));
     }
 
     // update record
