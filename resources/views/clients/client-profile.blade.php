@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     {{-- message --}}
     {!! Toastr::message() !!}
 
@@ -16,7 +15,7 @@
                     <div class="col-sm-12">
                         <h3 class="page-title">Cilents</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Profile</li>
                         </ul>
                     </div>
@@ -257,7 +256,7 @@
                                                         <a class="dropdown-item locationDelete" href="#" data-toggle="modal" data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
-                                                <h4 class="project-title text-xl text-center"><a href="{{ url('location/locations/profile/' . $cli->id) }}">{{ $cli->location_name }}</a></h4>
+                                                <h4 class="project-title text-xl"><a href="{{ url('location/locations/profile/' . $cli->id) }}">{{ $cli->location_name }} <i class="las la-external-link-alt"></i></a></h4>
                                                 <small class="block text-ellipsis m-b-15">
                                                     <span class="text-xs text-muted">Location address: {{ $cli->location_address }} </span>
                                                 </small>

@@ -60,10 +60,10 @@ class TimeClockController extends Controller
         $monthLeaves = LeavesEvidence::select('from_date', 'to_date')
                         ->where('rec_id', Auth::user()->rec_id)
                         ->where('status', 'Approved')
-                        ->get();  
+                        ->get();
         $monthLeavesCount = count($monthLeaves);
 
-    
+
         // Function to display all reccurring days in a month
         function workingDays($startDate, $totalDays)
         {
@@ -72,7 +72,7 @@ class TimeClockController extends Controller
             $month = $date_array[1];
             $year = $date_array[2];
             $working_date = array();
-    
+
             for ($p = 0; $p < $totalDays; $p++) {
                 $working_date[] = date('l', mktime(0, 0, 0, $month, $day +(int)$p, $year));
             }
@@ -91,7 +91,7 @@ class TimeClockController extends Controller
                 foreach ($period as $date) {
                     $date->format('l');
                 }
-                $dates[] = $period->toArray(); 
+                $dates[] = $period->toArray();
             }
         return $dates;
         }
@@ -99,7 +99,7 @@ class TimeClockController extends Controller
 
         foreach($daysThroughLeaves as $restDa){
             foreach ($restDa as $leave[]) {
-            
+
             }
         }
         $totalLeavesOfMonth = count($leave);
@@ -156,9 +156,9 @@ class TimeClockController extends Controller
         return $totalMonthHolidays;
         }
         $allCurrentLeavesOfMonth = countDayOverleap7($leave);
-                
 
-        
+
+
         //Number of  Leaves that are also rest Days
         function countDayOverleap3($tableVar, $restD){
             $totalMonthHolidays = 0;
@@ -178,7 +178,7 @@ class TimeClockController extends Controller
         $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
 
 
-        //Number of Leaves that are also holidays 
+        //Number of Leaves that are also holidays
         function countDayOverleap5($tableVar, $restD){
             $totalMonthHolidays = 0;
             foreach ($restD as $day) {
@@ -208,14 +208,14 @@ class TimeClockController extends Controller
     public function add(Request $request)
     {
 
-        if ($request->idno == NULL || $request->type == NULL) 
+        if ($request->idno == NULL || $request->type == NULL)
         {
             return response()->json([
                 "error" => trans("Please enter your ID.")
             ]);
         }
 
-        if(strlen($request->idno) >= 20 || strlen($request->type) >= 20) 
+        if(strlen($request->idno) >= 20 || strlen($request->type) >= 20)
         {
             return response()->json([
                 "error" => trans("Invalid Employee ID.")
@@ -234,9 +234,9 @@ class TimeClockController extends Controller
         $tf = DB::table('clock_time_settings')->value('time_format');
         $time_val = ($tf == 1) ? $time : date("H:i:s", strtotime($time)) ;
 
-        if ($clock_comment == "on") 
+        if ($clock_comment == "on")
         {
-            if ($comment == NULL) 
+            if ($comment == NULL)
             {
                 return response()->json([
                     "error" => trans("Please provide your comment!")
@@ -246,18 +246,18 @@ class TimeClockController extends Controller
 
         // ip resriction
         $iprestriction = DB::table('clock_time_settings')->value('iprestriction');
-        if ($iprestriction != NULL) 
+        if ($iprestriction != NULL)
         {
             $ips = explode(",", $iprestriction);
 
-            if(in_array($ip, $ips) == false) 
+            if(in_array($ip, $ips) == false)
             {
                 $msge = trans("Whoops! You are not allowed to Clock In or Out from your IP address")." ".$ip;
                 return response()->json([
                     "error" => $msge,
                 ]);
             }
-        } 
+        }
 
 
         $employee_id = DB::table('employees')->where('employee_id', $idno)->value('employee_id');
@@ -273,11 +273,11 @@ class TimeClockController extends Controller
         $mi = $emp->username;
         $employee = mb_strtoupper($lastname.', '.$firstname.' '.$mi);
 
-        if ($type == 'timein') 
+        if ($type == 'timein')
         {
             $has = DB::table('time_clocks')->where([['idno', $idno],['date', $date]])->exists();
 
-            if ($has == 1) 
+            if ($has == 1)
             {
                 $hti = DB::table('time_clocks')->where([['idno', $idno],['date', $date]])->value('timein');
                 $hti = date('h:i A', strtotime($hti));
@@ -300,7 +300,7 @@ class TimeClockController extends Controller
                 } else {
 
                     $sched_in_time = DB::table('schedules')->where([['idno', $idno], ['archive', 0]])->value('intime');
-                    
+
                     if($sched_in_time == NULL)
                     {
                         $status_in = "Ok";
@@ -308,7 +308,7 @@ class TimeClockController extends Controller
                         $sched_clock_in_time_24h = date("H.i", strtotime($sched_in_time));
                         $time_in_24h = date("H.i", strtotime($time));
 
-                        if ($time_in_24h <= $sched_clock_in_time_24h) 
+                        if ($time_in_24h <= $sched_clock_in_time_24h)
                         {
                             $status_in = 'In Time';
                         } else {
@@ -316,7 +316,7 @@ class TimeClockController extends Controller
                         }
                     }
 
-                    if($clock_comment == "on" && $comment != NULL) 
+                    if($clock_comment == "on" && $comment != NULL)
                     {
                         DB::table('time_clocks')->insert([
                             [
@@ -353,22 +353,22 @@ class TimeClockController extends Controller
                 }
             }
         }
-  
-        if ($type == 'timeout') 
+
+        if ($type == 'timeout')
         {
             $timeIN = DB::table('time_clocks')->where([['idno', $idno], ['timeout', NULL]])->value('timein');
             $clockInDate = DB::table('time_clocks')->where([['idno', $idno],['timeout', NULL]])->value('date');
             $hasout = DB::table('time_clocks')->where([['idno', $idno],['date', $date]])->value('timeout');
             $timeOUT = date("Y-m-d h:i:s A", strtotime($date." ".$time));
 
-            if($timeIN == NULL) 
+            if($timeIN == NULL)
             {
                 return response()->json([
                     "error" => trans("Please Clock In before Clocking Out.")
                 ]);
-            } 
+            }
 
-            if ($hasout != NULL) 
+            if ($hasout != NULL)
             {
                 $hto = DB::table('time_clocks')->where([['idno', $idno],['date', $date]])->value('timeout');
                 $hto = date('h:i A', strtotime($hto));
@@ -381,15 +381,15 @@ class TimeClockController extends Controller
 
             } else {
                 $sched_out_time = DB::table('schedules')->where([['idno', $idno], ['archive', 0]])->value('outime');
-                
-                if($sched_out_time == NULL) 
+
+                if($sched_out_time == NULL)
                 {
                     $status_out = "Ok";
                 } else {
                     $sched_clock_out_time_24h = date("H.i", strtotime($sched_out_time));
                     $time_out_24h = date("H.i", strtotime($timeOUT));
-                    
-                    if($time_out_24h >= $sched_clock_out_time_24h) 
+
+                    if($time_out_24h >= $sched_clock_out_time_24h)
                     {
                         $status_out = 'On Time';
                     } else {
@@ -397,8 +397,8 @@ class TimeClockController extends Controller
                     }
                 }
 
-                $time1 = Carbon::createFromFormat("Y-m-d h:i:s A", $timeIN); 
-                $time2 = Carbon::createFromFormat("Y-m-d h:i:s A", $timeOUT); 
+                $time1 = Carbon::createFromFormat("Y-m-d h:i:s A", $timeIN);
+                $time2 = Carbon::createFromFormat("Y-m-d h:i:s A", $timeOUT);
                 $th = $time1->diffInHours($time2);
                 $tm = floor(($time1->diffInMinutes($time2) - (60 * $th)));
                 $totalhour = $th.".".$tm;
@@ -426,10 +426,10 @@ class TimeClockController extends Controller
                     'missedhours' => $missedhours,
                     'status_timeout' => $status_out)
                 );
-                
+
                 return response()->json([
                     "type" => $type,
-                    "time" => $time_val, 
+                    "time" => $time_val,
                     "date" => $date,
                     "lastname" => $lastname,
                     "firstname" => $firstname,
@@ -486,10 +486,10 @@ class TimeClockController extends Controller
         $monthLeaves = LeavesEvidence::select('from_date', 'to_date')
                         ->where('rec_id', Auth::user()->rec_id)
                         ->where('status', 'Approved')
-                        ->get();  
+                        ->get();
         $monthLeavesCount = count($monthLeaves);
 
-    
+
         // Function to display all reccurring days in a month
         function workingDays($startDate, $totalDays)
         {
@@ -498,7 +498,7 @@ class TimeClockController extends Controller
             $month = $date_array[1];
             $year = $date_array[2];
             $working_date = array();
-    
+
             for ($p = 0; $p < $totalDays; $p++) {
                 $working_date[] = date('l', mktime(0, 0, 0, $month, $day +(int)$p, $year));
             }
@@ -517,7 +517,7 @@ class TimeClockController extends Controller
                 foreach ($period as $date) {
                     $date->format('l');
                 }
-                $dates[] = $period->toArray(); 
+                $dates[] = $period->toArray();
             }
         return $dates;
         }
@@ -525,7 +525,7 @@ class TimeClockController extends Controller
 
         foreach($daysThroughLeaves as $restDa){
             foreach ($restDa as $leave[]) {
-            
+
             }
         }
         $totalLeavesOfMonth = count($leave);
@@ -555,10 +555,13 @@ class TimeClockController extends Controller
             $totalMonthHolidays = 0;
             foreach ($restD as $day) {
                 foreach ($tableVar as $var) {
-                    if (date('l', strtotime($var)) == $day) {
-                        $sum = 1;
-                    } else {
-                        $sum = 0;
+                    foreach ($var as $v)
+                    dd($v);
+                        if (date('l', strtotime($v)) == $day) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
                     }
                 $totalMonthHolidays += $sum;
                 }
@@ -582,9 +585,9 @@ class TimeClockController extends Controller
         return $totalMonthHolidays;
         }
         $allCurrentLeavesOfMonth = countDayOverleap7($leave);
-                
 
-        
+
+
         //Number of  Leaves that are also rest Days
         function countDayOverleap3($tableVar, $restD){
             $totalMonthHolidays = 0;
@@ -604,7 +607,7 @@ class TimeClockController extends Controller
         $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
 
 
-        //Number of Leaves that are also holidays 
+        //Number of Leaves that are also holidays
         function countDayOverleap5($tableVar, $restD){
             $totalMonthHolidays = 0;
             foreach ($restD as $day) {
@@ -631,14 +634,14 @@ class TimeClockController extends Controller
         // $date  = $request->date;
         // $month = $request->month;
 
-        
+
         // $date  =  $request->date;
         $year  =  $request->year;
         $month =  $request->month;
         $date = Carbon::parse($request->date)->format('Y-m-d');
         // $date;
 
-       
+
 
         // search by month
         if($request->month)
@@ -655,7 +658,7 @@ class TimeClockController extends Controller
             ->where('date','LIKE','%'.$year.'%')
             ->get();
         }
- 
+
         // search by year and month
         if($request->month && $request->year)
         {
@@ -672,7 +675,7 @@ class TimeClockController extends Controller
         //      ->where('date','LIKE','%'.$date.'%')
         //      ->get();
         //  }
- 
+
         // $now = Carbon::now();
 
             //  return normal view
