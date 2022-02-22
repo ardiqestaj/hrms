@@ -28,7 +28,6 @@ class FindEmployees extends Controller
                     ->get();
 
 
-        // $schedRestDays = preg_split('/\s+/', $location_type_work->restday);
         $employees = Employee::select('employee_id', 'name', 'restdays')
                     ->where('employees.department', 'LIKE', '%'.$location_type_work->type_work_id.'%')
                     ->get();
