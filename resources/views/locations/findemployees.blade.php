@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     {{-- message --}}
     {!! Toastr::message() !!}
 
@@ -16,8 +15,10 @@
                     <div class="col-sm-12">
                         <h3 class="page-title">Manage Employees on this dapartement </h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Profile</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('clients/clients') }}">Clients</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url()->previous() }}">Client Location</a></li>
+                            <li class="breadcrumb-item active">Menage Department</li>
                         </ul>
                     </div>
                 </div>
@@ -122,19 +123,17 @@
                                 <div class="col-lg-5 col-sm-5">
                                     <select name="customleave_from" id="customleave_select" class="form-control" size="{{ count($finale) }}" multiple="multiple">
                                         @if (isset($finale))
-                                            
                                             @foreach ($finale as $employee)
-                                                <option value="{{ $employee['employee_id'] }}">{{ $employee['name']}} 
-                                                    {{-- {{ $employee->lastname }} -
-                                                    <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span> --}}
+                                                <option value="{{ $employee['employee_id'] }}">{{ $employee['name'] }} {{ $employee['lastname'] }} -
+                                                    <span style="color: blue;" id="text-muted-employees">{{ $employee['time_start'] }} - {{ $employee['time_end'] }} / {{ $employee['restdays'] }}</span>
 
                                                 </option>
                                             @endforeach
 
-                                            @else
-                                            <option value="">NO EMPLOYEES 
-                                                {{-- {{ $employee->lastname }} -
-                                                <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span> --}}
+                                        @else
+                                            <option value="">NO EMPLOYEES
+                                                {{ $employee->lastname }} -
+                                                <span style="color: blue;" id="text-muted-employees">{{ $employee->time_start }} - {{ $employee->time_end }} / {{ $employee->restdays }}</span>
 
                                             </option>
                                         @endif

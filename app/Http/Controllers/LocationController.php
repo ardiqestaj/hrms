@@ -39,7 +39,12 @@ class LocationController extends Controller
                         ->select('location_type_works.number_of_employees','location_type_works.location_id', 'location_type_works.location_type_work_id as tid', 'departments.department', 'departments.id as did', 'schedules.*')
                         ->where('location_id',$id)->get();
 
-        return view('locations.locationprofile', compact('locations', 'departments', 'locations_types', 'billings'));
+        $assignments = DB::table('assignment_employees')
+                        ->join('users', 'users.rec_id', '=', 'assignment_employees.employee_id')
+                        ->select('assignment_employees.*', 'users.avatar', 'users.name')
+                        ->get();
+        // dd($assignments);
+        return view('locations.locationprofile', compact('locations', 'departments', 'locations_types', 'billings', 'assignments'));
 
         //
     }

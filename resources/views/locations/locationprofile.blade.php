@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     {{-- message --}}
     {!! Toastr::message() !!}
 
@@ -14,10 +13,11 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3 class="page-title">Profile</h3>
+                        <h3 class="page-title">Client Location</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Profile</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('clients/clients') }}">Clients</a></li>
+                            <li class="breadcrumb-item active">Client Location</li>
                         </ul>
                     </div>
                 </div>
@@ -245,7 +245,7 @@
                                                             Delete</a>
                                                     </div>
                                                 </div>
-                                                <h4 class="project-title"><a href="project-view.html">{{ $locations_type->department }}</a>
+                                                <h4 class="project-title">{{ $locations_type->department }}
                                                 </h4>
                                                 <small class="block text-ellipsis m-b-15">
                                                     <span class="text-xs">{{ $locations_type->number_of_employees }}</span>
@@ -285,10 +285,18 @@
                                                 <div class="project-members m-b-15">
                                                     <div>Employees:</div>
                                                     <ul class="team-members">
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
-                                                        </li>
-                                                        <li>
+                                                        <div hidden>{{ $a = 0 }}</div>
+                                                        @foreach ($assignments as $assignment)
+                                                            @if ($assignment->location_type_work_id == $locations_type->tid)
+                                                                <li>
+                                                                    <a href="#" data-toggle="tooltip" title="{{ $assignment->name }}"><img alt="" src="{{ URL::to('/assets/images/' . $assignment->avatar) }}"></a>
+                                                                </li>
+                                                                <div hidden>{{ $a++ }}</div>
+                                                            @endif
+                                                        @endforeach
+
+
+                                                        {{-- <li>
                                                             <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
                                                         </li>
                                                         <li>
@@ -296,15 +304,18 @@
                                                         </li>
                                                         <li>
                                                             <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
-                                                        </li>
+                                                        </li> --}}
                                                         <li class="dropdown avatar-dropdown">
-                                                            <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+15</a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <div class="avatar-group">
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt="" src="assets/img/profiles/avatar-02.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
+                                                            <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ $a }}</a>
+                                                            {{-- <div class="dropdown-menu dropdown-menu-right">
+                                                                    <div class="avatar-group">
+                                                                        @foreach ($assignments as $assignment)
+                                                                            <a class="avatar avatar-xs" href="#">
+                                                                                <img alt="" src="{{ URL::to('/assets/images/' . $assignment->avatar) }}">
+                                                                            </a>
+                                                                        @endforeach --}}
+
+                                                            {{-- <a class="avatar avatar-xs" href="#">
                                                                         <img alt="" src="assets/img/profiles/avatar-09.jpg">
                                                                     </a>
                                                                     <a class="avatar avatar-xs" href="#">
@@ -327,34 +338,38 @@
                                                                     </a>
                                                                     <a class="avatar avatar-xs" href="#">
                                                                         <img alt="" src="assets/img/profiles/avatar-16.jpg">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="avatar-pagination">
-                                                                    <ul class="pagination">
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="#" aria-label="Previous">
-                                                                                <span aria-hidden="true">«</span>
-                                                                                <span class="sr-only">Previous</span>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="#" aria-label="Next">
-                                                                                <span aria-hidden="true">»</span>
-                                                                                <span class="sr-only">Next</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
+                                                                    </a> --}}
+                                                            {{-- </div> --}}
+                                                            {{-- <div class="avatar-pagination">
+                                                                        <ul class="pagination">
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="#" aria-label="Previous">
+                                                                                    <span aria-hidden="true">«</span>
+                                                                                    <span class="sr-only">Previous</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="#" aria-label="Next">
+                                                                                    <span aria-hidden="true">»</span>
+                                                                                    <span class="sr-only">Next</span>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div> --}}
+                                                            {{-- </div> --}}
                                                         </li>
+
                                                     </ul>
                                                 </div>
-                                                <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+                                                <p class="m-b-5">Progress <span class="text-success float-right">{{ $a }}/{{ $locations_type->number_of_employees }}</span></p>
                                                 <div class="progress progress-xs mb-0">
-                                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
+                                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" aria-valuemin="0" aria-valuemax="{{ $locations_type->number_of_employees }}" style="width: {{ $a * (100 / $locations_type->number_of_employees) }}%"></div>
                                                 </div>
+                                                {{-- <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{ $locations_type->number_of_employees }}" style="width: {{ $a * (100 / $locations_type->number_of_employees) }}%"></div>
+                                                </div> --}}
                                                 <div class="project-members m-b-10 m-t-15">
                                                     <h4 class="project-title"><a class="dropdown-item" href="{{ url('location/profile/find/' . $locations_type->tid) }}"><i style="font-size: 20px" class="las la-search-plus"></i>
                                                             Find Employees</a>

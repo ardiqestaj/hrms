@@ -73,11 +73,11 @@ class UserController extends Controller
             'department'        => $request->department,
             'payment_method'    => $request->payment_method,
             'restdays'            => $restdays,
-            'time_start'        => $request->time_start,
-            'time_end'          => $request->time_end,
+            'time_start'        => date("h:i A", strtotime($request->time_start)),
+            'time_end'          => date("h:i A", strtotime($request->time_end)),
             'restdays_opt'        => $restdays_opt,
-            'time_start_opt'    => $request->time_start_opt,
-            'time_end_opt'      => $request->time_end_opt,
+            'time_start_opt'    => date("h:i A", strtotime($request->time_start_opt)),
+            'time_end_opt'      => date("h:i A", strtotime($request->time_end_opt)),
         ]);
 
         ProfileInformation::create([
