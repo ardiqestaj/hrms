@@ -439,7 +439,7 @@
     <script>
         $(document).ready(function() {
             $('.select2s-hidden-accessible').select2({
-                closeOnSelect: false
+                // closeOnSelect: false
             });
         });
     </script>

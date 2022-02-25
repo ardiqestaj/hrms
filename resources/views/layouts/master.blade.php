@@ -112,7 +112,7 @@
     <script>
 
         var timezone = "@isset($tz){{ $tz }}@endisset";
-   
+
     </script>
 
     @yield('script')
