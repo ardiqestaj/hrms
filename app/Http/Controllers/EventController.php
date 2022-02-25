@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CalendarEvent;
+use App\Models\Holiday;
 use Redirect,Response;
 use App\Http\Requests;
 
@@ -21,11 +22,18 @@ class EventController extends Controller
   
         if($request->ajax()) {
        
-             $data = CalendarEvent::whereDate('start', '>=', $request->start)
+             $data1 = CalendarEvent::whereDate('start', '>=', $request->start)
                        ->whereDate('end',   '<=', $request->end)
                        ->get(['id', 'title', 'start', 'end']);
-  
-             return response()->json($data);
+
+            $data2 = Holiday::whereDate('start', '>=', $request->start)
+            ->whereDate('end',   '<=', $request->end)
+            ->get(['id', 'title', 'start', 'end']);
+
+            $data=$data1->merge($data2);
+
+            return response()->json($data);
+
         }
   
         return view('app/calendar_events');

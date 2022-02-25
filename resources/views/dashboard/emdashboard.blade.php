@@ -158,21 +158,9 @@
                             <h5 class="dash-title">Projects</h5>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="time-list">
-                                        <div class="dash-stats-list">
-                                            <h4>71</h4>
-                                            <p>Total Tasks</p>
-                                        </div>
-                                        <div class="dash-stats-list">
-                                            <h4>14</h4>
-                                            <p>Pending Tasks</p>
-                                        </div>
-                                    </div>
-                                    <div class="request-btn">
-                                        <div class="dash-stats-list">
-                                            <h4>2</h4>
-                                            <p>Total Projects</p>
-                                        </div>
+                                    <div id='calendar'></div>
+                                    <div class="request-btn mt-4">
+                                        <a class="btn btn-primary" href="{{ url('fullcalender') }}">View Calendar</a>
                                     </div>
                                 </div>
                             </div>
@@ -183,16 +171,16 @@
                                 <div class="card-body">
                                     <div class="time-list">
                                         <div class="dash-stats-list">
-                                            <h4>4.5</h4>
+                                            <h4>{{$LeavesEvidence->where('status', 'Approved')->sum('day')}}</h4>
                                             <p>Leave Taken</p>
                                         </div>
                                         <div class="dash-stats-list">
-                                            <h4>12</h4>
+                                            <h4>{{$LeaveTypes->sum('leave_days') - $LeavesEvidence->where('status', 'Approved')->sum('day')}}</h4>
                                             <p>Remaining</p>
                                         </div>
                                     </div>
                                     <div class="request-btn">
-                                        <a class="btn btn-primary" href="#">Apply Leave</a>
+                                        <a class="btn btn-primary" href="{{ url('form/leavesemployee/new') }}">Apply Leave</a>
                                     </div>
                                 </div>
                             </div>
@@ -232,4 +220,105 @@
         <!-- /Page Content -->
     </div>
     <!-- /Page Wrapper -->  
+
+    <script>
+        $(document).ready(function() {
+
+            var SITEURL = "{{ url('/') }}";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var calendar = $('#calendar').fullCalendar({
+                editable: true,
+                events: SITEURL + "/fullcalender",
+                displayEventTime: false,
+                editable: true,
+                eventRender: function(event, element, view) {
+                    if (event.allDay === 'true') {
+                        event.allDay = true;
+                    } else {
+                        event.allDay = false;
+                    }
+                },
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end, allDay) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
+                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
+                        $.ajax({
+                            url: SITEURL + "/fullcalenderAjax",
+                            data: {
+                                title: title,
+                                start: start,
+                                end: end,
+                                type: 'add'
+                            },
+                            type: "POST",
+                            success: function(data) {
+                                displayMessage("Event Created Successfully");
+
+                                calendar.fullCalendar('renderEvent', {
+                                    id: data.id,
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay
+                                }, true);
+
+                                calendar.fullCalendar('unselect');
+                            }
+                        });
+                    }
+                },
+                eventDrop: function(event, delta) {
+                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
+                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
+
+                    $.ajax({
+                        url: SITEURL + '/fullcalenderAjax',
+                        data: {
+                            title: event.title,
+                            start: start,
+                            end: end,
+                            id: event.id,
+                            type: 'update'
+                        },
+                        type: "POST",
+                        success: function(response) {
+                            displayMessage("Event Updated Successfully");
+                        }
+                    });
+                },
+                eventClick: function(event) {
+                    var deleteMsg = confirm("Do you really want to delete?");
+                    if (deleteMsg) {
+                        $.ajax({
+                            type: "POST",
+                            url: SITEURL + '/fullcalenderAjax',
+                            data: {
+                                id: event.id,
+                                type: 'delete'
+                            },
+                            success: function(response) {
+                                calendar.fullCalendar('removeEvents', event.id);
+                                displayMessage("Event Deleted Successfully");
+                            }
+                        });
+                    }
+                }
+
+            });
+
+        });
+
+        function displayMessage(message) {
+            toastr.success(message, 'Event');
+        }
+    </script>
 @endsection

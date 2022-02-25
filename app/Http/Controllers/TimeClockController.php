@@ -39,8 +39,8 @@ class TimeClockController extends Controller
         $numOfRestDays = count($days);
 
         // Holidays Table
-        $weekHolidayss = Holiday::where('date_holiday', '>', Carbon::now()->startOfWeek())->where('date_holiday', '<', Carbon::now()->endOfWeek())->get();
-        $monthHolidays = Holiday::where('date_holiday', '>', Carbon::now()->startOfMonth())->where('date_holiday', '<', Carbon::now()->endOfMonth())->get();
+        $weekHolidayss = Holiday::where('start', '>', Carbon::now()->startOfWeek())->where('start', '<', Carbon::now()->endOfWeek())->get();
+        $monthHolidays = Holiday::where('start', '>', Carbon::now()->startOfMonth())->where('start', '<', Carbon::now()->endOfMonth())->get();
         $monthHolidaysNo = count($monthHolidays);
         $weekHolidays = count($weekHolidayss);
 
@@ -104,7 +104,7 @@ class TimeClockController extends Controller
             $totalMonthHolidays = 0;
             foreach ($restD as $day) {
                 foreach ($tableVar as $var) {
-                    if (date('l', strtotime($var->date_holiday)) == $day) {
+                    if (date('l', strtotime($var->start)) == $day) {
                         $sum = 1;
                     } else {
                         $sum = 0;
@@ -176,7 +176,7 @@ class TimeClockController extends Controller
             $totalMonthHolidays = 0;
             foreach ($restD as $day) {
                 foreach ($tableVar as $var) {
-                    if ($var->date_holiday == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
+                    if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
                         $sum = 1;
                     } else {
                         $sum = 0;
@@ -462,8 +462,8 @@ class TimeClockController extends Controller
             $numOfRestDays = count($days);
 
             // Holidays Table
-            $weekHolidayss = Holiday::where('date_holiday', '>', Carbon::now()->startOfWeek())->where('date_holiday', '<', Carbon::now()->endOfWeek())->get();
-            $monthHolidays = Holiday::where('date_holiday', '>', Carbon::now()->startOfMonth())->where('date_holiday', '<', Carbon::now()->endOfMonth())->get();
+            $weekHolidayss = Holiday::where('start', '>', Carbon::now()->startOfWeek())->where('start', '<', Carbon::now()->endOfWeek())->get();
+            $monthHolidays = Holiday::where('start', '>', Carbon::now()->startOfMonth())->where('start', '<', Carbon::now()->endOfMonth())->get();
             $monthHolidaysNo = count($monthHolidays);
             $weekHolidays = count($weekHolidayss);
 
@@ -527,7 +527,7 @@ class TimeClockController extends Controller
                 $totalMonthHolidays = 0;
                 foreach ($restD as $day) {
                     foreach ($tableVar as $var) {
-                        if (date('l', strtotime($var->date_holiday)) == $day) {
+                        if (date('l', strtotime($var->start)) == $day) {
                             $sum = 1;
                         } else {
                             $sum = 0;
@@ -606,7 +606,7 @@ class TimeClockController extends Controller
             $totalMonthHolidays = 0;
             foreach ($restD as $day) {
                 foreach ($tableVar as $var) {
-                    if ($var->date_holiday == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
+                    if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
                         $sum = 1;
                     } else {
                         $sum = 0;

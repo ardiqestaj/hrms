@@ -31,12 +31,13 @@ class HolidayController extends Controller
             'nameHoliday' => 'required|string|max:255',
             'holidayDate' => 'required|string|max:255',
         ]);
-
+        $date = date('Y-m-d', strtotime($request->holidayDate));
         DB::beginTransaction();
         try {
             $holiday = new Holiday;
-            $holiday->name_holiday = $request->nameHoliday;
-            $holiday->date_holiday  = $request->holidayDate;
+            $holiday->title = $request->nameHoliday;
+            $holiday->start  = $date; 
+            $holiday->end = $date; 
             $holiday->save();
 
             DB::commit();
@@ -57,12 +58,14 @@ class HolidayController extends Controller
             $id           = $request->id;
             $holidayName  = $request->holidayName;
             $holidayDate  = $request->holidayDate;
+            $holidayDate2  = $request->holidayDate;
 
             $update = [
 
                 'id'           => $id,
-                'name_holiday' => $holidayName,
-                'date_holiday' => $holidayDate,
+                'title' => $holidayName,
+                'start' => $holidayDate,
+                'end' => $holidayDate2,
             ];
 
             Holiday::where('id',$request->id)->update($update);

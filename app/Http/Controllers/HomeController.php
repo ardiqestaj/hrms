@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use AUTH;
 use Carbon\Carbon;
 use PDF;
 use App\Models\User;
@@ -11,6 +12,9 @@ use App\Models\Employee;
 use App\Models\Location;
 use App\Models\Client;
 use App\Models\Department;
+use App\Models\LeaveTypes;
+
+
 
 
 class HomeController extends Controller
@@ -55,9 +59,12 @@ class HomeController extends Controller
     // employee dashboard
     public function emDashboard()
     {
+        $em_id = Auth::user()->rec_id; 
         $dt        = Carbon::now();
         $todayDate = $dt->toDayDateTimeString();
-        return view('dashboard.emdashboard',compact('todayDate'));
+        $LeaveTypes = LeaveTypes::all();
+        $LeavesEvidence = DB::table('leaves_evidence')->where('rec_id', $em_id) ;
+        return view('dashboard.emdashboard',compact('todayDate', 'LeaveTypes', 'LeavesEvidence'));
     }
 
     public function generatePDF(Request $request)
