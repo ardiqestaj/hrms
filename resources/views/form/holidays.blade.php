@@ -41,7 +41,11 @@
                                     <th>Title </th>
                                     <th>Holiday Date</th>
                                     <th>Day</th>
+                                    @if(Auth::user()->role_name == 'Admin')
                                     <th class="text-right">Action</th>
+                                    @else
+                                    <th></th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,10 +78,10 @@
                                     <tr class="holiday-upcoming">
                                         <td hidden class="id">{{ $items->id }}</td>
                                         <td>{{ ++$key }}</td>
-                                        <td class="holidayName">{{ $items->name_holiday }}</td>
-                                        <td hidden class="holidayDate">{{ $items->date_holiday }}</td>
-                                        <td>{{ date('d F, Y', strtotime($items->date_holiday)) }}</td>
-                                        <td>{{ date('l', strtotime($items->date_holiday)) }}</td>
+                                        <td class="holidayName">{{ $items->title }}</td>
+                                        <td hidden class="holidayDate">{{ $items->start }}</td>
+                                        <td>{{ date('d F, Y', strtotime($items->start)) }}</td>
+                                        <td>{{ date('l', strtotime($items->start)) }}</td>
                                         <td class="text-right">
                                         @if(Auth::user()->role_name == 'Admin')
                                             <div class="dropdown dropdown-action">
