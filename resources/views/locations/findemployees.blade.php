@@ -111,8 +111,6 @@
                 </div>
             </div>
 
-
-
             <div class="row">
                 <div class="col-md-12 mt-5">
                     <form action="{{ url('location/profile/assignment/' . $location_type_work->location_type_work_id) }}" method="POST">
@@ -121,7 +119,7 @@
                             <label>Posible employees</label>
                             <div class="row">
                                 <div class="col-lg-5 col-sm-5">
-                                    <select name="customleave_from" id="customleave_select" class="form-control" size="{{ count($finale) }}" multiple="multiple">
+                                    <select name="customleave_from selectpicker" id="customleave_select" class="form-control" size="{{ count($finale) }}" data-max-options="2" multiple="multiple">
                                         @if (isset($finale))
                                             @foreach ($finale as $employee)
                                                 <option value="{{ $employee['employee_id'] }}">{{ $employee['name'] }} {{ $employee['lastname'] }} -
@@ -129,7 +127,7 @@
 
                                                 </option>
                                             @endforeach
-
+                                            <br>
                                         @else
                                             <option value="">NO EMPLOYEES
                                                 {{ $employee->lastname }} -
@@ -138,8 +136,12 @@
                                             </option>
                                         @endif
 
-                                    </select>
+                                        {{-- <option value="">-- Select --</option>
+                                        @foreach ($employeeList as $key => $emp)
+                                            <option value="{{ $emp->name }}" data-employee_id={{ $emp->employee_id }}>{{ $emp->name }}</option>
+                                        @endforeach --}}
 
+                                    </select>
 
                                 </div>
                                 <div class="multiselect-controls col-lg-2 col-sm-2">
@@ -149,12 +151,18 @@
                                     <button type="button" id="customleave_select_leftAll" class="btn btn-block btn-white"><i class="fa fa-backward"></i></button>
                                 </div>
                                 <div class="col-lg-5 col-sm-5">
-                                    <select name="customleave_to[]" id="customleave_select_to" class="form-control" size="{{ $location_type_work->number_of_employees }}" multiple="multiple">
-                                        @foreach ($assignments as $assignment)
-                                            <option value="{{ $assignment->em_id }}">{{ $assignment->name }} {{ $assignment->lastname }} -
-                                                <span style="color: blue;" id="text-muted-employees">{{ $assignment->time_start }} - {{ $assignment->time_end }} / {{ $assignment->restdays }}</span>
-                                            </option>
-                                        @endforeach
+                                    <select name="customleave_to[]" id="customleave_select_to" class="form-control selectpicker" size="{{ $location_type_work->number_of_employees }}" multiple="multiple">
+                                        {{-- <optgroup data-max-options="{{ $location_type_work->number_of_employees }}"> --}}
+                                        @if (count($assignments) <= $location_type_work->number_of_employees)
+                                            @foreach ($assignments as $assignment)
+                                                <option value="{{ $assignment->em_id }}">{{ $assignment->name }} {{ $assignment->lastname }} -
+                                                    <span style="color: blue;" id="text-muted-employees">{{ $assignment->time_start }} - {{ $assignment->time_end }} / {{ $assignment->restdays }}</span>
+                                                </option>
+                                            @endforeach
+                                        @else
+                                        @endif
+
+                                        {{-- </optgroup> --}}
                                     </select>
                                 </div>
                             </div>
@@ -205,22 +213,15 @@
             var _this = $(this).parents('.more');
             $('#e_id').val(_this.find('.idd').text());
         });
+
+        $('#customleave_select').on('change', function() {
+            if (this.selectedOptions.length <= {{ $location_type_work->number_of_employees }}) {
+                $(this).find(':selected').addClass('selected');
+                $(this).find(':not(:selected)').removeClass('selected');
+            } else
+                $(this)
+                .find(':selected:not(.selected)')
+                .prop('selected', false);
+        });
     </script>
 @endsection
-{{-- Find Employees Modal --}}
-<div id="find_employees_modal" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Custom Policy</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-        </div>
-    </div>
-</div>
-{{-- // Find Employees Modal --}}

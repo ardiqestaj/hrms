@@ -534,6 +534,7 @@ class TimeClockController extends Controller
                         }
                         $totalMonthHolidays += $sum;
                     }
+                    $totalMonthHolidays += $sum;
                 }
                 return $totalMonthHolidays;
             }
@@ -562,7 +563,7 @@ class TimeClockController extends Controller
 
             }
         }
-        $monthDaysEqualRestDays = countDayOverleap2($getMonthAllDays, $days);
+        return $totalMonthHolidays;
 
         //Number of  Leaves within current month
         function countDayOverleap7($tableVar)

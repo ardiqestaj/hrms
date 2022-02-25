@@ -149,7 +149,6 @@ class AdminAttendance extends Controller
             }
             return $totalMonthHolidays;
         }
-
         //Number of  Leaves within current month
         function countDayOverleap7($tableVar)
         {
