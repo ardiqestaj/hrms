@@ -1,77 +1,156 @@
-
 @extends('layouts.master')
 @section('content')
-
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <div class="content container-fluid">
-        
+
+            {{-- message --}}
+            {!! Toastr::message() !!}
+
             <!-- Page Header -->
             <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-12">
+                <div class="row align-items-center">
+                    <div class="col">
                         <h3 class="page-title">Attendance</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Attendance</li>
                         </ul>
                     </div>
+                    <div class="col-auto float-right ml-auto">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i
+                                class="fa fa-plus"></i> Manual Entry</a>
+                    </div>
                 </div>
             </div>
             <!-- /Page Header -->
-            
+
+            <!-- Add Salary Modal -->
+            <div id="add_salary" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Staff Salary</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('attendance/page/manual-entrance') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Select Staff</label>
+                                            <select
+                                                class="select select2s-hidden-accessible @error('name') is-invalid @enderror"
+                                                style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($userList as $key => $user)
+                                                    {{-- <input class="form-control d-none" style="display: none" type="hidden"
+                                                        name="rec_id" id="employee_i" value="{{ $user->rec_id }}"
+                                                        readonly> --}}
+
+                                                    <option value="{{ $user->name }}" class="selected"
+                                                        data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <input class="form-control" type="hidden" name="rec_id" id="employee_id" readonly>
+
+                                        <div class="form-group">
+                                            <label>Select Date <span class="text-danger">*</span></label>
+                                            <div class="cal-icon">
+                                                <input type="text" class="form-control datetimepicker" id="from_date"
+                                                    placeholder="00-00-0000" name="date">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Time In <small class="text-danger"> (required)</small></label>
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" required type="time" id="time_start"
+                                                    name="time_in">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Time Out <small class="text-danger"> (optional)</small></label>
+                                            <div class="input-group time timepicker">
+                                                <input class="form-control" type="time" id="time_end" name="time_out">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Add Salary Modal -->
+
             <!-- Search Filter -->
             <form action="{{ route('attendance/page/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating" name="name">
-                            @if(isset($name))
-                            <label class="focus-label">{{$name}}</label>
+                            @if (isset($name))
+                                <label class="focus-label">{{ $name }}</label>
                             @else
-                            <label class="focus-label">Employee Name</label>
+                                <label class="focus-label">Employee Name</label>
                             @endif
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3"> 
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
-                            <select class="select floating" name="month"> 
-                                    <option> {{$month}} </option>
-                                    <option value="-01-">Jan</option>
-                                    <option value="-02-">Feb</option>
-                                    <option value="-03-">Mar</option>
-                                    <option value="-04-">Apr</option>
-                                    <option value="-05-">May</option>
-                                    <option value="-06-">Jun</option>
-                                    <option value="-07-">Jul</option>
-                                    <option value="-08-">Aug</option>
-                                    <option value="-09-">Sep</option>
-                                    <option value="-10-">Oct</option>
-                                    <option value="-11-">Nov</option>
-                                    <option value="-12-">Dec</option>
+                            <select class="select floating" name="month">
+                                <option> {{ $month }} </option>
+                                <option value="-01-">Jan</option>
+                                <option value="-02-">Feb</option>
+                                <option value="-03-">Mar</option>
+                                <option value="-04-">Apr</option>
+                                <option value="-05-">May</option>
+                                <option value="-06-">Jun</option>
+                                <option value="-07-">Jul</option>
+                                <option value="-08-">Aug</option>
+                                <option value="-09-">Sep</option>
+                                <option value="-10-">Oct</option>
+                                <option value="-11-">Nov</option>
+                                <option value="-12-">Dec</option>
                             </select>
                             <label class="focus-label">Select Month</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3"> 
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
-                            <select class="select floating" name="year"> 
-                                <option> {{$years}} </option>
-                                @for ($year = 2021; $year <= 2030; $year++) 
-                                <option value='{{$year}}-'>{{$year}}</option>;
+                            <select class="select floating" name="year">
+                                <option> {{ $years }} </option>
+                                @for ($year = 2021; $year <= 2030; $year++)
+                                    <option value='{{ $year }}-'>{{ $year }}</option>;
                                 @endfor
                             </select>
                             <label class="focus-label">Select Year</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <button type="submit" class="btn btn-success btn-block"> Search </button>  
-                    </div>     
+                    <div class="col-sm-6 col-md-3">
+                        <button type="submit" class="btn btn-success btn-block"> Search </button>
+                    </div>
                 </div>
             </form>
             <!-- /Search Filter -->
-            
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-responsive">
@@ -79,24 +158,25 @@
                             <thead>
                                 <tr>
                                     <th>Employee</th>
-                                    @for ($day = 1; $day <= $daysInMonth; $day++) 
-                                        <td>{{$day}}</td>
+                                    @for ($day = 1; $day <= $daysInMonth; $day++)
+                                        <td>{{ $day }}</td>
                                     @endfor
                                 </tr>
-                                
+
                             </thead>
                             <tbody>
                                 @forelse($finale as $attend)
-                                <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
-                                            <a href="profile.html">{{ $attend['name'] }} </a>
-                                        </h2>
-                                    </td>
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a class="avatar avatar-xs" href="profile.html"><img alt=""
+                                                        src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
+                                                <a href="profile.html">{{ $attend['name'] }} </a>
+                                            </h2>
+                                        </td>
 
 
-                                  <?php 
+                                        <?php 
                                     $monthWorkingHrs = $attend['monthWorkingHrs'];
                                     $monthAttendences = $attend['totalMonthProductivity'];
                                     $monthMissedHrs = $attend['monthMissedHrs'];
@@ -187,33 +267,36 @@
                                         } 
                                       } 
                                   ?>
-                                  <td><?php echo $attendance_for_day; ?> </td>
-                                  <?php }?>
-                                  
-                                </tr>
+                                        <td><?php echo $attendance_for_day; ?> </td>
+                                        <?php }?>
+
+                                    </tr>
                                 @empty
-                                <tr><td>No Employees to show</td></tr>
+                                    <tr>
+                                        <td>No Employees to show</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
-                        
+
                     </div>
                 </div>
                 <div class="mx-auto mt-5">
-                    @if(count($users) >= 8)
-                    {{$users->links('vendor.pagination.bootstrap-4')}}
+                    @if (count($users) >= 8)
+                        {{ $users->links('vendor.pagination.bootstrap-4') }}
                     @endif
                 </div>
             </div>
         </div>
         <!-- /Page Content -->
-        
+
         <!-- Attendance Modal -->
         <div class="modal custom-modal fade" id="attendance_info" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Attendance Info  <small class="text-muted" id="bringInfo3"></small></h5>
+                        <h5 class="modal-title">Attendance Info <small class="text-muted" id="bringInfo3"></small>
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -230,15 +313,15 @@
                                         </div>
                                         <div class="punch-info">
                                             <div class="punch-hours">
-                                                <span class="bringInfo4"></span>
+                                                <span class="bringInfo4"></span> <span>&nbsp;hrs</span>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="punch-det">
                                             <h6>Punch Out at</h6>
                                             <p class="bringInfo2"></p>
                                         </div>
-                                        
+
                                         <div class="statistics">
                                             <div class="row">
                                                 <div class="col-md-6 col-6 text-center">
@@ -267,32 +350,38 @@
                                         <div class="stats-list">
                                             <div class="stats-info">
                                                 <p>Today <strong>
-                                                    <small><strong> <span class="bringInfo4"></span></strong> /<span class="bringInfo8"></span> hrs</small></strong></p>
+                                                        <small><strong> <span class="bringInfo4"></span></strong>
+                                                            /<span class="bringInfo8"></span> hrs</small></strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
                                                         aria-valuenow="25%" aria-valuemin="0" aria-valuemax=""></div>
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="stats-info">
                                                 <p>This Month <strong>
-                                                    <small><strong> <span class="bringInfo9"></span></strong> /<span class="bringInfo7"></span> hrs</small></strong></p>
+                                                        <small><strong> <span class="bringInfo9"></span></strong>
+                                                            /<span class="bringInfo7"></span> hrs</small></strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg"
-                                                        aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                        id="thismonthPrg" aria-valuenow="62" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
-                                                <p>Remaining this Month<strong> 
-                                                    <small><strong><span class="bringInfo13"></span> hrs</small></strong> </strong></p>
+                                                <p>Remaining this Month<strong>
+                                                        <small><strong><span class="bringInfo13"></span>
+                                                                hrs</small></strong> </strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth"
-                                                        aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                        id="remainthismonth" aria-valuenow="62" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
                                                 <p>Missed Hours this Month<strong>
-                                                    <small><strong><span class="bringInfo11"></span> hrs</small></strong> </strong></p>
+                                                        <small><strong><span class="bringInfo11"></span>
+                                                                hrs</small></strong> </strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
                                                         aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
@@ -300,7 +389,8 @@
                                             </div>
                                             <div class="stats-info">
                                                 <p>Overtime this Month<strong>
-                                                    <small><strong><span class="bringInfo12"></span> hrs</small></strong> </strong></p>
+                                                        <small><strong><span class="bringInfo12"></span>
+                                                                hrs</small></strong> </strong></p>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-info" role="progressbar" id="overtime"
                                                         aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
@@ -316,12 +406,25 @@
             </div>
         </div>
         <!-- /Attendance Modal -->
-        
+
     </div>
     <!-- Page Wrapper -->
 
+
     <script>
-        $(document).on('click', '.adminattendancebtn', function(){
+        $(document).ready(function() {
+            $('.select2s-hidden-accessible').select2({
+                closeOnSelect: false
+            });
+
+            // select auto id and email
+            $('#name').on('change', function() {
+                $('#employee_id').val($(this).find(':selected').data('employee_id'));
+            });
+        });
+
+
+        $(document).on('click', '.adminattendancebtn', function() {
             var _this = $(this).parents('.modalParent');
             $('.bringInfo').text(_this.find('.takeInfo').text());
             $('.bringInfo2').text(_this.find('.takeInfo2').text());
@@ -349,10 +452,10 @@
             var missedHrs = _this.find('.takeInfo11').text();
             var overtimeHrs = _this.find('.takeInfo12').text();
 
-            document.getElementById("todayPrg").style.width = 100*thisDay/totDay + "%";
+            document.getElementById("todayPrg").style.width = 100 * thisDay / totDay + "%";
             document.getElementById("todayPrg").setAttribute('aria-valuemax', totDay);
 
-            document.getElementById("thismonthPrg").style.width = 100*thisMonth/totMonth + "%";
+            document.getElementById("thismonthPrg").style.width = 100 * thisMonth / totMonth + "%";
             document.getElementById("thismonthPrg").setAttribute('aria-valuemax', totMonth);
 
             document.getElementById("remainthismonth").style.width = remainMonth + "%";

@@ -19,7 +19,8 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i class="fa fa-plus"></i> Add Salary</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i
+                                class="fa fa-plus"></i> Add Salary</a>
                     </div>
                 </div>
             </div>
@@ -95,8 +96,11 @@
                                     <tr>
                                         <td>
                                             <h2 class="table-avatar">
-                                                <a href="{{ url('employee/profile/' . $items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/' . $items->avatar) }}"></a>
-                                                <a href="{{ url('employee/profile/' . $items->rec_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                                <a href="{{ url('employee/profile/' . $items->rec_id) }}"
+                                                    class="avatar"><img alt=""
+                                                        src="{{ URL::to('/assets/images/' . $items->avatar) }}"></a>
+                                                <a
+                                                    href="{{ url('employee/profile/' . $items->rec_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                             </h2>
                                         </td>
                                         <td>{{ $items->rec_id }}</td>
@@ -119,13 +123,20 @@
                                         <td>{{ $items->role_name }}</td>
                                         <td>${{ $items->salary }}</td>
                                         <td hidden class="salary">{{ $items->salary }}</td>
-                                        <td><a class="btn btn-sm btn-primary" href="{{ url('form/salary/view/' . $items->rec_id) }}">Generate Slip</a></td>
+                                        <td><a class="btn btn-sm btn-primary"
+                                                href="{{ url('form/salary/view/' . $items->rec_id) }}">Generate Slip</a>
+                                        </td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item userSalary" href="#" data-toggle="modal" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item salaryDelete" href="#" data-toggle="modal" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    <a class="dropdown-item userSalary" href="#" data-toggle="modal"
+                                                        data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i>
+                                                        Edit</a>
+                                                    <a class="dropdown-item salaryDelete" href="#" data-toggle="modal"
+                                                        data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i>
+                                                        Delete</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -157,10 +168,13 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Select Staff</label>
-                                        <select class="select select2s-hidden-accessible @error('name') is-invalid @enderror" style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
+                                        <select
+                                            class="select select2s-hidden-accessible @error('name') is-invalid @enderror"
+                                            style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key => $user)
-                                                <option value="{{ $user->name }}" data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
+                                                <option value="{{ $user->name }}"
+                                                    data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -173,7 +187,9 @@
                                 <input class="form-control" type="hidden" name="rec_id" id="employee_id" readonly>
                                 <div class="col-sm-6">
                                     <label>Net Salary</label>
-                                    <input class="form-control @error('salary') is-invalid @enderror" type="number" name="salary" id="salary" value="{{ old('salary') }}" placeholder="Enter net salary">
+                                    <input class="form-control @error('salary') is-invalid @enderror" type="number"
+                                        name="salary" id="salary" value="{{ old('salary') }}"
+                                        placeholder="Enter net salary">
                                     @error('salary')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -186,7 +202,8 @@
                                     <h4 class="text-primary">Earnings</h4>
                                     <div class="form-group">
                                         <label>Basic</label>
-                                        <input class="form-control @error('basic') is-invalid @enderror" type="number" name="basic" id="basic" value="{{ old('basic') }}" placeholder="Enter basic">
+                                        <input class="form-control @error('basic') is-invalid @enderror" type="number"
+                                            name="basic" id="basic" value="{{ old('basic') }}" placeholder="Enter basic">
                                         @error('basic')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -195,7 +212,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>DA(40%)</label>
-                                        <input class="form-control @error('da') is-invalid @enderror" type="number" name="da" id="da" value="{{ old('da') }}" placeholder="Enter DA(40%)">
+                                        <input class="form-control @error('da') is-invalid @enderror" type="number"
+                                            name="da" id="da" value="{{ old('da') }}" placeholder="Enter DA(40%)">
                                         @error('da')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -204,7 +222,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>HRA(15%)</label>
-                                        <input class="form-control @error('hra') is-invalid @enderror" type="number" name="hra" id="hra" value="{{ old('hra') }}" placeholder="Enter HRA(15%)">
+                                        <input class="form-control @error('hra') is-invalid @enderror" type="number"
+                                            name="hra" id="hra" value="{{ old('hra') }}" placeholder="Enter HRA(15%)">
                                         @error('hra')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -213,7 +232,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Conveyance</label>
-                                        <input class="form-control @error('conveyance') is-invalid @enderror" type="number" name="conveyance" id="conveyance" value="{{ old('conveyance') }}" placeholder="Enter conveyance">
+                                        <input class="form-control @error('conveyance') is-invalid @enderror" type="number"
+                                            name="conveyance" id="conveyance" value="{{ old('conveyance') }}"
+                                            placeholder="Enter conveyance">
                                         @error('conveyance')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -222,7 +243,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Allowance</label>
-                                        <input class="form-control @error('allowance') is-invalid @enderror" type="number" name="allowance" id="allowance" value="{{ old('allowance') }}" placeholder="Enter allowance">
+                                        <input class="form-control @error('allowance') is-invalid @enderror" type="number"
+                                            name="allowance" id="allowance" value="{{ old('allowance') }}"
+                                            placeholder="Enter allowance">
                                         @error('allowance')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -231,7 +254,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Medical Allowance</label>
-                                        <input class="form-control @error('medical_allowance') is-invalid @enderror" type="number" name="medical_allowance" id="medical_allowance" value="{{ old('medical_allowance') }}" placeholder="Enter medical  allowance">
+                                        <input class="form-control @error('medical_allowance') is-invalid @enderror"
+                                            type="number" name="medical_allowance" id="medical_allowance"
+                                            value="{{ old('medical_allowance') }}"
+                                            placeholder="Enter medical  allowance">
                                         @error('medical_allowance')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -243,7 +269,8 @@
                                     <h4 class="text-primary">Deductions</h4>
                                     <div class="form-group">
                                         <label>TDS</label>
-                                        <input class="form-control @error('tds') is-invalid @enderror" type="number" name="tds" id="tds" value="{{ old('tds') }}" placeholder="Enter TDS">
+                                        <input class="form-control @error('tds') is-invalid @enderror" type="number"
+                                            name="tds" id="tds" value="{{ old('tds') }}" placeholder="Enter TDS">
                                         @error('tds')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -252,7 +279,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>ESI</label>
-                                        <input class="form-control @error('esi') is-invalid @enderror" type="number" name="esi" id="esi" value="{{ old('esi') }}" placeholder="Enter ESI">
+                                        <input class="form-control @error('esi') is-invalid @enderror" type="number"
+                                            name="esi" id="esi" value="{{ old('esi') }}" placeholder="Enter ESI">
                                         @error('esi')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -261,7 +289,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>PF</label>
-                                        <input class="form-control @error('pf') is-invalid @enderror" type="number" name="pf" id="pf" value="{{ old('pf') }}" placeholder="Enter PF">
+                                        <input class="form-control @error('pf') is-invalid @enderror" type="number"
+                                            name="pf" id="pf" value="{{ old('pf') }}" placeholder="Enter PF">
                                         @error('pf')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -270,7 +299,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Leave</label>
-                                        <input class="form-control @error('leave') is-invalid @enderror" type="text" name="leave" id="leave" value="{{ old('leave') }}" placeholder="Enter leave">
+                                        <input class="form-control @error('leave') is-invalid @enderror" type="text"
+                                            name="leave" id="leave" value="{{ old('leave') }}" placeholder="Enter leave">
                                         @error('leave')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -279,7 +309,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Prof. Tax</label>
-                                        <input class="form-control @error('prof_tax') is-invalid @enderror" type="number" name="prof_tax" id="prof_tax" value="{{ old('prof_tax') }}" placeholder="Enter Prof. Tax">
+                                        <input class="form-control @error('prof_tax') is-invalid @enderror" type="number"
+                                            name="prof_tax" id="prof_tax" value="{{ old('prof_tax') }}"
+                                            placeholder="Enter Prof. Tax">
                                         @error('prof_tax')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -288,7 +320,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Loan</label>
-                                        <input class="form-control @error('labour_welfare') is-invalid @enderror" type="number" name="labour_welfare" id="labour_welfare" value="{{ old('labour_welfare') }}" placeholder="Enter Loan">
+                                        <input class="form-control @error('labour_welfare') is-invalid @enderror"
+                                            type="number" name="labour_welfare" id="labour_welfare"
+                                            value="{{ old('labour_welfare') }}" placeholder="Enter Loan">
                                         @error('labour_welfare')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -325,7 +359,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Name Staff</label>
-                                        <input class="form-control " type="text" name="name" id="e_name" value="" readonly>
+                                        <input class="form-control " type="text" name="name" id="e_name" value=""
+                                            readonly>
                                     </div>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -355,15 +390,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Conveyance</label>
-                                        <input class="form-control" type="text" name="conveyance" id="e_conveyance" value="">
+                                        <input class="form-control" type="text" name="conveyance" id="e_conveyance"
+                                            value="">
                                     </div>
                                     <div class="form-group">
                                         <label>Allowance</label>
-                                        <input class="form-control" type="text" name="allowance" id="e_allowance" value="">
+                                        <input class="form-control" type="text" name="allowance" id="e_allowance"
+                                            value="">
                                     </div>
                                     <div class="form-group">
                                         <label>Medical Allowance</label>
-                                        <input class="form-control" type="text" name="medical_allowance" id="e_medical_allowance" value="">
+                                        <input class="form-control" type="text" name="medical_allowance"
+                                            id="e_medical_allowance" value="">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -390,7 +428,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Loan</label>
-                                        <input class="form-control" type="text" name="labour_welfare" id="e_labour_welfare" value="">
+                                        <input class="form-control" type="text" name="labour_welfare"
+                                            id="e_labour_welfare" value="">
                                     </div>
                                 </div>
                             </div>
@@ -419,10 +458,12 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <input type="hidden" name="id" class="e_id" value="">
-                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit"
+                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal"
+                                            class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
