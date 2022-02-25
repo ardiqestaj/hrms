@@ -28,8 +28,10 @@
                                 <div class="fixedcenter">
                                     <div class="clockwrapper">
                                         <div class="clockinout">
-                                            <button class="btnclock timein active" data-type="timein">{{ __('Punch In') }}</button>
-                                            <button class="btnclock timeout" data-type="timeout">{{ __('Punch Out') }}</button>
+                                            <button class="btnclock timein active"
+                                                data-type="timein">{{ __('Punch In') }}</button>
+                                            <button class="btnclock timeout"
+                                                data-type="timeout">{{ __('Punch Out') }}</button>
                                         </div>
                                     </div>
                                     <div class="clockwrapper">
@@ -47,15 +49,20 @@
                                                 @isset($cc)
                                                     @if ($cc == 'on')
                                                         <div class="inline field comment">
-                                                            <textarea name="comment" class="uppercase lightblue" rows="1" placeholder="Enter comment" value=""></textarea>
+                                                            <textarea name="comment" class="uppercase lightblue" rows="1"
+                                                                placeholder="Enter comment" value=""></textarea>
                                                         </div>
                                                     @endif
                                                 @endisset
                                                 <div class="inline field">
-                                                    <input type="hidden" @if ($rfid == 'on') id="rfid" @endif class="enter_idno uppercase @if ($rfid == 'on') mr-0 @endif" name="idno" value="{{ Auth::user()->rec_id }}" type="text" placeholder="{{ __('ENTER YOUR ID') }}" required autofocus>
+                                                    <input type="hidden" @if ($rfid == 'on') id="rfid" @endif
+                                                        class="enter_idno uppercase @if ($rfid == 'on') mr-0 @endif"
+                                                        name="idno" value="{{ Auth::user()->rec_id }}" type="text"
+                                                        placeholder="{{ __('ENTER YOUR ID') }}" required autofocus>
 
                                                     @if ($rfid !== 'on')
-                                                        <button id="btnclockin" type="button" class="ui positive large icon button">{{ __('Confirm') }}</button>
+                                                        <button id="btnclockin" type="button"
+                                                            class="ui positive large icon button">{{ __('Confirm') }}</button>
                                                     @endif
                                                     <input type="hidden" id="_url" value="{{ url('/') }}">
                                                 </div>
@@ -125,7 +132,8 @@
 
                                     {{-- <p>This Month <strong>{{$attend->totalhours}} <small>/ {{$schedules->hours}} hrs</small></strong></p> --}}
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary" id="todayPrg" role="progressbar" aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
+                                            aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
 
@@ -133,7 +141,8 @@
                                     <p>This Month <strong>{{ $monthAttendance->sum('totalhours') }} <small>/
                                                 {{ $monthWorkingHrs }} hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg"
+                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
@@ -143,21 +152,24 @@
                                             @endif <small> hrs</small>
                                         </strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth"
+                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
                                     <p>Missed Hours this Month<strong>{{ $monthAttendance->sum('missedhours') }} <small>
                                                 hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" id="missedHrs" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
+                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
                                     <p>Overtime this Month<strong>{{ $monthAttendance->sum('overtime') }} <small>
                                                 hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" id="overtime" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" id="overtime"
+                                            aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
 
@@ -353,9 +365,11 @@
                                             {{-- Status In/Out --}}
                                             <td>
                                                 @if ($attend->status_timein != '' && $attend->status_timeout != '')
-                                                    <span class="@if ($attend->status_timein == 'Late In') orange @else blue @endif">{{ $attend->status_timein }}</span>
+                                                    <span
+                                                        class="@if ($attend->status_timein == 'Late In') orange @else blue @endif">{{ $attend->status_timein }}</span>
                                                     /
-                                                    <span class="@if ($attend->status_timeout == 'Early Out') red @else green @endif">{{ $attend->status_timeout }}</span>
+                                                    <span
+                                                        class="@if ($attend->status_timeout == 'Early Out') red @else green @endif">{{ $attend->status_timeout }}</span>
                                                 @elseif($attend->status_timein == 'Late In')
                                                     <span class="orange">{{ $attend->status_timein }}</span>
                                                 @else
@@ -556,9 +570,9 @@
             var remainingThisMonth = 0;
         }
 
-        // if(isset(productionHrs1)){
+        // if (isset(productionHrs1)) {
         //     var productionHrs2 = productionHrs1;
-        // }else {
+        // } else {
         //     var productionHrs2 = 0;
         // };
 

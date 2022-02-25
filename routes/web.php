@@ -1,31 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PhotosController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\LockScreen;
-use App\Http\Controllers\PayrollController;
-use App\Http\Controllers\ExpenseReportsController;
-use App\Http\Controllers\PerformanceController;
-use App\Http\Controllers\CompanyInfoController;
-use App\Http\Controllers\ThemeSettingsController;
-use App\Http\Controllers\ClientsController;
-use App\Http\Controllers\TimeClockController;
-use App\Http\Controllers\LocationTypeWorkController;
-use App\Http\Controllers\FindEmployees;
 use App\Http\Controllers\EventController;
-
-
-
-
-
-
-
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,20 +12,17 @@ use App\Http\Controllers\EventController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::group(['middleware'=>'auth'],function()
-{
-    Route::get('home',function()
-    {
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('home', function () {
         return view('home');
     });
-    Route::get('home',function()
-    {
+    Route::get('home', function () {
         return view('home');
     });
 });
@@ -59,7 +32,6 @@ Auth::routes();
 // ----------------------------- main dashboard ------------------------------//
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashboard'])->name('em/dashboard');
-
 
 // -----------------------------settings----------------------------------------//
 Route::get('company/settings/page', [App\Http\Controllers\SettingController::class, 'companySettings'])->middleware('auth')->name('company/settings/page');
@@ -140,7 +112,6 @@ Route::post('form/department/delete', [App\Http\Controllers\DepartmentController
 // ----------------------------- profile employee ------------------------------//
 Route::get('employee/profile/{rec_id}', [App\Http\Controllers\EmployeeController::class, 'profileEmployee'])->middleware('auth');
 
-
 // ----------------------------- form holiday ------------------------------//
 Route::get('form/holidays/new', [App\Http\Controllers\HolidayController::class, 'holiday'])->middleware('auth')->name('form/holidays/new');
 Route::post('form/holidays/save', [App\Http\Controllers\HolidayController::class, 'saveRecord'])->middleware('auth')->name('form/holidays/save');
@@ -166,8 +137,6 @@ Route::get('form/leavetypes/page', [App\Http\Controllers\LeavesController::class
 Route::post('form/leavetypes/add', [App\Http\Controllers\LeavesController::class, 'saveLeaveTypes'])->middleware('auth')->name('form/leavetypes/add');
 Route::get('form/leavetypes/delete/{leave_id}', [App\Http\Controllers\LeavesController::class, 'deleteTypes'])->middleware('auth');
 Route::get('form/leavetypes/edit/{leave_id}', [App\Http\Controllers\LeavesController::class, 'editLeaveTypes'])->middleware('auth');
-
-
 
 // ----------------------------- form attendance  ------------------------------//
 Route::get('form/shiftscheduling/page', [App\Http\Controllers\LeavesController::class, 'shiftScheduLing'])->middleware('auth')->name('form/shiftscheduling/page');
@@ -195,11 +164,6 @@ Route::post('location/type/delete', [App\Http\Controllers\LocationTypeWorkContro
 // ----------------------------- Find Possible Employees------------------------------//
 Route::get('location/profile/find/{id}', [App\Http\Controllers\FindEmployees::class, 'find'])->middleware('auth')->name('location/profile/find');
 Route::post('location/profile/assignment/{id}', [App\Http\Controllers\FindEmployees::class, 'assignment'])->middleware('auth')->name('location/profile/assignment');
-
-
-
-
-
 
 // ----------------------------- form payroll  ------------------------------//
 Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');
@@ -258,7 +222,7 @@ Route::post('attendance/add', [App\Http\Controllers\TimeClockController::class, 
 Route::post('attendance/search', [App\Http\Controllers\TimeClockController::class, 'search'])->middleware('auth')->name('attendance/search');
 Route::get('attendance/page', [App\Http\Controllers\AdminAttendance::class, 'AdminAttendance'])->middleware('auth')->name('attendance/page');
 Route::post('attendance/page/search', [App\Http\Controllers\AdminAttendance::class, 'attSearch'])->middleware('auth')->name('attendance/page/search');
-
+Route::post('attendance/page/manual-entrance', [App\Http\Controllers\AdminAttendance::class, 'manualEntrance'])->middleware('auth')->name('attendance/page/manual-entrance');
 
 // ---------------------------------- App--------------------------------------------------------//
 // Route::get('/show-event-calendar', [EventController::class, 'index']);
