@@ -44,7 +44,8 @@ class HomeController extends Controller
 
         $employees = DB::table('employees')
                         ->join('departments', 'employees.department', '=', 'departments.id')
-                        ->select('employees.*', 'departments.department as dep')
+                        ->join('users', 'users.rec_id', '=', 'employees.employee_id')
+                        ->select('employees.*', 'departments.department as dep', 'users.avatar')
                         ->take(6)->get();
         $employeesCount = DB::table('employees')
         ->join('departments', 'employees.department', '=', 'departments.id')
@@ -67,14 +68,14 @@ class HomeController extends Controller
         return view('dashboard.emdashboard',compact('todayDate', 'LeaveTypes', 'LeavesEvidence'));
     }
 
-    public function generatePDF(Request $request)
-    {
-        // $data = ['title' => 'Welcome to ItSolutionStuff.com'];
-        // $pdf = PDF::loadView('payroll.salaryview', $data);
-        // return $pdf->download('text.pdf');
-        // selecting PDF view
-        $pdf = PDF::loadView('payroll.salaryview');
-        // download pdf file
-        return $pdf->download('pdfview.pdf');
-    }
+    // public function generatePDF(Request $request)
+    // {
+    //     // $data = ['title' => 'Welcome to ItSolutionStuff.com'];
+    //     // $pdf = PDF::loadView('payroll.salaryview', $data);
+    //     // return $pdf->download('text.pdf');
+    //     // selecting PDF view
+    //     $pdf = PDF::loadView('payroll.salaryview');
+    //     // download pdf file
+    //     return $pdf->download('pdfview.pdf');
+    // }
 }

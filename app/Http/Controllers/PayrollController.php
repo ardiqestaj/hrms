@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\StaffSalary;
 use Brian2694\Toastr\Facades\Toastr;
+use PDF;
+
 
 class PayrollController extends Controller
 {
@@ -150,5 +152,26 @@ class PayrollController extends Controller
     public function payrollItems()
     {
         return view('payroll.payrollitems');
+    }
+
+    public function createPDF($rec_id)
+
+    {
+        $users = DB::table('users')
+                ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
+                ->join('profile_information', 'users.rec_id', '=', 'profile_information.rec_id')
+                ->select('users.*', 'staff_salaries.*','profile_information.*')
+                ->where('staff_salaries.rec_id',$rec_id)
+                ->first();
+        
+        // $data = ['title' => 'Welcome to ItSolutionStuff.com'];
+        // view()->share('payroll.salaryview', compact('users'));
+        // dd($users);
+        $pdf = PDF::loadView('payroll.pdfpayslip', compact('users'));
+        // return $pdf->download('text.pdf');
+        // selecting PDF view
+        // $pdf = PDF::loadView('payroll.salaryview');
+        // download pdf file
+        return $pdf->download('pdfview.pdf');
     }
 }

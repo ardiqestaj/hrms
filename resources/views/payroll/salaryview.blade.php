@@ -18,7 +18,7 @@
                         <div class="col-auto float-right ml-auto">
                             <div class="btn-group btn-group-sm">
                                 <button class="btn btn-white">CSV</button>
-                                <button class="btn btn-white"><a href="" @click.prevent="printme" target="_blank">PDF</a></button>
+                                <button class="btn btn-white"><a href="{{ url('form/payroll/items/pdf/' . $users->rec_id) }}" @click.prevent="printme" target="_blank">PDF</a></button>
                                 <button class="btn btn-white"><i class="fa fa-print fa-lg"></i><a href="" @click.prevent="printme" target="_blank"> Print</a></button>
                             </div>
                         </div>
