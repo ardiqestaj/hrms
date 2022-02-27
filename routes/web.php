@@ -223,6 +223,8 @@ Route::post('attendance/search', [App\Http\Controllers\TimeClockController::clas
 Route::get('attendance/page', [App\Http\Controllers\AdminAttendance::class, 'AdminAttendance'])->middleware('auth')->name('attendance/page');
 Route::post('attendance/page/search', [App\Http\Controllers\AdminAttendance::class, 'attSearch'])->middleware('auth')->name('attendance/page/search');
 Route::post('attendance/page/manual-entrance', [App\Http\Controllers\AdminAttendance::class, 'manualEntrance'])->middleware('auth')->name('attendance/page/manual-entrance');
+Route::post('attendance/page/edit', [App\Http\Controllers\AdminAttendance::class, 'edit'])->middleware('auth')->name('attendance/page/edit');
+Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::class, 'delete'])->middleware('auth')->name('attendance/page/delete');
 
 // ---------------------------------- App--------------------------------------------------------//
 // Route::get('/show-event-calendar', [EventController::class, 'index']);
