@@ -244,6 +244,88 @@ a {
     -webkit-transition: all 0.4s ease;
 }
 
+.editInput input {
+    color: transparent;
+    display: block;
+    margin: 10px;
+    padding: 10px;
+}
+
+.editInput input:invalid:before {
+    color: #808080;
+    content: attr(placeholder);
+    padding-left: 10px;
+    pointer-events: none;
+    position: absolute;
+    left: 20px;
+}
+
+.modal.in {
+    -webkit-perspective: 2000px !important;
+    -moz-perspective: 2000px !important;
+    -ms-perspective: 2000px !important;
+    -o-perspective: 2000px !important;
+    perspective: 2000px !important;
+}
+
+.modal.in .modal-dialog.aside {
+    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
+    -ms-transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
+    -o-transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
+    transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
+    -webkit-transform-style: preserve-3d !important;
+    -ms-transform-style: preserve-3d !important;
+    -o-transform-style: preserve-3d !important;
+    transform-style: preserve-3d !important;
+}
+
+.modal.in .modal-dialog.aside.aside-1 {
+    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
+    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
+    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
+    transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
+}
+
+.modal.in .modal-dialog.aside.aside-2 {
+    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
+    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
+    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
+    transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
+}
+
+.modal.in .modal-dialog.aside.aside-3 {
+    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+    transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
+}
+
+.modal.in .modal-dialog.aside.aside-4 {
+    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+    transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
+}
+
+.modal.in .modal-dialog.aside.aside-5 {
+    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+    transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
+}
+
+.editInput input:valid,
+.editInput input:focus,
+.editInput input:active {
+    color: #000;
+}
+
+.editInput input:valid:before,
+.editInput input:focus:before,
+.editInput input:active:before {
+    display: none;
+}
+
 input,
 input:focus,
 button,
@@ -382,6 +464,10 @@ table tr:last-child td:last-child {
 .table thead th {
     font-weight: 500;
     letter-spacing: 0.05em;
+}
+
+#show-edit-form {
+    display: none;
 }
 
 .table-striped>tbody>tr:nth-of-type(2n+1) {

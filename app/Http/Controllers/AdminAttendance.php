@@ -29,11 +29,10 @@ class AdminAttendance extends Controller
             $users = User::select('rec_id', 'name')
                 ->where('role_name', 'LIKE', 'employee')->get();
         }
-   
 
         $userList = DB::table('users')->get();
         $permission_lists = DB::table('permission_lists')->get();
-
+        // dd($userList);
         // Attendance
         $now = Carbon::now();
         $startOfMonth = $now->startOfMonth()->format('Y-m-d');
@@ -99,13 +98,13 @@ class AdminAttendance extends Controller
         }
         // dd($final);
 
-        $month = Carbon::now()->format('m');
-        $years = Carbon::now()->format('Y');
-        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
+        // $month = Carbon::now()->format('m');
+        // $years = Carbon::now()->format('Y');
+        // $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
         // Total days in the current month
         $now = Carbon::now();
-        $totalMonthDay = Carbon::now()->daysInMonth;
+        // $totalMonthDay = Carbon::now()->daysInMonth;
         $startOfMonth = $now->startOfMonth()->format('Y-m-d');
 
         // Function to display all reccurring days in a month
@@ -200,7 +199,7 @@ class AdminAttendance extends Controller
         }
 
         // month Days
-        $getMonthAllDays = workingDays($startOfMonth, $totalMonthDay);
+        $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
 
         foreach ($final as $stats) {
             foreach ($stats['schedule'] as $sched) {
@@ -265,94 +264,157 @@ class AdminAttendance extends Controller
         return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists'));
     }
 
-    // Company information settings
+    // Manual Entrance
     public function manualEntrance(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|string|max:255',
             'time_in' => 'required|string|max:255',
-            'time_out' => 'required|string|max:255',
         ]);
-        // $time1 = date("h:i", strtotime($request->time_in));
-        // $time2 = date("h:i", strtotime($request->time_out));
-
-        // print_r($totalhour);
-
-        // $scheduless = DB::table('assignment_employees')
-        //     ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
-        //     ->where('assignment_employees.employee_id', $request->rec_id)->first();
-
-        // $overtime = '';
-        // if ($scheduless->hours < $totalhour) {
-        //     $overtime = ($totalhour - $scheduless->hours);
-        // } else {
-        //     $overtime = 0;
-        // };
-
-        // $missedhours = '';
-        // if ($scheduless->hours > $totalhour) {
-        //     $missedhours = ($scheduless->hours - $totalhour);
-        // } else {
-        //     $missedhours = 0;
-        // };
 
         DB::beginTransaction();
         try {
-            $timeIn = date("h:i A", strtotime($request->time_in));
-            $timeOut = date("h:i A", strtotime($request->time_out));
-            $date = $request->date;
 
-            // $time1 = $date . " " . $timeIn;
+            if (isset($request->time_out)) {
+                $date = date("Y-m-d", strtotime($request->date));
+                $timeOut = date("h:i A", strtotime($request->time_out));
+                $timeOUT = $date . " " . $timeOut;
+                $timeIn = date("h:i A", strtotime($request->time_in));
+                $timeIN = $date . " " . $timeIn;
 
-            $time1 = Carbon::createFromFormat("Y-m-d h:i A", $date . " " . $timeIn);
-            $time2 = Carbon::createFromFormat("Y-m-d h:i A", $date . " " . $timeOut);
-            // dd($time1);
-            $th = $time1->diffInHours($time2);
-            $tm = floor(($time1->diffInMinutes($time2) - (60 * $th)));
-            $totalhour = $th . "." . $tm;
-            // $entry = TimeClock::updateOrCreate(['idno' => $request->rec_id]);
+                $start = new Carbon($timeIN);
+                $end = new Carbon($timeOUT);
+                $totalhour = $start->diff($end)->format('%H.%I');
 
-            // $timeIn = $request->time_in;
-            // $timeOut = $request->time_out;
+                $scheduless = DB::table('assignment_employees')
+                    ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
+                    ->where('assignment_employees.employee_id', $request->rec_id)->first();
+
+                $overtime = '';
+                if ($scheduless->hours < $totalhour) {
+                    $overtime = ($totalhour - $scheduless->hours);
+                } else {
+                    $overtime = 0;
+                };
+
+                $missedhours = '';
+                if ($scheduless->hours > $totalhour) {
+                    $missedhours = ($scheduless->hours - $totalhour);
+                } else {
+                    $missedhours = 0;
+                };
+
+            } else {
+                $date = $request->date;
+                $timeIn = date("h:i A", strtotime($request->time_in));
+                $timeIN = $date . " " . $timeIn;
+
+                $missedhours = null;
+                $overtime = null;
+                $totalhour = null;
+                $timeOUT = null;
+            }
 
             $entry = new TimeClock;
             $entry->employee = $request->name;
             $entry->date = date("Y-m-d", strtotime($request->date));
-            $entry->timein = date("h:i A", strtotime($request->time_in));
-            $entry->timeout = date("h:i A", strtotime($request->time_out));
+            $entry->timein = $timeIN;
+            $entry->timeout = $timeOUT;
             $entry->idno = $request->rec_id;
             $entry->totalhours = $totalhour;
-            // $entry->overtime = 'dcscs';
-            // $entry->missedhours = 'csdcscs';
+            $entry->overtime = $overtime;
+            $entry->missedhours = $missedhours;
 
             $entry->save();
-
             DB::commit();
             Toastr::success('Manual attendance created successfully :)', 'Success');
-            return redirect()->back();
+            return redirect()->route('attendance/page');
+
         } catch (\Exception$e) {
             DB::rollback();
             Toastr::error('Creating Manual attendance failed :)', 'Error');
-            return redirect()->back();
+            return redirect()->route('attendance/page');
+        }
+    }
+
+    // Manual Entrance
+    public function edit(Request $request)
+    {
+        $request->validate([
+            'time_in' => 'required|string|max:255',
+            'time_out' => 'required|string|max:255',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $date = date("Y-m-d", strtotime($request->date));
+            $idno = $request->rec_id;
+
+            $timeOut = date("h:i:s A", strtotime($request->time_out));
+            $timeOUT = $date . " " . $timeOut;
+
+            $timeIn = date("h:i:s A", strtotime($request->time_in));
+            $timeIN = $date . " " . $timeIn;
+
+            $start = new Carbon($timeIN);
+            $end = new Carbon($timeOUT);
+            $totalhour = $start->diff($end)->format('%H.%I');
+
+            $scheduless = DB::table('assignment_employees')
+                ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
+                ->where('assignment_employees.employee_id', $request->rec_id)->first();
+
+            $overtime = '';
+            if ($scheduless->hours < $totalhour) {
+                $overtime = ($totalhour - $scheduless->hours);
+            } else {
+                $overtime = 0;
+            };
+
+            $missedhours = '';
+            if ($scheduless->hours > $totalhour) {
+                $missedhours = ($scheduless->hours - $totalhour);
+            } else {
+                $missedhours = 0;
+            };
+
+            $update = [
+                'timein' => $timeIN,
+                'timeout' => $timeOUT,
+                'totalhours' => $totalhour,
+                'overtime' => $overtime,
+                'missedhours' => $missedhours,
+            ];
+
+            TimeClock::where('date', $date)->where('idno', $idno)->update($update);
+            DB::commit();
+            Toastr::success('Attendance edit successfull :)', 'Success');
+            return redirect()->route('attendance/page');
+        } catch (\Exception$e) {
+            DB::rollback();
+            Toastr::error('Attendance edit failed :)', 'Error');
+            return redirect()->route('attendance/page');
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            TimeClock::where('date', $date)->where('idno', $idno)->delete();
+            Toastr::success('Attendance Deleted successfully :)', 'Success');
+            return redirect()->route('attendance/page');
+
+        } catch (\Exception$e) {
+
+            DB::rollback();
+            Toastr::error('Attendance Deleted failed :)', 'Error');
+            return redirect()->route('attendance/page');
         }
     }
 
     public function attSearch(Request $request)
     {
-
-        // employees
-        $users = User::select('rec_id', 'name')
-            ->where('role_name', 'LIKE', 'employee')
-            ->get();
-
-        // Attendance
-        $now = Carbon::now();
-        $startOfMonth = $now->startOfMonth()->format('Y-m-d');
-        $now = Carbon::now();
-        $attendances = TimeClock::whereBetween('date', [$startOfMonth, $now])
-            ->get();
-
         // month
         if (!empty($request->month)) {
             $monthVar = $request->month;
@@ -371,6 +433,19 @@ class AdminAttendance extends Controller
 
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
+        $dt = $years . '-' . $month . '-' . '01';
+        $searchDt = $years . '-' . $month;
+        // dd($searchDt);
+        $startOfMonth = date('Y-m-d', strtotime($dt));
+        $endOfMonth = date("Y-m-t", strtotime($dt));
+        // dd($dt);
+
+        $now = Carbon::now();
+        // $startOfMonth = $now->startOfMonth()->format('Y-m-d');
+        $users = User::select('rec_id', 'name')
+            ->where('role_name', 'LIKE', 'employee')
+            ->get();
+
         // Search by name
         $name = $request->name;
         if (isset($request->name)) {
@@ -378,28 +453,17 @@ class AdminAttendance extends Controller
                 ->where('role_name', 'LIKE', 'employee')
                 ->where('name', 'LIKE', '%' . $name . '%')
                 ->get();
-        }
-
-        // Search by month
-        if (isset($request->month)) {
-            $attendances = DB::table('time_clocks')->select()
-                ->where('date', 'LIKE', '%' . $month . '%')
-                ->get();
-        }
-
-        //  search by year
-        if (isset($request->years)) {
-            $attendances = DB::table('time_clocks')->select()
-                ->where('date', 'LIKE', '%' . $years . '%')
-                ->get();
-        }
-
-        // search by year and month
-        if (isset($request->month) && isset($request->year)) {
-            $attendances = DB::table('time_clocks')
-                ->where('date', 'LIKE', '%' . $years . '%')
-                ->where('date', 'LIKE', '%' . $month . '%')
-                ->get();
+            if (count($users) > 8) {
+                $users = User::select('rec_id', 'name')
+                    ->where('role_name', 'LIKE', 'employee')
+                    ->where('name', 'LIKE', '%' . $name . '%')
+                    ->paginate(8);
+            } else {
+                $users = User::select('rec_id', 'name')
+                    ->where('role_name', 'LIKE', 'employee')
+                    ->where('name', 'LIKE', '%' . $name . '%')
+                    ->get();
+            }
         }
 
         if (!count($users) > 0) {
@@ -407,29 +471,225 @@ class AdminAttendance extends Controller
                 ->where('role_name', 'LIKE', 'employee')
                 ->where('name', 'LIKE', '%' . $name . '%')
                 ->get();
+        }
 
-        } else {
-            foreach ($users as $user) {
-                $employee['rec_id'] = $user->rec_id;
-                $employee['name'] = $user->name;
-                $attend = [];
+        $userList = DB::table('users')->get();
+        $permission_lists = DB::table('permission_lists')->get();
 
-                foreach ($attendances as $attendance) {
-                    if ($attendance->idno == $user->rec_id) {
-                        $attend_2['idno'] = $attendance->idno;
-                        $attend_2['date'] = $attendance->date;
-                        $attend_2['timein'] = $attendance->timein;
-                        $attend_2['timeout'] = $attendance->timeout;
-                        $attend_2['totalhours'] = $attendance->totalhours;
-                        $attend_2['overtime'] = $attendance->overtime;
-                        $attend_2['missedhours'] = $attendance->missedhours;
-                        $attend[] = $attend_2;
+        // Attendance
+        $attendances = TimeClock::whereBetween('date', [$startOfMonth, $endOfMonth])->get();
+        $todayAttendances = DB::table('time_clocks')->where('date', Carbon::today())->get();
+
+        $schedules = DB::table('assignment_employees')
+            ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
+            ->select('employee_id', 'idno', 'hours', 'restday')->get();
+
+        $monthHolidays = Holiday::where('start', '>', $startOfMonth)->where('start', '<', $endOfMonth)->get();
+        $monthHolidaysNo = count($monthHolidays);
+
+        // Leaves Table
+        $monthLeaves = DB::table('leave_applies')->select('*')->where('status', 'Approved')->get();
+        $monthLeavesCount = count($monthLeaves);
+
+        // foreach
+        foreach ($users as $user) {
+            $employee['rec_id'] = $user->rec_id;
+            $employee['name'] = $user->name;
+            $attend = [];
+            $leaves = [];
+            $schedul = [];
+
+            foreach ($attendances as $attendance) {
+                // attendances
+                if ($attendance->idno == $user->rec_id) {
+                    $attend_2['idno'] = $attendance->idno;
+                    $attend_2['date'] = $attendance->date;
+                    $attend_2['timein'] = $attendance->timein;
+                    $attend_2['timeout'] = $attendance->timeout;
+                    $attend_2['totalhours'] = $attendance->totalhours;
+                    $attend_2['overtime'] = $attendance->overtime;
+                    $attend_2['missedhours'] = $attendance->missedhours;
+                    $attend[] = $attend_2;
+                }
+            }
+            $employee['attendance'] = $attend;
+
+            // Leaves
+            foreach ($monthLeaves as $monthLea) {
+                if ($monthLea->rec_id == $user->rec_id) {
+                    $leave_2['from_date'] = $monthLea->from_date;
+                    $leave_2['to_date'] = $monthLea->to_date;
+                    $leaves[] = $leave_2;
+                }
+            }
+            $employee['monthLea'] = $leaves;
+
+            // Schedules
+            foreach ($schedules as $schedule) {
+                if ($schedule->employee_id == $user->rec_id) {
+                    $schedule_2['hours'] = $schedule->hours;
+                    $schedule_2['restday'] = $schedule->restday;
+                    $schedul[] = $schedule_2;
+                }
+            }
+            $employee['schedule'] = $schedul;
+            $final[] = $employee;
+        }
+
+        // Function to display all reccurring days in a month
+        function workingDays($startDate, $totalDays)
+        {
+            $date_array = explode('-', $startDate);
+            $day = $date_array[0];
+            $month = $date_array[1];
+            $year = $date_array[2];
+            $working_date = array();
+
+            for ($p = 0; $p < $totalDays; $p++) {
+                $working_date[] = date('l', mktime(0, 0, 0, $month, $day + (int) $p, $year));
+            }
+            return $working_date;
+        }
+
+        // Count all Leaves of the month
+        function countLeaves($startCount, $endCount)
+        {
+            $period = CarbonPeriod::create($startCount, $endCount);
+            foreach ($period as $date) {
+                $date->format('l');
+            }
+            $dates[] = $period->toArray();
+            return $dates;
+        }
+
+        // Number of Holidays that are Rest Days
+        function countDayOverleap($tableVar, $restD)
+        {
+            $totalMonthHolidays = 0;
+            foreach ($restD as $day) {
+                foreach ($tableVar as $var) {
+                    if (date('l', strtotime($var->start)) == $day) {
+                        $sum = 1;
+                    } else {
+                        $sum = 0;
+                    }
+                    $totalMonthHolidays += $sum;
+                }
+            }
+            return $totalMonthHolidays;
+        }
+        //Number of  Leaves within current month
+        function countDayOverleap7($tableVar)
+        {
+            $totalMonthHolidays = 0;
+            foreach ($tableVar as $var) {
+                if ($var->isCurrentMonth()) {
+                    $sum = 1;
+                } else {
+                    $sum = 0;
+                }
+                $totalMonthHolidays += $sum;
+            }
+            return $totalMonthHolidays;
+        }
+
+        //Number of  Leaves that are also rest Days
+        function countDayOverleap3($tableVar, $restD)
+        {
+            $totalMonthHolidays = 0;
+            foreach ($restD as $day) {
+                foreach ($tableVar as $var) {
+                    if (date('l', strtotime($var)) == $day && $var->isCurrentMonth()) {
+                        $sum = 1;
+                    } else {
+                        $sum = 0;
+                    }
+                    $totalMonthHolidays += $sum;
+                }
+            }
+            return $totalMonthHolidays;
+        }
+
+        //Number of Leaves that are also holidays
+        function countDayOverleap5($tableVar, $restD)
+        {
+            $totalMonthHolidays = 0;
+            foreach ($restD as $day) {
+                foreach ($tableVar as $var) {
+                    if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
+                        $sum = 1;
+                    } else {
+                        $sum = 0;
+                    }
+                    $totalMonthHolidays += $sum;
+                }
+            }
+            return $totalMonthHolidays;
+        }
+
+        // month Days
+        $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
+        $finale = [];
+        foreach ($final as $stats) {
+            foreach ($stats['schedule'] as $sched) {
+                $workingHrs = $sched['hours'];
+                $restDays = $sched['restday'];
+                $days = explode(', ', $restDays);
+                $numOfRestDays = count($days);
+            }
+
+            $common = array_intersect($getMonthAllDays, $days);
+            $monthDaysEqualRestDays = count($common);
+
+            // Leaves
+            foreach ($stats['monthLea'] as $leaves) {
+                $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
+                foreach ($daysThroughLeaves as $restDa) {
+                    $leave = [];
+                }
+
+                {
+                    foreach ($restDa as $leave[]) {
                     }
                 }
-                $employee['attendance'] = $attend;
-                $final[] = $employee;
             }
+
+            $allCurrentLeavesOfMonth = countDayOverleap7($leave);
+            // dd($allCurrentLeavesOfMonth);
+
+            // Number of leaves that are rest days
+            $LeaveDaysEqualRestDays = countDayOverleap3($leave, $days);
+            $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
+            // Number of leaves that are holidays
+            $monthLeavesEqualHolidays = countDayOverleap5($monthHolidays, $leave);
+
+            // Month Holidays
+            $monthHolidaysEqualRestDay = countDayOverleap($monthHolidays, $days);
+            $monthHolidaysNotRestDays = ($monthHolidaysNo - $monthHolidaysEqualRestDay);
+
+            // Total working days in the current month
+            $monthWorkingDays = (count($getMonthAllDays) - $monthDaysEqualRestDays - $monthHolidaysNotRestDays - $monthLeavesEqualHolidays - $LeaveDaysEqualNotDays);
+
+            $monthWorkingHrs = $monthWorkingDays * $workingHrs;
+
+            $stats['monthWorkingHrs'] = $monthWorkingHrs;
+
+            $totalMonthProductivity = [];
+            $monthMissedHrs = [];
+            $monthOvertimeHrs = [];
+            foreach ($stats['attendance'] as $att) {
+                $totalMonthProductivity[] = $att['totalhours'];
+                $monthMissedHrs[] = $att['missedhours'];
+                $monthOvertimeHrs[] = $att['overtime'];
+
+            }
+            $stats['totalMonthProductivity'] = array_sum($totalMonthProductivity);
+            $stats['monthMissedHrs'] = array_sum($monthMissedHrs);
+            $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
+
+            $finale[] = $stats;
         }
-        return view('form.attendance', compact('users', 'month', 'years', 'name', 'daysInMonth', 'finale'));
+        // dd($finale);
+        return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt'));
     }
 }
