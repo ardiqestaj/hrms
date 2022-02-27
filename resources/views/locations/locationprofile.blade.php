@@ -104,9 +104,11 @@
             <div class="card tab-box">
                 <div class="row user-tabs">
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab" href="#myprojects">Projects</a></li>
-                            <li class="nav-item col-sm-3"><a class="nav-link" data-toggle="tab" href="#tasks">Tasks</a></li>
+                        <ul class="nav nav-tabs nav-tabs-bottom d-flex">
+                            <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab">Departments</a></li>
+                            {{-- <div class="col-auto float-right ml-auto">
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location_type" style="border: none;"><i class="fa fa-plus"></i> Add Department </a>
+                            </div> --}}
                         </ul>
                     </div>
                 </div>
@@ -222,9 +224,7 @@
             <!-- /Add Client Modal -->
             <div class="row">
                 {{-- Add Departament button --}}
-                <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location_type"><i class="fa fa-plus"></i> Add Sector </a>
-                </div>
+
                 <div class="col-lg-12">
                     <div class="tab-content profile-tab-content">
                         <!-- Projects Tab -->
@@ -232,7 +232,7 @@
                             <div class="row">
                                 @foreach ($locations_types as $locations_type)
                                     <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                                        <div class="card">
+                                        <div class="card" style="height: 95%">
                                             <div class="card-body">
                                                 <div class="dropdown profile-action more">
                                                     <div hidden class="idd">{{ $locations_type->tid }}</div>
@@ -370,14 +370,16 @@
                                                 {{-- <div class="progress">
                                                     <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{ $locations_type->number_of_employees }}" style="width: {{ $a * (100 / $locations_type->number_of_employees) }}%"></div>
                                                 </div> --}}
-                                                <div class="project-members m-b-10 m-t-15">
-                                                    <h4 class="project-title"><a class="dropdown-item" href="{{ url('location/profile/find/' . $locations_type->tid) }}"><i style="font-size: 20px" class="las la-search-plus"></i>
+                                                <div class="project-members m-b-10 m-t-15 ">
+                                                    <h4 class="project-title py-2 text-center card" style="border: 1px solid #ccc; border-radius: 10px;"><a class="" href="{{ url('location/profile/find/' . $locations_type->tid) }}"><i style="font-size: 20px" class="las la-search-plus"></i>
                                                             Find Employees</a>
                                                     </h4>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
+
                                     {{-- data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->tid }}" --}}
                                     {{-- data-toggle="modal" data-target="#find_employees_modal{{ $locations_type->location_type_work_id }}" --}}
                                     {{-- Edit Location Modal --}}
@@ -542,6 +544,15 @@
                                     </div>
                                     {{-- // Find Employees Modal --}}
                                 @endforeach
+                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                                    <div class="card" style="height: 95%;">
+                                        <div class="card-body d-flex align-items-center justify-content-center">
+
+                                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location_type" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /Projects Tab -->

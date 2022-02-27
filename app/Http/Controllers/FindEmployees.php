@@ -176,27 +176,24 @@ class FindEmployees extends Controller
             $location_type_work = DB::table('location_type_works')->where('location_type_work_id', $id)->value('number_of_employees');
             AssignmentEmployees::where('location_type_work_id', $id)->delete();
 
-            $assignment = $request->customleave_to;
-            return ($location_type_work >= $i);
+            if ($request->customleave_to) {
+                $assignment = $request->customleave_to;
+                if (count($assignment) <= $location_type_work) {
 
-            // if ($request->customleave_to) {
-            //     $assignment = $request->customleave_to;
-            //     if (count($assignment) <= $location_type_work) {
+                    for ($i = 0; $i < count($assignment); $i++) {
+                        $saveRecord = [
+                            'location_type_work_id' => $id,
+                            'employee_id' => $assignment[$i],
 
-            //         for ($i = 0; $i < count($assignment); $i++) {
-            //             $saveRecord = [
-            //                 'location_type_work_id' => $id,
-            //                 'employee_id' => $assignment[$i],
+                        ];
+                        AssignmentEmployees::create($saveRecord);
+                    }
+                } else {
+                    Toastr::error('You need only ' . $location_type_work . ' employees on this department', 'Error');
+                    return redirect()->back();
+                }
 
-            //             ];
-            //             AssignmentEmployees::create($saveRecord);
-            //         }
-            //     } else {
-            //         Toastr::error('Assignment fail :)', 'Error');
-            //         return redirect()->back();
-            //     }
-
-            // }
+            }
 
             DB::commit();
             Toastr::success('Assignment successfully :)', 'Success');
