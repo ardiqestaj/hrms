@@ -80,9 +80,9 @@
             <div class="card tab-box">
                 <div class="row user-tabs">
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab" href="#myprojects">Projects</a></li>
-                            <li class="nav-item col-sm-3"><a class="nav-link" data-toggle="tab" href="#tasks">Tasks</a></li>
+                        <ul class="nav nav-tabs nav-tabs-bottom d-flex">
+                            <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab">Loctions</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -219,9 +219,7 @@
 
             <div class="row">
                 <!-- Add Location Modal Button-->
-                <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i class="fa fa-plus"></i> Add Location</a>
-                </div>
+
 
                 <div class="col-lg-12">
                     <div class="tab-content profile-tab-content">
@@ -231,7 +229,7 @@
                             <div class="row">
                                 @foreach ($clients as $cli)
                                     <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                                        <div class="card">
+                                        <div class="card" style="height: 95%">
                                             <div hidden class="id">{{ $cli->id }}</div>
 
                                             <div hidden class="location_name">{{ $cli->location_name }}</div>
@@ -256,7 +254,7 @@
                                                         <a class="dropdown-item locationDelete" href="#" data-toggle="modal" data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
-                                                <h4 class="project-title text-xl"><a href="{{ url('location/locations/profile/' . $cli->id) }}">{{ $cli->location_name }} <i class="las la-external-link-alt"></i></a></h4>
+                                                <h4 class="project-title text-xl"><a class="stretched-link" href="{{ url('location/locations/profile/' . $cli->id) }}">{{ $cli->location_name }}</a></h4>
                                                 <small class="block text-ellipsis m-b-15">
                                                     <span class="text-xs text-muted">Location address: {{ $cli->location_address }} </span>
                                                 </small>
@@ -486,7 +484,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-
+                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                                    <div class="card" style="height: 95%;">
+                                        <div class="card-body d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Location</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
