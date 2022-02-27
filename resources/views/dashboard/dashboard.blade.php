@@ -279,7 +279,7 @@
 
                             </div>
                         </div>
-                        <div class="card-footer"> <a href="clients.html">View all clients</a> </div>
+                        <div class="card-footer"> <a href="{{ url('clients/clients')}}">View all clients</a> </div>
                     </div>
                 </div>
                 <div class="col-md-6 d-flex">
@@ -307,7 +307,7 @@
 
                                                     <td>
                                                         <h2 class="table-avatar">
-                                                            <a href="{{ url('employee/profile/' . $employee->employee_id) }}" class="avatar"><img alt="" src="assets/img/profiles/avatar-19.jpg"></a>
+                                                            <a href="{{ url('employee/profile/' . $employee->employee_id) }}" class="avatar"><img alt="" src={{ URL::to('/assets/images/' . $employee->avatar) }}></a>
                                                             <a href="{{ url('employee/profile/' . $employee->employee_id) }}">{{ $employee->name }}
                                                                 {{ $employee->lastname }}<span>{{ $employee->dep }}</span></a>
                                                         </h2>

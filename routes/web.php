@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PayrollController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -172,6 +174,7 @@ Route::post('form/salary/update', [App\Http\Controllers\PayrollController::class
 Route::post('form/salary/delete', [App\Http\Controllers\PayrollController::class, 'deleteRecord'])->middleware('auth')->name('form/salary/delete');
 Route::get('form/salary/view/{rec_id}', [App\Http\Controllers\PayrollController::class, 'salaryView'])->middleware('auth');
 Route::get('form/payroll/items', [App\Http\Controllers\PayrollController::class, 'payrollItems'])->middleware('auth')->name('form/payroll/items');
+Route::get('form/payroll/items/pdf/{rec_id}', [App\Http\Controllers\PayrollController::class, 'createPDF'])->middleware('auth')->name('form/payroll/items/pdf');
 
 // ----------------------------- reports  ------------------------------//
 Route::get('form/expense/reports/page', [App\Http\Controllers\ExpenseReportsController::class, 'index'])->middleware('auth')->name('form/expense/reports/page');
@@ -236,3 +239,4 @@ Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::cla
 
 Route::get('fullcalender', [EventController::class, 'index']);
 Route::post('fullcalenderAjax', [EventController::class, 'ajax']);
+
