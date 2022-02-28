@@ -400,6 +400,9 @@ class AdminAttendance extends Controller
 
     public function delete(Request $request)
     {
+        $date = $request->date;
+        $idno = $request->rec_id;
+
         try {
             TimeClock::where('date', $date)->where('idno', $idno)->delete();
             Toastr::success('Attendance Deleted successfully :)', 'Success');

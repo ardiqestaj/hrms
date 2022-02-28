@@ -20,11 +20,11 @@
 
             {{-- ----Time Clock---- --}}
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="card punch-status">
                         <div class="card-body">
 
-                            <div class="container-fluid">
+                            <div class="container-fluid p-0">
                                 <div class="fixedcenter">
                                     <div class="clockwrapper">
                                         <div class="clockinout">
@@ -61,7 +61,8 @@
                                                         placeholder="{{ __('ENTER YOUR ID') }}" required autofocus>
 
                                                     @if ($rfid !== 'on')
-                                                        <button id="btnclockin" type="button"
+                                                        <button type="button" data-toggle="modal" data-dismiss="modal"
+                                                            data-target="#delete_approve"
                                                             class="ui positive large icon button">{{ __('Confirm') }}</button>
                                                     @endif
                                                     <input type="hidden" id="_url" value="{{ url('/') }}">
@@ -87,18 +88,43 @@
                     </div>
                 </div>
                 {{-- ----End Time Clock---- --}}
+                <!-- Delete Attendance Modal -->
+                <div class="modal custom-modal fade" id="delete_approve" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="form-header">
+                                    <h3>Punch In / Punch Out</h3>
+                                    <p>Are you sure want to continue?</p>
+                                </div>
+                                <div class="modal-btn delete-action">
+                                    <form action="{{ route('attendance/page/delete') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="rec_id" class="rec_id" value="">
+                                        <input type="hidden" name="date" class="date" value="">
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button class="btn btn-primary continue-btn submit-btn" id="btnclockin"
+                                                    type="button" data-dismiss="modal">Confirm</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal"
+                                                    class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Delete Attendance Modal -->
 
                 {{-- ----Statistics---- --}}
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="card att-statistics">
                         <div class="card-body">
-                            {{-- @foreach ($daysThroughLeaves as $restDa) --}}
-
-                            {{-- @foreach ($leave as $date)
-                                        <h5 class="card-title">Statistics {{date('Y-m-d', strtotime($date))}}</h5>
-                                @endforeach --}}
-                            {{-- @endforeach --}}
-
 
                             <h5 class="card-title">Statistics</h5>
                             <div class="stats-list">
@@ -124,7 +150,8 @@
                                                             {{ $h }} hr {{ $m }} mins
                                                         @endif
                                                     @endif
-                                                @else 0
+                                                @else
+                                                    0
                                                 @endisset
                                             @endforeach
                                             <small>/ {{ $schedules->hours }} hrs</small>
@@ -148,7 +175,9 @@
                                 <div class="stats-info">
                                     <p>Remaining this Month<strong>
                                             @if ($monthWorkingHrs - $monthAttendance->sum('totalhours') > 0)
-                                            {{ $monthWorkingHrs - $monthAttendance->sum('totalhours') }} @else 0
+                                                {{ $monthWorkingHrs - $monthAttendance->sum('totalhours') }}
+                                            @else
+                                                0
                                             @endif <small> hrs</small>
                                         </strong></p>
                                     <div class="progress">
@@ -180,7 +209,7 @@
                 {{-- ----Statistics---- --}}
 
                 {{-- ----Today CheckIn/CheckOut---- --}}
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="card recent-activity">
                         <div class="card-body">
                             <h5 class="card-title">Today Activity</h5>
@@ -220,6 +249,8 @@
                                     </p>
                                 </li>
                             </ul>
+                            <h5 class="card-title">Today Activity</h5>
+
                         </div>
                     </div>
                 </div>
@@ -358,7 +389,8 @@
                                                             {{ $h }} hr {{ $m }} mins
                                                         @endif
                                                     @endif
-                                                @else --
+                                                @else
+                                                    --
                                                 @endisset
                                             </td>
 

@@ -42,7 +42,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Select Staff</label>
-                                            <select
+                                            {{-- <select
                                                 class="select select2s-hidden-accessible @error('name') is-invalid @enderror"
                                                 style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
                                                 <option value="">-- Select --</option>
@@ -51,7 +51,19 @@
                                                     <option value="{{ $user->name }}" class="selected"
                                                         data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
                                                 @endforeach
-                                            </select>
+                                            </select> --}}
+
+                                            <input id="custom_field1" name="name" type="text" list="employees"
+                                                class="form-control" placeholder="Manualy Select Employees">
+
+                                            <datalist id="employees">
+                                                {{-- <option value="">-- Select --</option> --}}
+
+                                                @foreach ($userList as $user)
+                                                    <option value="{{ $user->name }}" class="selected"
+                                                        data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
+                                                @endforeach
+                                            </datalist>
                                         </div>
 
                                         @error('name')
@@ -94,7 +106,8 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                    <button type="submit" id="manualEntry"
+                                        class="btn btn-primary submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -305,7 +318,8 @@
         <!-- /Page Content -->
 
         <!-- Attendance Modal -->
-        <div class="modal custom-modal fade" id="attendance_info" role="dialog" data-modal-index="1">
+
+        <div class="modal custom-modal" style="transition: all 1s;" id="attendance_info" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -416,20 +430,6 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-end">
-                            <div>
-                                <button class="btn add-btn mr-3" id="show-edit-btn"><i class="fa fa-edit"></i> Edit
-                                    Attendance</button>
-                            </div>
-                            {{-- <div> --}}
-                            <button class="btn add-btn text-danger" data-toggle="modal" data-target="#delete_approve"><i
-                                    class="fa fa-trash text-danger"></i> Delete
-                                Attendance</button>
-                            {{-- </div> --}}
-                        </div>
-
-
-
                         <div id="show-edit-form">
                             <form action="{{ route('attendance/page/edit') }}" method="POST">
                                 @csrf
@@ -464,26 +464,38 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <button class="btn add-btn mr-3" id="show-edit-btn"><i class="fa fa-edit"></i> Edit
+                                    Attendance</button>
+                            </div>
+                            {{-- <div> --}}
+                            <button class="btn add-btn text-danger" data-toggle="modal" data-dismiss="modal"
+                                data-target="#delete_approve"><i class="fa fa-trash text-danger"></i> Delete
+                                Attendance</button>
+                            {{-- </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <a class="btn add-btn text-danger" href="#delete_approve" data-toggle="modal"><i
-                class="fa fa-trash text-danger"></i> Delete
-            Attendance</a>
+        <!-- /Attendance Modal -->
+
         <!-- Delete Attendance Modal -->
-        <div class="modal custom-modal fade" id="delete_approve" role="dialog" data-modal-index="2">
+        <div class="modal custom-modal fade" id="delete_approve" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="form-header">
-                            <h3>Delete Leave</h3>
-                            <p>Are you sure want to delete this leave?</p>
+                            <h3>Delete days attendance</h3>
+                            <p>Are you sure want to delete this days Attendance?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            <form action="{{ route('form/leaves/edit/delete') }}" method="POST">
+                            <form action="{{ route('attendance/page/delete') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="id" class="e_id" value="">
+                                <input type="hidden" name="rec_id" class="rec_id" value="">
+                                <input type="hidden" name="date" class="date" value="">
+
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="submit"
@@ -502,7 +514,6 @@
         </div>
         <!-- /Delete Attendance Modal -->
 
-        <!-- /Attendance Modal -->
 
     </div>
     <!-- Page Wrapper -->
@@ -513,30 +524,29 @@
             $('.select2s-hidden-accessible').select2({
                 closeOnSelect: false
             });
-
             // select auto id and email
-            $('#name').on('change', function() {
+            $('#employees').on('change', function() {
                 $('#employee_id').val($(this).find(':selected').data('employee_id'));
             });
 
         });
+        $(document).ready(function() {
+            $("#custom_field1").change(function() {
+                var e_id = $("#custom_field1").val();
+                var name = $('#employees option').filter(function() {
+                    return this.value == e_id;
+                }).data('employee_id');
+
+                $('#add_salary').find('#employee_id').val(name);
+            });
+        });
+
         $(document).ready(function() {
             $("#show-edit-btn").click(function() {
                 $("#show-edit-form").toggle();
                 $(this).hide();
             });
         });
-        $(document).ready(function() {
-            $(document).on('show.bs.modal', '.modal', function(event) {
-                var zIndex = 2040 + (10 * $('.modal:visible').length);
-                $(this).css('z-index', zIndex);
-                setTimeout(function() {
-                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass(
-                        'modal-stack');
-                }, 0);
-            });
-        });
-
 
         $(document).on('click', '.adminattendancebtn', function() {
             var _this = $(this).parents('.modalParent');
@@ -559,10 +569,8 @@
             $('.bringInfo17').val(_this.find('.takeInfo17').text());
             $('.bringInfo14').attr('placeholder', _this.find('.takeInfo14').text());
             $('.bringInfo15').attr('placeholder', _this.find('.takeInfo15').text());
-            // $('.bringInfo16').attr('placeholder', _this.find('.takeInfo16').text());
-
-
-
+            $('.date').val(_this.find('.takeInfo16').text());
+            $('.rec_id').val(_this.find('.takeInfo17').text());
 
             var thisDay = _this.find('.takeInfo4').text();
             var totDay = _this.find('.takeInfo8').text();
