@@ -260,60 +260,6 @@ a {
     left: 20px;
 }
 
-.modal.in {
-    -webkit-perspective: 2000px !important;
-    -moz-perspective: 2000px !important;
-    -ms-perspective: 2000px !important;
-    -o-perspective: 2000px !important;
-    perspective: 2000px !important;
-}
-
-.modal.in .modal-dialog.aside {
-    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
-    -ms-transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
-    -o-transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
-    transform: scale(0.8) rotateY(45deg) translateZ(-340px) !important;
-    -webkit-transform-style: preserve-3d !important;
-    -ms-transform-style: preserve-3d !important;
-    -o-transform-style: preserve-3d !important;
-    transform-style: preserve-3d !important;
-}
-
-.modal.in .modal-dialog.aside.aside-1 {
-    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
-    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
-    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
-    transform: scale(0.8) rotateY(45deg) translateZ(calc(-300px)) !important;
-}
-
-.modal.in .modal-dialog.aside.aside-2 {
-    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
-    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
-    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
-    transform: scale(0.8) rotateY(45deg) translateZ(calc(-260px)) !important;
-}
-
-.modal.in .modal-dialog.aside.aside-3 {
-    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
-    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
-    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
-    transform: scale(0.8) rotateY(45deg) translateZ(calc(-220px));
-}
-
-.modal.in .modal-dialog.aside.aside-4 {
-    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
-    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
-    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
-    transform: scale(0.8) rotateY(45deg) translateZ(calc(-180px));
-}
-
-.modal.in .modal-dialog.aside.aside-5 {
-    -webkit-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
-    -ms-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
-    -o-transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
-    transform: scale(0.8) rotateY(45deg) translateZ(calc(-140px));
-}
-
 .editInput input:valid,
 .editInput input:focus,
 .editInput input:active {
@@ -5990,7 +5936,7 @@ html.menu-opened body {
 }
 
 .recent-activity .res-activity-list {
-    height: 328px;
+    /* height: 328px; */
     list-style-type: none;
     margin-bottom: 0;
     overflow-y: auto;
@@ -10384,7 +10330,7 @@ ul.comment-list li ul.children {
 
 .btnclock {
     border: 0px;
-    padding: 6px 38px;
+    padding: 6px 30px;
     border-radius: 5px;
     color: #9E9E9E;
     font-size: 16px;
@@ -10399,12 +10345,13 @@ ul.comment-list li ul.children {
 
 .timeclock {
     margin-top: 30px;
-    width: 310px;
-    height: 310px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
-    background: #2196F3;
+    background: transparent;
     display: inline-block;
-    border: 10px solid #B2EBF2
+    border: 10px solid #434343;
+    box-shadow: inset 0px 0px 15px 5px rgba(0, 0, 0, .1);
 }
 
 .timeclock span {
@@ -10412,23 +10359,24 @@ ul.comment-list li ul.children {
 }
 
 .clock-text {
-    margin-top: 90px;
-    color: #f4f4f4;
-    font-family: Helvetica Neue;
-    font-size: 42px;
+    margin-top: 50px;
+    color: #434343;
+    font-size: 32px;
     font-weight: 300;
     text-transform: uppercase;
 }
 
 .clock-time {
     padding: 30px 0px;
-    font-size: 46px;
-    color: #424242;
+    font-size: 36px;
+    color: #55CE63;
+    font-weight: 500;
 }
 
 span.clock-day {
-    color: white;
+    color: 434343;
     font-size: 26px;
+    font-weight: 300;
 }
 
 .userinput {
