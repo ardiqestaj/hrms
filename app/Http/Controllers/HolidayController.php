@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Holiday;
-use DB;
-use Session;
-
 use Auth;
-
+use Brian2694\Toastr\Facades\Toastr;
+use DB;
+use Illuminate\Http\Request;
+use Session;
 
 class HolidayController extends Controller
 {
@@ -19,10 +17,10 @@ class HolidayController extends Controller
 
         $user = Auth::User();
         Session::put('user', $user);
-        $user=Session::get('user');
+        $user = Session::get('user');
 
         $holiday = Holiday::all();
-        return view('form.holidays',compact('holiday'));
+        return view('form.holidays', compact('holiday'));
     }
     // save record
     public function saveRecord(Request $request)
@@ -36,61 +34,61 @@ class HolidayController extends Controller
         try {
             $holiday = new Holiday;
             $holiday->title = $request->nameHoliday;
-            $holiday->start  = $date; 
-            $holiday->end = $date; 
+            $holiday->start = $date;
+            $holiday->end = $date;
             $holiday->save();
 
             DB::commit();
-            Toastr::success('Create new holiday successfully :)','Success');
+            Toastr::success('Create new holiday successfully :)', 'Success');
             return redirect()->back();
 
-        } catch(\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Add Holiday fail :)','Error');
+            Toastr::error('Add Holiday fail :)', 'Error');
             return redirect()->back();
         }
     }
     // update
-    public function updateRecord( Request $request)
+    public function updateRecord(Request $request)
     {
         DB::beginTransaction();
-        try{
-            $id           = $request->id;
-            $holidayName  = $request->holidayName;
-            $holidayDate  = $request->holidayDate;
-            $holidayDate2  = $request->holidayDate;
+        try {
+            $id = $request->id;
+            $holidayName = $request->holidayName;
+            $holidayDate = date('Y-m-d', strtotime($request->holidayDate));
+            $holidayDate2 = date('Y-m-d', strtotime($request->holidayDate));
 
             $update = [
 
-                'id'           => $id,
+                'id' => $id,
                 'title' => $holidayName,
                 'start' => $holidayDate,
                 'end' => $holidayDate2,
             ];
 
-            Holiday::where('id',$request->id)->update($update);
+            Holiday::where('id', $request->id)->update($update);
             DB::commit();
-            Toastr::success('Holiday updated successfully :)','Success');
+            Toastr::success('Holiday updated successfully :)', 'Success');
             return redirect()->back();
 
-        }catch(\Exception $e){
+        } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Holiday update fail :)','Error');
+            Toastr::error('Holiday update fail :)', 'Error');
             return redirect()->back();
         }
     }
     public function deleteRecord(Request $request)
     {
-        try{
+        try {
 
-        Holiday::destroy($request->id);
-        Toastr::success('Holiday deleted successfully :)','Success');
+            Holiday::destroy($request->id);
+            Toastr::success('Holiday deleted successfully :)', 'Success');
             return redirect()->back();
 
-        } catch(\Exception $e) {
+        } catch (\Exception$e) {
 
             DB::rollback();
-            Toastr::error('Holiday delete fail :)','Error');
+            Toastr::error('Holiday delete fail :)', 'Error');
             return redirect()->back();
         }
     }
