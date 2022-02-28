@@ -3,9 +3,6 @@
 @extends('sidebar.dashboard')
 @endsection --}}
 @section('content')
-
-
-    
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -14,7 +11,7 @@
                 <div class="col-md-12">
                     <div class="welcome-box">
                         <div class="welcome-img">
-                            <img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                            <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
                         </div>
                         <div class="welcome-det">
                             <h3>Welcome, {{ Auth::user()->name }}</h3>
@@ -23,14 +20,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
-                <div class="col-lg-8 col-md-8">
+                <div class="col-lg-6 col-md-6">
                     <section class="dash-section">
                         <h1 class="dash-sec-title">Today</h1>
                         <div class="dash-sec-content">
                             <div class="dash-info-list">
-                                <a href="#" class="dash-card text-danger">
+                                <div href="#" class="dash-card">
                                     <div class="dash-card-container">
                                         <div class="dash-card-icon">
                                             <i class="fa fa-hourglass-o"></i>
@@ -38,11 +35,31 @@
                                         <div class="dash-card-content">
                                             <p>Richard Miles is off sick today</p>
                                         </div>
-                                        <div class="dash-card-avatars">
-                                            <div class="e-avatar"><img src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}" alt=""></div>
-                                        </div>
+
                                     </div>
-                                </a>
+
+
+                                    <div class="dash-card-container mt-3">
+                                        <div class="dash-card-icon">
+                                            <i class="fa fa-suitcase"></i>
+                                        </div>
+                                        <div class="dash-card-content">
+                                            <p>You are away today</p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="dash-card-container mt-3">
+                                        <div class="dash-card-icon">
+                                            <i class="fa fa-suitcase"></i>
+                                        </div>
+                                        <div class="dash-card-content">
+                                            <p>You are away today</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
                             </div>
 
                             <div class="dash-info-list">
@@ -128,7 +145,7 @@
                                             <i class="fa fa-user-plus"></i>
                                         </div>
                                         <div class="dash-card-content">
-                                            <p>Your first day is going to be  on Thursday</p>
+                                            <p>Your first day is going to be on Thursday</p>
                                         </div>
                                         <div class="dash-card-avatars">
                                             <div class="e-avatar"><img src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}" alt=""></div>
@@ -143,7 +160,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <div class="dash-card-content">
-                                            <p>It's Spring Bank Holiday  on Monday</p>
+                                            <p>It's Spring Bank Holiday on Monday</p>
                                         </div>
                                     </div>
                                 </a>
@@ -152,7 +169,7 @@
                     </section>
                 </div>
 
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-6 col-md-6">
                     <div class="dash-sidebar">
                         <section>
                             <h5 class="dash-title">Projects</h5>
@@ -171,11 +188,11 @@
                                 <div class="card-body">
                                     <div class="time-list">
                                         <div class="dash-stats-list">
-                                            <h4>{{$LeavesEvidence->where('status', 'Approved')->sum('day')}}</h4>
+                                            <h4>{{ $LeavesEvidence->where('status', 'Approved')->sum('day') }}</h4>
                                             <p>Leave Taken</p>
                                         </div>
                                         <div class="dash-stats-list">
-                                            <h4>{{$LeaveTypes->sum('leave_days') - $LeavesEvidence->where('status', 'Approved')->sum('day')}}</h4>
+                                            <h4>{{ $LeaveTypes->sum('leave_days') - $LeavesEvidence->where('status', 'Approved')->sum('day') }}</h4>
                                             <p>Remaining</p>
                                         </div>
                                     </div>
@@ -209,7 +226,7 @@
                             <h5 class="dash-title">Upcoming Holiday</h5>
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <h4 class="holiday-title mb-0">Mon 20 May 2019 - Ramzan</h4>
+                                    <h4 class="holiday-title mb-0">{{ $nextHoliday->title }} - {{ $totalTime }}</h4>
                                 </div>
                             </div>
                         </section>
@@ -219,7 +236,7 @@
         </div>
         <!-- /Page Content -->
     </div>
-    <!-- /Page Wrapper -->  
+    <!-- /Page Wrapper -->
 
     <script>
         $(document).ready(function() {

@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use DB;
-use AUTH;
-use Carbon\Carbon;
-use PDF;
-use App\Models\User;
-use App\Models\Employee;
-use App\Models\Location;
 use App\Models\Client;
 use App\Models\Department;
+use App\Models\Holiday;
 use App\Models\LeaveTypes;
-
-
-
+use App\Models\Location;
+use App\Models\User;
+use AUTH;
+use Carbon\Carbon;
+use DB;
 
 class HomeController extends Controller
 {
@@ -41,31 +36,39 @@ class HomeController extends Controller
         $clients = Client::take(6)->get();
         $clientsCount = Client::all();
 
-
         $employees = DB::table('employees')
-                        ->join('departments', 'employees.department', '=', 'departments.id')
-                        ->join('users', 'users.rec_id', '=', 'employees.employee_id')
-                        ->select('employees.*', 'departments.department as dep', 'users.avatar')
-                        ->take(6)->get();
+            ->join('departments', 'employees.department', '=', 'departments.id')
+            ->join('users', 'users.rec_id', '=', 'employees.employee_id')
+            ->select('employees.*', 'departments.department as dep', 'users.avatar')
+            ->take(6)->get();
         $employeesCount = DB::table('employees')
-        ->join('departments', 'employees.department', '=', 'departments.id')
-        ->select('employees.*', 'departments.department as dep')
-        ->get();
+            ->join('departments', 'employees.department', '=', 'departments.id')
+            ->select('employees.*', 'departments.department as dep')
+            ->get();
         $department = Department::all();
-        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients'));
+        $dt = Carbon::now();
+        $nextHoliday = Holiday::where('start', '>', $dt)->first();
+        $dt = Carbon::now();
+        $totalTime = $dt->diff($nextHoliday->start)->format('%D Days and %H Hours');
+        $totalTimeD = $dt->diff($nextHoliday->start)->format('%D');
+        $totalTimeH = $dt->diff($nextHoliday->start)->format('%H');
+
+        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients', 'nextHoliday', 'totalTimeD', 'totalTimeH'));
     }
-
-
 
     // employee dashboard
     public function emDashboard()
     {
-        $em_id = Auth::user()->rec_id; 
-        $dt        = Carbon::now();
+        $em_id = Auth::user()->rec_id;
+        $dt = Carbon::now();
         $todayDate = $dt->toDayDateTimeString();
         $LeaveTypes = LeaveTypes::all();
-        $LeavesEvidence = DB::table('leaves_evidence')->where('rec_id', $em_id) ;
-        return view('dashboard.emdashboard',compact('todayDate', 'LeaveTypes', 'LeavesEvidence'));
+        $LeavesEvidence = DB::table('leaves_evidence')->where('rec_id', $em_id);
+        $dt = Carbon::now();
+        $nextHoliday = Holiday::where('start', '>', $dt)->first();
+        $dt = Carbon::now();
+        $totalTime = $dt->diff($nextHoliday->start)->format('%D Days, %H Hours and %I Minutes');
+        return view('dashboard.emdashboard', compact('todayDate', 'LeaveTypes', 'LeavesEvidence', 'nextHoliday', 'totalTime'));
     }
 
     // public function generatePDF(Request $request)
