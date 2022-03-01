@@ -49,11 +49,13 @@ class HomeController extends Controller
         $dt = Carbon::now();
         $nextHoliday = Holiday::where('start', '>', $dt)->first();
         $dt = Carbon::now();
-        $totalTime = $dt->diff($nextHoliday->start)->format('%D Days and %H Hours');
+        // $totalTime = $dt->diffForHumans($nextHoliday->start)->format('%D Days and %H Hours');
+        $totalTimeM = $dt->diff($nextHoliday->start)->format('%M');
         $totalTimeD = $dt->diff($nextHoliday->start)->format('%D');
         $totalTimeH = $dt->diff($nextHoliday->start)->format('%H');
+        $totalTimeMin = $dt->diff($nextHoliday->start)->format('%I');
 
-        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients', 'nextHoliday', 'totalTimeD', 'totalTimeH'));
+        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin'));
     }
 
     // employee dashboard

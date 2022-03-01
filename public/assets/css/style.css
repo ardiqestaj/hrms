@@ -10598,17 +10598,18 @@ ul.comment-list li ul.children {
     margin-top: 30px;
     width: 250px;
     height: 250px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     background: transparent;
     display: inline-block;
-    border: 10px solid #434343;
-    box-shadow: inset 0px 0px 15px 5px rgba(0, 0, 0, .1);
+    /* border: 10px solid #434343; */
+    /* box-shadow: inset 0px 0px 15px 5px rgba(0, 0, 0, .1); */
 }
 
 .timeclock span {
     display: block;
 }
 
+/* Weekday */
 .clock-text {
     margin-top: 50px;
     color: #434343;
@@ -10617,6 +10618,7 @@ ul.comment-list li ul.children {
     text-transform: uppercase;
 }
 
+/* Time */
 .clock-time {
     padding: 30px 0px;
     font-size: 36px;
@@ -10624,8 +10626,9 @@ ul.comment-list li ul.children {
     font-weight: 500;
 }
 
+/* Date */
 span.clock-day {
-    color: 434343;
+    color: #434343;
     font-size: 26px;
     font-weight: 300;
 }
