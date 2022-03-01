@@ -17,7 +17,8 @@ class PayrollController extends Controller
 
         $users = DB::table('users')
                     ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
-                    ->select('users.*', 'staff_salaries.*')
+                    ->join('employees', 'employees.employee_id', '=', 'users.rec_id')
+                    ->select('users.*', 'staff_salaries.*', 'employees.payment_method')
                     ->get();
         $userList = DB::table('users')->get();
         $permission_lists = DB::table('permission_lists')->get();
