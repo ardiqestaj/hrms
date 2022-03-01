@@ -47,11 +47,11 @@
                     <div class="form-group form-focus select-focus">
                         <select class="select floating">
                             <option> -- Select -- </option>
-                            <option> Pending </option>
-                            <option> Approved </option>
-                            <option> Rejected </option>
+                            <option> Fulltime </option>
+                            <option> Partime </option>
+                            <option> Hourly </option>
                         </select>
-                        <label class="focus-label">Leave Status</label>
+                        <label class="focus-label">Payment Method</label>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
@@ -84,7 +84,7 @@
                                     <th>Employee</th>
                                     <th>Employee ID</th>
                                     <th>Email</th>
-                                    <th>Join Date</th>
+                                    <th>Payment Method</th>
                                     <th>Role</th>
                                     <th>Salary</th>
                                     <th>Payslip</th>
@@ -119,7 +119,7 @@
                                         <td hidden class="prof_tax">{{ $items->prof_tax }}</td>
                                         <td hidden class="labour_welfare">{{ $items->labour_welfare }}</td>
                                         <td>{{ $items->email }}</td>
-                                        <td>{{ $items->join_date }}</td>
+                                        <td>{{ $items->payment_method }}</td>
                                         <td>{{ $items->role_name }}</td>
                                         <td>${{ $items->salary }}</td>
                                         <td hidden class="salary">{{ $items->salary }}</td>
