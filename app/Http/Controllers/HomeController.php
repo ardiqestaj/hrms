@@ -47,15 +47,29 @@ class HomeController extends Controller
             ->get();
         $department = Department::all();
         $dt = Carbon::now();
-        $nextHoliday = Holiday::where('start', '>', $dt)->first();
-        $dt = Carbon::now();
-        // $totalTime = $dt->diffForHumans($nextHoliday->start)->format('%D Days and %H Hours');
-        $totalTimeM = $dt->diff($nextHoliday->start)->format('%M');
-        $totalTimeD = $dt->diff($nextHoliday->start)->format('%D');
-        $totalTimeH = $dt->diff($nextHoliday->start)->format('%H');
-        $totalTimeMin = $dt->diff($nextHoliday->start)->format('%I');
+        // $dt = $dth->format("Y-m-d");
 
-        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin'));
+        $nextHoliday = Holiday::where('start', '>=', $dt)->first();
+        // dd($nextHoliday);
+        $dt = Carbon::now();
+
+        $checkHolidays = DB::table('holidays')->get();
+        // dd($checkHolidays);
+        // $totalTime = $dt->diffForHumans($nextHoliday->start)->format('%D Days and %H Hours');
+        if (isset($nextHoliday)) {
+            $totalTimeM = $dt->diff($nextHoliday->start)->format('%M');
+            $totalTimeD = $dt->diff($nextHoliday->start)->format('%D');
+            $totalTimeH = $dt->diff($nextHoliday->start)->format('%H');
+            $totalTimeMin = $dt->diff($nextHoliday->start)->format('%I');
+        } else {
+            $totalTimeM = 999;
+            $totalTimeD = 999;
+            $totalTimeH = 999;
+            $totalTimeMin = 999;
+
+        }
+
+        return view('dashboard.dashboard', compact('clientsCount', 'employeesCount', 'employees', 'locations', 'clients', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'checkHolidays'));
     }
 
     // employee dashboard
@@ -69,7 +83,10 @@ class HomeController extends Controller
         $dt = Carbon::now();
         $nextHoliday = Holiday::where('start', '>', $dt)->first();
         $dt = Carbon::now();
-        $totalTime = $dt->diff($nextHoliday->start)->format('%D Days, %H Hours and %I Minutes');
+        if (isset($nextHoliday)) {
+            $totalTime = $dt->diff($nextHoliday->start)->format('%D Days, %H Hours and %I Minutes');} else {
+            $totalTime = 99999;
+        }
         return view('dashboard.emdashboard', compact('todayDate', 'LeaveTypes', 'LeavesEvidence', 'nextHoliday', 'totalTime'));
     }
 

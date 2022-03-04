@@ -226,7 +226,12 @@
                             <h5 class="dash-title">Upcoming Holiday</h5>
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <h4 class="holiday-title mb-0">{{ $nextHoliday->title }} - {{ $totalTime }}</h4>
+                                    @if (isset($nextHoliday))
+                                        <h4 class="holiday-title mb-0">{{ $nextHoliday->title }} - {{ $totalTime }}</h4>
+                                    @else
+                                        <h4 class="holiday-title mb-0">No Upcoming Holidays</h4>
+                                    @endif
+
                                 </div>
                             </div>
                         </section>
