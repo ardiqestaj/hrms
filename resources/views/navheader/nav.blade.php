@@ -86,6 +86,7 @@
 						<div class="topnav-dropdown-header"> <span class="notification-title">Notifications</span> <a href="javascript:void(0)" class="clear-noti"> Clear All </a> </div>
 						<div class="noti-content">
 							<ul class="notification-list">
+								{{-- @forelse ()
 								<li class="notification-message">
 									<a href="activities.html">
 										<div class="media"> <span class="avatar">
@@ -98,7 +99,22 @@
 										</div>
 									</a>
 								</li>
+								@empty
 								<li class="notification-message">
+									<a href="activities.html">
+										<div class="media"> <span class="avatar">
+													<img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+												</span>
+											<div class="media-body">
+												<p class="noti-details"><span class="noti-title">Empty</span> no notification <span class="noti-title"></span></p>
+												{{-- <p class="noti-time"><span class="notification-time">4 mins ago</span></p> --}}
+											{{-- </div>
+										</div>
+									</a>
+								</li> --}}
+								{{-- @endforelse --}} 
+								
+								{{-- <li class="notification-message">
 									<a href="activities.html">
 										<div class="media"> <span class="avatar">
 													<img alt="" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
@@ -145,7 +161,7 @@
 											</div>
 										</div>
 									</a>
-								</li>
+								</li> --}}
 							</ul>
 						</div>
 						<div class="topnav-dropdown-footer"> <a href="activities.html">View all Notifications</a> </div>

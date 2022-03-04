@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\LeaveTypes;
 use App\Models\LeaveApplies;
+use App\Models\User;
 use App\Models\LeavesEvidence;
+use App\Notifications\ApproveEmployeeLeaveNotify;
+// use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification;
 use DB;
 use DateTime;
 use Session;
@@ -215,6 +219,12 @@ class LeavesController extends Controller
             $LeavesEvidence->from_date                 = $request->from_date;
             $LeavesEvidence->to_date                 = $request->to_date;
             $LeavesEvidence->save();
+            // $requestt = '4';
+            // $users1 = DB::table('users')->where('rec_id', $request->rec_id)->get();
+            $users1 = User::where('rec_id', $request->rec_id)->first();
+            // dd($users1);
+
+            Notification::send($users1, new ApproveEmployeeLeaveNotify($request->status));
 
             DB::commit();
             Toastr::success('Status Updated :)','Success');
