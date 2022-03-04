@@ -165,7 +165,7 @@
                         <form action="{{ route('form/salary/save') }}" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Select Staff</label>
                                         <select
@@ -173,8 +173,9 @@
                                             style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key => $user)
-                                                <option value="{{ $user->name }}"
-                                                    data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
+                                                <option value="{{ $user->name }}" data-employee_id={{ $user->rec_id }}
+                                                    data-payment_method={{ $user->payment_method }}>{{ $user->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -185,19 +186,227 @@
                                     @enderror
                                 </div>
                                 <input class="form-control" type="hidden" name="rec_id" id="employee_id" readonly>
-                                <div class="col-sm-6">
-                                    <label>Net Salary</label>
-                                    <input class="form-control @error('salary') is-invalid @enderror" type="number"
-                                        name="salary" id="salary" value="{{ old('salary') }}"
-                                        placeholder="Enter net salary">
-                                    @error('salary')
+
+                            </div>
+                            <div class="pm-fulltime" style="display: none;">
+                                <div class="row">
+                                    <h4 class="text-primary col-12">Earnings</h4>
+                                    <div class="form-group col-6">
+                                        <label>Base Wage</label>
+                                        <input class="form-control @error('basic') is-invalid @enderror" type="number"
+                                            name="basic" id="basic" value="{{ old('basic') }}"
+                                            placeholder="Enter Monatslohn">
+                                        @error('basic')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Monthly Surcharge</label>
+                                        <input class="form-control @error('da') is-invalid @enderror" type="number"
+                                            name="da" id="da" value="{{ old('da') }}"
+                                            placeholder="Enter FSB Zuschlag mtl">
+                                        @error('da')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>13th Month Salary </label>
+                                        <input class="form-control @error('hra') is-invalid @enderror" type="number"
+                                            name="hra" id="hra" value="{{ old('hra') }}"
+                                            placeholder="13. Monatslohn (Auto Calculated)">
+                                        @error('hra')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Brutto Wage</label>
+                                    <input style="border: 1px solid #55CE63;"
+                                        class="form-control @error('conveyance') is-invalid @enderror" type="number"
+                                        name="conveyance" id="conveyance" value="{{ old('conveyance') }}"
+                                        placeholder="Bruttolohn (Auto Calculated)">
+                                    @error('conveyance')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="row">
+                                    <h4 class="text-primary col-12">Deductions</h4>
+                                    <div class="form-group col-6">
+                                        <label>Pension Insurance</label>
+                                        <input class="form-control @error('medical_allowance') is-invalid @enderror"
+                                            type="number" name="medical_allowance" id="medical_allowance"
+                                            value="{{ old('medical_allowance') }}" placeholder="Enter AHV Abzug">
+                                        @error('medical_allowance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Unemployment Insurance</label>
+                                        <input class="form-control @error('tds') is-invalid @enderror" type="number"
+                                            name="tds" id="tds" value="{{ old('tds') }}" placeholder="ALV Abzug">
+                                        @error('tds')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Accident Insurance </label>
+                                        <input class="form-control @error('esi') is-invalid @enderror" type="number"
+                                            name="esi" id="esi" value="{{ old('esi') }}" placeholder="NBU Abzug">
+                                        @error('esi')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>UVG Erganzung Grob...</label>
+                                        <input class="form-control @error('labour_welfare') is-invalid @enderror"
+                                            type="number" name="labour_welfare" id="labour_welfare"
+                                            value="{{ old('labour_welfare') }}"
+                                            placeholder="UVG Erganzung Grobfahrlassigkeit">
+                                        @error('labour_welfare')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Pension Fund Insurance</label>
+                                        <input class="form-control @error('pf') is-invalid @enderror" type="number"
+                                            name="pf" id="pf" value="{{ old('pf') }}" placeholder="Pensionkasse Abzug">
+                                        @error('pf')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Medical Insurance</label>
+                                        <input class="form-control @error('leave') is-invalid @enderror" type="text"
+                                            name="leave" id="leave" value="{{ old('leave') }}"
+                                            placeholder="Krankentaggeld">
+                                        @error('leave')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Collective Labor Agreement</label>
+                                        <input class="form-control @error('prof_tax') is-invalid @enderror" type="number"
+                                            name="prof_tax" id="prof_tax" value="{{ old('prof_tax') }}"
+                                            placeholder="GAV Abzug">
+                                        @error('prof_tax')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Total Deductons</label>
+                                        <input class="form-control @error('labour_welfare') is-invalid @enderror"
+                                            type="number" name="labour_welfare" id="labour_welfare"
+                                            value="{{ old('labour_welfare') }}"
+                                            placeholder="Total Abzüge (Auto Calculated)">
+                                        @error('labour_welfare')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Netto Wage </label>
+                                    <input class="form-control @error('medical_allowance') is-invalid @enderror"
+                                        type="number" name="medical_allowance" id="medical_allowance"
+                                        value="{{ old('medical_allowance') }}" placeholder="Nettolohn (Auto Calculated)"
+                                        style="border: 1px solid #55CE63;">
+                                    @error('medical_allowance')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="row">
+                                    <h4 class="text-primary col-12">Other Expenses</h4>
+                                    <div class="form-group col-6">
+                                        <label>Expenses</label>
+                                        <input class="form-control @error('conveyance') is-invalid @enderror"
+                                            type="number" name="conveyance" id="conveyance"
+                                            value="{{ old('conveyance') }}" placeholder="Enter Spesen">
+                                        @error('conveyance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Telephone and Shipment</label>
+                                        <input class="form-control @error('allowance') is-invalid @enderror" type="number"
+                                            name="allowance" id="allowance" value="{{ old('allowance') }}"
+                                            placeholder="Telefon und Versandspesen">
+                                        @error('allowance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Mileage Compensation</label>
+                                        <input class="form-control @error('medical_allowance') is-invalid @enderror"
+                                            type="number" name="medical_allowance" id="medical_allowance"
+                                            value="{{ old('medical_allowance') }}"
+                                            placeholder="Enter Kilometerentschadingung">
+                                        @error('medical_allowance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Total Expenses </label>
+                                        <input class="form-control @error('medical_allowance') is-invalid @enderror"
+                                            type="number" name="medical_allowance" id="medical_allowance"
+                                            value="{{ old('medical_allowance') }}"
+                                            placeholder="Totalspesen (Auto Calculated)">
+                                        @error('medical_allowance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Payout </label>
+                                    <input class="form-control @error('medical_allowance') is-invalid @enderror"
+                                        type="number" name="medical_allowance" id="medical_allowance"
+                                        value="{{ old('medical_allowance') }}"
+                                        placeholder="Total Auszahlung (Auto Calculated)" style="border: 1px solid #55CE63;">
+                                    @error('medical_allowance')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row">
+                    </div>
+
+                    {{-- <div class="row pm-hourl">
                                 <div class="col-sm-6">
                                     <h4 class="text-primary">Earnings</h4>
                                     <div class="form-group">
@@ -330,149 +539,145 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-                            </div>
-                        </form>
+                            </div> --}}
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <!-- /Add Salary Modal -->
+    </div>
+    <!-- /Add Salary Modal -->
 
-        <!-- Edit Salary Modal -->
-        <div id="edit_salary" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Staff Salary</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <!-- Edit Salary Modal -->
+    <div id="edit_salary" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Staff Salary</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('form/salary/update') }}" method="POST">
+                        @csrf
+                        <input class="form-control" type="hidden" name="id" id="e_id" value="" readonly>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Name Staff</label>
+                                    <input class="form-control " type="text" name="name" id="e_name" value="" readonly>
+                                </div>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Net Salary</label>
+                                <input class="form-control" type="text" name="salary" id="e_salary" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4 class="text-primary">Earnings</h4>
+                                <div class="form-group">
+                                    <label>Basic</label>
+                                    <input class="form-control" type="text" name="basic" id="e_basic" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>DA(40%)</label>
+                                    <input class="form-control" type="text" name="da" id="e_da" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>HRA(15%)</label>
+                                    <input class="form-control" type="text" name="hra" id="e_hra" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Conveyance</label>
+                                    <input class="form-control" type="text" name="conveyance" id="e_conveyance" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Allowance</label>
+                                    <input class="form-control" type="text" name="allowance" id="e_allowance" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Medical Allowance</label>
+                                    <input class="form-control" type="text" name="medical_allowance"
+                                        id="e_medical_allowance" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4 class="text-primary">Deductions</h4>
+                                <div class="form-group">
+                                    <label>TDS</label>
+                                    <input class="form-control" type="text" name="tds" id="e_tds" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>ESI</label>
+                                    <input class="form-control" type="text" name="esi" id="e_esi" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>PF</label>
+                                    <input class="form-control" type="text" name="pf" id="e_pf" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Leave</label>
+                                    <input class="form-control" type="text" name="leave" id="e_leave" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Prof. Tax</label>
+                                    <input class="form-control" type="text" name="prof_tax" id="e_prof_tax" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Loan</label>
+                                    <input class="form-control" type="text" name="labour_welfare" id="e_labour_welfare"
+                                        value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Salary Modal -->
+
+    <!-- Delete Salary Modal -->
+    <div class="modal custom-modal fade" id="delete_salary" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete Salary</h3>
+                        <p>Are you sure want to delete?</p>
                     </div>
-                    <div class="modal-body">
-                        <form action="{{ route('form/salary/update') }}" method="POST">
+                    <div class="modal-btn delete-action">
+                        <form action="{{ route('form/salary/delete') }}" method="POST">
                             @csrf
-                            <input class="form-control" type="hidden" name="id" id="e_id" value="" readonly>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Name Staff</label>
-                                        <input class="form-control " type="text" name="name" id="e_name" value=""
-                                            readonly>
-                                    </div>
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="col-6">
+                                    <input type="hidden" name="id" class="e_id" value="">
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                 </div>
-                                <div class="col-sm-6">
-                                    <label>Net Salary</label>
-                                    <input class="form-control" type="text" name="salary" id="e_salary" value="">
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal"
+                                        class="btn btn-primary cancel-btn">Cancel</a>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4 class="text-primary">Earnings</h4>
-                                    <div class="form-group">
-                                        <label>Basic</label>
-                                        <input class="form-control" type="text" name="basic" id="e_basic" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>DA(40%)</label>
-                                        <input class="form-control" type="text" name="da" id="e_da" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>HRA(15%)</label>
-                                        <input class="form-control" type="text" name="hra" id="e_hra" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Conveyance</label>
-                                        <input class="form-control" type="text" name="conveyance" id="e_conveyance"
-                                            value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Allowance</label>
-                                        <input class="form-control" type="text" name="allowance" id="e_allowance"
-                                            value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Medical Allowance</label>
-                                        <input class="form-control" type="text" name="medical_allowance"
-                                            id="e_medical_allowance" value="">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h4 class="text-primary">Deductions</h4>
-                                    <div class="form-group">
-                                        <label>TDS</label>
-                                        <input class="form-control" type="text" name="tds" id="e_tds" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>ESI</label>
-                                        <input class="form-control" type="text" name="esi" id="e_esi" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>PF</label>
-                                        <input class="form-control" type="text" name="pf" id="e_pf" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Leave</label>
-                                        <input class="form-control" type="text" name="leave" id="e_leave" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Prof. Tax</label>
-                                        <input class="form-control" type="text" name="prof_tax" id="e_prof_tax" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Loan</label>
-                                        <input class="form-control" type="text" name="labour_welfare"
-                                            id="e_labour_welfare" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Update</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Edit Salary Modal -->
-
-        <!-- Delete Salary Modal -->
-        <div class="modal custom-modal fade" id="delete_salary" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="form-header">
-                            <h3>Delete Salary</h3>
-                            <p>Are you sure want to delete?</p>
-                        </div>
-                        <div class="modal-btn delete-action">
-                            <form action="{{ route('form/salary/delete') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="hidden" name="id" class="e_id" value="">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Delete Salary Modal -->
+    </div>
+    <!-- /Delete Salary Modal -->
 
     </div>
     <!-- /Page Wrapper -->
@@ -488,6 +693,13 @@
         // select auto id and email
         $('#name').on('change', function() {
             $('#employee_id').val($(this).find(':selected').data('employee_id'));
+            if ($(this).find(':selected').data('payment_method') == "Fulltime") {
+                $('.pm-fulltime').css('display', 'block');
+            } else if ($(this).find(':selected').data('payment_method') == "Parttime") {
+                $('.pm-parttime').css('display', 'block');
+            } else {
+                $('.pm-hourly').css('display', 'block');
+            }
         });
     </script>
     {{-- update js --}}
