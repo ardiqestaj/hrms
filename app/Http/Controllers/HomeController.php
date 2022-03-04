@@ -100,4 +100,5 @@ class HomeController extends Controller
     //     // download pdf file
     //     return $pdf->download('pdfview.pdf');
     // }
+    
 }

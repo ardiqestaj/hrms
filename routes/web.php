@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PayrollController;
+
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -229,7 +231,17 @@ Route::post('attendance/page/manual-entrance', [App\Http\Controllers\AdminAttend
 Route::post('attendance/page/edit', [App\Http\Controllers\AdminAttendance::class, 'edit'])->middleware('auth')->name('attendance/page/edit');
 Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::class, 'delete'])->middleware('auth')->name('attendance/page/delete');
 
+// -------------------- Posts --------------------------------------------------------------------------------------------
 // ---------------------------------- App--------------------------------------------------------//
+// Route::group(['prefix' => 'posts'], function() {
+    Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->name('posts');
+    Route::get('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts/create');
+    // Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'store'])->name('posts/store');
+    // Route::get('posts/{post}/show', [App\Http\Controllers\PostsController::class, 'show'])->name('posts/show');
+    Route::get('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('posts/edit');
+    // Route::patch('posts/{post}/update', 'PostsController@update')->name('posts/update');
+    Route::delete('posts/delete', [App\Http\Controllers\PostsController::class, 'delete'])->name('posts/delete');
+// });
 // Route::get('/show-event-calendar', [EventController::class, 'index']);
 // Route::post('/manage-events', [EventController::class, 'manageEvents']);
 // Route::get('ckeditor', [EventController::class, 'index']);
