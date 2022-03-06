@@ -278,6 +278,7 @@
                                 </label>
                             </div>
 
+                            <div class="display-on-toggle">
                             <label for="col-form-label">Possible working days and hours <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -316,6 +317,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
                             {{-- <div class="table-responsive m-t-15">
                                 <table class="table table-striped custom-table">
@@ -441,6 +443,16 @@
             $('.select2s-hidden-accessible').select2({
                 // closeOnSelect: false
             });
+
+            $(document).ready(function() {
+                $(".display-on-toggle").toggle();
+
+                $("#switch_hospitalisation").click(function() {
+                    $(".display-on-toggle").toggle();
+                    $(this).hide();
+                });
+             });
+
         });
     </script>
     <script>
@@ -480,6 +492,24 @@
             $(_option).appendTo("#e_status");
 
         });
+
+        // document.ready(function(){
+        // $(function()
+        // {
+        //   $('#switch_hospitalisation').change(function()
+        //   {
+        //     if ($(this).is(':checked')) {
+        //         $( '.display-on-toggle' ).style.display = 'block';
+        //     }
+        //     else{
+        //         $( '.display-on-toggle' ).style.display = 'none';
+        //     }
+
+        //   });
+        // });
+
+       
+
     </script>
 @endsection
 
