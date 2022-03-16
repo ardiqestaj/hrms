@@ -1,11 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\PayrollController;
-
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,6 +167,7 @@ Route::post('location/profile/assignment/{id}', [App\Http\Controllers\FindEmploy
 
 // ----------------------------- form payroll  ------------------------------//
 Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');
+Route::get('form/salary/paymentMethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->middleware('auth')->name('form/salary/paymentMethod');
 Route::post('form/salary/save', [App\Http\Controllers\PayrollController::class, 'saveRecord'])->middleware('auth')->name('form/salary/save');
 Route::post('form/salary/update', [App\Http\Controllers\PayrollController::class, 'updateRecord'])->middleware('auth')->name('form/salary/update');
 Route::post('form/salary/delete', [App\Http\Controllers\PayrollController::class, 'deleteRecord'])->middleware('auth')->name('form/salary/delete');
@@ -234,13 +231,13 @@ Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::cla
 // -------------------- Posts --------------------------------------------------------------------------------------------
 // ---------------------------------- App--------------------------------------------------------//
 // Route::group(['prefix' => 'posts'], function() {
-    Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->name('posts');
-    Route::get('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts/create');
-    // Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'store'])->name('posts/store');
-    // Route::get('posts/{post}/show', [App\Http\Controllers\PostsController::class, 'show'])->name('posts/show');
-    Route::get('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('posts/edit');
-    // Route::patch('posts/{post}/update', 'PostsController@update')->name('posts/update');
-    Route::delete('posts/delete', [App\Http\Controllers\PostsController::class, 'delete'])->name('posts/delete');
+Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->name('posts');
+Route::get('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts/create');
+// Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'store'])->name('posts/store');
+// Route::get('posts/{post}/show', [App\Http\Controllers\PostsController::class, 'show'])->name('posts/show');
+Route::get('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('posts/edit');
+// Route::patch('posts/{post}/update', 'PostsController@update')->name('posts/update');
+Route::delete('posts/delete', [App\Http\Controllers\PostsController::class, 'delete'])->name('posts/delete');
 // });
 // Route::get('/show-event-calendar', [EventController::class, 'index']);
 // Route::post('/manage-events', [EventController::class, 'manageEvents']);
@@ -251,4 +248,3 @@ Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::cla
 
 Route::get('fullcalender', [EventController::class, 'index']);
 Route::post('fullcalenderAjax', [EventController::class, 'ajax']);
-
