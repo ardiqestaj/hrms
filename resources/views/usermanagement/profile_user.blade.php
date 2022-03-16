@@ -38,7 +38,7 @@
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
                                                 <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
-                                                <h6 class="text-muted">{{ Auth::user()->department }}</h6>
+                                                {{-- <h6 class="text-muted">{{ Auth::user()->department }}</h6> --}}
                                                 <small class="text-muted">{{ Auth::user()->position }}</small>
                                                 <div class="staff-id">Employee ID : {{ Auth::user()->rec_id }}</div>
                                                 <div class="small doj text-muted">Date of Join :
@@ -155,8 +155,10 @@
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
                             <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Projects</a></li>
-                            <li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin
-                                        Only)</small></a></li>
+                            @if (Auth::user()->role_name == 'Admin')
+                                <li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin
+                                            Only)</small></a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -235,7 +237,6 @@
                                             </thead>
                                             <tbody>
                                                 @if (!empty($family))
-
                                                     <tr>
                                                         @if (Auth::user()->rec_id == $family->rec_id)
                                                             <td>{{ $family->name }}</td>
@@ -293,7 +294,6 @@
                                         <ul class="experience-list">
                                             @if (!empty($education))
                                                 @foreach ($education as $edu)
-
                                                     <li>
 
                                                         <div class="experience-user">
@@ -306,7 +306,6 @@
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                                 @if ($edu->id)
-
                                                                     <div hidden class="id">
                                                                         {{ $edu->id }}
                                                                     </div>
@@ -328,14 +327,12 @@
 
                                                                     <div hidden class="grade">{{ $edu->grade }}
                                                                     </div>
-
                                                                 @endif
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <hr>
                                                 @endforeach
-
                                             @else
                                                 <li>
                                                     <div class="experience-user">
@@ -372,7 +369,6 @@
                                         <ul class="experience-list">
                                             @if (!empty($experience))
                                                 @foreach ($experience as $exp)
-
                                                     <li>
                                                         <div class="experience-user">
                                                             <div class="before-circle"></div>
@@ -951,7 +947,6 @@
         <!-- /Page Content -->
 
         @if (!empty($information))
-
             <!-- Profile Modal -->
             <div id="profile_info" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1364,7 +1359,6 @@
                 </div>
             </div>
             <!-- /Emergency Contact Modal -->
-
         @else
             <!-- Emergency Contact Modal -->
             <div id="emergency_contact_modal" class="modal custom-modal fade" role="dialog">
@@ -1706,7 +1700,6 @@
                 </div>
             </div>
             {{-- @endforeach --}}
-
         @endif
 
         <!-- /Education Modal -->

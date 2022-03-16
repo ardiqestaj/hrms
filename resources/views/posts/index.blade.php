@@ -38,8 +38,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Title </th>
-                                    <th>Holiday Date</th>
-                                    <th>Day</th>
+                                    <th>Content</th>
+                                    <th>Publish Date</th>
                                     @if (Auth::user()->role_name == 'Admin')
                                         <th class="text-right">Action</th>
                                     @else
@@ -73,8 +73,8 @@
                                     @endif
                                 @endforeach --}}
                                 {{-- @foreach ($holiday as $key => $items) --}}
-                                    {{-- @if ($today_date <= $items->date_holiday) --}}
-                                    {{-- <tr class="holiday-upcoming">
+                                {{-- @if ($today_date <= $items->date_holiday) --}}
+                                {{-- <tr class="holiday-upcoming">
                                         <td hidden class="id">{{ $items->id }}</td>
                                         <td>{{ ++$key }}</td>
                                         <td class="holidayName">{{ $items->title }}</td>
@@ -94,7 +94,7 @@
                                             @endif
                                         </td>
                                     </tr> --}}
-                                    {{-- @endif --}}
+                                {{-- @endif --}}
                                 {{-- @endforeach --}}
                             </tbody>
                         </table>

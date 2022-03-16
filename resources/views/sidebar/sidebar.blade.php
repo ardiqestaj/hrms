@@ -132,14 +132,25 @@
                             <li><a href="taxes.html">Taxes</a></li>
                         </ul>
                     </li> -->
-                <li class="submenu"> <a href="#"><i class="las la-wallet"></i>
-                        <span> Payroll </span> <span class="menu-arrow"></span></a>
-                    <ul style="display: none;">
-                        <li><a href="{{ route('form/salary/page') }}"> Employee Salary </a></li>
-                        <li><a href="{{ url('form/salary/view/' . Auth::user()->rec_id) }}"> Payslip </a></li>
-                        <li><a href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
-                    </ul>
-                </li>
+                @if (Auth::user()->role_name == 'Admin')
+                    <li class="submenu"> <a href="#"><i class="las la-wallet"></i>
+                            <span> Payroll </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('form/salary/page') }}"> Employee Salary </a></li>
+                            <li><a href="{{ url('form/salary/view/' . Auth::user()->rec_id) }}"> Payslip </a></li>
+                            <li><a href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->role_name == 'Employee')
+                    <li class="submenu"> <a href="#"><i class="las la-wallet"></i>
+                            <span> Payroll </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url('form/salary/view/' . Auth::user()->rec_id) }}"> Payslip </a></li>
+                        </ul>
+                    </li>
+                @endif
+
                 {{-- App --}}
                 <li class="submenu"> <a href="#"><i class="las la-cube"></i>
                         <span> App </span> <span class="menu-arrow"></span></a>

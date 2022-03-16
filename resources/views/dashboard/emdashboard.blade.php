@@ -26,7 +26,7 @@
                     <section class="dash-section">
                         <h1 class="dash-sec-title">Today</h1>
                         <div class="dash-sec-content">
-                            <div class="dash-info-list">
+                            {{-- <div class="dash-info-list">
                                 <div href="#" class="dash-card">
                                     <div class="dash-card-container">
                                         <div class="dash-card-icon">
@@ -60,7 +60,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="dash-info-list">
                                 <a href="#" class="dash-card">

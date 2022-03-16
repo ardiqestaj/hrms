@@ -18,8 +18,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i
-                                class="fa fa-plus"></i> Manual Entry</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i class="fa fa-plus"></i> Manual Entry</a>
                     </div>
                 </div>
             </div>
@@ -53,15 +52,13 @@
                                                 @endforeach
                                             </select> --}}
 
-                                            <input id="custom_field1" name="name" type="text" list="employees"
-                                                class="form-control" placeholder="Manualy Select Employees">
+                                            <input id="custom_field1" name="name" type="text" list="employees" class="form-control" placeholder="Manualy Select Employees">
 
                                             <datalist id="employees">
                                                 {{-- <option value="">-- Select --</option> --}}
 
                                                 @foreach ($userList as $user)
-                                                    <option value="{{ $user->name }}" class="selected"
-                                                        data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
+                                                    <option value="{{ $user->name }}" class="selected" data-employee_id={{ $user->rec_id }}>{{ $user->name }}</option>
                                                 @endforeach
                                             </datalist>
                                         </div>
@@ -76,8 +73,7 @@
                                         <div class="form-group">
                                             <label>Select Date <span class="text-danger">*</span></label>
                                             <div class="cal-icon">
-                                                <input type="text" class="form-control datetimepicker" id="from_date"
-                                                    placeholder="00-00-0000" name="date">
+                                                <input type="text" class="form-control datetimepicker" id="from_date" placeholder="00-00-0000" name="date">
                                             </div>
                                         </div>
 
@@ -86,8 +82,7 @@
                                                 <div class="form-group">
                                                     <label>Time In <small class="text-danger"> (required)</small></label>
                                                     <div class="input-group time timepicker">
-                                                        <input class="form-control" required type="time" id="time_start"
-                                                            name="time_in">
+                                                        <input class="form-control" required type="time" id="time_start" name="time_in">
                                                     </div>
                                                 </div>
                                             </div>
@@ -97,8 +92,7 @@
                                                     <label>Time Out <small class="text-danger">
                                                             (optional)</small></label>
                                                     <div class="input-group time timepicker">
-                                                        <input class="form-control" type="time" id="time_end"
-                                                            name="time_out">
+                                                        <input class="form-control" type="time" id="time_end" name="time_out">
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,8 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button type="submit" id="manualEntry"
-                                        class="btn btn-primary submit-btn">Submit</button>
+                                    <button type="submit" id="manualEntry" class="btn btn-primary submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -186,13 +179,12 @@
                                     <tr>
                                         <td>
                                             <h2 class="table-avatar">
-                                                <a class="avatar avatar-xs" href="profile.html"><img alt=""
-                                                        src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
+                                                <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/images/photo_defaults.jpg') }}"></a>
                                                 <a href="profile.html">{{ $attend['name'] }} </a>
                                             </h2>
                                         </td>
 
-                                        <?php 
+                                        <?php
                                     $monthWorkingHrs = $attend['monthWorkingHrs'];
                                     $monthAttendences = $attend['totalMonthProductivity'];
                                     $monthMissedHrs = $attend['monthMissedHrs'];
@@ -270,7 +262,7 @@
                                             $remainInMonth = 0;
                                            }
 
-                                           $attendance_for_day = '<div class="modalParent"> 
+                                           $attendance_for_day = '<div class="modalParent">
                                             <div hidden class="takeInfo">'  . $daysattendance . '</div>
                                             <div hidden class="takeInfo14">'  . $daysattendanceEdit . '</div>
                                             <div hidden class="takeInfo2">' . $daysattendance2 .  '</div>
@@ -289,8 +281,8 @@
                                             <div hidden class="takeInfo17">' . $attendeeId . '</div>
                                             <a href="javascript:void(0);" class="adminattendancebtn" data-toggle="modal"  data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></div>';
 
-                                        } 
-                                      } 
+                                        }
+                                      }
                                   ?>
                                         <td><?php echo $attendance_for_day; ?> </td>
                                         <?php }?>
@@ -381,8 +373,7 @@
                                                         <small><strong> <span class="bringInfo4"></span></strong>
                                                             /<span class="bringInfo8"></span> hrs</small></strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
-                                                        aria-valuenow="25%" aria-valuemin="0" aria-valuemax=""></div>
+                                                    <div class="progress-bar bg-primary" id="todayPrg" role="progressbar" aria-valuenow="25%" aria-valuemin="0" aria-valuemax=""></div>
                                                 </div>
                                             </div>
 
@@ -391,9 +382,7 @@
                                                         <small><strong> <span class="bringInfo9"></span></strong>
                                                             /<span class="bringInfo7"></span> hrs</small></strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                        id="thismonthPrg" aria-valuenow="62" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
@@ -401,9 +390,7 @@
                                                         <small><strong><span class="bringInfo13"></span>
                                                                 hrs</small></strong> </strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-danger" role="progressbar"
-                                                        id="remainthismonth" aria-valuenow="62" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
@@ -411,8 +398,7 @@
                                                         <small><strong><span class="bringInfo11"></span>
                                                                 hrs</small></strong> </strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
-                                                        aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-warning" role="progressbar" id="missedHrs" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                             <div class="stats-info">
@@ -420,8 +406,7 @@
                                                         <small><strong><span class="bringInfo12"></span>
                                                                 hrs</small></strong> </strong></p>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-info" role="progressbar" id="overtime"
-                                                        aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-info" role="progressbar" id="overtime" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -438,14 +423,12 @@
                                         <div class="form-group">
                                             <label>Time In <small class="text-danger"> (required)</small></label>
                                             <div class="input-group time timepicker editInput">
-                                                <input class="form-control bringInfo14" required type="time"
-                                                    id="time_start" name="time_in" placeholder="">
+                                                <input class="form-control bringInfo14" required type="time" id="time_start" name="time_in" placeholder="">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <input class="form-control datetimepicker bringInfo16" type="hidden" name="date"
-                                        readonly>
+                                    <input class="form-control datetimepicker bringInfo16" type="hidden" name="date" readonly>
                                     <input class="form-control bringInfo17" type="hidden" name="rec_id" readonly>
 
                                     <div class="col-sm-6 pl-2 p-0">
@@ -453,8 +436,7 @@
                                             <label>Time Out <small class="text-danger">
                                                     (required)</small></label>
                                             <div class="input-group time timepicker editInput">
-                                                <input class="form-control bringInfo15" required type="time" id="time_end"
-                                                    name="time_out" placeholder="">
+                                                <input class="form-control bringInfo15" required type="time" id="time_end" name="time_out" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -470,8 +452,7 @@
                                     Attendance</button>
                             </div>
                             {{-- <div> --}}
-                            <button class="btn add-btn text-danger" data-toggle="modal" data-dismiss="modal"
-                                data-target="#delete_approve"><i class="fa fa-trash text-danger"></i> Delete
+                            <button class="btn add-btn text-danger" data-toggle="modal" data-dismiss="modal" data-target="#delete_approve"><i class="fa fa-trash text-danger"></i> Delete
                                 Attendance</button>
                             {{-- </div> --}}
                         </div>
@@ -498,12 +479,10 @@
 
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
