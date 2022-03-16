@@ -31,105 +31,112 @@
                 $today_date = Carbon::today()->format('d-m-Y');
             @endphp
             <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped custom-table datatable">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Title </th>
-                                    <th>Content</th>
-                                    <th>Publish Date</th>
-                                    @if (Auth::user()->role_name == 'Admin')
-                                        <th class="text-right">Action</th>
-                                    @else
-                                        <th></th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{-- @foreach ($holiday as $key => $items)
-                                    @if ($today_date > $items->date_holiday)
-                                        <tr class="holiday-completed">
-                                            <td>{{ ++$key }}</td>
-                                            <td>{{ $items->name_holiday }}</td>
-                                            <td>{{ date('d F, Y', strtotime($items->date_holiday)) }}</td>
-                                            <td>{{ date('l', strtotime($items->date_holiday)) }}</td>
-                                            <td>
-                                                <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item userUpdate" data-toggle="modal"
-                                                            data-id="'.$items->id.'" data-target="#edit_holiday"><i
-                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item holidayDelete" href="#" data-toggle="modal"
-                                                            data-target="#delete_holiday"><i
-                                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach --}}
-                                {{-- @foreach ($holiday as $key => $items) --}}
-                                {{-- @if ($today_date <= $items->date_holiday) --}}
-                                {{-- <tr class="holiday-upcoming">
-                                        <td hidden class="id">{{ $items->id }}</td>
-                                        <td>{{ ++$key }}</td>
-                                        <td class="holidayName">{{ $items->title }}</td>
-                                        <td hidden class="holidayDate">{{ date('d-m-Y', strtotime($items->start)) }}</td>
-                                        <td>{{ date('d F, Y', strtotime($items->start)) }}</td>
-                                        <td>{{ date('l', strtotime($items->start)) }}</td>
-                                        <td class="text-right">
-                                            @if (Auth::user()->role_name == 'Admin')
-                                                <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item holidayDelete" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i>
-                                                            Delete</a>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </td>
-                                    </tr> --}}
-                                {{-- @endif --}}
-                                {{-- @endforeach --}}
-                            </tbody>
-                        </table>
-                    </div>
+                @forelse ($posts as $post)
+                <div class="col-md-6">
+                    <div class="blog-container">
+                        <div class="blog-header">
+                          <div class="blog-cover">
+                              <img id="img_posts" class="mx-auto" src="{{ URL::to('/assets/images/posts/' . $post->image) }}" alt="">
+                            <div class="blog-author">
+                              <h3>Russ Beye</h3>
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="blog-body">
+                          <div class="blog-title mt-4">
+                            <h1><a href="#">I Like To Make Cool Things</a></h1>
+                          </div>
+                          <div class="blog-summary mt-4">
+                            <p>I love working on fresh designs that <a href="https://www.youtube.com/watch?v=hANtM1vJvOo">breathe</a>. To that end, I need to freshen up my portfolio here because it does exactly the opposite. For the next month I will be working almost exclusively on my portfolio. Sounds like a lot of fun!</p>
+                          </div>
+                        </div>
+                        
+                        <div class="blog-footer mt-4">
+                          <ul>
+                            <li class="published-date">2 days ago</li>
+                          </ul>
+                        </div>
+                      
+                      </div>
                 </div>
+                @empty
+                    No Post to show, Create one.
+                @endforelse
+                
+            </div>
+            <div class="mt-5">
+                @if (count($posts) >= 10)
+                    {{ $posts->links('vendor.pagination.bootstrap-4') }}
+                @endif
             </div>
         </div>
+     
         <!-- /Page Content -->
-        <!-- Add Holiday Modal -->
+        <!-- Add Post Modal Modal -->
         @if (Auth::user()->role_name == 'Admin')
-            <div class="modal custom-modal fade" id="add_holiday" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+            <div  class="modal custom-modal fade" id="add_holiday" role="dialog">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Add Holiday</h5>
+                            <h5 class="modal-title">Add Post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form action="{{ route('form/holidays/save') }}" method="POST">
+                        <div class="modal-body text-center">
+                            <form method="POST" enctype="multipart/form-data" id="save-content-form" action="{{ route('posts/create') }}">
                                 @csrf
-                                <div class="form-group">
-                                    <label>Holiday Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="nameHoliday" name="nameHoliday">
+                                <div class="mb-3 text-left">
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input value="{{ old('title') }}" 
+                                        type="text" 
+                                        class="form-control" 
+                                        name="title" 
+                                        placeholder="Title" required>
+                
+                                    @if ($errors->has('title'))
+                                        <span class="text-danger text-left">{{ $errors->first('title') }}</span>
+                                    @endif
                                 </div>
-                                <div class="form-group">
-                                    <label>Holiday Date <span class="text-danger">*</span></label>
-                                    <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="text" id="holidayDate" name="holidayDate">
-                                    </div>
+                
+                                <div class="mb-3 text-left">
+                                    <label for="description" class="form-label">Description</label>
+                                    <input value="{{ old('description') }}" 
+                                        type="text" 
+                                        class="form-control" 
+                                        name="description" 
+                                        placeholder="Description" required>
+                
+                                    @if ($errors->has('description'))
+                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
+                                    @endif
                                 </div>
-                                <div class="submit-section">
-                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                <div class="mb-3 text-left">
+                                    <label for="description" class="form-label">Add Image</label>
+                                    <input value="" 
+                                        type="file" 
+                                        class="form-control" 
+                                        id="image"
+                                        name="image" 
+                                        placeholder="image">
+                
+                                    {{-- @if ($errors->has('description'))
+                                        <span class="text-danger text-left">{{ $errors->first('description') }}</span>
+                                    @endif --}}
                                 </div>
+                
+                                <div class="mb-3 text-left">
+                                    <label for="body" class="form-label">Body</label>
+                                    <textarea class="form-control"
+                                        id="tinymce" name="body">{{ old('body') }} </textarea>
+                
+                                    @if ($errors->has('body'))
+                                        <span class="text-danger text-left">{{ $errors->first('body') }}</span>
+                                    @endif
+                                </div>
+                                <button type="submit" class="btn btn-primary mx-auto">Save</button>
                             </form>
                         </div>
                     </div>
@@ -204,6 +211,23 @@
     </div>
     <!-- /Page Wrapper -->
 @section('script')
+    <script type="text/javascript">
+        // tinymce.init({
+	    //     selector: 'textarea#tinymce',
+	    //     plugins: [
+        //         "advlist autolink lists link image charmap print preview anchor",
+        //         "searchreplace visualblocks code fullscreen",
+        //         "insertdatetime media table paste codesample"
+        //     ],
+        //     toolbar:
+        //         "undo redo | fontselect styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | codesample action section button",
+	    //     font_formats:"Segoe UI=Segoe UI;",
+	    //     fontsize_formats: "8px 9px 10px 11px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px 32px 34px 36px 38px 40px 42px 44px 46px 48px 50px 52px 54px 56px 58px 60px 62px 64px 66px 68px 70px 72px 74px 76px 78px 80px 82px 84px 86px 88px 90px 92px 94px 94px 96px",
+	    //     height: 600
+	    // });
+
+        
+    </script>
     <script>
         document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>

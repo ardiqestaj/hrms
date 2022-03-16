@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Post;
+use DB;
+
 
 class PostsController extends Controller
 {
@@ -14,7 +17,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = DB::table('posts')
+        ->join('users', 'users.id', '=', 'posts.user_id')
+        ->select('users.avatar', 'users.name', 'posts.*')
+        ->latest()->paginate(10); 
+        // $posts = Post::latest()->paginate(10);
         // dd($posts);
 
         return view('posts.index', compact('posts'));
@@ -29,7 +36,32 @@ class PostsController extends Controller
      */
     public function create(Request $request)
     {
-        return view('posts.create');
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'description'        => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+        $image = $request->file('image')->getClientOriginalName();
+        $path =  $request->file('image')->move(public_path('assets/images/posts'), $image);
+        DB::beginTransaction();
+        try {
+
+            $post = new Post;
+            $post->user_id       = $request->user_id;
+            $post->title         = $request->title;
+            $post->description   = $request->description;
+            $post->body          = $request->body;
+            $post->image          = $image;
+            $post->save();
+            
+            DB::commit();
+            Toastr::success('Create new Post successfully :)','Success');
+            return redirect()->back();
+        } catch(\Exception $e) {
+            DB::rollback();
+            Toastr::error('Add Post fail :)','Error');
+            return redirect()->back();
+        }
     }
 
     /**
