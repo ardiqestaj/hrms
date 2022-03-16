@@ -25,6 +25,45 @@
                 </div>
             </div>
 
+            {{-- Payment method Cards --}}
+            {{-- <div class="row mb-4">
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                    <div class="card dash-widget card-box1">
+                        <div class="card-body"> <span class="dash-widget-icon"><i
+                                    class="las la-business-time"></i></span>
+                            <div class="dash-widget-info">
+                                <span class="text-md d-block">Configure</span>
+                                <span class="text-md d-block">Fulltime Salary</span>
+                            </div>
+                        </div>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                    <div class="card dash-widget card-box2">
+                        <div class="card-body "> <span class="dash-widget-icon"><i class="las la-clock"></i></span>
+                            <div class="dash-widget-info">
+                                <span class="">Parttime</span>
+                            </div>
+                        </div>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                    <div class="card dash-widget card-box3">
+                        <div class="card-body"> <span class="dash-widget-icon"><i class="las la-stopwatch"></i></span>
+                            <div class="dash-widget-info">
+                                <span class="">Hourly</span>
+                            </div>
+                        </div>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- End Payment method Cards --}}
+
+
             <!-- Search Filter -->
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
@@ -124,7 +163,8 @@
                                         <td>${{ $items->salary }}</td>
                                         <td hidden class="salary">{{ $items->salary }}</td>
                                         <td><a class="btn btn-sm btn-primary"
-                                                href="{{ url('form/salary/view/' . $items->rec_id) }}">Generate Slip</a>
+                                                href="{{ url('form/salary/view/' . $items->rec_id) }}">Generate
+                                                Slip</a>
                                         </td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
@@ -174,7 +214,8 @@
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key => $user)
                                                 <option value="{{ $user->name }}" data-employee_id={{ $user->rec_id }}
-                                                    data-payment_method={{ $user->payment_method }}>{{ $user->name }}
+                                                    data-payment_method={{ $user->payment_method }}>
+                                                    {{ $user->name }}
                                                 </option>
                                             @endforeach
                                         </select>

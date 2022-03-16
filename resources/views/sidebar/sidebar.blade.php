@@ -41,7 +41,8 @@
                 @if (Auth::user()->role_name == 'Admin')
                     <li class="submenu">
                         <a href="#">
-                            <i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
+                            <i class="la la-user-secret"></i> <span> User Controller</span> <span
+                                class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
                             <li><a href="{{ route('userManagement') }}">All User</a></li>
@@ -136,6 +137,7 @@
                     <li class="submenu"> <a href="#"><i class="las la-wallet"></i>
                             <span> Payroll </span> <span class="menu-arrow"></span></a>
                         <ul style="display: none;">
+                            <li><a href="{{ route('form/salary/paymentMethod') }}"> Payment Methods </a></li>
                             <li><a href="{{ route('form/salary/page') }}"> Employee Salary </a></li>
                             <li><a href="{{ url('form/salary/view/' . Auth::user()->rec_id) }}"> Payslip </a></li>
                             <li><a href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
