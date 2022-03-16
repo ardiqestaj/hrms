@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
-use App\Views\Composers\MultiComposer;
-use App\Models\Department;
-use Illuminate\Http\Request;
-use Brian2694\Toastr\Facades\Toastr;
 
+use App\Models\Department;
+use Auth;
+use Brian2694\Toastr\Facades\Toastr;
+use DB;
+use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
@@ -18,9 +18,13 @@ class DepartmentController extends Controller
 
     public function allDepartmet()
     {
-        $departments = Department::all();
-        return view('form.departments',compact('departments'));
+        if (Auth::user()->role_name == 'Admin') {
 
+            $departments = Department::all();
+            return view('form.departments', compact('departments'));
+        } else {
+            return redirect()->route('em/dashboard');
+        }
 
     }
 
@@ -28,7 +32,7 @@ class DepartmentController extends Controller
     public function saveDepartment(Request $request)
     {
         $request->validate([
-            'department' => 'required|string|max:255'
+            'department' => 'required|string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -38,37 +42,37 @@ class DepartmentController extends Controller
             $department->save();
 
             DB::commit();
-            Toastr::success('Create New Department successfully :)','Success');
+            Toastr::success('Create New Department successfully :)', 'Success');
             return redirect()->back();
 
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Add Department fail :)','Error');
+            Toastr::error('Add Department fail :)', 'Error');
             return redirect()->back();
         }
     }
 
-    public function updateDepartment( Request $request)
+    public function updateDepartment(Request $request)
     {
         DB::beginTransaction();
-        try{
-            $id           = $request->id;
-            $department  = $request->department;
+        try {
+            $id = $request->id;
+            $department = $request->department;
 
             $update = [
 
-                'id'           => $id,
+                'id' => $id,
                 'department' => $department,
             ];
 
-            Department::where('id',$request->id)->update($update);
+            Department::where('id', $request->id)->update($update);
             DB::commit();
-            Toastr::success('Department updated successfully :)','Success');
+            Toastr::success('Department updated successfully :)', 'Success');
             return redirect()->back();
 
-        }catch(\Exception $e){
+        } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Department update fail :)','Error');
+            Toastr::error('Department update fail :)', 'Error');
             return redirect()->back();
         }
 
@@ -76,16 +80,16 @@ class DepartmentController extends Controller
 
     public function deleteDepartment(Request $request)
     {
-        try{
+        try {
 
-        Department::destroy($request->id);
-        Toastr::success('Department deleted successfully :)','Success');
+            Department::destroy($request->id);
+            Toastr::success('Department deleted successfully :)', 'Success');
             return redirect()->back();
 
-        } catch(\Exception $e) {
+        } catch (\Exception$e) {
 
             DB::rollback();
-            Toastr::error('Department delete fail :)','Error');
+            Toastr::error('Department delete fail :)', 'Error');
             return redirect()->back();
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StaffSalary;
+use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use Illuminate\Http\Request;
@@ -94,6 +95,7 @@ class PayrollController extends Controller
         //         ->where('=.rec_id',$rec_id)
         //         ->first();
         return view('payroll.salaryview', compact('users'));
+
     }
 
     // update record
@@ -154,7 +156,12 @@ class PayrollController extends Controller
     // payroll Items
     public function payrollItems()
     {
-        return view('payroll.payrollitems');
+        if (Auth::user()->role_name == 'Admin') {
+
+            return view('payroll.payrollitems');
+        } else {
+            return redirect()->route('em/dashboard');
+        }
     }
 
     public function createPDF($rec_id)

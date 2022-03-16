@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Holiday;
 use App\Models\TimeClock;
 use App\Models\User;
+use AUTH;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -15,253 +16,256 @@ class AdminAttendance extends Controller
 {
     public function AdminAttendance()
     {
+        if (Auth::user()->role_name == 'Admin') {
+            $month = Carbon::now()->format('m');
+            $years = Carbon::now()->format('Y');
+            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
-        $month = Carbon::now()->format('m');
-        $years = Carbon::now()->format('Y');
-        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
-
-        $users = User::select('rec_id', 'name')
-            ->where('role_name', 'LIKE', 'employee')->get();
-        if (count($users) > 8) {
-            $users = User::select('rec_id', 'name')
-                ->where('role_name', 'LIKE', 'employee')->paginate(8);
-        } else {
             $users = User::select('rec_id', 'name')
                 ->where('role_name', 'LIKE', 'employee')->get();
-        }
+            if (count($users) > 8) {
+                $users = User::select('rec_id', 'name')
+                    ->where('role_name', 'LIKE', 'employee')->paginate(8);
+            } else {
+                $users = User::select('rec_id', 'name')
+                    ->where('role_name', 'LIKE', 'employee')->get();
+            }
 
-        $userList = DB::table('users')->get();
-        $permission_lists = DB::table('permission_lists')->get();
-        // dd($userList);
-        // Attendance
-        $now = Carbon::now();
-        $startOfMonth = $now->startOfMonth()->format('Y-m-d');
-        $now = Carbon::now();
-        $attendances = TimeClock::whereBetween('date', [$startOfMonth, $now])->get();
-        $todayAttendances = DB::table('time_clocks')->where('date', Carbon::today())->get();
+            $userList = DB::table('users')->get();
+            $permission_lists = DB::table('permission_lists')->get();
+            // dd($userList);
+            // Attendance
+            $now = Carbon::now();
+            $startOfMonth = $now->startOfMonth()->format('Y-m-d');
+            $now = Carbon::now();
+            $attendances = TimeClock::whereBetween('date', [$startOfMonth, $now])->get();
+            $todayAttendances = DB::table('time_clocks')->where('date', Carbon::today())->get();
 
-        $schedules = DB::table('assignment_employees')
-            ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
-            ->select('employee_id', 'idno', 'hours', 'restday')->get();
-        //  DB::table('schedules')->select('idno', 'hours', 'restday')->get();
+            $schedules = DB::table('assignment_employees')
+                ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
+                ->select('employee_id', 'idno', 'hours', 'restday')->get();
+            //  DB::table('schedules')->select('idno', 'hours', 'restday')->get();
 
-        $monthHolidays = Holiday::where('start', '>', Carbon::now()->startOfMonth())->where('start', '<', Carbon::now()->endOfMonth())->get();
-        $monthHolidaysNo = count($monthHolidays);
+            $monthHolidays = Holiday::where('start', '>', Carbon::now()->startOfMonth())->where('start', '<', Carbon::now()->endOfMonth())->get();
+            $monthHolidaysNo = count($monthHolidays);
 
-        // Leaves Table
-        $monthLeaves = DB::table('leave_applies')->select('*')->where('status', 'Approved')->get();
-        $monthLeavesCount = count($monthLeaves);
+            // Leaves Table
+            $monthLeaves = DB::table('leave_applies')->select('*')->where('status', 'Approved')->get();
+            $monthLeavesCount = count($monthLeaves);
 
-        // foreach
-        foreach ($users as $user) {
-            $employee['rec_id'] = $user->rec_id;
-            $employee['name'] = $user->name;
-            $attend = [];
-            $leaves = [];
-            $schedul = [];
+            // foreach
+            foreach ($users as $user) {
+                $employee['rec_id'] = $user->rec_id;
+                $employee['name'] = $user->name;
+                $attend = [];
+                $leaves = [];
+                $schedul = [];
 
-            foreach ($attendances as $attendance) {
-                // attendances
-                if ($attendance->idno == $user->rec_id) {
-                    $attend_2['idno'] = $attendance->idno;
-                    $attend_2['date'] = $attendance->date;
-                    $attend_2['timein'] = $attendance->timein;
-                    $attend_2['timeout'] = $attendance->timeout;
-                    $attend_2['totalhours'] = $attendance->totalhours;
-                    $attend_2['overtime'] = $attendance->overtime;
-                    $attend_2['missedhours'] = $attendance->missedhours;
-                    $attend[] = $attend_2;
+                foreach ($attendances as $attendance) {
+                    // attendances
+                    if ($attendance->idno == $user->rec_id) {
+                        $attend_2['idno'] = $attendance->idno;
+                        $attend_2['date'] = $attendance->date;
+                        $attend_2['timein'] = $attendance->timein;
+                        $attend_2['timeout'] = $attendance->timeout;
+                        $attend_2['totalhours'] = $attendance->totalhours;
+                        $attend_2['overtime'] = $attendance->overtime;
+                        $attend_2['missedhours'] = $attendance->missedhours;
+                        $attend[] = $attend_2;
+                    }
                 }
-            }
-            $employee['attendance'] = $attend;
+                $employee['attendance'] = $attend;
 
-            // Leaves
-            foreach ($monthLeaves as $monthLea) {
-                if ($monthLea->rec_id == $user->rec_id) {
-                    $leave_2['from_date'] = $monthLea->from_date;
-                    $leave_2['to_date'] = $monthLea->to_date;
-                    $leaves[] = $leave_2;
+                // Leaves
+                foreach ($monthLeaves as $monthLea) {
+                    if ($monthLea->rec_id == $user->rec_id) {
+                        $leave_2['from_date'] = $monthLea->from_date;
+                        $leave_2['to_date'] = $monthLea->to_date;
+                        $leaves[] = $leave_2;
+                    }
                 }
-            }
-            $employee['monthLea'] = $leaves;
+                $employee['monthLea'] = $leaves;
 
-            // Schedules
-            foreach ($schedules as $schedule) {
-                if ($schedule->employee_id == $user->rec_id) {
-                    $schedule_2['hours'] = $schedule->hours;
-                    $schedule_2['restday'] = $schedule->restday;
-                    $schedul[] = $schedule_2;
+                // Schedules
+                foreach ($schedules as $schedule) {
+                    if ($schedule->employee_id == $user->rec_id) {
+                        $schedule_2['hours'] = $schedule->hours;
+                        $schedule_2['restday'] = $schedule->restday;
+                        $schedul[] = $schedule_2;
+                    }
                 }
+                $employee['schedule'] = $schedul;
+                $final[] = $employee;
             }
-            $employee['schedule'] = $schedul;
-            $final[] = $employee;
-        }
-        // dd($final);
+            // dd($final);
 
-        // $month = Carbon::now()->format('m');
-        // $years = Carbon::now()->format('Y');
-        // $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
+            // $month = Carbon::now()->format('m');
+            // $years = Carbon::now()->format('Y');
+            // $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
-        // Total days in the current month
-        $now = Carbon::now();
-        // $totalMonthDay = Carbon::now()->daysInMonth;
-        $startOfMonth = $now->startOfMonth()->format('Y-m-d');
+            // Total days in the current month
+            $now = Carbon::now();
+            // $totalMonthDay = Carbon::now()->daysInMonth;
+            $startOfMonth = $now->startOfMonth()->format('Y-m-d');
 
-        // Function to display all reccurring days in a month
-        function workingDays($startDate, $totalDays)
-        {
-            $date_array = explode('-', $startDate);
-            $day = $date_array[0];
-            $month = $date_array[1];
-            $year = $date_array[2];
-            $working_date = array();
+            // Function to display all reccurring days in a month
+            function workingDays($startDate, $totalDays)
+            {
+                $date_array = explode('-', $startDate);
+                $day = $date_array[0];
+                $month = $date_array[1];
+                $year = $date_array[2];
+                $working_date = array();
 
-            for ($p = 0; $p < $totalDays; $p++) {
-                $working_date[] = date('l', mktime(0, 0, 0, $month, $day + (int) $p, $year));
+                for ($p = 0; $p < $totalDays; $p++) {
+                    $working_date[] = date('l', mktime(0, 0, 0, $month, $day + (int) $p, $year));
+                }
+                return $working_date;
             }
-            return $working_date;
-        }
 
-        // Count all Leaves of the month
-        function countLeaves($startCount, $endCount)
-        {
-            $period = CarbonPeriod::create($startCount, $endCount);
-            foreach ($period as $date) {
-                $date->format('l');
+            // Count all Leaves of the month
+            function countLeaves($startCount, $endCount)
+            {
+                $period = CarbonPeriod::create($startCount, $endCount);
+                foreach ($period as $date) {
+                    $date->format('l');
+                }
+                $dates[] = $period->toArray();
+                return $dates;
             }
-            $dates[] = $period->toArray();
-            return $dates;
-        }
 
-        // Number of Holidays that are Rest Days
-        function countDayOverleap($tableVar, $restD)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($restD as $day) {
+            // Number of Holidays that are Rest Days
+            function countDayOverleap($tableVar, $restD)
+            {
+                $totalMonthHolidays = 0;
+                foreach ($restD as $day) {
+                    foreach ($tableVar as $var) {
+                        if (date('l', strtotime($var->start)) == $day) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
+                        $totalMonthHolidays += $sum;
+                    }
+                }
+                return $totalMonthHolidays;
+            }
+            //Number of  Leaves within current month
+            function countDayOverleap7($tableVar)
+            {
+                $totalMonthHolidays = 0;
                 foreach ($tableVar as $var) {
-                    if (date('l', strtotime($var->start)) == $day) {
+                    if ($var->isCurrentMonth()) {
                         $sum = 1;
                     } else {
                         $sum = 0;
                     }
                     $totalMonthHolidays += $sum;
                 }
-            }
-            return $totalMonthHolidays;
-        }
-        //Number of  Leaves within current month
-        function countDayOverleap7($tableVar)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($tableVar as $var) {
-                if ($var->isCurrentMonth()) {
-                    $sum = 1;
-                } else {
-                    $sum = 0;
-                }
-                $totalMonthHolidays += $sum;
-            }
-            return $totalMonthHolidays;
-        }
-
-        //Number of  Leaves that are also rest Days
-        function countDayOverleap3($tableVar, $restD)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($restD as $day) {
-                foreach ($tableVar as $var) {
-                    if (date('l', strtotime($var)) == $day && $var->isCurrentMonth()) {
-                        $sum = 1;
-                    } else {
-                        $sum = 0;
-                    }
-                    $totalMonthHolidays += $sum;
-                }
-            }
-            return $totalMonthHolidays;
-        }
-
-        //Number of Leaves that are also holidays
-        function countDayOverleap5($tableVar, $restD)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($restD as $day) {
-                foreach ($tableVar as $var) {
-                    if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
-                        $sum = 1;
-                    } else {
-                        $sum = 0;
-                    }
-                    $totalMonthHolidays += $sum;
-                }
-            }
-            return $totalMonthHolidays;
-        }
-
-        // month Days
-        $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
-
-        foreach ($final as $stats) {
-            foreach ($stats['schedule'] as $sched) {
-                $workingHrs = $sched['hours'];
-                $restDays = $sched['restday'];
-                $days = explode(', ', $restDays);
-                $numOfRestDays = count($days);
+                return $totalMonthHolidays;
             }
 
-            $common = array_intersect($getMonthAllDays, $days);
-            $monthDaysEqualRestDays = count($common);
-
-            // Leaves
-            foreach ($stats['monthLea'] as $leaves) {
-                $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
-                foreach ($daysThroughLeaves as $restDa) {
-                    $leave = [];
-                }
-
-                {
-                    foreach ($restDa as $leave[]) {
+            //Number of  Leaves that are also rest Days
+            function countDayOverleap3($tableVar, $restD)
+            {
+                $totalMonthHolidays = 0;
+                foreach ($restD as $day) {
+                    foreach ($tableVar as $var) {
+                        if (date('l', strtotime($var)) == $day && $var->isCurrentMonth()) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
+                        $totalMonthHolidays += $sum;
                     }
                 }
+                return $totalMonthHolidays;
             }
 
-            $allCurrentLeavesOfMonth = countDayOverleap7($leave);
-            // dd($allCurrentLeavesOfMonth);
+            //Number of Leaves that are also holidays
+            function countDayOverleap5($tableVar, $restD)
+            {
+                $totalMonthHolidays = 0;
+                foreach ($restD as $day) {
+                    foreach ($tableVar as $var) {
+                        if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
+                        $totalMonthHolidays += $sum;
+                    }
+                }
+                return $totalMonthHolidays;
+            }
 
-            // Number of leaves that are rest days
-            $LeaveDaysEqualRestDays = countDayOverleap3($leave, $days);
-            $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
-            // Number of leaves that are holidays
-            $monthLeavesEqualHolidays = countDayOverleap5($monthHolidays, $leave);
+            // month Days
+            $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
 
-            // Month Holidays
-            $monthHolidaysEqualRestDay = countDayOverleap($monthHolidays, $days);
-            $monthHolidaysNotRestDays = ($monthHolidaysNo - $monthHolidaysEqualRestDay);
+            foreach ($final as $stats) {
+                foreach ($stats['schedule'] as $sched) {
+                    $workingHrs = $sched['hours'];
+                    $restDays = $sched['restday'];
+                    $days = explode(', ', $restDays);
+                    $numOfRestDays = count($days);
+                }
 
-            // Total working days in the current month
-            $monthWorkingDays = (count($getMonthAllDays) - $monthDaysEqualRestDays - $monthHolidaysNotRestDays - $monthLeavesEqualHolidays - $LeaveDaysEqualNotDays);
+                $common = array_intersect($getMonthAllDays, $days);
+                $monthDaysEqualRestDays = count($common);
 
-            $monthWorkingHrs = $monthWorkingDays * $workingHrs;
+                // Leaves
+                foreach ($stats['monthLea'] as $leaves) {
+                    $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
+                    foreach ($daysThroughLeaves as $restDa) {
+                        $leave = [];
+                    }
 
-            $stats['monthWorkingHrs'] = $monthWorkingHrs;
+                    {
+                        foreach ($restDa as $leave[]) {
+                        }
+                    }
+                }
 
-            $totalMonthProductivity = [];
-            $monthMissedHrs = [];
-            $monthOvertimeHrs = [];
-            foreach ($stats['attendance'] as $att) {
-                $totalMonthProductivity[] = $att['totalhours'];
-                $monthMissedHrs[] = $att['missedhours'];
-                $monthOvertimeHrs[] = $att['overtime'];
+                $allCurrentLeavesOfMonth = countDayOverleap7($leave);
+                // dd($allCurrentLeavesOfMonth);
+
+                // Number of leaves that are rest days
+                $LeaveDaysEqualRestDays = countDayOverleap3($leave, $days);
+                $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
+                // Number of leaves that are holidays
+                $monthLeavesEqualHolidays = countDayOverleap5($monthHolidays, $leave);
+
+                // Month Holidays
+                $monthHolidaysEqualRestDay = countDayOverleap($monthHolidays, $days);
+                $monthHolidaysNotRestDays = ($monthHolidaysNo - $monthHolidaysEqualRestDay);
+
+                // Total working days in the current month
+                $monthWorkingDays = (count($getMonthAllDays) - $monthDaysEqualRestDays - $monthHolidaysNotRestDays - $monthLeavesEqualHolidays - $LeaveDaysEqualNotDays);
+
+                $monthWorkingHrs = $monthWorkingDays * $workingHrs;
+
+                $stats['monthWorkingHrs'] = $monthWorkingHrs;
+
+                $totalMonthProductivity = [];
+                $monthMissedHrs = [];
+                $monthOvertimeHrs = [];
+                foreach ($stats['attendance'] as $att) {
+                    $totalMonthProductivity[] = $att['totalhours'];
+                    $monthMissedHrs[] = $att['missedhours'];
+                    $monthOvertimeHrs[] = $att['overtime'];
+
+                }
+                $stats['totalMonthProductivity'] = array_sum($totalMonthProductivity);
+                $stats['monthMissedHrs'] = array_sum($monthMissedHrs);
+                $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
+
+                $finale[] = $stats;
 
             }
-            $stats['totalMonthProductivity'] = array_sum($totalMonthProductivity);
-            $stats['monthMissedHrs'] = array_sum($monthMissedHrs);
-            $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
-
-            $finale[] = $stats;
-
+            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists'));
+        } else {
+            return redirect()->route('home');
         }
-        return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists'));
     }
 
     // Manual Entrance
@@ -418,281 +422,285 @@ class AdminAttendance extends Controller
 
     public function attSearch(Request $request)
     {
-        // month
-        if (!empty($request->month)) {
-            $monthVar = $request->month;
-            $month = str_replace("-", "", $monthVar);
-        } else {
-            $month = Carbon::now()->format('m');
-        }
+        if (Auth::user()->role_name == 'Admin') {
+            // month
+            if (!empty($request->month)) {
+                $monthVar = $request->month;
+                $month = str_replace("-", "", $monthVar);
+            } else {
+                $month = Carbon::now()->format('m');
+            }
 
-        // Year
-        if (!empty($request->year)) {
-            $yearsVar = $request->year;
-            $years = str_replace("-", "", $yearsVar);
-        } else {
-            $years = Carbon::now()->format('Y');
-        }
+            // Year
+            if (!empty($request->year)) {
+                $yearsVar = $request->year;
+                $years = str_replace("-", "", $yearsVar);
+            } else {
+                $years = Carbon::now()->format('Y');
+            }
 
-        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
+            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
-        $dt = $years . '-' . $month . '-' . '01';
-        $searchDt = $years . '-' . $month;
-        // dd($searchDt);
-        $startOfMonth = date('Y-m-d', strtotime($dt));
-        $endOfMonth = date("Y-m-t", strtotime($dt));
-        // dd($dt);
+            $dt = $years . '-' . $month . '-' . '01';
+            $searchDt = $years . '-' . $month;
+            // dd($searchDt);
+            $startOfMonth = date('Y-m-d', strtotime($dt));
+            $endOfMonth = date("Y-m-t", strtotime($dt));
+            // dd($dt);
 
-        $now = Carbon::now();
-        // $startOfMonth = $now->startOfMonth()->format('Y-m-d');
-        $users = User::select('rec_id', 'name')
-            ->where('role_name', 'LIKE', 'employee')
-            ->get();
-
-        // Search by name
-        $name = $request->name;
-        if (isset($request->name)) {
+            $now = Carbon::now();
+            // $startOfMonth = $now->startOfMonth()->format('Y-m-d');
             $users = User::select('rec_id', 'name')
                 ->where('role_name', 'LIKE', 'employee')
-                ->where('name', 'LIKE', '%' . $name . '%')
                 ->get();
-            if (count($users) > 8) {
-                $users = User::select('rec_id', 'name')
-                    ->where('role_name', 'LIKE', 'employee')
-                    ->where('name', 'LIKE', '%' . $name . '%')
-                    ->paginate(8);
-            } else {
+
+            // Search by name
+            $name = $request->name;
+            if (isset($request->name)) {
                 $users = User::select('rec_id', 'name')
                     ->where('role_name', 'LIKE', 'employee')
                     ->where('name', 'LIKE', '%' . $name . '%')
                     ->get();
-            }
-        }
-
-        if (!count($users) > 0) {
-            $final = User::select('rec_id', 'name')
-                ->where('role_name', 'LIKE', 'employee')
-                ->where('name', 'LIKE', '%' . $name . '%')
-                ->get();
-        }
-
-        $userList = DB::table('users')->get();
-        $permission_lists = DB::table('permission_lists')->get();
-
-        // Attendance
-        $attendances = TimeClock::whereBetween('date', [$startOfMonth, $endOfMonth])->get();
-        $todayAttendances = DB::table('time_clocks')->where('date', Carbon::today())->get();
-
-        $schedules = DB::table('assignment_employees')
-            ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
-            ->select('employee_id', 'idno', 'hours', 'restday')->get();
-
-        $monthHolidays = Holiday::where('start', '>', $startOfMonth)->where('start', '<', $endOfMonth)->get();
-        $monthHolidaysNo = count($monthHolidays);
-
-        // Leaves Table
-        $monthLeaves = DB::table('leave_applies')->select('*')->where('status', 'Approved')->get();
-        $monthLeavesCount = count($monthLeaves);
-
-        // foreach
-        foreach ($users as $user) {
-            $employee['rec_id'] = $user->rec_id;
-            $employee['name'] = $user->name;
-            $attend = [];
-            $leaves = [];
-            $schedul = [];
-
-            foreach ($attendances as $attendance) {
-                // attendances
-                if ($attendance->idno == $user->rec_id) {
-                    $attend_2['idno'] = $attendance->idno;
-                    $attend_2['date'] = $attendance->date;
-                    $attend_2['timein'] = $attendance->timein;
-                    $attend_2['timeout'] = $attendance->timeout;
-                    $attend_2['totalhours'] = $attendance->totalhours;
-                    $attend_2['overtime'] = $attendance->overtime;
-                    $attend_2['missedhours'] = $attendance->missedhours;
-                    $attend[] = $attend_2;
-                }
-            }
-            $employee['attendance'] = $attend;
-
-            // Leaves
-            foreach ($monthLeaves as $monthLea) {
-                if ($monthLea->rec_id == $user->rec_id) {
-                    $leave_2['from_date'] = $monthLea->from_date;
-                    $leave_2['to_date'] = $monthLea->to_date;
-                    $leaves[] = $leave_2;
-                }
-            }
-            $employee['monthLea'] = $leaves;
-
-            // Schedules
-            foreach ($schedules as $schedule) {
-                if ($schedule->employee_id == $user->rec_id) {
-                    $schedule_2['hours'] = $schedule->hours;
-                    $schedule_2['restday'] = $schedule->restday;
-                    $schedul[] = $schedule_2;
-                }
-            }
-            $employee['schedule'] = $schedul;
-            $final[] = $employee;
-        }
-
-        // Function to display all reccurring days in a month
-        function workingDays($startDate, $totalDays)
-        {
-            $date_array = explode('-', $startDate);
-            $day = $date_array[0];
-            $month = $date_array[1];
-            $year = $date_array[2];
-            $working_date = array();
-
-            for ($p = 0; $p < $totalDays; $p++) {
-                $working_date[] = date('l', mktime(0, 0, 0, $month, $day + (int) $p, $year));
-            }
-            return $working_date;
-        }
-
-        // Count all Leaves of the month
-        function countLeaves($startCount, $endCount)
-        {
-            $period = CarbonPeriod::create($startCount, $endCount);
-            foreach ($period as $date) {
-                $date->format('l');
-            }
-            $dates[] = $period->toArray();
-            return $dates;
-        }
-
-        // Number of Holidays that are Rest Days
-        function countDayOverleap($tableVar, $restD)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($restD as $day) {
-                foreach ($tableVar as $var) {
-                    if (date('l', strtotime($var->start)) == $day) {
-                        $sum = 1;
-                    } else {
-                        $sum = 0;
-                    }
-                    $totalMonthHolidays += $sum;
-                }
-            }
-            return $totalMonthHolidays;
-        }
-        //Number of  Leaves within current month
-        function countDayOverleap7($tableVar)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($tableVar as $var) {
-                if ($var->isCurrentMonth()) {
-                    $sum = 1;
+                if (count($users) > 8) {
+                    $users = User::select('rec_id', 'name')
+                        ->where('role_name', 'LIKE', 'employee')
+                        ->where('name', 'LIKE', '%' . $name . '%')
+                        ->paginate(8);
                 } else {
-                    $sum = 0;
+                    $users = User::select('rec_id', 'name')
+                        ->where('role_name', 'LIKE', 'employee')
+                        ->where('name', 'LIKE', '%' . $name . '%')
+                        ->get();
                 }
-                $totalMonthHolidays += $sum;
             }
-            return $totalMonthHolidays;
-        }
 
-        //Number of  Leaves that are also rest Days
-        function countDayOverleap3($tableVar, $restD)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($restD as $day) {
+            if (!count($users) > 0) {
+                $final = User::select('rec_id', 'name')
+                    ->where('role_name', 'LIKE', 'employee')
+                    ->where('name', 'LIKE', '%' . $name . '%')
+                    ->get();
+            }
+
+            $userList = DB::table('users')->get();
+            $permission_lists = DB::table('permission_lists')->get();
+
+            // Attendance
+            $attendances = TimeClock::whereBetween('date', [$startOfMonth, $endOfMonth])->get();
+            $todayAttendances = DB::table('time_clocks')->where('date', Carbon::today())->get();
+
+            $schedules = DB::table('assignment_employees')
+                ->join('schedules', 'schedules.idno', '=', 'assignment_employees.location_type_work_id')
+                ->select('employee_id', 'idno', 'hours', 'restday')->get();
+
+            $monthHolidays = Holiday::where('start', '>', $startOfMonth)->where('start', '<', $endOfMonth)->get();
+            $monthHolidaysNo = count($monthHolidays);
+
+            // Leaves Table
+            $monthLeaves = DB::table('leave_applies')->select('*')->where('status', 'Approved')->get();
+            $monthLeavesCount = count($monthLeaves);
+
+            // foreach
+            foreach ($users as $user) {
+                $employee['rec_id'] = $user->rec_id;
+                $employee['name'] = $user->name;
+                $attend = [];
+                $leaves = [];
+                $schedul = [];
+
+                foreach ($attendances as $attendance) {
+                    // attendances
+                    if ($attendance->idno == $user->rec_id) {
+                        $attend_2['idno'] = $attendance->idno;
+                        $attend_2['date'] = $attendance->date;
+                        $attend_2['timein'] = $attendance->timein;
+                        $attend_2['timeout'] = $attendance->timeout;
+                        $attend_2['totalhours'] = $attendance->totalhours;
+                        $attend_2['overtime'] = $attendance->overtime;
+                        $attend_2['missedhours'] = $attendance->missedhours;
+                        $attend[] = $attend_2;
+                    }
+                }
+                $employee['attendance'] = $attend;
+
+                // Leaves
+                foreach ($monthLeaves as $monthLea) {
+                    if ($monthLea->rec_id == $user->rec_id) {
+                        $leave_2['from_date'] = $monthLea->from_date;
+                        $leave_2['to_date'] = $monthLea->to_date;
+                        $leaves[] = $leave_2;
+                    }
+                }
+                $employee['monthLea'] = $leaves;
+
+                // Schedules
+                foreach ($schedules as $schedule) {
+                    if ($schedule->employee_id == $user->rec_id) {
+                        $schedule_2['hours'] = $schedule->hours;
+                        $schedule_2['restday'] = $schedule->restday;
+                        $schedul[] = $schedule_2;
+                    }
+                }
+                $employee['schedule'] = $schedul;
+                $final[] = $employee;
+            }
+
+            // Function to display all reccurring days in a month
+            function workingDays($startDate, $totalDays)
+            {
+                $date_array = explode('-', $startDate);
+                $day = $date_array[0];
+                $month = $date_array[1];
+                $year = $date_array[2];
+                $working_date = array();
+
+                for ($p = 0; $p < $totalDays; $p++) {
+                    $working_date[] = date('l', mktime(0, 0, 0, $month, $day + (int) $p, $year));
+                }
+                return $working_date;
+            }
+
+            // Count all Leaves of the month
+            function countLeaves($startCount, $endCount)
+            {
+                $period = CarbonPeriod::create($startCount, $endCount);
+                foreach ($period as $date) {
+                    $date->format('l');
+                }
+                $dates[] = $period->toArray();
+                return $dates;
+            }
+
+            // Number of Holidays that are Rest Days
+            function countDayOverleap($tableVar, $restD)
+            {
+                $totalMonthHolidays = 0;
+                foreach ($restD as $day) {
+                    foreach ($tableVar as $var) {
+                        if (date('l', strtotime($var->start)) == $day) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
+                        $totalMonthHolidays += $sum;
+                    }
+                }
+                return $totalMonthHolidays;
+            }
+            //Number of  Leaves within current month
+            function countDayOverleap7($tableVar)
+            {
+                $totalMonthHolidays = 0;
                 foreach ($tableVar as $var) {
-                    if (date('l', strtotime($var)) == $day && $var->isCurrentMonth()) {
+                    if ($var->isCurrentMonth()) {
                         $sum = 1;
                     } else {
                         $sum = 0;
                     }
                     $totalMonthHolidays += $sum;
                 }
-            }
-            return $totalMonthHolidays;
-        }
-
-        //Number of Leaves that are also holidays
-        function countDayOverleap5($tableVar, $restD)
-        {
-            $totalMonthHolidays = 0;
-            foreach ($restD as $day) {
-                foreach ($tableVar as $var) {
-                    if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
-                        $sum = 1;
-                    } else {
-                        $sum = 0;
-                    }
-                    $totalMonthHolidays += $sum;
-                }
-            }
-            return $totalMonthHolidays;
-        }
-
-        // month Days
-        $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
-        $finale = [];
-        foreach ($final as $stats) {
-            foreach ($stats['schedule'] as $sched) {
-                $workingHrs = $sched['hours'];
-                $restDays = $sched['restday'];
-                $days = explode(', ', $restDays);
-                $numOfRestDays = count($days);
+                return $totalMonthHolidays;
             }
 
-            $common = array_intersect($getMonthAllDays, $days);
-            $monthDaysEqualRestDays = count($common);
-
-            // Leaves
-            foreach ($stats['monthLea'] as $leaves) {
-                $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
-                foreach ($daysThroughLeaves as $restDa) {
-                    $leave = [];
-                }
-
-                {
-                    foreach ($restDa as $leave[]) {
+            //Number of  Leaves that are also rest Days
+            function countDayOverleap3($tableVar, $restD)
+            {
+                $totalMonthHolidays = 0;
+                foreach ($restD as $day) {
+                    foreach ($tableVar as $var) {
+                        if (date('l', strtotime($var)) == $day && $var->isCurrentMonth()) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
+                        $totalMonthHolidays += $sum;
                     }
                 }
+                return $totalMonthHolidays;
             }
 
-            $allCurrentLeavesOfMonth = countDayOverleap7($leave);
-            // dd($allCurrentLeavesOfMonth);
-
-            // Number of leaves that are rest days
-            $LeaveDaysEqualRestDays = countDayOverleap3($leave, $days);
-            $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
-            // Number of leaves that are holidays
-            $monthLeavesEqualHolidays = countDayOverleap5($monthHolidays, $leave);
-
-            // Month Holidays
-            $monthHolidaysEqualRestDay = countDayOverleap($monthHolidays, $days);
-            $monthHolidaysNotRestDays = ($monthHolidaysNo - $monthHolidaysEqualRestDay);
-
-            // Total working days in the current month
-            $monthWorkingDays = (count($getMonthAllDays) - $monthDaysEqualRestDays - $monthHolidaysNotRestDays - $monthLeavesEqualHolidays - $LeaveDaysEqualNotDays);
-
-            $monthWorkingHrs = $monthWorkingDays * $workingHrs;
-
-            $stats['monthWorkingHrs'] = $monthWorkingHrs;
-
-            $totalMonthProductivity = [];
-            $monthMissedHrs = [];
-            $monthOvertimeHrs = [];
-            foreach ($stats['attendance'] as $att) {
-                $totalMonthProductivity[] = $att['totalhours'];
-                $monthMissedHrs[] = $att['missedhours'];
-                $monthOvertimeHrs[] = $att['overtime'];
-
+            //Number of Leaves that are also holidays
+            function countDayOverleap5($tableVar, $restD)
+            {
+                $totalMonthHolidays = 0;
+                foreach ($restD as $day) {
+                    foreach ($tableVar as $var) {
+                        if ($var->start == date('Y-m-d', strtotime($day)) && $day->isCurrentMonth()) {
+                            $sum = 1;
+                        } else {
+                            $sum = 0;
+                        }
+                        $totalMonthHolidays += $sum;
+                    }
+                }
+                return $totalMonthHolidays;
             }
-            $stats['totalMonthProductivity'] = array_sum($totalMonthProductivity);
-            $stats['monthMissedHrs'] = array_sum($monthMissedHrs);
-            $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
 
-            $finale[] = $stats;
+            // month Days
+            $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
+            $finale = [];
+            foreach ($final as $stats) {
+                foreach ($stats['schedule'] as $sched) {
+                    $workingHrs = $sched['hours'];
+                    $restDays = $sched['restday'];
+                    $days = explode(', ', $restDays);
+                    $numOfRestDays = count($days);
+                }
+
+                $common = array_intersect($getMonthAllDays, $days);
+                $monthDaysEqualRestDays = count($common);
+
+                // Leaves
+                foreach ($stats['monthLea'] as $leaves) {
+                    $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
+                    foreach ($daysThroughLeaves as $restDa) {
+                        $leave = [];
+                    }
+
+                    {
+                        foreach ($restDa as $leave[]) {
+                        }
+                    }
+                }
+
+                $allCurrentLeavesOfMonth = countDayOverleap7($leave);
+                // dd($allCurrentLeavesOfMonth);
+
+                // Number of leaves that are rest days
+                $LeaveDaysEqualRestDays = countDayOverleap3($leave, $days);
+                $LeaveDaysEqualNotDays = ($allCurrentLeavesOfMonth - $LeaveDaysEqualRestDays);
+                // Number of leaves that are holidays
+                $monthLeavesEqualHolidays = countDayOverleap5($monthHolidays, $leave);
+
+                // Month Holidays
+                $monthHolidaysEqualRestDay = countDayOverleap($monthHolidays, $days);
+                $monthHolidaysNotRestDays = ($monthHolidaysNo - $monthHolidaysEqualRestDay);
+
+                // Total working days in the current month
+                $monthWorkingDays = (count($getMonthAllDays) - $monthDaysEqualRestDays - $monthHolidaysNotRestDays - $monthLeavesEqualHolidays - $LeaveDaysEqualNotDays);
+
+                $monthWorkingHrs = $monthWorkingDays * $workingHrs;
+
+                $stats['monthWorkingHrs'] = $monthWorkingHrs;
+
+                $totalMonthProductivity = [];
+                $monthMissedHrs = [];
+                $monthOvertimeHrs = [];
+                foreach ($stats['attendance'] as $att) {
+                    $totalMonthProductivity[] = $att['totalhours'];
+                    $monthMissedHrs[] = $att['missedhours'];
+                    $monthOvertimeHrs[] = $att['overtime'];
+
+                }
+                $stats['totalMonthProductivity'] = array_sum($totalMonthProductivity);
+                $stats['monthMissedHrs'] = array_sum($monthMissedHrs);
+                $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
+
+                $finale[] = $stats;
+            }
+            // dd($finale);
+            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt'));
+        } else {
+            return redirect()->route('em/dashboard');
         }
-        // dd($finale);
-        return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt'));
     }
 }

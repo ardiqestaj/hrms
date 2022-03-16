@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use Illuminate\Http\Request;
@@ -18,12 +19,14 @@ class ClientsController extends Controller
     //  Show Clients
     public function clients()
     {
+        if (Auth::user()->role_name == 'Admin') {
+            $clients = DB::table('clients')
+                ->get();
 
-        $clients = DB::table('clients')
-            ->get();
-
-        return view('clients.clients', compact('clients'));
-
+            return view('clients.clients', compact('clients'));
+        } else {
+            return redirect()->route('em/dashboard');
+        }
     }
 
     /**
@@ -33,17 +36,24 @@ class ClientsController extends Controller
      */
     public function clientsList()
     {
-        $clients = DB::table('clients')
-            ->get();
-        return view('clients.clients-list', compact('clients'));
-        //
+        if (Auth::user()->role_name == 'Admin') {
+
+            $clients = DB::table('clients')
+                ->get();
+            return view('clients.clients-list', compact('clients'));
+        } else {
+            return redirect()->route('em/dashboard');
+        }
     }
     public function clientsListProfile()
     {
-        $clients = DB::table('clients')
-            ->get();
-        return view('clients.clients-profile', compact('clients'));
-        //
+        if (Auth::user()->role_name == 'Admin') {
+            $clients = DB::table('clients')
+                ->get();
+            return view('clients.clients-profile', compact('clients'));
+        } else {
+            return redirect()->route('em/dashboard');
+        }
     }
 
     // Save Clients
@@ -127,23 +137,27 @@ class ClientsController extends Controller
      */
     public function clientProfile($client_id)
     {
-        $client = DB::table('clients')->where('client_id', $client_id)->first();
-        $client_list = DB::table('clients')->get();
-        $clients = DB::table('clients')
-            ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
-            ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
-            ->select('clients.*', 'locations.*', 'billing_addresses.*')
-            ->where('clients.rec_client_id', $client->rec_client_id)
-            ->get();
-        $typeOfWorks = DB::table('clients')
-            ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
-            ->join('location_type_works', 'location_type_works.location_id', '=', 'locations.id')
-            ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
-            ->where('client_id', $client_id)
-            ->get();
+        if (Auth::user()->role_name == 'Admin') {
 
-        return view('clients.client-profile', compact('client', 'clients', 'client_list', 'typeOfWorks'));
+            $client = DB::table('clients')->where('client_id', $client_id)->first();
+            $client_list = DB::table('clients')->get();
+            $clients = DB::table('clients')
+                ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
+                ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
+                ->select('clients.*', 'locations.*', 'billing_addresses.*')
+                ->where('clients.rec_client_id', $client->rec_client_id)
+                ->get();
+            $typeOfWorks = DB::table('clients')
+                ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
+                ->join('location_type_works', 'location_type_works.location_id', '=', 'locations.id')
+                ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
+                ->where('client_id', $client_id)
+                ->get();
 
+            return view('clients.client-profile', compact('client', 'clients', 'client_list', 'typeOfWorks'));
+        } else {
+            return redirect()->route('em/dashboard');
+        }
     }
 
     /**
