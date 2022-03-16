@@ -105,13 +105,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">Client <span class="text-danger">*</span></label>
-                                            <select class="select" name="rec_client_id" id="rec_cli_id">
-                                                <option selected disabled>-- Select Client --</option>
-                                                @foreach ($client_list as $cli)
-                                                    <option value="{{ $cli->rec_client_id }}">
-                                                        {{ $cli->client_name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <input class="form-control" type="hidden" name="rec_client_id" value="{{ $client->rec_client_id }}">
+                                            <input class="form-control" type="text" disabled value="{{ $client->client_name }}">
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -247,14 +243,14 @@
                                             <div hidden class="phone_number">{{ $cli->phone_number }}</div>
                                             <div hidden class="email">{{ $cli->email }}</div>
                                             <div class="card-body">
-                                                <div class="dropdown profile-action">
+                                                <div class="dropdown profile-action" style="z-index: 1000;">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <a class="dropdown-item locationUpdate" href="#" data-toggle="modal" data-target="#edit_location"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                         <a class="dropdown-item locationDelete" href="#" data-toggle="modal" data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
-                                                <h4 class="project-title text-xl"><a class="stretched-link" href="{{ url('location/locations/profile/' . $cli->id) }}">{{ $cli->location_name }}</a></h4>
+                                                <h4 class="project-title text-xl"><a class="stretched-link" style="z-index: 999;" href="{{ url('location/locations/profile/' . $cli->id) }}">{{ $cli->location_name }}</a></h4>
                                                 <small class="block text-ellipsis m-b-15">
                                                     <span class="text-xs text-muted">Location address: {{ $cli->location_address }} </span>
                                                 </small>
@@ -285,11 +281,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="project-members m-b-15">
+                                                {{-- <div class="project-members m-b-15">
                                                     <div>Type of work : <div class="text-danger">
-                                                            {{-- @foreach ($typeOfWorks as $typeOfWork)
-                                                                {{ $typeOfWork->department }}
-                                                            @endforeach --}}
+
                                                         </div>
                                                     </div>
                                                     <ul class="team-members">
@@ -362,7 +356,7 @@
                                                 <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
                                                 <div class="progress progress-xs mb-0">
                                                     <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>

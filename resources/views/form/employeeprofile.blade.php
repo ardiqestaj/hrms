@@ -28,9 +28,7 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href="#"><img alt="" class=""
-                                                src="{{ URL::to('/assets/images/' . $user->avatar) }}"
-                                                alt="{{ $user->name }}"></a>
+                                        <a href="#"><img alt="" class="" src="{{ URL::to('/assets/images/' . $user->avatar) }}" alt="{{ $user->name }}"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">
@@ -38,7 +36,7 @@
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
                                                 <h3 class="user-name mt-0 mt-md-5 mb-0">{{ $user->name }}</h3>
-                                                <h6 class="text-muted"> {{ $user->department }}</h6>
+                                                {{-- <h6 class="text-muted"> {{ $user->department }}</h6> --}}
                                                 <small class="text-muted">{{ $user->position }}</small>
                                                 <div class="staff-id">Employee ID : {{ $user->rec_id }}</div>
                                                 <div class="small doj text-muted">Date of Join : {{ $user->join_date }}
@@ -53,8 +51,7 @@
                                                     <li>
                                                         @if ($user->rec_id == $information->rec_id)
                                                             <div class="title">Email:</div>
-                                                            <div class="text"><a
-                                                                    href="mailto:{{ $information->email }}">{{ $information->email }}</a>
+                                                            <div class="text"><a href="mailto:{{ $information->email }}">{{ $information->email }}</a>
                                                             </div>
                                                         @else
                                                             <div class="title">Email:</div>
@@ -64,8 +61,7 @@
                                                     <li>
                                                         @if ($user->rec_id == $information->rec_id)
                                                             <div class="title">Phone:</div>
-                                                            <div class="text"><a
-                                                                    href="tel:{{ $information->phone_number }}">{{ $information->phone_number }}</a>
+                                                            <div class="text"><a href="tel:{{ $information->phone_number }}">{{ $information->phone_number }}</a>
                                                             </div>
                                                         @else
                                                             <div class="title">Phone:</div>
@@ -159,12 +155,9 @@
                 <div class="row user-tabs">
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="nav-item"><a href="#emp_profile" data-toggle="tab"
-                                    class="nav-link active">Profile</a></li>
-                            <li class="nav-item"><a href="#emp_projects" data-toggle="tab"
-                                    class="nav-link">Projects</a></li>
-                            <li class="nav-item"><a href="#bank_statutory" data-toggle="tab"
-                                    class="nav-link">Bank & Statutory <small class="text-danger">(Admin
+                            <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
+                            <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Projects</a></li>
+                            <li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin
                                         Only)</small></a></li>
                         </ul>
                     </div>
@@ -252,7 +245,6 @@
                                             </thead>
                                             <tbody>
                                                 @if (!empty($families))
-
                                                     <tr>
                                                         @if ($user->rec_id == $families->rec_id)
                                                             <td>{{ $families->name }}</td>
@@ -312,7 +304,6 @@
                                         <ul class="experience-list">
                                             @if (!empty($education))
                                                 @foreach ($education as $edu)
-
                                                     <li>
 
                                                         <div class="experience-user">
@@ -326,33 +317,27 @@
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a> --}}
                                                                 @if ($edu->id)
-
                                                                     <div hidden class="id">
                                                                         {{ $edu->id }}
                                                                     </div>
 
-                                                                    <a href="#/"
-                                                                        class="institution name">{{ $edu->institution }}</a>
+                                                                    <a href="#/" class="institution name">{{ $edu->institution }}</a>
 
                                                                     <div class="subject">{{ $edu->subject }}
                                                                     </div>
 
 
-                                                                    <span class="time"><span
-                                                                            class="st_date">{{ $edu->st_date }}
+                                                                    <span class="time"><span class="st_date">{{ $edu->st_date }}
                                                                         </span>
                                                                         -
-                                                                        <span
-                                                                            class="end_date">{{ $edu->end_date }}</span>
+                                                                        <span class="end_date">{{ $edu->end_date }}</span>
                                                                     </span>
-
                                                                 @endif
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <hr>
                                                 @endforeach
-
                                             @else
                                                 <li>
                                                     <div class="experience-user">
@@ -376,9 +361,7 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Experience <a href="#" class="edit-icon"
-                                            data-toggle="modal" data-target="#experience_info"><i
-                                                class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
                                     <div class="experience-box">
                                         <ul class="experience-list">
                                             <li>
@@ -435,13 +418,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                            href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Office Management</a></h4>
@@ -467,8 +447,7 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                        src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -476,20 +455,16 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                        src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                        src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                        src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                        src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
@@ -499,8 +474,7 @@
                                     <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
                                     </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                            class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -510,13 +484,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                            href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Project Management</a></h4>
@@ -542,8 +513,7 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                        src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -551,20 +521,16 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                        src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                        src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                        src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                        src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
@@ -574,8 +540,7 @@
                                     <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
                                     </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                            class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -585,13 +550,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                            href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Video Calling App</a></h4>
@@ -617,8 +579,7 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                        src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -626,20 +587,16 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                        src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                        src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                        src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                        src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
@@ -649,8 +606,7 @@
                                     <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
                                     </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                            class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -660,13 +616,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dropdown profile-action">
-                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                            href="#"><i class="material-icons">more_vert</i></a>
+                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a data-target="#edit_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a data-target="#delete_project" data-toggle="modal" href="#"
-                                                class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a data-target="#delete_project" data-toggle="modal" href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project-view.html">Hospital Administration</a></h4>
@@ -692,8 +645,7 @@
                                         <div>Project Leader :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                        src="assets/img/profiles/avatar-16.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -701,20 +653,16 @@
                                         <div>Team :</div>
                                         <ul class="team-members">
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                        src="assets/img/profiles/avatar-02.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                        src="assets/img/profiles/avatar-09.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                        src="assets/img/profiles/avatar-10.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
                                             </li>
                                             <li>
-                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                        src="assets/img/profiles/avatar-05.jpg"></a>
+                                                <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
                                             </li>
                                             <li>
                                                 <a href="#" class="all-users">+15</a>
@@ -724,8 +672,7 @@
                                     <p class="m-b-5">Progress <span class="text-success float-right">40%</span>
                                     </p>
                                     <div class="progress progress-xs mb-0">
-                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                            class="progress-bar bg-success" data-original-title="40%"></div>
+                                        <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar" class="progress-bar bg-success" data-original-title="40%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -743,8 +690,7 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Salary basis <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">Salary basis <span class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select salary basis type</option>
                                                 <option>Hourly</option>
@@ -762,8 +708,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">$</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -794,8 +739,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">PF No. <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">PF No. <span class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select PF contribution</option>
                                                 <option>Yes</option>
@@ -817,8 +761,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select additional rate</option>
                                                 <option>0%</option>
@@ -855,8 +798,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select additional rate</option>
                                                 <option>0%</option>
@@ -896,8 +838,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">ESI No. <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">ESI No. <span class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select ESI contribution</option>
                                                 <option>Yes</option>
@@ -919,8 +860,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
                                             <select class="select">
                                                 <option>Select additional rate</option>
                                                 <option>0%</option>

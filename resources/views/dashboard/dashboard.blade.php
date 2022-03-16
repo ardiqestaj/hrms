@@ -79,7 +79,7 @@
                                             </h4> <span>Next Holiday</span>
                                         @endif
                                     @elseif(0 < $totalTimeM && $totalTimeM < 365)
-                                        <small><strong>{{ $totalTimeM }}</strong> Months, <strong>{{ $totalTimeD }}</strong> Days and <strong>{{ $totalTimeH }}</strong> Hours</small>
+                                        <small><strong>{{ $totalTimeM }}</strong> Months and <strong>{{ $totalTimeD }}</strong> Days</small>
                                         </h4> <span>Next Holiday</span>
                                     @elseif($totalTimeM == 999)
                                         <h4> {{ $today_date = date('F j, Y') }}

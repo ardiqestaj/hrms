@@ -18,8 +18,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i
-                                class="fa fa-plus"></i> Add User</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add User</a>
                     </div>
                 </div>
             </div>
@@ -79,12 +78,8 @@
                                         <td>
                                             <span hidden class="image">{{ $user->avatar }}</span>
                                             <h2 class="table-avatar">
-                                                <a href="{{ url('employee/profile/' . $user->rec_id) }}"
-                                                    class="avatar"><img
-                                                        src="{{ URL::to('/assets/images/' . $user->avatar) }}"
-                                                        alt="{{ $user->avatar }}"></a>
-                                                <a href="{{ url('employee/profile/' . $user->rec_id) }}"
-                                                    class="name">{{ $user->name }}</span></a>
+                                                <a href="{{ url('employee/profile/' . $user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/images/' . $user->avatar) }}" alt="{{ $user->avatar }}"></a>
+                                                <a href="{{ url('employee/profile/' . $user->rec_id) }}" class="name">{{ $user->name }}</span></a>
                                             </h2>
                                         </td>
                                         <td hidden class="ids">{{ $user->id }}</td>
@@ -95,45 +90,36 @@
                                         <td>{{ $user->join_date }}</td>
                                         <td>
                                             @if ($user->role_name == 'Admin')
-                                                <span
-                                                    class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
+                                                <span class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
                                             @elseif ($user->role_name == 'Super Admin')
-                                                <span
-                                                    class="badge bg-inverse-warning role_name">{{ $user->role_name }}</span>
+                                                <span class="badge bg-inverse-warning role_name">{{ $user->role_name }}</span>
                                             @elseif ($user->role_name == 'Normal User')
-                                                <span
-                                                    class="badge bg-inverse-info role_name">{{ $user->role_name }}</span>
+                                                <span class="badge bg-inverse-info role_name">{{ $user->role_name }}</span>
                                             @elseif ($user->role_name == 'Client')
-                                                <span
-                                                    class="badge bg-inverse-success role_name">{{ $user->role_name }}</span>
+                                                <span class="badge bg-inverse-success role_name">{{ $user->role_name }}</span>
                                             @elseif ($user->role_name == 'Employee')
-                                                <span
-                                                    class="badge bg-inverse-dark role_name">{{ $user->role_name }}</span>
+                                                <span class="badge bg-inverse-dark role_name">{{ $user->role_name }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div class="dropdown action-label">
                                                 @if ($user->status == 'Active')
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa fa-dot-circle-o text-success"></i>
                                                         <span class="statuss">{{ $user->status }}</span>
                                                     </a>
                                                 @elseif ($user->status == 'Inactive')
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa fa-dot-circle-o text-info"></i>
                                                         <span class="statuss">{{ $user->status }}</span>
                                                     </a>
                                                 @elseif ($user->status == 'Disable')
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa fa-dot-circle-o text-danger"></i>
                                                         <span class="statuss">{{ $user->status }}</span>
                                                     </a>
                                                 @elseif ($user->status == '')
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa fa-dot-circle-o text-dark"></i>
                                                         <span class="statuss">N/A</span>
                                                     </a>
@@ -152,18 +138,21 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="department">{{ $user->department }}</td>
+                                        @foreach ($department as $dep)
+                                            @if ($dep->id == $user->department)
+                                                <td class="department">{{ $dep->department }}</td>
+                                            @endif
+                                        @endforeach
+                                        @if ($user->department == null)
+                                            <td class="department"></td>
+                                        @endif
+
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item userUpdate" data-toggle="modal"
-                                                        data-id="'.$user->id.'" data-target="#edit_user"><i
-                                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item userDelete" href="#" data-toggle="modal"
-                                                        ata-id="'.$user->id.'" data-target="#delete_user"><i
-                                                            class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$user->id.'" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$user->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -195,8 +184,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Full Name</label>
-                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id=""
-                                            name="name" value="{{ old('name') }}" placeholder="Enter Name">
+                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id="" name="name" value="{{ old('name') }}" placeholder="Enter Name">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -230,8 +218,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Phone</label>
-                                        <input class="form-control" type="tel" id="" name="phone"
-                                            placeholder="Enter Phone">
+                                        <input class="form-control" type="tel" id="" name="phone" placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -265,14 +252,12 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="password" class="form-control" name="password"
-                                            placeholder="Enter Password">
+                                        <input type="password" class="form-control" name="password" placeholder="Enter Password">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label>Repeat Password</label>
-                                    <input type="password" class="form-control" name="password_confirmation"
-                                        placeholder="Choose Repeat Password">
+                                    <input type="password" class="form-control" name="password_confirmation" placeholder="Choose Repeat Password">
                                 </div>
                             </div>
                             <div class="submit-section">
@@ -336,8 +321,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Phone</label>
-                                        <input class="form-control" type="text" id="e_phone_number" name="phone"
-                                            placeholder="Enter Phone">
+                                        <input class="form-control" type="text" id="e_phone_number" name="phone" placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -392,12 +376,10 @@
                                 <input type="hidden" name="avatar" class="e_avatar" value="">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>

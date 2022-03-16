@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use DB;
-use Brian2694\Toastr\Facades\Toastr;
-use App\Models\Employee;
-use App\Models\User;
 use App\Models\Client;
-use App\Models\module_permission;
+use Brian2694\Toastr\Facades\Toastr;
+use DB;
+use Illuminate\Http\Request;
+
 class ClientsController extends Controller
 {
     /**
@@ -22,13 +20,13 @@ class ClientsController extends Controller
     {
 
         $clients = DB::table('clients')
-                    ->get();
+            ->get();
 
-        return view('clients.clients',compact('clients'));
+        return view('clients.clients', compact('clients'));
 
     }
 
-           /**
+    /**
      * Show the clients in list form
      *
      * @return \Illuminate\Http\Response
@@ -36,14 +34,14 @@ class ClientsController extends Controller
     public function clientsList()
     {
         $clients = DB::table('clients')
-                    ->get();
+            ->get();
         return view('clients.clients-list', compact('clients'));
         //
     }
     public function clientsListProfile()
     {
         $clients = DB::table('clients')
-                    ->get();
+            ->get();
         return view('clients.clients-profile', compact('clients'));
         //
     }
@@ -52,29 +50,29 @@ class ClientsController extends Controller
     public function saveRecordClient(Request $request)
     {
         $request->validate([
-            'client_name'   => 'required|string|max:255',
-            'contact_person'    => 'required|string|max:255',
-            'client_address'      => 'required|string|max:255',
+            'client_name' => 'required|string|max:255',
+            'contact_person' => 'required|string|max:255',
+            'client_address' => 'required|string|max:255',
 
         ]);
 
         DB::beginTransaction();
         try {
             $client = new Client;
-            $client->client_name        = $request->client_name;
-            $client->contact_person    = $request->contact_person;
-            $client->client_address     = $request->client_address;
-            $client->client_email       = $request->client_email;
-            $client->client_mobile_phone           = $request->client_mobile_phone;
-            $client->client_fax_phone  = $request->client_fax_phone;
+            $client->client_name = $request->client_name;
+            $client->contact_person = $request->contact_person;
+            $client->client_address = $request->client_address;
+            $client->client_email = $request->client_email;
+            $client->client_mobile_phone = $request->client_mobile_phone;
+            $client->client_fax_phone = $request->client_fax_phone;
             $client->save();
 
             DB::commit();
-            Toastr::success('Create new Client successfully :)','Success');
+            Toastr::success('Create new Client successfully :)', 'Success');
             return redirect()->back();
-        } catch(\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Add Client fail :)','Error');
+            Toastr::error('Add Client fail :)', 'Error');
             return redirect()->back();
         }
     }
@@ -86,23 +84,23 @@ class ClientsController extends Controller
 
         try {
             $update = [
-            'client_name'        => $request->client_name,
-            'contact_person'    => $request->contact_person,
-            'client_address'     => $request->client_address,
-            'client_email'       => $request->client_email,
-            'client_mobile_phone'           => $request->client_mobile_phone,
-            'client_fax_phone'  => $request->client_fax_phone
+                'client_name' => $request->client_name,
+                'contact_person' => $request->contact_person,
+                'client_address' => $request->client_address,
+                'client_email' => $request->client_email,
+                'client_mobile_phone' => $request->client_mobile_phone,
+                'client_fax_phone' => $request->client_fax_phone,
             ];
 
-            Client::where('client_id',$request->id)->update($update);
+            Client::where('client_id', $request->id)->update($update);
             DB::commit();
 
             DB::commit();
-            Toastr::success('Updated Client successfully :)','Success');
+            Toastr::success('Updated Client successfully :)', 'Success');
             return redirect()->back();
-        } catch(\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Update Client fail :)','Error');
+            Toastr::error('Update Client fail :)', 'Error');
             return redirect()->back();
         }
     }
@@ -112,46 +110,41 @@ class ClientsController extends Controller
         try {
 
             Client::destroy($request->id);
-            Toastr::success('Client deleted successfully :)','Success');
+            Toastr::success('Client deleted successfully :)', 'Success');
             return redirect()->back();
 
-        } catch(\Exception $e) {
+        } catch (\Exception$e) {
 
             DB::rollback();
-            Toastr::error('Client delete fail :)','Error');
+            Toastr::error('Client delete fail :)', 'Error');
             return redirect()->back();
         }
     }
-        /**
+    /**
      * Show the client's profile
      *
      * @return \Illuminate\Http\Response
      */
     public function clientProfile($client_id)
     {
-        $client = DB::table('clients')->where('client_id',$client_id)->first();
+        $client = DB::table('clients')->where('client_id', $client_id)->first();
         $client_list = DB::table('clients')->get();
         $clients = DB::table('clients')
-                    ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
-                    ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
-                    ->select('clients.*', 'locations.*', 'billing_addresses.*')
-                    ->get();
+            ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
+            ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
+            ->select('clients.*', 'locations.*', 'billing_addresses.*')
+            ->where('clients.rec_client_id', $client->rec_client_id)
+            ->get();
         $typeOfWorks = DB::table('clients')
-                    ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
-                    ->join('location_type_works', 'location_type_works.location_id', '=', 'locations.id')
-                    ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
-                    ->where('client_id',$client_id)
-                    ->get();
+            ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
+            ->join('location_type_works', 'location_type_works.location_id', '=', 'locations.id')
+            ->join('departments', 'departments.id', '=', 'location_type_works.type_work_id')
+            ->where('client_id', $client_id)
+            ->get();
 
         return view('clients.client-profile', compact('client', 'clients', 'client_list', 'typeOfWorks'));
 
     }
-
-
-
-
-
-
 
     /**
      * Show the form for creating a new resource.
