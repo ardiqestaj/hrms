@@ -21,7 +21,7 @@ class ClientsController extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
             $clients = DB::table('clients')
-                ->get();
+                ->paginate(11);
 
             return view('clients.clients', compact('clients'));
         } else {
@@ -146,7 +146,7 @@ class ClientsController extends Controller
                 ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
                 ->select('clients.*', 'locations.*', 'billing_addresses.*')
                 ->where('clients.rec_client_id', $client->rec_client_id)
-                ->get();
+                ->paginate(7);
             $typeOfWorks = DB::table('clients')
                 ->join('locations', 'clients.rec_client_id', '=', 'locations.rec_client_id')
                 ->join('location_type_works', 'location_type_works.location_id', '=', 'locations.id')

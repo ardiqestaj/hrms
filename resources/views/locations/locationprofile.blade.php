@@ -230,6 +230,15 @@
                         <!-- Projects Tab -->
                         <div id="myprojects" class="tab-pane fade show active">
                             <div class="row">
+                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                                    <div class="card" style="height: 95%;">
+                                        <div class="card-body d-flex align-items-center justify-content-center">
+
+                                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location_type" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 @foreach ($locations_types as $locations_type)
                                     <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                                         <div class="card" style="height: 95%">
@@ -544,15 +553,12 @@
                                     </div>
                                     {{-- // Find Employees Modal --}}
                                 @endforeach
-                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                                    <div class="card" style="height: 95%;">
-                                        <div class="card-body d-flex align-items-center justify-content-center">
 
-                                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location_type" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
-
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="mx-auto mt-5">
+                                @if (count($locations_types) >= 1)
+                                    {{ $locations_types->links() }}
+                                @endif
                             </div>
                         </div>
                         <!-- /Projects Tab -->

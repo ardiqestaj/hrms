@@ -302,7 +302,7 @@
                 </div>
                 <div class="mx-auto mt-5">
                     @if (count($users) >= 8)
-                        {{ $users->links('vendor.pagination.bootstrap-4') }}
+                        {{ $users->links() }}
                     @endif
                 </div>
             </div>

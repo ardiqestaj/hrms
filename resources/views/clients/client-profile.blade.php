@@ -223,6 +223,13 @@
                         <!-- Projects Tab -->
                         <div id="myprojects" class="tab-pane fade show active">
                             <div class="row">
+                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                                    <div class="card" style="height: 95%;">
+                                        <div class="card-body d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Location</a>
+                                        </div>
+                                    </div>
+                                </div>
                                 @foreach ($clients as $cli)
                                     <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                                         <div class="card" style="height: 95%">
@@ -478,13 +485,12 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                                    <div class="card" style="height: 95%;">
-                                        <div class="card-body d-flex align-items-center justify-content-center">
-                                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Location</a>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            </div>
+                            <div class="mx-auto mt-5">
+                                @if (count($clients) >= 1)
+                                    {{ $clients->links() }}
+                                @endif
                             </div>
                         </div>
 
