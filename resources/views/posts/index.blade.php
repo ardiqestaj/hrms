@@ -30,34 +30,23 @@
                 use Carbon\Carbon;
                 $today_date = Carbon::today()->format('d-m-Y');
             @endphp
+            
             <div class="row">
                 @forelse ($posts as $post)
-                <div class="col-md-6">
-                    <div class="blog-container">
-                        <div class="blog-header">
-                          <div class="blog-cover">
-                              <img id="img_posts" class="mx-auto" src="{{ URL::to('/assets/images/posts/' . $post->image) }}" alt="">
-                            <div class="blog-author">
-                              <h3>Russ Beye</h3>
-                            </div>
-                          </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        @if ($post->image == "NULL")
+                         @else
+                        <img class="card-img-top img-fluid" style="height: 230px" src="{{ URL::to('/assets/images/posts/' . $post->image) }}">
+
+                        @endif
+                        <div class="card-body">
+                          <h5 class="card-title d-flex justify-content-between">{{$post->title}} <span style="font-size: 0.8rem" class="text-muted">Publish date: {{$post->created_at}}</span> </h5>
+                          <p class="card-text">{{$post->description}}</p>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                          <a href="#" class="btn btn-primary">Visit</a>
                         </div>
-                      
-                        <div class="blog-body">
-                          <div class="blog-title mt-4">
-                            <h1><a href="#">I Like To Make Cool Things</a></h1>
-                          </div>
-                          <div class="blog-summary mt-4">
-                            <p>I love working on fresh designs that <a href="https://www.youtube.com/watch?v=hANtM1vJvOo">breathe</a>. To that end, I need to freshen up my portfolio here because it does exactly the opposite. For the next month I will be working almost exclusively on my portfolio. Sounds like a lot of fun!</p>
-                          </div>
-                        </div>
-                        
-                        <div class="blog-footer mt-4">
-                          <ul>
-                            <li class="published-date">2 days ago</li>
-                          </ul>
-                        </div>
-                      
                       </div>
                 </div>
                 @empty
@@ -66,7 +55,7 @@
                 
             </div>
             <div class="mt-5">
-                @if (count($posts) >= 10)
+                @if (count($posts) >= 1)
                     {{ $posts->links('vendor.pagination.bootstrap-4') }}
                 @endif
             </div>
