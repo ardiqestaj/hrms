@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     {{-- message --}}
     {!! Toastr::message() !!}
 
@@ -21,7 +20,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
+                        {{-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a> --}}
                         <div class="view-icons">
                             <a href="{{ route('clients/clients') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="{{ route('clients/clients-list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
@@ -62,6 +61,15 @@
             <!-- Search Filter -->
 
             <div class="row staff-grid-row">
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 employeeclass">
+                    <div class="card" style="height: 88%;">
+                        <div class="card-body d-flex align-items-center justify-content-center">
+
+                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_client" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
+
+                        </div>
+                    </div>
+                </div>
                 @foreach ($clients as $client)
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 more">
                         <div class="profile-widget">
@@ -90,6 +98,11 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+            <div class="mx-auto mt-5">
+                @if (count($clients) >= 1)
+                    {{ $clients->links() }}
+                @endif
             </div>
         </div>
         <!-- /Page Content -->

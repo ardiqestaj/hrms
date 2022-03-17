@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                        {{-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a> --}}
                         <div class="view-icons">
                             <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
@@ -57,6 +57,15 @@
             <!-- Search Filter -->
             {{-- message --}}
             <div class="row staff-grid-row">
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 employeeclass">
+                    <div class="card" style="height: 83%;">
+                        <div class="card-body d-flex align-items-center justify-content-center">
+
+                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_employee" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
+
+                        </div>
+                    </div>
+                </div>
                 @foreach ($users as $lists)
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 employeeclass">
 
@@ -83,8 +92,8 @@
 
             </div>
             <div class="mx-auto mt-5">
-                @if (count($users) >= 11)
-                    {{ $users->links('vendor.pagination.bootstrap-4') }}
+                @if (count($users) >= 1)
+                    {{ $users->links() }}
                 @endif
             </div>
         </div>
@@ -107,7 +116,7 @@
                         <div class="card" style="border-radius: 0px; border: none;">
                             <div class="row user-tabs">
                                 <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
-                                    <ul class="nav nav-tabs nav-tabs-bottom">
+                                    <ul class="nav nav-tabs nav-tabs-bottom ">
                                         <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Personal Information</a></li>
                                         <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Salary Information</a></li>
                                         {{-- <li class="nav-item"><a href="#bank_statutory" data-toggle="tab"

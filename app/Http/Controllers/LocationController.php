@@ -21,7 +21,7 @@ class LocationController extends Controller
             $locations = DB::table('locations')
                 ->join('billing_addresses', 'locations.id', '=', 'billing_addresses.location_id')
                 ->select('locations.*', 'billing_addresses.*')
-                ->get();
+                ->paginate(11);
             return view('locations.locations', compact('clients', 'locations'));
         } else {
             return redirect()->route('em/dashboard');
@@ -40,7 +40,7 @@ class LocationController extends Controller
                 ->join('departments', 'location_type_works.type_work_id', '=', 'departments.id')
                 ->join('schedules', 'location_type_works.location_type_work_id', '=', 'schedules.idno')
                 ->select('location_type_works.number_of_employees', 'location_type_works.location_id', 'location_type_works.location_type_work_id as tid', 'departments.department', 'departments.id as did', 'schedules.*')
-                ->where('location_id', $id)->get();
+                ->where('location_id', $id)->paginate(7);
 
             $assignments = DB::table('assignment_employees')
                 ->join('users', 'users.rec_id', '=', 'assignment_employees.employee_id')

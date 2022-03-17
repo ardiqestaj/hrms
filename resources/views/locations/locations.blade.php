@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     {{-- message --}}
     {!! Toastr::message() !!}
 
@@ -21,13 +20,10 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i
-                                class="fa fa-plus"></i> Add Location</a>
+                        {{-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_location"><i class="fa fa-plus"></i> Add Location</a> --}}
                         <div class="view-icons">
-                            <a href="{{ route('location/locations') }}" class="grid-view btn btn-link active"><i
-                                    class="fa fa-th"></i></a>
-                            <a href="{{ route('location/locations/list') }}" class="list-view btn btn-link"><i
-                                    class="fa fa-bars"></i></a>
+                            <a href="{{ route('location/locations') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('location/locations/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -65,6 +61,15 @@
             <!-- Search Filter -->
 
             <div class="row staff-grid-row">
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 employeeclass">
+                    <div class="card" style="height: 86%;">
+                        <div class="card-body d-flex align-items-center justify-content-center">
+
+                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
+
+                        </div>
+                    </div>
+                </div>
                 @foreach ($locations as $location)
                     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 more">
                         <div class="profile-widget more">
@@ -87,31 +92,29 @@
                             {{-- <div hidden class="rec_client_id">{{ $location->rec_client_id }}</div> --}}
 
                             <div class="profile-img">
-                                <a href="{{ url('location/locations/profile/' . $location->id) }}"
-                                    class="avatar"><img alt=""
-                                        src="{{ URL::to('/assets/images/photo_defaults.jpg') }}"></a>
+                                <a href="{{ url('location/locations/profile/' . $location->id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/photo_defaults.jpg') }}"></a>
                             </div>
                             <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item locationUpdate" href="#" data-toggle="modal"
-                                        data-target="#edit_location"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item locationDelete" href="#" data-toggle="modal"
-                                        data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item locationUpdate" href="#" data-toggle="modal" data-target="#edit_location"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a class="dropdown-item locationDelete" href="#" data-toggle="modal" data-target="#delete_location"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
-                            <h4 class="user-name m-t-10 mb-0 text-ellipsis client_name"><a
-                                    href="client-profile.html">{{ $location->location_name }}</a></h4>
+                            <h4 class="user-name m-t-10 mb-0 text-ellipsis client_name"><a href="client-profile.html">{{ $location->location_name }}</a></h4>
                             {{-- <h5 class="user-name m-t-10 mb-0 text-ellipsis contact_person"><a
                                     href="client-profile.html">{{ $location->contact_person }}</a></h5> --}}
                             <div class="small text-muted"></div>
                             <a href="chat.html" class="btn btn-white btn-sm m-t-10 client-msg">Message</a>
-                            <a href="{{ url('location/locations/profile/' . $location->id) }}"
-                                class="btn btn-white btn-sm m-t-10">View Location</a>
+                            <a href="{{ url('location/locations/profile/' . $location->id) }}" class="btn btn-white btn-sm m-t-10">View Location</a>
                         </div>
                     </div>
                 @endforeach
+            </div>
+            <div class="mx-auto mt-5">
+                @if (count($locations) >= 1)
+                    {{ $locations->links() }}
+                @endif
             </div>
         </div>
         <!-- /Page Content -->
@@ -144,22 +147,19 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Name <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Location Name <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="location_name">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Address <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Location Address <span class="text-danger">*</span></label>
                                         <input class="form-control" name="location_address" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Email <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Location Email <span class="text-danger">*</span></label>
                                         <input class="form-control floating" name="location_email" type="email">
                                     </div>
                                 </div>
@@ -185,22 +185,19 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Firstname <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Firstname <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="firstname">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Lastname <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Lastname <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="lastname">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="col-form-label">Street Address <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Street Address <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="street_address">
                                     </div>
                                 </div>
@@ -212,29 +209,25 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">State/Province <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">State/Province <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="state">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Country/Region <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Country/Region <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="country">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Zip/Postal Code <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Zip/Postal Code <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="zip_code">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Phone Number <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Phone Number <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" name="phone_number">
                                     </div>
                                 </div>
@@ -274,33 +267,26 @@
                                     <input type="hidden" id="e_id" name="id">
 
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Name <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" id="e_location_name" name="location_name"
-                                            value="">
+                                        <label class="col-form-label">Location Name <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" id="e_location_name" name="location_name" value="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Address <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" id="e_location_address" name="location_address"
-                                            type="text">
+                                        <label class="col-form-label">Location Address <span class="text-danger">*</span></label>
+                                        <input class="form-control" id="e_location_address" name="location_address" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Location Email <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control floating" id="e_location_email" name="location_email"
-                                            type="email">
+                                        <label class="col-form-label">Location Email <span class="text-danger">*</span></label>
+                                        <input class="form-control floating" id="e_location_email" name="location_email" type="email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Phone Number</label>
-                                        <input class="form-control" id="e_location_phone_number"
-                                            name="location_phone_number" type="text">
+                                        <input class="form-control" id="e_location_phone_number" name="location_phone_number" type="text">
                                     </div>
                                 </div>
                                 <div class="modal-header">
@@ -313,30 +299,25 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Address identifier</label>
-                                        <input class="form-control" id="e_address_identifier" name="address_identifier"
-                                            type="text">
+                                        <input class="form-control" id="e_address_identifier" name="address_identifier" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Firstname <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Firstname <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" id="e_firstname" name="firstname">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Lastname <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Lastname <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" id="e_lastname" name="lastname">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="col-form-label">Street Address <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control floating" type="text" id="e_street_address"
-                                            name="street_address">
+                                        <label class="col-form-label">Street Address <span class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" id="e_street_address" name="street_address">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -347,32 +328,26 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">State/Province <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control floating" id="e_state" type="text" id="e_state"
-                                            name="state">
+                                        <label class="col-form-label">State/Province <span class="text-danger">*</span></label>
+                                        <input class="form-control floating" id="e_state" type="text" id="e_state" name="state">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Country/Region <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Country/Region <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" id="e_country" name="country">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Zip/Postal Code <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-form-label">Zip/Postal Code <span class="text-danger">*</span></label>
                                         <input class="form-control floating" type="text" id="e_zip_code" name="zip_code">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Phone Number <span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control floating" type="text" id="e_phone_number"
-                                            name="phone_number">
+                                        <label class="col-form-label">Phone Number <span class="text-danger">*</span></label>
+                                        <input class="form-control floating" type="text" id="e_phone_number" name="phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -551,12 +526,10 @@
                                 <input type="hidden" name="id" id="d_id" value="">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                     </div>
                                     <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                     </div>
                                 </div>
                             </form>
