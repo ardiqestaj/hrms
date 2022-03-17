@@ -232,7 +232,7 @@ Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::cla
 // ---------------------------------- App--------------------------------------------------------//
 // Route::group(['prefix' => 'posts'], function() {
 Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->name('posts');
-Route::get('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts/create');
+Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts/create');
 // Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'store'])->name('posts/store');
 // Route::get('posts/{post}/show', [App\Http\Controllers\PostsController::class, 'show'])->name('posts/show');
 Route::get('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('posts/edit');

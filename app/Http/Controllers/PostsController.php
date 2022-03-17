@@ -20,7 +20,7 @@ class PostsController extends Controller
         $posts = DB::table('posts')
         ->join('users', 'users.id', '=', 'posts.user_id')
         ->select('users.avatar', 'users.name', 'posts.*')
-        ->latest()->paginate(10); 
+        ->latest()->paginate(6); 
         // $posts = Post::latest()->paginate(10);
         // dd($posts);
 
@@ -39,10 +39,15 @@ class PostsController extends Controller
         $request->validate([
             'title'   => 'required|string|max:255',
             'description'        => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-        $image = $request->file('image')->getClientOriginalName();
-        $path =  $request->file('image')->move(public_path('assets/images/posts'), $image);
+        if ($request->filled('image')) {
+            $image = $request->file('image')->getClientOriginalName();
+            $path =  $request->file('image')->move(public_path('assets/images/posts'), $image);
+        } else {
+            $image = "NULL";
+        }
+      
         DB::beginTransaction();
         try {
 
