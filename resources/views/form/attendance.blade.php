@@ -126,7 +126,13 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
                             <select class="select floating" name="month">
-                                <option> {{ $month }} </option>
+                                @if (isset($thisMonth))
+                                    <option disabled selected>
+                                        {{ $thisMonth }}
+                                    </option>
+                                @else
+                                    <option></option>
+                                @endif
                                 <option value="-01-">Jan</option>
                                 <option value="-02-">Feb</option>
                                 <option value="-03-">Mar</option>

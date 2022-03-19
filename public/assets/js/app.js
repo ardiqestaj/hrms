@@ -154,11 +154,6 @@ $(document).ready(function() {
         });
     }
 
-    if ($('#client-table').length > 0) {
-        $('#client-table').DataTable({
-            "bFilter": false,
-        });
-    }
 
     // Tooltip
 

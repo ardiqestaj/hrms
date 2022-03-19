@@ -195,7 +195,44 @@ class TimeClockController extends Controller
             // Total working hours this Month
             $monthWorkingHrs = $monthWorkingDays * $workingHrs;
 
-            return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'now'));
+            $empID = Auth::user()->rec_id;
+            $empRestDays = DB::table('assignment_employees')
+            // ->join('employees', 'assignment_employees.employee_id', '=', 'employees.employee_id')
+                ->join('schedules', 'assignment_employees.location_type_work_id', '=', 'schedules.idno')
+                ->where('employee_id', $empID)
+                ->value('restday');
+
+            $eRestDays = explode(', ', $empRestDays);
+
+            // Find Next Holiday
+            $dt = Carbon::now();
+            // $dt = $dth->format("Y-m-d");
+
+            $nextHoliday1 = DB::table('holidays')->get();
+
+            $nextHoliday = $nextHoliday1->sortBy('start')->where('start', '>=', $dt)->first();
+            // dd($sorted);
+            // $nextHoliday = Holiday::where('start', '>=', $dt)->first();
+
+            $dt = Carbon::now();
+
+            // $checkHolidays = DB::table('holidays')->get();
+            // dd($checkHolidays);
+            // $totalTime = $dt->diffForHumans($nextHoliday->start)->format('%D Days and %H Hours');
+            if (isset($nextHoliday)) {
+                $totalTimeM = $dt->diff($nextHoliday->start)->format('%M');
+                $totalTimeD = $dt->diff($nextHoliday->start)->format('%D');
+                $totalTimeH = $dt->diff($nextHoliday->start)->format('%H');
+                $totalTimeMin = $dt->diff($nextHoliday->start)->format('%I');
+            } else {
+                $totalTimeM = 999;
+                $totalTimeD = 999;
+                $totalTimeH = 999;
+                $totalTimeMin = 999;
+
+            }
+            // dd($eRestDays);
+            return view('form.attendanceemployee', compact('cc', 'eRestDays', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'now', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'nextHoliday1'));
         } else {
             return redirect()->route('em/dashboard');
         }
@@ -637,11 +674,13 @@ class TimeClockController extends Controller
             $month = $request->month;
             $date = Carbon::parse($request->date)->format('Y-m-d');
             // $date;
+            $empID = Auth::user()->rec_id;
 
             // search by month
             if ($request->month) {
-                $attendance = DB::table('time_clocks')->select()
+                $attendance = DB::table('time_clocks')
                     ->where('date', 'LIKE', '%' . $month . '%')
+                    ->where('idno', 'LIKE', '%' . $empID . '%')
                     ->get();
             }
 
@@ -657,20 +696,57 @@ class TimeClockController extends Controller
                 $attendance = DB::table('time_clocks')
                     ->where('date', 'LIKE', '%' . $year . '%')
                     ->where('date', 'LIKE', '%' . $month . '%')
+                    ->where('idno', 'LIKE', '%' . $empID . '%')
                     ->get();
             }
 
             //  search by date
-            if ($request->has('date')) {
-                $attendance = DB::table('time_clocks')
-                    ->where('date', 'LIKE', '%' . $date . '%')
-                    ->get();
-            }
+            // if ($request->has('date')) {
+            //     $attendance = DB::table('time_clocks')
+            //         ->where('date', 'LIKE', '%' . $date . '%')
+            //         ->get();
+            // }
 
             // $now = Carbon::now();
 
+            $empRestDays = DB::table('assignment_employees')
+            // ->join('employees', 'assignment_employees.employee_id', '=', 'employees.employee_id')
+                ->join('schedules', 'assignment_employees.location_type_work_id', '=', 'schedules.idno')
+                ->where('employee_id', $empID)
+                ->value('restday');
+
+            $eRestDays = explode(', ', $empRestDays);
+
+            // Find Next Holiday
+            $dt = Carbon::now();
+            // $dt = $dth->format("Y-m-d");
+
+            $nextHoliday1 = DB::table('holidays')->get();
+
+            $nextHoliday = $nextHoliday1->sortBy('start')->where('start', '>=', $dt)->first();
+            // dd($sorted);
+            // $nextHoliday = Holiday::where('start', '>=', $dt)->first();
+
+            $dt = Carbon::now();
+
+            // $checkHolidays = DB::table('holidays')->get();
+            // dd($checkHolidays);
+            // $totalTime = $dt->diffForHumans($nextHoliday->start)->format('%D Days and %H Hours');
+            if (isset($nextHoliday)) {
+                $totalTimeM = $dt->diff($nextHoliday->start)->format('%M');
+                $totalTimeD = $dt->diff($nextHoliday->start)->format('%D');
+                $totalTimeH = $dt->diff($nextHoliday->start)->format('%H');
+                $totalTimeMin = $dt->diff($nextHoliday->start)->format('%I');
+            } else {
+                $totalTimeM = 999;
+                $totalTimeD = 999;
+                $totalTimeH = 999;
+                $totalTimeMin = 999;
+
+            }
+
             //  return normal view
-            return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'year', 'month', 'now', 'date'));
+            return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'year', 'month', 'now', 'date', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'nextHoliday1', 'eRestDays'));
         } else {
             return redirect()->route('em/dashboard');
         }
