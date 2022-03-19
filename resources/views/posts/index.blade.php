@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
+
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -17,7 +18,7 @@
                     </div>
                     @if (Auth::user()->role_name == 'Admin')
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Create Post</a>
+                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_post"><i class="fa fa-plus"></i> Create Post</a>
                         </div>
                     @endif
                 </div>
@@ -31,29 +32,52 @@
                 $today_date = Carbon::today()->format('d-m-Y');
             @endphp
             
-            <div class="row">
+            {{-- <div class="row"> --}}
+            <div class="grid-post">
+                {{-- <div class="item"> --}}
+
+                @if (Auth::user()->role_name == 'Admin')
+                <div class="employeeclass item">
+                    <div class="card content" >
+                        <div class="card-body d-flex align-items-center justify-content-center">
+                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_post" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add a new Post </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 @forelse ($posts as $post)
-                <div class="col-md-4">
-                    <div class="card">
+                <div class="item">
+                    <div class="card content">
                         @if ($post->image == "NULL")
                          @else
-                        <img class="card-img-top img-fluid" style="height: 230px" src="{{ URL::to('/assets/images/posts/' . $post->image) }}">
+                        <img class="card-img-top img-fluid" src="{{ URL::to('/assets/images/posts/' . $post->image) }}">
 
                         @endif
-                        <div class="card-body">
-                          <h5 class="card-title d-flex justify-content-between">{{$post->title}} <span style="font-size: 0.8rem" class="text-muted">Publish date: {{$post->created_at}}</span> </h5>
-                          <p class="card-text">{{$post->description}}</p>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
-                          <a href="#" class="btn btn-primary">Visit</a>
+                        <div class="card-body ">
+                          <h5 class="card-title d-flex justify-content-between">{{$post->title}} <span style="font-size: 0.8rem" class="text-muted">
+                            @php 
+                            $time_created = $post->created_at;
+                            echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
+                            @endphp</span> </h5>
+                          <h4 class="card-text">{{$post->description}}</h4>
+                          <div class="truncate">
+                          <p class="card-text">{!!$post->body!!}</p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                          <a href="{{ url('posts/show/' . $post->id) }}" class="btn btn-outline-success">Read more</a>
+                           <span style="font-size: 0.8rem" class="text-muted align-self-end">
+                           Author: {{$post->name}}
+                            </span>
+                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
                 @empty
                     No Post to show, Create one.
                 @endforelse
-                
             </div>
+            {{-- </div> --}}
             <div class="mt-5">
                 @if (count($posts) >= 1)
                     {{ $posts->links('vendor.pagination.bootstrap-4') }}
@@ -64,7 +88,7 @@
         <!-- /Page Content -->
         <!-- Add Post Modal Modal -->
         @if (Auth::user()->role_name == 'Admin')
-            <div  class="modal custom-modal fade" id="add_holiday" role="dialog">
+            <div  class="modal custom-modal fade" id="add_post" role="dialog">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -134,39 +158,7 @@
         @endif
         <!-- /Add Holiday Modal -->
 
-        <!-- Edit Holiday Modal -->
-        <div class="modal custom-modal fade" id="edit_holiday" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Holiday</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('form/holidays/update') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" id="e_id" value="">
-                            <div class="form-group">
-                                <label>Holiday Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="holidayName_edit" name="holidayName" value="">
-                            </div>
-                            <div class="form-group">
-                                <label>Holiday Date <span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="holidayDate_edit" name="holidayDate" value="">
-                                </div>
-                            </div>
-                            <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Edit Holiday Modal -->
+        
 
         <!-- Delete Holiday Modal -->
         <div class="modal custom-modal fade" id="delete_holiday" role="dialog">

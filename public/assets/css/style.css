@@ -10756,6 +10756,20 @@ img.wave {
     color: #0ba408 !important;
 }
 
+/* ------------------------------ Posts ------------------------------------- */
+/* .truncate {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } */
+.grid-post {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    grid-auto-rows: 20px;
+  }
+/* ------------------------------ Posts ------------------------------------- */
 
 @media (max-width: 390px) {
     .timeclock {

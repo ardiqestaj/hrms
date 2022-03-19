@@ -234,13 +234,13 @@ Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::cla
 // -------------------- Posts --------------------------------------------------------------------------------------------
 // ---------------------------------- App--------------------------------------------------------//
 // Route::group(['prefix' => 'posts'], function() {
-Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->name('posts');
-Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts/create');
+Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->middleware('auth')->name('posts');
+Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->middleware('auth')->name('posts/create');
 // Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'store'])->name('posts/store');
-// Route::get('posts/{post}/show', [App\Http\Controllers\PostsController::class, 'show'])->name('posts/show');
-Route::get('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('posts/edit');
+Route::get('posts/show/{post}', [App\Http\Controllers\PostsController::class, 'show'])->middleware('auth')->name('posts/show');
+Route::post('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->middleware('auth')->name('posts/edit');
 // Route::patch('posts/{post}/update', 'PostsController@update')->name('posts/update');
-Route::delete('posts/delete', [App\Http\Controllers\PostsController::class, 'delete'])->name('posts/delete');
+Route::post('posts/delete', [App\Http\Controllers\PostsController::class, 'delete'])->middleware('auth')->name('posts/delete');
 // });
 // Route::get('/show-event-calendar', [EventController::class, 'index']);
 // Route::post('/manage-events', [EventController::class, 'manageEvents']);

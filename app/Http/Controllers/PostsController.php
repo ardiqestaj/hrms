@@ -90,12 +90,15 @@ class PostsController extends Controller
     //  * @param  \App\Models\Post  $post
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function show(Post $post)
-    // {
-    //     return view('posts.show', [
-    //         'post' => $post
-    //     ]);
-    // }
+    public function show($post)
+    {
+        $posts = DB::table('posts')
+        ->join('users', 'users.id', '=', 'posts.user_id')
+        ->select('users.avatar', 'users.name', 'posts.*')
+        ->where('posts.id', $post)->first();
+        return view('posts.show', compact('posts'));
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -105,9 +108,33 @@ class PostsController extends Controller
      */
     public function edit(Request $request)
     {
-        return view('posts.edit', [
-            'post' => $post
-        ]);
+        if ($request->filled('image')) {
+            $image = $request->file('image')->getClientOriginalName();
+            $path =  $request->file('image')->move(public_path('assets/images/posts'), $image);
+        } else {
+            $image = "NULL";
+        }
+        DB::beginTransaction();
+        try {
+
+            $update = [
+                'title' => $request->title,
+                'description' => $request->description,
+                'body' => $request->body,
+                'image' => $image
+
+            ];
+
+            Post::where('id', $request->id)->update($update);
+            DB::commit();
+
+            Toastr::success('Updated post successfully :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception$e) {
+            DB::rollback();
+            Toastr::error('Updated post fail :)', 'Error');
+            return redirect()->back();
+        }
     }
 
     // /**
@@ -130,11 +157,26 @@ class PostsController extends Controller
     //  * @param  \App\Models\Post  $post
     //  * @return \Illuminate\Http\Response
     //  */
-    public function destroy(Post $post)
+    public function delete(Request $request)
     {
-        // $post->delete();
+        try {
 
-        // return redirect()->route('posts.index')
-        //     ->withSuccess(__('Post deleted successfully.'));
+            Post::destroy($request->id);
+            Toastr::success('Post deleted successfully :)', 'Success');
+        //     $posts = DB::table('posts')
+        // ->join('users', 'users.id', '=', 'posts.user_id')
+        // ->select('users.avatar', 'users.name', 'posts.*')
+        // ->latest()->paginate(6);
+        // return view('posts.index', compact('posts'));
+
+            // return redirect()->back();
+            return redirect()->route('posts');
+
+        } catch (\Exception$e) {
+
+            DB::rollback();
+            Toastr::error('Post deleted fail :)', 'Error');
+            return redirect()->back();
+        }
     }
 }
