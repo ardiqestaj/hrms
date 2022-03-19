@@ -168,6 +168,9 @@ Route::post('location/profile/assignment/{id}', [App\Http\Controllers\FindEmploy
 // ----------------------------- form payroll  ------------------------------//
 Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');
 Route::get('form/salary/paymentMethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->middleware('auth')->name('form/salary/paymentMethod');
+Route::post('form/salary/fulltime', [App\Http\Controllers\PaymentMethodController::class, 'FulltimeConfig'])->middleware('auth')->name('form/salary/fulltime');
+Route::post('form/salary/parttime', [App\Http\Controllers\PaymentMethodController::class, 'ParttimeConfig'])->middleware('auth')->name('form/salary/parttime');
+Route::post('form/salary/hourly', [App\Http\Controllers\PaymentMethodController::class, 'HourlyConfig'])->middleware('auth')->name('form/salary/hourly');
 Route::post('form/salary/save', [App\Http\Controllers\PayrollController::class, 'saveRecord'])->middleware('auth')->name('form/salary/save');
 Route::post('form/salary/update', [App\Http\Controllers\PayrollController::class, 'updateRecord'])->middleware('auth')->name('form/salary/update');
 Route::post('form/salary/delete', [App\Http\Controllers\PayrollController::class, 'deleteRecord'])->middleware('auth')->name('form/salary/delete');
