@@ -18,51 +18,12 @@
                             <li class="breadcrumb-item active">Salary</li>
                         </ul>
                     </div>
-                    <div class="col-auto float-right ml-auto">
+                    {{-- <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i
                                 class="fa fa-plus"></i> Add Salary</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-
-            {{-- Payment method Cards --}}
-            {{-- <div class="row mb-4">
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                    <div class="card dash-widget card-box1">
-                        <div class="card-body"> <span class="dash-widget-icon"><i
-                                    class="las la-business-time"></i></span>
-                            <div class="dash-widget-info">
-                                <span class="text-md d-block">Configure</span>
-                                <span class="text-md d-block">Fulltime Salary</span>
-                            </div>
-                        </div>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                    <div class="card dash-widget card-box2">
-                        <div class="card-body "> <span class="dash-widget-icon"><i class="las la-clock"></i></span>
-                            <div class="dash-widget-info">
-                                <span class="">Parttime</span>
-                            </div>
-                        </div>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                    <div class="card dash-widget card-box3">
-                        <div class="card-body"> <span class="dash-widget-icon"><i class="las la-stopwatch"></i></span>
-                            <div class="dash-widget-info">
-                                <span class="">Hourly</span>
-                            </div>
-                        </div>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- End Payment method Cards --}}
-
 
             <!-- Search Filter -->
             <div class="row filter-row">
@@ -192,7 +153,7 @@
         <!-- /Page Content -->
 
         <!-- Add Salary Modal -->
-        <div id="add_salary" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="add_salary" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -447,147 +408,13 @@
                             </div>
                     </div>
 
-                    {{-- <div class="row pm-hourl">
-                                <div class="col-sm-6">
-                                    <h4 class="text-primary">Earnings</h4>
-                                    <div class="form-group">
-                                        <label>Basic</label>
-                                        <input class="form-control @error('basic') is-invalid @enderror" type="number"
-                                            name="basic" id="basic" value="{{ old('basic') }}" placeholder="Enter basic">
-                                        @error('basic')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>DA(40%)</label>
-                                        <input class="form-control @error('da') is-invalid @enderror" type="number"
-                                            name="da" id="da" value="{{ old('da') }}" placeholder="Enter DA(40%)">
-                                        @error('da')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>HRA(15%)</label>
-                                        <input class="form-control @error('hra') is-invalid @enderror" type="number"
-                                            name="hra" id="hra" value="{{ old('hra') }}" placeholder="Enter HRA(15%)">
-                                        @error('hra')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Conveyance</label>
-                                        <input class="form-control @error('conveyance') is-invalid @enderror" type="number"
-                                            name="conveyance" id="conveyance" value="{{ old('conveyance') }}"
-                                            placeholder="Enter conveyance">
-                                        @error('conveyance')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Allowance</label>
-                                        <input class="form-control @error('allowance') is-invalid @enderror" type="number"
-                                            name="allowance" id="allowance" value="{{ old('allowance') }}"
-                                            placeholder="Enter allowance">
-                                        @error('allowance')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Medical Allowance</label>
-                                        <input class="form-control @error('medical_allowance') is-invalid @enderror"
-                                            type="number" name="medical_allowance" id="medical_allowance"
-                                            value="{{ old('medical_allowance') }}"
-                                            placeholder="Enter medical  allowance">
-                                        @error('medical_allowance')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h4 class="text-primary">Deductions</h4>
-                                    <div class="form-group">
-                                        <label>TDS</label>
-                                        <input class="form-control @error('tds') is-invalid @enderror" type="number"
-                                            name="tds" id="tds" value="{{ old('tds') }}" placeholder="Enter TDS">
-                                        @error('tds')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>ESI</label>
-                                        <input class="form-control @error('esi') is-invalid @enderror" type="number"
-                                            name="esi" id="esi" value="{{ old('esi') }}" placeholder="Enter ESI">
-                                        @error('esi')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>PF</label>
-                                        <input class="form-control @error('pf') is-invalid @enderror" type="number"
-                                            name="pf" id="pf" value="{{ old('pf') }}" placeholder="Enter PF">
-                                        @error('pf')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Leave</label>
-                                        <input class="form-control @error('leave') is-invalid @enderror" type="text"
-                                            name="leave" id="leave" value="{{ old('leave') }}" placeholder="Enter leave">
-                                        @error('leave')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Prof. Tax</label>
-                                        <input class="form-control @error('prof_tax') is-invalid @enderror" type="number"
-                                            name="prof_tax" id="prof_tax" value="{{ old('prof_tax') }}"
-                                            placeholder="Enter Prof. Tax">
-                                        @error('prof_tax')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Loan</label>
-                                        <input class="form-control @error('labour_welfare') is-invalid @enderror"
-                                            type="number" name="labour_welfare" id="labour_welfare"
-                                            value="{{ old('labour_welfare') }}" placeholder="Enter Loan">
-                                        @error('labour_welfare')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div> --}}
                     <div class="submit-section">
                         <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                     </div>
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!-- /Add Salary Modal -->
 

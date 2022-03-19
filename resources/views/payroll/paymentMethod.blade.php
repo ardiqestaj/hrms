@@ -29,8 +29,8 @@
                             <li class="nav-item"><a href="#parttime" data-toggle="tab"
                                     class="nav-link">Parttime</a></li>
                             <li class="nav-item"><a href="#hourly" data-toggle="tab" class="nav-link">Hourly
-                                    <small class="text-danger">(Admin
-                                        Only)</small></a></li>
+                                    <small class="text-danger">
+                                    </small></a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,9 +42,19 @@
                     <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                         <div class="card-body">
                             <h3 class="card-title"> Earnings Information</h3>
-
-                            <form>
+                            <form action="{{ route('form/salary/fulltime') }}" method="POST">
+                                @csrf
                                 <div class="row">
+                                    <div class="col-sm-4" hidden>
+                                        <div class="form-group">
+                                            <label>Gender <span class="text-danger">*</span></label>
+                                            <select class="select form-control" name="payment_type" style="width: 100%;"
+                                                tabindex="-1" aria-hidden="true" id="gender" name="gender" required>
+                                                <option value="Fulltime" selected>Fulltime</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label class="col-form-label">Salary amount <small class="text-muted">per
@@ -54,8 +64,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="salary_amount"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->salary_amount }}">
                                             </div>
                                         </div>
                                     </div>
@@ -68,8 +79,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="200.00">
+                                                <input type="text" class="form-control" name="monthly_surcharge"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->monthly_surcharge }}">
                                             </div>
                                         </div>
                                     </div>
@@ -115,8 +127,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="pension_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->pension_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -130,8 +143,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="unemployment_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->unemployment_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -144,22 +158,24 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="accident_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->accident_insurance }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit <small
-                                                    class="text-muted">
+                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit
+                                                <small class="text-muted">
                                                     UVG</small></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="uvg_grb"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->uvg_grb }}">
                                             </div>
                                         </div>
                                     </div>
@@ -173,8 +189,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="pension_fund"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->pension_fund }}">
                                             </div>
                                         </div>
                                     </div>
@@ -187,8 +204,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="medical_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->medical_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -202,8 +220,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="collective_labor"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->collective_labor }}">
                                             </div>
                                         </div>
                                     </div>
@@ -250,8 +269,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="expenses"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->expenses }}">
                                             </div>
                                         </div>
                                     </div>
@@ -265,8 +285,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="telephone_shipment"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->telephone_shipment }}">
                                             </div>
                                         </div>
                                     </div>
@@ -280,8 +301,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="mileage_compensation"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $fulltimeConfig->mileage_compensation }}">
                                             </div>
                                         </div>
                                     </div>
@@ -314,8 +336,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 <div class="submit-section">
@@ -332,8 +352,19 @@
                     <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                         <div class="card-body">
                             <h3 class="card-title"> Earnings Information</h3>
-                            <form>
+                            <form action="{{ route('form/salary/parttime') }}" method="POST">
+                                @csrf
                                 <div class="row">
+                                    <div class="col-sm-4" hidden>
+                                        <div class="form-group">
+                                            <label>Gender <span class="text-danger">*</span></label>
+                                            <select class="select form-control" name="payment_type" style="width: 100%;"
+                                                tabindex="-1" aria-hidden="true" id="gender" name="gender" required>
+                                                <option value="Parttime" selected>Parttime</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label class="col-form-label">Salary amount <small class="text-muted">per
@@ -343,8 +374,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="salary_amount"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->salary_amount }}">
                                             </div>
                                         </div>
                                     </div>
@@ -357,8 +389,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="200.00">
+                                                <input type="text" class="form-control" name="monthly_surcharge"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->monthly_surcharge }}">
                                             </div>
                                         </div>
                                     </div>
@@ -404,8 +437,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="pension_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->pension_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -419,8 +453,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="unemployment_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->unemployment_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -434,22 +469,24 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="accident_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->accident_insurance }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit <small
-                                                    class="text-muted">
+                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit
+                                                <small class="text-muted">
                                                     UVG</small></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="uvg_grb"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->uvg_grb }}">
                                             </div>
                                         </div>
                                     </div>
@@ -463,8 +500,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="pension_fund"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->pension_fund }}">
                                             </div>
                                         </div>
                                     </div>
@@ -477,8 +515,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="medical_insurance"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->medical_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -492,8 +531,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="collective_labor"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->collective_labor }}">
                                             </div>
                                         </div>
                                     </div>
@@ -540,8 +580,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="expenses"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->expenses }}">
                                             </div>
                                         </div>
                                     </div>
@@ -555,8 +596,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="telephone_shipment"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->telephone_shipment }}">
                                             </div>
                                         </div>
                                     </div>
@@ -570,8 +612,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="mileage_compensation"
+                                                    placeholder="Type your salary amount"
+                                                    value="{{ $parttimeConfig->mileage_compensation }}">
                                             </div>
                                         </div>
                                     </div>
@@ -604,8 +647,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 <div class="submit-section">
@@ -622,24 +663,97 @@
                     <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                         <div class="card-body">
                             <h3 class="card-title"> Earnings Information</h3>
-
-                            <form>
+                            <form action="{{ route('form/salary/hourly') }}" method="POST">
+                                @csrf
                                 <div class="row">
+
+                                    <div class="col-sm-4" hidden>
+                                        <div class="form-group">
+                                            <label>Type of Work <span class="text-danger">*</span></label>
+                                            <select class="select form-control" name="payment_type" style="width: 100%;"
+                                                tabindex="-1" aria-hidden="true" id="gender" name="payment_type" required>
+                                                <option value="Hourly" selected>Houly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label class="col-form-label">Hourly Salary<small class="text-muted">
                                                     Stundenlohn
-
                                                 </small></label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="hourly_salary" value="{{ $hourlyConfig->hourly_salary }}">
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Night/Sunday Bonus <small
+                                                    class="text-muted">
+                                                    Nacht - Sonntagszulage</small></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">CHF</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="night_sunday_bon"
+                                                    value="{{ $hourlyConfig->night_sunday_bon }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Holiday Bonus <small class="text-muted">
+                                                    Ferienentschadigung</small></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">CHF</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="holiday_bon" value="{{ $hourlyConfig->holiday_bon }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Holiday Bonus minus<small
+                                                    class="text-muted">
+                                                    Ferienentschadigung minus</small></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">CHF</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="holiday_bon_minus" value="{{ $hourlyConfig->holiday_bon }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Timesupplement Night/Sunday<small
+                                                    class="text-muted">
+                                                    Zeitzuschlag Nacht/Sonntag</small></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">CHF</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="timesupplement_night_sunday"
+                                                    value="{{ $hourlyConfig->timesupplement_night_sunday }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <div class="col-sm-4">
                                         <div class="form-group">
@@ -649,8 +763,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="200.00">
+                                                <input type="text" class="form-control" disabled placeholder="00.00"
+                                                    name="monthly_surcharge"
+                                                    value="{{ $hourlyConfig->monthly_surcharge }}">
                                             </div>
                                         </div>
                                     </div>
@@ -663,8 +778,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" disabled placeholder="00.00"
+                                                    value="{{ $hourlyConfig->holiday_bon_minus }}">
                                             </div>
                                         </div>
                                     </div>
@@ -678,8 +793,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -696,8 +810,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="pension_insurance"
+                                                    placeholder="00.00" value="{{ $hourlyConfig->pension_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -711,8 +825,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="unemployment_insurance"
+                                                    value="{{ $hourlyConfig->unemployment_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -726,11 +841,13 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00"
+                                                    name="accident_insurance"
+                                                    value="{{ $hourlyConfig->accident_insurance }}">
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit <small
@@ -740,8 +857,22 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="uvg_grb"
+                                                    placeholder="00.00" value="{{ $hourlyConfig->uvg_grb }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Pension Fund<small class="text-muted">
+                                                    Pensionkasse Abzug</small></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="pension_fund" disabled
+                                                    placeholder="00.00" value="{{ $hourlyConfig->pension_fund }}">
                                             </div>
                                         </div>
                                     </div>
@@ -754,8 +885,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="medical_insurance"
+                                                    placeholder="00.00" value="{{ $hourlyConfig->medical_insurance }}">
                                             </div>
                                         </div>
                                     </div>
@@ -769,8 +900,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="collective_labor"
+                                                    placeholder="00.00" value="{{ $hourlyConfig->collective_labor }}">
                                             </div>
                                         </div>
                                     </div>
@@ -783,8 +914,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -798,8 +928,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -817,8 +946,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="expenses" disabled
+                                                    placeholder="00.00" value="{{ $hourlyConfig->expenses }}">
                                             </div>
                                         </div>
                                     </div>
@@ -832,8 +961,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="telephone_shipment"
+                                                    placeholder="00.00" value="{{ $hourlyConfig->telephone_shipment }}">
                                             </div>
                                         </div>
                                     </div>
@@ -847,8 +976,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" name="mileage_compensation"
+                                                    placeholder="00.00"
+                                                    value="{{ $hourlyConfig->mileage_compensation }}">
                                             </div>
                                         </div>
                                     </div>
@@ -861,8 +991,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -876,8 +1005,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CHF</span>
                                                 </div>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Type your salary amount" value="0.00">
+                                                <input type="text" class="form-control" placeholder="00.00" value="0.00">
                                             </div>
                                         </div>
                                     </div>
@@ -898,6 +1026,7 @@
         <!-- /Page Content -->
 
         <!-- /Experience Modal -->
+
 
         <!-- /Page Content -->
     </div>
