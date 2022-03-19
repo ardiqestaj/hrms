@@ -260,9 +260,10 @@ class AdminAttendance extends Controller
                 $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
 
                 $finale[] = $stats;
+                $thisMonth = Carbon::now()->format('m');
 
             }
-            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists'));
+            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists', 'thisMonth'));
         } else {
             return redirect()->route('home');
         }
@@ -424,9 +425,52 @@ class AdminAttendance extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
             // month
+            $thisMonth = Carbon::now()->format('m');
+            dd($thisMonth);
             if (!empty($request->month)) {
                 $monthVar = $request->month;
                 $month = str_replace("-", "", $monthVar);
+                $thisMonth = $month;
+
+                switch ($thisMonth) {
+                    case '01':
+                        $thisMonth = 'Jan';
+                        break;
+                    case '02':
+                        $thisMonth = 'Fab';
+                        break;
+                    case '03':
+                        $thisMonth = 'Mar';
+                        break;
+                    case '04':
+                        $thisMonth = 'Apr';
+                        break;
+                    case '05':
+                        $thisMonth = 'May';
+                        break;
+                    case '06':
+                        $thisMonth = 'Jun';
+                        break;
+                    case '07':
+                        $thisMonth = 'Jul';
+                        break;
+                    case '08':
+                        $thisMonth = 'Aug';
+                        break;
+                    case '09':
+                        $thisMonth = 'Sep';
+                        break;
+                    case '10':
+                        $thisMonth = 'Oct';
+                        break;
+                    case '11';
+                        $thisMonth = 'Nov';
+                        break;
+                    case '12':
+                        $thisMonth = 'Dec';
+                        break;
+
+                }
             } else {
                 $month = Carbon::now()->format('m');
             }
@@ -435,6 +479,7 @@ class AdminAttendance extends Controller
             if (!empty($request->year)) {
                 $yearsVar = $request->year;
                 $years = str_replace("-", "", $yearsVar);
+
             } else {
                 $years = Carbon::now()->format('Y');
             }
@@ -698,7 +743,7 @@ class AdminAttendance extends Controller
                 $finale[] = $stats;
             }
             // dd($finale);
-            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt'));
+            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt', 'thisMonth'));
         } else {
             return redirect()->route('em/dashboard');
         }

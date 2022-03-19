@@ -20,7 +20,7 @@
 
             {{-- ----Time Clock---- --}}
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-xl-4 col-lg-6 col-12">
                     <div class="card punch-status">
                         <div class="card-body">
 
@@ -28,10 +28,8 @@
                                 <div class="fixedcenter">
                                     <div class="clockwrapper">
                                         <div class="clockinout">
-                                            <button class="btnclock timein active"
-                                                data-type="timein">{{ __('Punch In') }}</button>
-                                            <button class="btnclock timeout"
-                                                data-type="timeout">{{ __('Punch Out') }}</button>
+                                            <button class="btnclock timein active" data-type="timein">{{ __('Punch In') }}</button>
+                                            <button class="btnclock timeout" data-type="timeout">{{ __('Punch Out') }}</button>
                                         </div>
                                     </div>
                                     <div class="clockwrapper">
@@ -49,21 +47,15 @@
                                                 @isset($cc)
                                                     @if ($cc == 'on')
                                                         <div class="inline field comment">
-                                                            <textarea name="comment" class="uppercase lightblue" rows="1"
-                                                                placeholder="Enter comment" value=""></textarea>
+                                                            <textarea name="comment" class="uppercase lightblue" rows="1" placeholder="Enter comment" value=""></textarea>
                                                         </div>
                                                     @endif
                                                 @endisset
                                                 <div class="inline field">
-                                                    <input type="hidden" @if ($rfid == 'on') id="rfid" @endif
-                                                        class="enter_idno uppercase @if ($rfid == 'on') mr-0 @endif"
-                                                        name="idno" value="{{ Auth::user()->rec_id }}" type="text"
-                                                        placeholder="{{ __('ENTER YOUR ID') }}" required autofocus>
+                                                    <input type="hidden" @if ($rfid == 'on') id="rfid" @endif class="enter_idno uppercase @if ($rfid == 'on') mr-0 @endif" name="idno" value="{{ Auth::user()->rec_id }}" type="text" placeholder="{{ __('ENTER YOUR ID') }}" required autofocus>
 
                                                     @if ($rfid !== 'on')
-                                                        <button type="button" data-toggle="modal" data-dismiss="modal"
-                                                            data-target="#delete_approve"
-                                                            class="ui positive large icon button">{{ __('Confirm') }}</button>
+                                                        <button type="button" data-toggle="modal" data-dismiss="modal" data-target="#delete_approve" class="ui mt-0 positive large icon button">{{ __('Confirm') }}</button>
                                                     @endif
                                                     <input type="hidden" id="_url" value="{{ url('/') }}">
                                                 </div>
@@ -105,12 +97,10 @@
 
                                         <div class="row">
                                             <div class="col-6">
-                                                <button class="btn btn-primary continue-btn submit-btn" id="btnclockin"
-                                                    type="button" data-dismiss="modal">Confirm</button>
+                                                <button class="btn btn-primary continue-btn submit-btn" id="btnclockin" type="button" data-dismiss="modal">Confirm</button>
                                             </div>
                                             <div class="col-6">
-                                                <a href="javascript:void(0);" data-dismiss="modal"
-                                                    class="btn btn-primary cancel-btn">Cancel</a>
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                             </div>
                                         </div>
                                     </form>
@@ -122,7 +112,7 @@
                 <!-- /Delete Attendance Modal -->
 
                 {{-- ----Statistics---- --}}
-                <div class="col-lg-4">
+                <div class="col-lg-6 col-12 col-xl-4">
                     <div class="card att-statistics">
                         <div class="card-body">
 
@@ -159,8 +149,7 @@
 
                                     {{-- <p>This Month <strong>{{$attend->totalhours}} <small>/ {{$schedules->hours}} hrs</small></strong></p> --}}
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary" id="todayPrg" role="progressbar"
-                                            aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" id="todayPrg" role="progressbar" aria-valuenow="25%" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
 
@@ -168,8 +157,7 @@
                                     <p>This Month <strong>{{ $monthAttendance->sum('totalhours') }} <small>/
                                                 {{ $monthWorkingHrs }} hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg"
-                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" id="thismonthPrg" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
@@ -181,24 +169,21 @@
                                             @endif <small> hrs</small>
                                         </strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth"
-                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="remainthismonth" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
                                     <p>Missed Hours this Month<strong>{{ $monthAttendance->sum('missedhours') }} <small>
                                                 hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" id="missedHrs"
-                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" id="missedHrs" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="stats-info">
                                     <p>Overtime this Month<strong>{{ $monthAttendance->sum('overtime') }} <small>
                                                 hrs</small></strong></p>
                                     <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" id="overtime"
-                                            aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" id="overtime" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
 
@@ -209,11 +194,11 @@
                 {{-- ----Statistics---- --}}
 
                 {{-- ----Today CheckIn/CheckOut---- --}}
-                <div class="col-lg-4">
+                <div class="col-xl-4 col-lg-6 col-12">
                     <div class="card recent-activity">
                         <div class="card-body">
                             <h5 class="card-title">Today Activity</h5>
-                            <ul class="res-activity-list">
+                            <ul class="res-activity-list mb-2">
                                 <li>
                                     <p class="mb-0">Punch In at</p>
                                     <p class="res-activity-time">
@@ -249,187 +234,242 @@
                                     </p>
                                 </li>
                             </ul>
-                            <h5 class="card-title">Today Activity</h5>
 
+                            <h5 class="card-title">Rest Days</h5>
+                            <ul class="res-activity-list mb-2 ">
+                                @foreach ($eRestDays as $empRestDay)
+                                    <li class="mb-3">
+                                        <h4>{{ $empRestDay }}</h4>
+                                    </li>
+                                @endforeach
+
+                            </ul>
+
+                            <h5 class="card-title">Next Holiday</h5>
+                            <ul class="res-activity-list">
+                                <li class="mb-2">
+                                    @php
+                                        use Carbon\Carbon;
+                                        $today_date = Carbon::today()->format('Y-m-d');
+                                    @endphp
+
+
+                                    <div hidden>{{ $today = 0 }}</div>
+                                    @foreach ($nextHoliday1 as $checkHoliday)
+                                        @if ($today_date == $checkHoliday->start)
+                                            <h4>Happy {{ $checkHoliday->title }} Day
+                                                <br>
+                                            </h4>
+                                            <span>{{ $today_date = date('F j, Y') }}</span>
+                                            <div hidden>{{ $today++ }}</div>
+                                        @endif
+                                    @endforeach
+
+                                    @if ($today != 1)
+                                        @if (isset($nextHoliday))
+                                            <h4>{{ $nextHoliday->title }} <br>
+                                        @endif
+                                        @if ($totalTimeM == 0)
+                                            @if ($totalTimeD == 0)
+                                                <small><strong>{{ $totalTimeH }}</strong> Hours and <strong>{{ $totalTimeMin }} Minutes</strong></small>
+                                            @else
+                                                <small><strong>{{ $totalTimeD }}</strong> Days and <strong>{{ $totalTimeH }}</strong> Hours</small>
+                                            @endif
+                                        @elseif(0 < $totalTimeM && $totalTimeM < 365)
+                                            <small><strong>{{ $totalTimeM }}</strong> Months and <strong>{{ $totalTimeD }}</strong> Days</small>
+                                        @elseif($totalTimeM == 999)
+                                            <h4> {{ $today_date = date('F j, Y') }}
+                                                <br>
+                                                <br>
+                                                <div hidden></div>
+
+
+
+                                            </h4>
+                                            <span class="">No Upcoming Holidays</span>
+                                        @endif
+                                    @endif
+
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- ----End Today CheckIn/CheckOut---- --}}
+        </div>
+        {{-- ----End Today CheckIn/CheckOut---- --}}
 
 
-            <!-- Search Filter -->
-            <form action="{{ route('attendance/search') }}" method="POST">
-                @csrf
-                <div class="row filter-row">
-                    <div class="col-sm-3">
-                        <div class="focused form-group form-focus focus focused">
-                            <div class="cal-icon">
-                                <input type="text" class="form-control floating datetimepicker" name="date">
-                            </div>
-                            <label class="focus-label">Date</label>
+        <!-- Search Filter -->
+        <form action="{{ route('attendance/search') }}" method="POST">
+            @csrf
+            <div class="row filter-row">
+                <div class="col-sm-3">
+                    <div class="focused form-group form-focus focus focused">
+                        <div class="cal-icon">
+                            <input type="text" class="form-control floating datetimepicker" name="date">
                         </div>
+                        <label class="focus-label">Date</label>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="form-group form-focus select-focus">
-                            <select class="select floating" name="month">
-                                {{-- @if (isset($month))
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group form-focus select-focus">
+                        <select class="select floating" name="month">
+                            {{-- @if (isset($month))
                                 <option> {{$month}} </option>
-                                @else 
+                                @else
                                 <option> - </option>
                                 @endif --}}
-                                <option> - </option>
-                                <option value="-01-">Jan</option>
-                                <option value="-02-">Feb</option>
-                                <option value="-03-">Mar</option>
-                                <option value="-04-">Apr</option>
-                                <option value="-05-">May</option>
-                                <option value="-06-">Jun</option>
-                                <option value="-07-">Jul</option>
-                                <option value="-08-">Aug</option>
-                                <option value="-09-">Sep</option>
-                                <option value="-10-">Oct</option>
-                                <option value="-11-">Nov</option>
-                                <option value="-12-">Dec</option>
-                            </select>
-                            <label class="focus-label">Select Month</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group form-focus select-focus">
-                            <select class="select floating" name="year">
-                                <option> - </option>
-                                <?php
-                                for ($year = 2021; $year <= 2030; $year++) {
-                                    echo "<option value='{$year}-'>$year</option>";
-                                }
-                                ?>
-                            </select>
-                            <label class="focus-label">Select Year</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-success btn-block"> Search </button>
+                            <option> - </option>
+                            <option value="-01-">Jan</option>
+                            <option value="-02-">Feb</option>
+                            <option value="-03-">Mar</option>
+                            <option value="-04-">Apr</option>
+                            <option value="-05-">May</option>
+                            <option value="-06-">Jun</option>
+                            <option value="-07-">Jul</option>
+                            <option value="-08-">Aug</option>
+                            <option value="-09-">Sep</option>
+                            <option value="-10-">Oct</option>
+                            <option value="-11-">Nov</option>
+                            <option value="-12-">Dec</option>
+                        </select>
+                        <label class="focus-label">Select Month</label>
                     </div>
                 </div>
-            </form>
-            <!-- /Search Filter -->
-
-
-            {{-- --Personal Attendence --}}
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped custom-table datatable">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Date </th>
-                                    <th>Punch In</th>
-                                    <th>Punch Out</th>
-                                    <th>Production</th>
-                                    <th>Status (In/Out)</th>
-                                    <th>Overtime</th>
-                                    <th>Missed Hours</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @isset($attendance)
-                                    @foreach ($attendance as $key => $attend)
-                                        <tr>
-                                            <td>{{ ++$key }}</td>
-                                            <td>{{ $attend->date }}</td>
-
-                                            {{-- Punch In --}}
-                                            <td>
-                                                @php
-                                                    if ($attend->timein != null) {
-                                                        if ($timeFormat == 1) {
-                                                            echo e(date('h:i:s A', strtotime($attend->timein)));
-                                                        } else {
-                                                            echo e(date('H:i:s', strtotime($attend->timein)));
-                                                        }
-                                                    }
-                                                @endphp
-                                            </td>
-
-                                            {{-- Punch Out --}}
-                                            <td>
-                                                @php
-                                                    if ($attend->timeout != null) {
-                                                        if ($timeFormat == 1) {
-                                                            echo e(date('h:i:s A', strtotime($attend->timeout)));
-                                                        } else {
-                                                            echo e(date('H:i:s', strtotime($attend->timeout)));
-                                                        }
-                                                    } else {
-                                                        echo '--';
-                                                    }
-                                                @endphp
-                                            </td>
-
-                                            {{-- Total Hours --}}
-                                            <td>
-                                                @isset($attend->totalhours)
-                                                    @if ($attend->totalhours != null)
-                                                        @php
-                                                            if (stripos($attend->totalhours, '.') === false) {
-                                                                $h = $attend->totalhours;
-                                                            } else {
-                                                                $HM = explode('.', $attend->totalhours);
-                                                                $h = $HM[0];
-                                                                $m = $HM[1];
-                                                            }
-                                                        @endphp
-                                                    @endif
-                                                    @if ($attend->totalhours != null)
-                                                        @if (stripos($attend->totalhours, '.') === false)
-                                                            {{ $h }} hr
-                                                        @else
-                                                            {{ $h }} hr {{ $m }} mins
-                                                        @endif
-                                                    @endif
-                                                @else
-                                                    --
-                                                @endisset
-                                            </td>
-
-                                            {{-- Status In/Out --}}
-                                            <td>
-                                                @if ($attend->status_timein != '' && $attend->status_timeout != '')
-                                                    <span
-                                                        class="@if ($attend->status_timein == 'Late In') orange @else blue @endif">{{ $attend->status_timein }}</span>
-                                                    /
-                                                    <span
-                                                        class="@if ($attend->status_timeout == 'Early Out') red @else green @endif">{{ $attend->status_timeout }}</span>
-                                                @elseif($attend->status_timein == 'Late In')
-                                                    <span class="orange">{{ $attend->status_timein }}</span>
-                                                @else
-                                                    <span class="blue">{{ $attend->status_timein }}</span>
-                                                @endif
-                                            </td>
-
-                                            {{-- Overtme Hours --}}
-                                            <td>
-                                                {{ $attend->overtime }} hrs
-                                            </td>
-
-                                            {{-- Short Time  Hours --}}
-                                            <td>
-                                                {{ $attend->missedhours }} hrs
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endisset
-                            </tbody>
-                        </table>
+                <div class="col-sm-3">
+                    <div class="form-group form-focus select-focus">
+                        <select class="select floating" name="year">
+                            <option> - </option>
+                            <?php
+                            for ($year = 2021; $year <= 2030; $year++) {
+                                echo "<option value='{$year}-'>$year</option>";
+                            }
+                            ?>
+                        </select>
+                        <label class="focus-label">Select Year</label>
                     </div>
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-success btn-block"> Search </button>
                 </div>
             </div>
-            {{-- --End Personal Attendence --}}
+        </form>
+        <!-- /Search Filter -->
 
+
+        {{-- --Personal Attendence --}}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Date </th>
+                                <th>Punch In</th>
+                                <th>Punch Out</th>
+                                <th>Production</th>
+                                <th>Status (In/Out)</th>
+                                <th>Overtime</th>
+                                <th>Missed Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @isset($attendance)
+                                @foreach ($attendance as $key => $attend)
+                                    <tr>
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $attend->date }}</td>
+
+                                        {{-- Punch In --}}
+                                        <td>
+                                            @php
+                                                if ($attend->timein != null) {
+                                                    if ($timeFormat == 1) {
+                                                        echo e(date('h:i:s A', strtotime($attend->timein)));
+                                                    } else {
+                                                        echo e(date('H:i:s', strtotime($attend->timein)));
+                                                    }
+                                                }
+                                            @endphp
+                                        </td>
+
+                                        {{-- Punch Out --}}
+                                        <td>
+                                            @php
+                                                if ($attend->timeout != null) {
+                                                    if ($timeFormat == 1) {
+                                                        echo e(date('h:i:s A', strtotime($attend->timeout)));
+                                                    } else {
+                                                        echo e(date('H:i:s', strtotime($attend->timeout)));
+                                                    }
+                                                } else {
+                                                    echo '--';
+                                                }
+                                            @endphp
+                                        </td>
+
+                                        {{-- Total Hours --}}
+                                        <td>
+                                            @isset($attend->totalhours)
+                                                @if ($attend->totalhours != null)
+                                                    @php
+                                                        if (stripos($attend->totalhours, '.') === false) {
+                                                            $h = $attend->totalhours;
+                                                        } else {
+                                                            $HM = explode('.', $attend->totalhours);
+                                                            $h = $HM[0];
+                                                            $m = $HM[1];
+                                                        }
+                                                    @endphp
+                                                @endif
+                                                @if ($attend->totalhours != null)
+                                                    @if (stripos($attend->totalhours, '.') === false)
+                                                        {{ $h }} hr
+                                                    @else
+                                                        {{ $h }} hr {{ $m }} mins
+                                                    @endif
+                                                @endif
+                                            @else
+                                                --
+                                            @endisset
+                                        </td>
+
+                                        {{-- Status In/Out --}}
+                                        <td>
+                                            @if ($attend->status_timein != '' && $attend->status_timeout != '')
+                                                <span class="@if ($attend->status_timein == 'Late In') orange @else blue @endif">{{ $attend->status_timein }}</span>
+                                                /
+                                                <span class="@if ($attend->status_timeout == 'Early Out') red @else green @endif">{{ $attend->status_timeout }}</span>
+                                            @elseif($attend->status_timein == 'Late In')
+                                                <span class="orange">{{ $attend->status_timein }}</span>
+                                            @else
+                                                <span class="blue">{{ $attend->status_timein }}</span>
+                                            @endif
+                                        </td>
+
+                                        {{-- Overtme Hours --}}
+                                        <td>
+                                            {{ $attend->overtime }} hrs
+                                        </td>
+
+                                        {{-- Short Time  Hours --}}
+                                        <td>
+                                            {{ $attend->missedhours }} hrs
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endisset
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <!-- /Page Content -->
+        {{-- --End Personal Attendence --}}
+
+    </div>
+    <!-- /Page Content -->
     </div>
     <!-- /Page Wrapper -->
     </div>

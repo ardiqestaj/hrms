@@ -65,7 +65,7 @@
                     <div class="card" style="height: 86%;">
                         <div class="card-body d-flex align-items-center justify-content-center">
 
-                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Department </a>
+                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_location" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add Location </a>
 
                         </div>
                     </div>
