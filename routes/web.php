@@ -236,10 +236,9 @@ Route::post('attendance/page/delete', [App\Http\Controllers\AdminAttendance::cla
 // Route::group(['prefix' => 'posts'], function() {
 Route::get('posts', [App\Http\Controllers\PostsController::class, 'index'])->middleware('auth')->name('posts');
 Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'create'])->middleware('auth')->name('posts/create');
-// Route::post('posts/create', [App\Http\Controllers\PostsController::class, 'store'])->name('posts/store');
+Route::get('posts/search', [App\Http\Controllers\PostsController::class, 'searchPost'])->name('posts/search');
 Route::get('posts/show/{post}', [App\Http\Controllers\PostsController::class, 'show'])->middleware('auth')->name('posts/show');
 Route::post('posts/edit', [App\Http\Controllers\PostsController::class, 'edit'])->middleware('auth')->name('posts/edit');
-// Route::patch('posts/{post}/update', 'PostsController@update')->name('posts/update');
 Route::post('posts/delete', [App\Http\Controllers\PostsController::class, 'delete'])->middleware('auth')->name('posts/delete');
 // });
 // Route::get('/show-event-calendar', [EventController::class, 'index']);
@@ -249,5 +248,5 @@ Route::post('posts/delete', [App\Http\Controllers\PostsController::class, 'delet
 // Route::post('fullcalendar/update', [EventController::class, 'update']);
 // Route::post('fullcalendar/delete', [EventController::class, 'destroy']);
 
-Route::get('fullcalender', [EventController::class, 'index']);
-Route::post('fullcalenderAjax', [EventController::class, 'ajax']);
+Route::get('fullcalender', [EventController::class, 'index'])->middleware('auth');
+Route::post('fullcalenderAjax', [EventController::class, 'ajax'])->middleware('auth');

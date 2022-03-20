@@ -10763,11 +10763,16 @@ img.wave {
     overflow: hidden;
     text-overflow: ellipsis;
   } */
-.grid-post {
+.gridPost {
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    grid-gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
     grid-auto-rows: 20px;
+  }
+  .img-post {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+
   }
 /* ------------------------------ Posts ------------------------------------- */
 

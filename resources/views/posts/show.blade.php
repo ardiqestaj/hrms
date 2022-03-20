@@ -14,6 +14,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a href="{{ route('posts') }}">Post</a></li>
+                            <li class="breadcrumb-item active"><a href="#">{{$posts->title}}</a></li>
                         </ul>
                     </div>
                     @if (Auth::user()->role_name == 'Admin')

@@ -16,11 +16,6 @@
                             <li class="breadcrumb-item active">Posts</li>
                         </ul>
                     </div>
-                    @if (Auth::user()->role_name == 'Admin')
-                        <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_post"><i class="fa fa-plus"></i> Create Post</a>
-                        </div>
-                    @endif
                 </div>
             </div>
             <!-- /Page Header -->
@@ -31,14 +26,44 @@
                 use Carbon\Carbon;
                 $today_date = Carbon::today()->format('d-m-Y');
             @endphp
+             <!-- Search Filter -->
+             <form action="{{ route('posts/search') }}" method="get">
+                @csrf
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <input type="text" class="form-control floating" name="author" value="{{$author}}">
+                            <label class="focus-label">Author</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="focused form-group form-focus focus focused">
+                            <div class="cal-icon">
+                                <input type="text" class="form-control floating datetimepicker" name="date" value="{{$date}}">
+                            </div>
+                            <label class="focus-label">Date</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <input type="text" class="form-control floating" value="{{$general}}" name="general">
+                            <label class="focus-label">General Search</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <button type="sumit" class="btn btn-success btn-block"> Search </button>
+                    </div>
+                </div>
+            </form>
+            <!-- Search Filter -->
             
             {{-- <div class="row"> --}}
-            <div class="grid-post">
+            <div class="gridPost mt-4">
                 {{-- <div class="item"> --}}
 
                 @if (Auth::user()->role_name == 'Admin')
                 <div class="employeeclass item">
-                    <div class="card content" >
+                    <div class="card content-post" style="height: 180px" >
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_post" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add a new Post </a>
                         </div>
@@ -48,10 +73,10 @@
 
                 @forelse ($posts as $post)
                 <div class="item">
-                    <div class="card content">
+                    <div class="card content-post">
                         @if ($post->image == "NULL")
                          @else
-                        <img class="card-img-top img-fluid" src="{{ URL::to('/assets/images/posts/' . $post->image) }}">
+                        <img class="card-img-top img-post img-fluid" src="{{ URL::to('/assets/images/posts/' . $post->image) }}">
 
                         @endif
                         <div class="card-body ">
@@ -156,56 +181,39 @@
                 </div>
             </div>
         @endif
-        <!-- /Add Holiday Modal -->
-
-        
-
-        <!-- Delete Holiday Modal -->
-        <div class="modal custom-modal fade" id="delete_holiday" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="form-header">
-                            <h3>Delete Holiday</h3>
-                            <p>Are you sure want to delete?</p>
-                        </div>
-                        <div class="modal-btn delete-action">
-                            <form action="{{ route('form/holidays/delete') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" class="e_id" value="">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Delete Holiday Modal -->
+        <!-- /Add Post Modal -->
 
     </div>
     <!-- /Page Wrapper -->
 @section('script')
     <script type="text/javascript">
-        // tinymce.init({
-	    //     selector: 'textarea#tinymce',
-	    //     plugins: [
-        //         "advlist autolink lists link image charmap print preview anchor",
-        //         "searchreplace visualblocks code fullscreen",
-        //         "insertdatetime media table paste codesample"
-        //     ],
-        //     toolbar:
-        //         "undo redo | fontselect styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | codesample action section button",
-	    //     font_formats:"Segoe UI=Segoe UI;",
-	    //     fontsize_formats: "8px 9px 10px 11px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px 32px 34px 36px 38px 40px 42px 44px 46px 48px 50px 52px 54px 56px 58px 60px 62px 64px 66px 68px 70px 72px 74px 76px 78px 80px 82px 84px 86px 88px 90px 92px 94px 94px 96px",
-	    //     height: 600
-	    // });
+function resizeGridItem(item){
+    gridPost = document.getElementsByClassName("gridPost")[0];
+    rowHeight = parseInt(window.getComputedStyle(gridPost).getPropertyValue('grid-auto-rows'));
+    rowGap = parseInt(window.getComputedStyle(gridPost).getPropertyValue('grid-row-gap'));
+    rowSpan = Math.ceil((item.querySelector('.content-post').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
+      item.style.gridRowEnd = "span "+rowSpan;
+  }
+  
+  function resizeAllGridItems(){
+    allItems = document.getElementsByClassName("item");
+    for(x=0;x<allItems.length;x++){
+      resizeGridItem(allItems[x]);
+    }
+  }
+  
+  function resizeInstance(instance){
+      item = instance.elements[0];
+    resizeGridItem(item);
+  }
+  
+  window.onload = resizeAllGridItems();
+  window.addEventListener("resize", resizeAllGridItems);
+  
+  allItems = document.getElementsByClassName("item");
+  for(x=0;x<allItems.length;x++){
+    imagesLoaded( allItems[x], resizeInstance);
+  }
 
         
     </script>
