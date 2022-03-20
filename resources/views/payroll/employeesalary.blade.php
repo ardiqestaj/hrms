@@ -106,18 +106,25 @@
                                         <td>{{ $items->rec_id }}</td>
                                         <td hidden class="id">{{ $items->id }}</td>
                                         <td hidden class="name">{{ $items->name }}</td>
-                                        <td hidden class="basic">{{ $items->basic }}</td>
-                                        <td hidden class="da">{{ $items->da }}</td>
-                                        <td hidden class="hra">{{ $items->hra }}</td>
-                                        <td hidden class="conveyance">{{ $items->conveyance }}</td>
-                                        <td hidden class="allowance">{{ $items->allowance }}</td>
-                                        <td hidden class="medical_allowance">{{ $items->medical_allowance }}</td>
-                                        <td hidden class="tds">{{ $items->tds }}</td>
-                                        <td hidden class="esi">{{ $items->esi }}</td>
-                                        <td hidden class="pf">{{ $items->pf }}</td>
-                                        <td hidden class="leave">{{ $items->leave }}</td>
-                                        <td hidden class="prof_tax">{{ $items->prof_tax }}</td>
-                                        <td hidden class="labour_welfare">{{ $items->labour_welfare }}</td>
+                                        <td hidden class="salary_amount">{{ $items->salary_amount }}</td>
+                                        <td hidden class="hourly_salary">{{ $items->hourly_salary }}</td>
+                                        <td hidden class="night_sunday_bon">{{ $items->night_sunday_bon }}</td>
+                                        <td hidden class="holiday_bon">{{ $items->holiday_bon }}</td>
+                                        <td hidden class="timesupplement_night_sunday">
+                                            {{ $items->timesupplement_night_sunday }}</td>
+                                        <td hidden class="monthly_surcharge">{{ $items->monthly_surcharge }}</td>
+                                        <td hidden class="pension_insurance">{{ $items->pension_insurance }}</td>
+                                        <td hidden class="unemployment_insurance">{{ $items->unemployment_insurance }}
+                                        </td>
+                                        <td hidden class="accident_insurance">{{ $items->accident_insurance }}</td>
+                                        <td hidden class="uvg_grb">{{ $items->uvg_grb }}</td>
+                                        <td hidden class="pension_fund">{{ $items->pension_fund }}</td>
+                                        <td hidden class="medical_insurance">{{ $items->medical_insurance }}</td>
+                                        <td hidden class="collective_labor">{{ $items->collective_labor }}</td>
+                                        <td hidden class="expenses">{{ $items->expenses }}</td>
+                                        <td hidden class="telephone_shipment">{{ $items->telephone_shipment }}</td>
+                                        <td hidden class="mileage_compensation">{{ $items->mileage_compensation }}</td>
+
                                         <td>{{ $items->email }}</td>
                                         <td>{{ $items->payment_method }}</td>
                                         <td>{{ $items->role_name }}</td>
@@ -195,10 +202,10 @@
                                     <h4 class="text-primary col-12">Earnings</h4>
                                     <div class="form-group col-6">
                                         <label>Base Wage</label>
-                                        <input class="form-control @error('basic') is-invalid @enderror" type="number"
-                                            name="basic" id="basic" value="{{ old('basic') }}"
+                                        <input class="form-control @error('salary_amount') is-invalid @enderror" type="number"
+                                            name="salary_amount" id="salary_amount" value="{{ old('salary_amount') }}"
                                             placeholder="Enter Monatslohn">
-                                        @error('basic')
+                                        @error('salary_amount')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -433,6 +440,7 @@
                         @csrf
                         <input class="form-control" type="hidden" name="id" id="e_id" value="" readonly>
                         <div class="row">
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Name Staff</label>
@@ -454,7 +462,8 @@
                                 <h4 class="text-primary">Earnings</h4>
                                 <div class="form-group">
                                     <label>Basic</label>
-                                    <input class="form-control" type="text" name="basic" id="e_basic" value="">
+                                    <input class="form-control" type="text" name="salary_amount" id="e_salary_amount"
+                                        value="">
                                 </div>
                                 <div class="form-group">
                                     <label>DA(40%)</label>
@@ -577,7 +586,7 @@
             $('#e_id').val(_this.find('.id').text());
             $('#e_name').val(_this.find('.name').text());
             $('#e_salary').val(_this.find('.salary').text());
-            $('#e_basic').val(_this.find('.basic').text());
+            $('#e_salary_amount').val(_this.find('.salary_amount').text());
             $('#e_da').val(_this.find('.da').text());
             $('#e_hra').val(_this.find('.hra').text());
             $('#e_conveyance').val(_this.find('.conveyance').text());

@@ -33,39 +33,48 @@ class PayrollController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'salary' => 'required|string|max:255',
-            'basic' => 'required|string|max:255',
-            'da' => 'required|string|max:255',
-            'hra' => 'required|string|max:255',
-            'conveyance' => 'required|string|max:255',
-            'allowance' => 'required|string|max:255',
-            'medical_allowance' => 'required|string|max:255',
-            'tds' => 'required|string|max:255',
-            'esi' => 'required|string|max:255',
-            'pf' => 'required|string|max:255',
-            'leave' => 'required|string|max:255',
-            'prof_tax' => 'required|string|max:255',
-            'labour_welfare' => 'required|string|max:255',
+            'rec_id' => 'required|string|max:255',
+            'payment_type' => 'required|string|max:255',
+            'salary_amount' => 'required|string|max:255',
+            'hourly_salary' => 'required|string|max:255',
+            'monthly_surcharge' => 'required|string|max:255',
+            'night_sunday_bon' => 'required|string|max:255',
+            'holiday_bon' => 'required|string|max:255',
+            'holiday_bon_minus' => 'required|string|max:255',
+            'timesupplement_night_sunday' => 'required|string|max:255',
+            'pension_insurance' => 'required|string|max:255',
+            'unemployment_insurance' => 'required|string|max:255',
+            'accident_insurance' => 'required|string|max:255',
+            'uvg_grb' => 'required|string|max:255',
+            'pension_fund' => 'required|string|max:255',
+            'medical_insurance' => 'required|string|max:255',
+            'collective_labor' => 'required|string|max:255',
+            'expenses' => 'required|string|max:255',
+            'telephone_shipment' => 'required|string|max:255',
+            'mileage_compensation' => 'required|string|max:255',
+
         ]);
 
         DB::beginTransaction();
         try {
             $salary = StaffSalary::updateOrCreate(['rec_id' => $request->rec_id]);
-            $salary->name = $request->name;
-            $salary->rec_id = $request->rec_id;
-            $salary->salary = $request->salary;
-            $salary->basic = $request->basic;
-            $salary->da = $request->da;
-            $salary->hra = $request->hra;
-            $salary->conveyance = $request->conveyance;
-            $salary->allowance = $request->allowance;
-            $salary->medical_allowance = $request->medical_allowance;
-            $salary->tds = $request->tds;
-            $salary->esi = $request->esi;
-            $salary->pf = $request->pf;
-            $salary->leave = $request->leave;
-            $salary->prof_tax = $request->prof_tax;
-            $salary->labour_welfare = $request->labour_welfare;
+            $salary->hourly_salary = $request->hourly_salary;
+            $salary->salary_amount = $request->salary_amount;
+            $salary->night_sunday_bon = $request->night_sunday_bon;
+            $salary->holiday_bon = $request->holiday_bon;
+            $salary->holiday_bon_minus = $request->holiday_bon_minus;
+            $salary->timesupplement_night_sunday = $request->timesupplement_night_sunday;
+            $salary->monthly_surcharge = $request->monthly_surcharge;
+            $salary->pension_insurance = $request->pension_insurance;
+            $salary->unemployment_insurance = $request->unemployment_insurance;
+            $salary->accident_insurance = $request->accident_insurance;
+            $salary->uvg_grb = $request->uvg_grb;
+            $salary->pension_fund = $request->pension_fund;
+            $salary->medical_insurance = $request->medical_insurance;
+            $salary->collective_labor = $request->collective_labor;
+            $salary->expenses = $request->expenses;
+            $salary->telephone_shipment = $request->telephone_shipment;
+            $salary->mileage_compensation = $request->mileage_compensation;
             $salary->save();
 
             DB::commit();
@@ -102,22 +111,24 @@ class PayrollController extends Controller
         DB::beginTransaction();
         try {
             $update = [
-
-                'id' => $request->id,
                 'name' => $request->name,
-                'salary' => $request->salary,
-                'basic' => $request->basic,
-                'da' => $request->da,
-                'hra' => $request->hra,
-                'conveyance' => $request->conveyance,
-                'allowance' => $request->allowance,
-                'medical_allowance' => $request->medical_allowance,
-                'tds' => $request->tds,
-                'esi' => $request->esi,
-                'pf' => $request->pf,
-                'leave' => $request->leave,
-                'prof_tax' => $request->prof_tax,
-                'labour_welfare' => $request->labour_welfare,
+                'rec_id' => $request->rec_id,
+                'salary_amount' => $request->salary_amount,
+                'hourly_salary' => $request->hourly_salary,
+                'night_sunday_bon' => $request->night_sunday_bon,
+                'holiday_bon' => $request->holiday_bon,
+                'timesupplement_night_sunday' => $request->timesupplement_night_sunday,
+                'monthly_surcharge' => $request->monthly_surcharge,
+                'pension_insurance' => $request->pension_insurance,
+                'unemployment_insurance' => $request->unemployment_insurance,
+                'accident_insurance' => $request->accident_insurance,
+                'uvg_grb' => $request->uvg_grb,
+                'pension_fund' => $request->pension_fund,
+                'medical_insurance' => $request->medical_insurance,
+                'collective_labor' => $request->collective_labor,
+                'expenses' => $request->expenses,
+                'telephone_shipment' => $request->telephone_shipment,
+                'mileage_compensation' => $request->mileage_compensation,
             ];
 
             StaffSalary::where('id', $request->id)->update($update);
