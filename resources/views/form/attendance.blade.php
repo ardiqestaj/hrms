@@ -186,7 +186,7 @@
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/images/photo_defaults.jpg') }}"></a>
-                                                <a href="profile.html">{{ $attend['name'] }} </a>
+                                                <a href="#">{{ $attend['name'] . ' ' . $attend['lastname'] }} </a>
                                             </h2>
                                         </td>
 

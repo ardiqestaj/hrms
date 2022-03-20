@@ -54,7 +54,37 @@
                                                     <div class="text"><a href="">{{ Auth::user()->email }}</a>
                                                     </div>
                                                 </li>
-                                                @if (!empty($information))
+                                                @if (empty($information))
+                                                    <li>
+                                                        <div class="title">Birthday:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Gender:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    {{-- @if (Auth::user()->role_name != 'Admin')
+                                                        <li>
+                                                            <div class="title">Reports to:</div>
+                                                            <div class="text">
+                                                                <div class="avatar-box">
+                                                                    <div class="avatar avatar-xs">
+                                                                        <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
+                                                                            alt="{{ Auth::user()->name }}">
+                                                                    </div>
+                                                                </div>
+                                                                <a href="profile.html">
+                                                                    {{ Auth::user()->name }}
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    @else
+                                                    @endif --}}
+                                                @else
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Phone:</div>
@@ -93,36 +123,7 @@
                                                             <div class="text">N/A</div>
                                                         @endif
                                                     </li>
-                                                    {{-- @if (Auth::user()->role_name != 'Admin')
-                                                        <li>
-                                                            <div class="title">Reports to:</div>
-                                                            <div class="text">
-                                                                <div class="avatar-box">
-                                                                    <div class="avatar avatar-xs">
-                                                                        <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
-                                                                            alt="{{ Auth::user()->name }}">
-                                                                    </div>
-                                                                </div>
-                                                                <a href="profile.html">
-                                                                    {{ Auth::user()->name }}
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    @else
-                                                    @endif --}}
-                                                @else
-                                                    <li>
-                                                        <div class="title">Birthday:</div>
-                                                        <div class="text">N/A</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Address:</div>
-                                                        <div class="text">N/A</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Gender:</div>
-                                                        <div class="text">N/A</div>
-                                                    </li>
+
                                                     {{-- <li>
                                                         <div class="title">Reports to:</div>
                                                         <div class="text">
@@ -1397,10 +1398,12 @@
                                                     <input class="form-control" type="text" name="phone_number">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Date of birth <span class="text-danger">*</span></label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text" id="birthdate" name="birthdate">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Date of birth <span class="text-danger">*</span></label>
+                                                    <div class="cal-icon">
+                                                        <input class="form-control datetimepicker" type="text" id="birthdate" name="birthdate">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

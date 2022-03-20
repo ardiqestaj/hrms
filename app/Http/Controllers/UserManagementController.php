@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\EducationInformation;
-use App\Models\Employee;
 use App\Models\ExperienceInformation;
 use App\Models\Family;
 use App\Models\ProfileInformation;
@@ -129,35 +128,98 @@ class UserManagementController extends Controller
         $user = DB::table('users')->get();
         $employees = DB::table('profile_information')->where('rec_id', $profile)->first();
         $families = DB::table('families')->where('rec_id', $profile)->first();
-        // $educations = DB::table('education_information')->where('rec_id',$profile)->first();
+        $educations = DB::table('education_information')->where('rec_id', $profile)->first();
+        $experience = DB::table('experience_information')->where('rec_id', $profile)->first();
+        $employee = DB::table('employees')->where('employee_id', $profile)->first();
+
+        // if (empty($employees)) {
+        //     $information = DB::table('profile_information')->where('rec_id', $profile)->first();
+        //     $employee = DB::table('employees')->where('employee_id', $profile)->first();
+        //     $family = DB::table('families')->where('rec_id', $profile)->first();
+        //     $education = DB::table('education_information')->where('rec_id', $profile)->get();
+        //     $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
+        //     return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'education', 'family', 'experience'));
+
+        // } else {
+        //     $rec_id = $employees->rec_id;
+        //     if ($rec_id == $profile) {
+        //         $information = DB::table('profile_information')->where('rec_id', $profile)->first();
+        //         $employee = DB::table('employees')->where('employee_id', $profile)->first();
+        //         $family = DB::table('families')->where('rec_id', $profile)->first();
+        //         $education = DB::table('education_information')->where('rec_id', $profile)->get();
+        //         $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
+
+        //         return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'experience'));
+        //     } else {
+        //         $information = ProfileInformation::all();
+        //         $employee = Employee::all();
+        //         $family = Family::all();
+        //         $education = EducationInformation::all();
+        //         $experience = ExperienceInformation::all();
+        //         return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'education', 'experience'));
+        //     }
+        // }
 
         if (empty($employees)) {
             $information = DB::table('profile_information')->where('rec_id', $profile)->first();
-            $employee = DB::table('employees')->where('employee_id', $profile)->first();
-            $family = DB::table('families')->where('rec_id', $profile)->first();
-            $education = DB::table('education_information')->where('rec_id', $profile)->get();
-            $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-            return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'education', 'experience'));
+            return view('usermanagement.profile_user', compact('information', 'user'));
 
         } else {
             $rec_id = $employees->rec_id;
             if ($rec_id == $profile) {
                 $information = DB::table('profile_information')->where('rec_id', $profile)->first();
-                $employee = DB::table('employees')->where('employee_id', $profile)->first();
-                $family = DB::table('families')->where('rec_id', $profile)->first();
-                $education = DB::table('education_information')->where('rec_id', $profile)->get();
-                $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-
-                return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'education', 'experience'));
+                return view('usermanagement.profile_user', compact('information', 'user'));
             } else {
                 $information = ProfileInformation::all();
-                $employee = Employee::all();
-                $family = Family::all();
-                $education = EducationInformation::all();
-                $experience = ExperienceInformation::all();
-                return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'education', 'experience'));
+                return view('usermanagement.profile_user', compact('information', 'user'));
             }
         }
+
+        // if (empty($family)) {
+        //     $family = DB::table('families')->where('rec_id', $profile)->first();
+        //     return view('usermanagement.profile_user', compact('family', 'user'));
+        // } else {
+        //     $rec_id = $employee->rec_id;
+        //     if ($rec_id == $profile) {
+        //         $family = DB::table('families')->where('rec_id', $profile)->first();
+        //         return view('usermanagement.profile_user', compact('family', 'user'));
+        //     } else {
+        //         $family = Family::all();
+        //         return view('usermanagement.profile_user', compact('family', 'user'));
+        //     }
+        // }
+
+        // if (empty($education)) {
+        //     $education = DB::table('education_information')->where('rec_id', $profile)->get();
+
+        //     return view('usermanagement.profile_user', compact('education', 'user'));
+        // } else {
+        //     $rec_id = $employee->rec_id;
+        //     if ($rec_id == $profile) {
+        //         $education = DB::table('education_information')->where('rec_id', $profile)->get();
+
+        //         return view('usermanagement.profile_user', compact('education', 'user'));
+        //     } else {
+        //         $education = EducationInformation::all();
+        //         return view('usermanagement.profile_user', compact('education', 'user'));
+        //     }
+        // }
+
+        // if (empty($experience)) {
+        //     $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
+
+        //     return view('usermanagement.profile_user', compact('experience', 'user'));
+        // } else {
+        //     $rec_id = $employee->rec_id;
+        //     if ($rec_id == $profile) {
+        //         $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
+
+        //         return view('usermanagement.profile_user', compact('experience', 'user'));
+        //     } else {
+        //         $experience = ExperienceInformation::all();
+        //         return view('usermanagement.profile_user', compact('experience', 'user'));
+        //     }
+        // }
     }
 
     // save profile information
@@ -258,7 +320,7 @@ class UserManagementController extends Controller
             return redirect()->back();
         } catch (\Exception$e) {
             DB::rollback();
-            Toastr::error('Add Family Information fail :)', 'Error');
+            Toastr::error('Add Education Information fail :)', 'Error');
             return redirect()->back();
         }
 

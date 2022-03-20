@@ -21,16 +21,32 @@ class AdminAttendance extends Controller
             $years = Carbon::now()->format('Y');
             $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
-            $users = User::select('rec_id', 'name')
-                ->where('role_name', 'LIKE', 'employee')->get();
-            if (count($users) > 8) {
-                $users = User::select('rec_id', 'name')
-                    ->where('role_name', 'LIKE', 'employee')->paginate(8);
-            } else {
-                $users = User::select('rec_id', 'name')
-                    ->where('role_name', 'LIKE', 'employee')->get();
-            }
+            // $users = User::select('rec_id', 'name')
+            //     ->where('role_name', 'LIKE', 'employee')->get();
+            // if (count($users) > 8) {
+            //     $users = User::select('rec_id', 'name')
+            //         ->where('role_name', 'LIKE', 'employee')->paginate(8);
+            // } else {
+            //     $users = User::select('rec_id', 'name')
+            //         ->where('role_name', 'LIKE', 'employee')->get();
+            // }
 
+            $users = DB::table('users')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->select('rec_id', 'employees.name', 'lastname')
+                ->where('users.role_name', 'LIKE', 'employee')->get();
+            if (count($users) > 8) {
+                $users = DB::table('users')
+                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                    ->select('rec_id', 'employees.name', 'lastname')
+                    ->where('users.role_name', 'LIKE', 'employee')->paginate(8);
+            } else {
+                $users = DB::table('users')
+                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                    ->select('rec_id', 'employees.name', 'lastname')
+                    ->where('users.role_name', 'LIKE', 'employee')->get();
+            }
+            // dd($users);
             $userList = DB::table('users')->get();
             $permission_lists = DB::table('permission_lists')->get();
             // dd($userList);
@@ -57,6 +73,7 @@ class AdminAttendance extends Controller
             foreach ($users as $user) {
                 $employee['rec_id'] = $user->rec_id;
                 $employee['name'] = $user->name;
+                $employee['lastname'] = $user->lastname;
                 $attend = [];
                 $leaves = [];
                 $schedul = [];
@@ -260,9 +277,48 @@ class AdminAttendance extends Controller
                 $stats['monthOvertimeHrs'] = array_sum($monthOvertimeHrs);
 
                 $finale[] = $stats;
-                $thisMonth = Carbon::now()->format('m');
 
             }
+            $thisMonth = Carbon::now()->format('m');
+            switch ($thisMonth) {
+                case '01':
+                    $thisMonth = 'Jan';
+                    break;
+                case '02':
+                    $thisMonth = 'Fab';
+                    break;
+                case '03':
+                    $thisMonth = 'Mar';
+                    break;
+                case '04':
+                    $thisMonth = 'Apr';
+                    break;
+                case '05':
+                    $thisMonth = 'May';
+                    break;
+                case '06':
+                    $thisMonth = 'Jun';
+                    break;
+                case '07':
+                    $thisMonth = 'Jul';
+                    break;
+                case '08':
+                    $thisMonth = 'Aug';
+                    break;
+                case '09':
+                    $thisMonth = 'Sep';
+                    break;
+                case '10':
+                    $thisMonth = 'Oct';
+                    break;
+                case '11';
+                    $thisMonth = 'Nov';
+                    break;
+                case '12':
+                    $thisMonth = 'Dec';
+                    break;
+            }
+
             return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists', 'thisMonth'));
         } else {
             return redirect()->route('home');
@@ -425,8 +481,7 @@ class AdminAttendance extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
             // month
-            $thisMonth = Carbon::now()->format('m');
-            dd($thisMonth);
+
             if (!empty($request->month)) {
                 $monthVar = $request->month;
                 $month = str_replace("-", "", $monthVar);
@@ -480,6 +535,47 @@ class AdminAttendance extends Controller
                 $yearsVar = $request->year;
                 $years = str_replace("-", "", $yearsVar);
 
+                $thisMonth = Carbon::now()->format('m');
+
+                switch ($thisMonth) {
+                    case '01':
+                        $thisMonth = 'Jan';
+                        break;
+                    case '02':
+                        $thisMonth = 'Fab';
+                        break;
+                    case '03':
+                        $thisMonth = 'Mar';
+                        break;
+                    case '04':
+                        $thisMonth = 'Apr';
+                        break;
+                    case '05':
+                        $thisMonth = 'May';
+                        break;
+                    case '06':
+                        $thisMonth = 'Jun';
+                        break;
+                    case '07':
+                        $thisMonth = 'Jul';
+                        break;
+                    case '08':
+                        $thisMonth = 'Aug';
+                        break;
+                    case '09':
+                        $thisMonth = 'Sep';
+                        break;
+                    case '10':
+                        $thisMonth = 'Oct';
+                        break;
+                    case '11';
+                        $thisMonth = 'Nov';
+                        break;
+                    case '12':
+                        $thisMonth = 'Dec';
+                        break;
+
+                }
             } else {
                 $years = Carbon::now()->format('Y');
             }
@@ -495,9 +591,10 @@ class AdminAttendance extends Controller
 
             $now = Carbon::now();
             // $startOfMonth = $now->startOfMonth()->format('Y-m-d');
-            $users = User::select('rec_id', 'name')
-                ->where('role_name', 'LIKE', 'employee')
-                ->get();
+            $users = DB::table('users')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->select('rec_id', 'employees.name', 'lastname')
+                ->where('users.role_name', 'LIKE', 'employee')->get();
 
             // Search by name
             $name = $request->name;
@@ -548,6 +645,7 @@ class AdminAttendance extends Controller
             foreach ($users as $user) {
                 $employee['rec_id'] = $user->rec_id;
                 $employee['name'] = $user->name;
+                $employee['lastname'] = $user->lastname;
                 $attend = [];
                 $leaves = [];
                 $schedul = [];
