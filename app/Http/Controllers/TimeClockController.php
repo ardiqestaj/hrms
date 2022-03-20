@@ -231,8 +231,12 @@ class TimeClockController extends Controller
                 $totalTimeMin = 999;
 
             }
+
+            $thisMonth = Carbon::now()->format('m');
+            $thisYear = Carbon::now()->format('Y');
+
             // dd($eRestDays);
-            return view('form.attendanceemployee', compact('cc', 'eRestDays', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'now', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'nextHoliday1'));
+            return view('form.attendanceemployee', compact('cc', 'eRestDays', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'now', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'nextHoliday1', 'thisYear'));
         } else {
             return redirect()->route('em/dashboard');
         }
@@ -682,6 +686,47 @@ class TimeClockController extends Controller
                     ->where('date', 'LIKE', '%' . $month . '%')
                     ->where('idno', 'LIKE', '%' . $empID . '%')
                     ->get();
+                $thisYear = Carbon::now()->format('Y');
+
+                switch ($request->month) {
+                    case '-01-':
+                        $thisMonth = 'Jan';
+                        break;
+                    case '-02-':
+                        $thisMonth = 'Fab';
+                        break;
+                    case '-03-':
+                        $thisMonth = 'Mar';
+                        break;
+                    case '-04-':
+                        $thisMonth = 'Apr';
+                        break;
+                    case '-05-':
+                        $thisMonth = 'May';
+                        break;
+                    case '-06-':
+                        $thisMonth = 'Jun';
+                        break;
+                    case '-07-':
+                        $thisMonth = 'Jul';
+                        break;
+                    case '-08-':
+                        $thisMonth = 'Aug';
+                        break;
+                    case '-09-':
+                        $thisMonth = 'Sep';
+                        break;
+                    case '-10-':
+                        $thisMonth = 'Oct';
+                        break;
+                    case '-11-';
+                        $thisMonth = 'Nov';
+                        break;
+                    case '-12-':
+                        $thisMonth = 'Dec';
+                        break;
+
+                }
             }
 
             //  search by year
@@ -689,6 +734,47 @@ class TimeClockController extends Controller
                 $attendance = DB::table('time_clocks')->select()
                     ->where('date', 'LIKE', '%' . $year . '%')
                     ->get();
+                $thisYear = str_replace('-', '', $request->year);
+                $thisMonth = Carbon::now()->format('m');
+                switch ($request->month) {
+                    case '-01-':
+                        $thisMonth = 'Jan';
+                        break;
+                    case '-02-':
+                        $thisMonth = 'Fab';
+                        break;
+                    case '-03-':
+                        $thisMonth = 'Mar';
+                        break;
+                    case '-04-':
+                        $thisMonth = 'Apr';
+                        break;
+                    case '-05-':
+                        $thisMonth = 'May';
+                        break;
+                    case '-06-':
+                        $thisMonth = 'Jun';
+                        break;
+                    case '-07-':
+                        $thisMonth = 'Jul';
+                        break;
+                    case '-08-':
+                        $thisMonth = 'Aug';
+                        break;
+                    case '-09-':
+                        $thisMonth = 'Sep';
+                        break;
+                    case '-10-':
+                        $thisMonth = 'Oct';
+                        break;
+                    case '-11-';
+                        $thisMonth = 'Nov';
+                        break;
+                    case '-12-':
+                        $thisMonth = 'Dec';
+                        break;
+
+                }
             }
 
             // search by year and month
@@ -698,6 +784,45 @@ class TimeClockController extends Controller
                     ->where('date', 'LIKE', '%' . $month . '%')
                     ->where('idno', 'LIKE', '%' . $empID . '%')
                     ->get();
+                $thisMonth = Carbon::now()->format('m');
+                switch ($request->month) {
+                    case '-01-':
+                        $thisMonth = 'Jan';
+                        break;
+                    case '-02-':
+                        $thisMonth = 'Fab';
+                        break;
+                    case '-03-':
+                        $thisMonth = 'Mar';
+                        break;
+                    case '-04-':
+                        $thisMonth = 'Apr';
+                        break;
+                    case '-05-':
+                        $thisMonth = 'May';
+                        break;
+                    case '-06-':
+                        $thisMonth = 'Jun';
+                        break;
+                    case '-07-':
+                        $thisMonth = 'Jul';
+                        break;
+                    case '-08-':
+                        $thisMonth = 'Aug';
+                        break;
+                    case '-09-':
+                        $thisMonth = 'Sep';
+                        break;
+                    case '-10-':
+                        $thisMonth = 'Oct';
+                        break;
+                    case '-11-';
+                        $thisMonth = 'Nov';
+                        break;
+                    case '-12-':
+                        $thisMonth = 'Dec';
+                        break;
+                }
             }
 
             //  search by date
@@ -746,7 +871,7 @@ class TimeClockController extends Controller
             }
 
             //  return normal view
-            return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'year', 'month', 'now', 'date', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'nextHoliday1', 'eRestDays'));
+            return view('form.attendanceemployee', compact('cc', 'tz', 'tf', 'rfid', 'attendance', 'todayAttendance', 'schedules', 'timeFormat', 'monthWorkingDays', 'monthWorkingHrs', 'monthAttendance', 'workingHrs', 'year', 'month', 'now', 'date', 'nextHoliday', 'totalTimeD', 'totalTimeH', 'totalTimeM', 'totalTimeMin', 'nextHoliday1', 'eRestDays', 'thisMonth', 'thisYear'));
         } else {
             return redirect()->route('em/dashboard');
         }

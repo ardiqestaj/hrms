@@ -315,12 +315,11 @@
                 <div class="col-sm-3">
                     <div class="form-group form-focus select-focus">
                         <select class="select floating" name="month">
-                            {{-- @if (isset($month))
-                                <option> {{$month}} </option>
-                                @else
+                            @if (isset($thisMonth))
+                                <option> {{ $thisMonth }} </option>
+                            @else
                                 <option> - </option>
-                                @endif --}}
-                            <option> - </option>
+                            @endif
                             <option value="-01-">Jan</option>
                             <option value="-02-">Feb</option>
                             <option value="-03-">Mar</option>
@@ -340,7 +339,7 @@
                 <div class="col-sm-3">
                     <div class="form-group form-focus select-focus">
                         <select class="select floating" name="year">
-                            <option> - </option>
+                            <option disabled selected> {{ $thisYear }} </option>
                             <?php
                             for ($year = 2021; $year <= 2030; $year++) {
                                 echo "<option value='{$year}-'>$year</option>";
@@ -629,7 +628,16 @@
 
 
         var productionHrs = '{{ $monthAttendance->sum('totalhours') }}';
+        <?php if (isset($attend)) { ?>
         var productionHrs1 = '{{ $attend->totalhours }}';
+
+        <?php }
+        else { ?>
+        var productionHrs1 = 0;
+
+        <?php } ?>
+
+
         var scheduledHrs = '{{ $schedules->hours }}';
         var totalMonthHrs = '{{ $monthWorkingHrs }}';
         var remainingThisMonth1 = totalMonthHrs - productionHrs;
@@ -642,11 +650,7 @@
             var remainingThisMonth = 0;
         }
 
-        // if (isset(productionHrs1)) {
-        //     var productionHrs2 = productionHrs1;
-        // } else {
-        //     var productionHrs2 = 0;
-        // };
+
 
         document.getElementById("todayPrg").style.width = (productionHrs1 / scheduledHrs) * 100 + "%";
         document.getElementById("todayPrg").setAttribute('aria-valuemax', scheduledHrs);
