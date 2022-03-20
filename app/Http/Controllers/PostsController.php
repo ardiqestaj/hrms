@@ -17,6 +17,10 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $author = '';
+        $date = '';
+        $general = '';
+
         $posts = DB::table('posts')
         ->join('users', 'users.id', '=', 'posts.user_id')
         ->select('users.avatar', 'users.name', 'posts.*')
@@ -24,7 +28,7 @@ class PostsController extends Controller
         // $posts = Post::latest()->paginate(10);
         // dd($posts);
 
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('posts', 'author', 'date', 'general'));
     }
 
     /**
@@ -41,12 +45,9 @@ class PostsController extends Controller
             'description'        => 'required|string|max:255',
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-        if ($request->filled('image')) {
             $image = $request->file('image')->getClientOriginalName();
             $path =  $request->file('image')->move(public_path('assets/images/posts'), $image);
-        } else {
-            $image = "NULL";
-        }
+
       
         DB::beginTransaction();
         try {
@@ -135,6 +136,82 @@ class PostsController extends Controller
             Toastr::error('Updated post fail :)', 'Error');
             return redirect()->back();
         }
+    }
+    // Post search
+    public function SearchPost(Request $request)
+    {
+            // search by author
+            $author = '';
+            if ($request->author) {
+                $posts = DB::table('posts')
+                ->join('users', 'users.id', '=', 'posts.user_id')
+                ->select('users.avatar', 'users.name', 'posts.*')
+                ->where('users.name', 'LIKE', '%' . $request->author . '%')
+                ->latest()->paginate(6); 
+                $author = $request->author;
+
+            }
+            // search by date
+            $date = '';
+            if ($request->date) {
+           $date = date('Y-m-d', strtotime($request->date));
+
+                $posts = DB::table('posts')
+                ->join('users', 'users.id', '=', 'posts.user_id')
+                ->select('users.avatar', 'users.name', 'posts.*')
+                ->where('posts.updated_at', 'LIKE', '%' . $date . '%')
+                ->latest()->paginate(6); 
+                $date = $request->date;
+            }
+            // search by general
+            $general = '';
+            if ($request->general) {
+                $posts = DB::table('posts')
+                ->join('users', 'users.id', '=', 'posts.user_id')
+                ->select('users.avatar', 'users.name', 'posts.*')
+                ->where('posts.title', 'LIKE', '%' . $request->general . '%')
+                ->orWhere('posts.description', 'LIKE', '%' . $request->general . '%')
+                ->orWhere('posts.body', 'LIKE', '%' . $request->general . '%')
+                ->latest()->paginate(6); 
+            $general = $request->general;
+
+            }
+
+            // search by author and date
+            if ($request->author && $request->date) {
+                $date = date('Y-m-d', strtotime($request->date));
+
+                $posts = DB::table('posts')
+                ->join('users', 'users.id', '=', 'posts.user_id')
+                ->select('users.avatar', 'users.name', 'posts.*')
+                ->where('users.name', 'LIKE', '%' . $request->author . '%')
+                ->where('posts.updated_at', 'LIKE', '%' . $date . '%')
+                ->latest()->paginate(6); 
+            }
+            // search by author and general
+            if ($request->author && $request->general) {
+                $posts = DB::table('posts')
+                ->join('users', 'users.id', '=', 'posts.user_id')
+                ->select('users.avatar', 'users.name', 'posts.*')
+                ->where('users.name', 'LIKE', '%' . $request->author . '%')
+                ->where('posts.title', 'LIKE', '%' . $request->general . '%')
+                ->orWhere('posts.description', 'LIKE', '%' . $request->general . '%')
+                ->orWhere('posts.body', 'LIKE', '%' . $request->general . '%')
+                ->latest()->paginate(6); 
+            }
+            // search by date and general
+            if ($request->date && $request->general) {
+                $date = date('Y-m-d', strtotime($request->date));
+                $posts = DB::table('posts')
+                ->join('users', 'users.id', '=', 'posts.user_id')
+                ->select('users.avatar', 'users.name', 'posts.*')
+                ->where('posts.updated_at', 'LIKE', '%' . $date . '%')
+                ->where('posts.title', 'LIKE', '%' . $request->general . '%')
+                ->orWhere('posts.description', 'LIKE', '%' . $request->general . '%')
+                ->orWhere('posts.body', 'LIKE', '%' . $request->general . '%')
+                ->latest()->paginate(6); 
+            }
+            return view('posts.index', compact('posts', 'author', 'date', 'general'));
     }
 
     // /**

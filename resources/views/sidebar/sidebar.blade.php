@@ -41,12 +41,11 @@
                 @if (Auth::user()->role_name == 'Admin')
                     <li class="submenu">
                         <a href="#">
-                            <i class="la la-user-secret"></i> <span> User Controller</span> <span
+                            <i class="las la-user-check"></i> <span> User Controller</span> <span
                                 class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
                             <li><a href="{{ route('userManagement') }}">All User</a></li>
-                            <li><a href="{{ route('posts') }}">Create Posts</a></li>
                             <li><a href="{{ route('activity/log') }}">Activity Log</a></li>
                             <li><a href="{{ route('activity/login/logout') }}">Activity User</a></li>
                         </ul>
@@ -152,6 +151,21 @@
                         </ul>
                     </li>
                 @endif
+
+                <li class="submenu-click">
+                    <a href="{{ route('posts') }}" class="">
+                        <i class="las la-blog"></i>
+                        <span class="dash-category">Newsfeed</span>
+                        <!-- <span class="menu-arrow"></span> -->
+                    </a>
+                    <!-- <ul style="display: none;">
+                    <li><a class="" href="{{ route('all/employee/card') }}">All Employees</a></li>
+                    <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
+                    <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin)
+                            <span class=""></span></a>
+                    </li>
+                </ul> -->
+                </li>
 
                 {{-- App --}}
                 <li class="submenu"> <a href="#"><i class="las la-cube"></i>
