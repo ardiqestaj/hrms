@@ -132,24 +132,25 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                                     <ul class="nav nav-tabs nav-tabs-bottom ">
                                         <li class="nav-item"><a href="#emp_profile" data-toggle="tab"
-                                                class="nav-link active">Personal Information</a></li>
+                                                class="nav-link active emp_profile">Personal Information</a></li>
                                         <li class="nav-item"><a href="#emp_salary" data-toggle="tab"
-                                                class="nav-link">Salary Information</a></li>
+                                                class="nav-link emp_salary">Salary Information</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         {{-- End Add employee menu --}}
 
-                        <div class="tab-content pt-0">
+                        {{-- Add employee form --}}
+                        <form action="{{ route('register/user') }}" method="POST">
+                            @csrf
+                            <div class="tab-content pt-0">
+                                {{-- Personal Info --}}
+                                <div class="tab-pane fade show active" id="emp_profile">
+                                    <div class="card"
+                                        style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                        <div class="card-body">
 
-                            {{-- Personal Info --}}
-                            <div class="tab-pane fade show active" id="emp_profile">
-                                <div class="card"
-                                    style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
-                                    <div class="card-body">
-                                        <form action="{{ route('register/user') }}" method="POST">
-                                            @csrf
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
@@ -304,14 +305,21 @@
                                                     <div class="form-group">
                                                         <label class="col-form-label">Payment Method <span
                                                                 class="text-danger">*</span></label>
-                                                        <select class="select select2s-hidden-accessible"
-                                                            style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                            id="payment_method" name="payment_method" required>
-                                                            <option value="">-- Select --</option>
-                                                            <option value="Fulltime">Fulltime</option>
-                                                            <option value="Parttime">Parttime</option>
-                                                            <option value="Hourly">Hourly</option>
-                                                        </select>
+                                                        <p class="errMsg text-danger m-0 p-0" style="display: none;">
+                                                            Please
+                                                            select
+                                                            an option.</p>
+                                                        <div class="select-border" style="border-radius: 5px;">
+                                                            <select class="select select2s-hidden-accessible"
+                                                                style="width: 100%;" tabindex="-1" aria-hidden="true"
+                                                                id="payment_method" name="payment_method" required>
+                                                                <option value="selectcard">-- Select --</option>
+                                                                <option value="Fulltime">Fulltime</option>
+                                                                <option value="Parttime">Parttime</option>
+                                                                <option value="Hourly">Hourly</option>
+                                                            </select>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -439,96 +447,96 @@
                                             </div>
 
                                             {{-- <div class="table-responsive m-t-15">
-                                        <table class="table table-striped custom-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Module Permission</th>
-                                                    <th class="text-center">Read</th>
-                                                    <th class="text-center">Write</th>
-                                                    <th class="text-center">Create</th>
-                                                    <th class="text-center">Delete</th>
-                                                    <th class="text-center">Import</th>
-                                                    <th class="text-center">Export</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($permission_lists as $lists)
-                                                    <tr>
-                                                        <td>{{ $lists->permission_name }}</td>
-                                                        <input type="hidden" name="permission[]"
-                                                            value="{{ $lists->permission_name }}">
-                                                        <input type="hidden" name="id_count[]" value="{{ $lists->id }}">
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="read{{ ++$key }}" id="read"
-                                                                name="read[]" value="Y"
-                                                                {{ $lists->read == 'Y' ? 'checked' : '' }}>
-                                                            <input type="checkbox" class="read{{ ++$key1 }}" id="read"
-                                                                name="read[]" value="N"
-                                                                {{ $lists->read == 'N' ? 'checked' : '' }}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="write{{ ++$key }}" id="write"
-                                                                name="write[]" value="Y"
-                                                                {{ $lists->write == 'Y' ? 'checked' : '' }}>
-                                                            <input type="checkbox" class="write{{ ++$key1 }}" id="write"
-                                                                name="write[]" value="N"
-                                                                {{ $lists->write == 'N' ? 'checked' : '' }}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="create{{ ++$key }}" id="create"
-                                                                name="create[]" value="Y"
-                                                                {{ $lists->create == 'Y' ? 'checked' : '' }}>
-                                                            <input type="checkbox" class="create{{ ++$key1 }}" id="create"
-                                                                name="create[]" value="N"
-                                                                {{ $lists->create == 'N' ? 'checked' : '' }}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="delete{{ ++$key }}" id="delete"
-                                                                name="delete[]" value="Y"
-                                                                {{ $lists->delete == 'Y' ? 'checked' : '' }}>
-                                                            <input type="checkbox" class="delete{{ ++$key1 }}" id="delete"
-                                                                name="delete[]" value="N"
-                                                                {{ $lists->delete == 'N' ? 'checked' : '' }}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="import{{ ++$key }}" id="import"
-                                                                name="import[]" value="Y"
-                                                                {{ $lists->import == 'Y' ? 'checked' : '' }}>
-                                                            <input type="checkbox" class="import{{ ++$key1 }}" id="import"
-                                                                name="import[]" value="N"
-                                                                {{ $lists->import == 'N' ? 'checked' : '' }}>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <input type="checkbox" class="export{{ ++$key }}" id="export"
-                                                                name="export[]" value="Y"
-                                                                {{ $lists->export == 'Y' ? 'checked' : '' }}>
-                                                            <input type="checkbox" class="export{{ ++$key1 }}" id="export"
-                                                                name="export[]" value="N"
-                                                                {{ $lists->export == 'N' ? 'checked' : '' }}>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div> --}}
+                                                <table class="table table-striped custom-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Module Permission</th>
+                                                            <th class="text-center">Read</th>
+                                                            <th class="text-center">Write</th>
+                                                            <th class="text-center">Create</th>
+                                                            <th class="text-center">Delete</th>
+                                                            <th class="text-center">Import</th>
+                                                            <th class="text-center">Export</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($permission_lists as $lists)
+                                                            <tr>
+                                                                <td>{{ $lists->permission_name }}</td>
+                                                                <input type="hidden" name="permission[]"
+                                                                    value="{{ $lists->permission_name }}">
+                                                                <input type="hidden" name="id_count[]" value="{{ $lists->id }}">
+                                                                <td class="text-center">
+                                                                    <input type="checkbox" class="read{{ ++$key }}" id="read"
+                                                                        name="read[]" value="Y"
+                                                                        {{ $lists->read == 'Y' ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="read{{ ++$key1 }}" id="read"
+                                                                        name="read[]" value="N"
+                                                                        {{ $lists->read == 'N' ? 'checked' : '' }}>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <input type="checkbox" class="write{{ ++$key }}" id="write"
+                                                                        name="write[]" value="Y"
+                                                                        {{ $lists->write == 'Y' ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="write{{ ++$key1 }}" id="write"
+                                                                        name="write[]" value="N"
+                                                                        {{ $lists->write == 'N' ? 'checked' : '' }}>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <input type="checkbox" class="create{{ ++$key }}" id="create"
+                                                                        name="create[]" value="Y"
+                                                                        {{ $lists->create == 'Y' ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="create{{ ++$key1 }}" id="create"
+                                                                        name="create[]" value="N"
+                                                                        {{ $lists->create == 'N' ? 'checked' : '' }}>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <input type="checkbox" class="delete{{ ++$key }}" id="delete"
+                                                                        name="delete[]" value="Y"
+                                                                        {{ $lists->delete == 'Y' ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="delete{{ ++$key1 }}" id="delete"
+                                                                        name="delete[]" value="N"
+                                                                        {{ $lists->delete == 'N' ? 'checked' : '' }}>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <input type="checkbox" class="import{{ ++$key }}" id="import"
+                                                                        name="import[]" value="Y"
+                                                                        {{ $lists->import == 'Y' ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="import{{ ++$key1 }}" id="import"
+                                                                        name="import[]" value="N"
+                                                                        {{ $lists->import == 'N' ? 'checked' : '' }}>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <input type="checkbox" class="export{{ ++$key }}" id="export"
+                                                                        name="export[]" value="Y"
+                                                                        {{ $lists->export == 'Y' ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="export{{ ++$key1 }}" id="export"
+                                                                        name="export[]" value="N"
+                                                                        {{ $lists->export == 'N' ? 'checked' : '' }}>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                        {{-- </div> --}}
+
                                             <div class="submit-section">
-                                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                                <button id="next-form-btn" type="button" class="btn btn-primary submit-btn"
+                                                    onclick="fun()">Next <i class="mt-2 las la-arrow-right"></i></button>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- End Personal Info --}}
+                                {{-- End Personal Info --}}
 
-                            <div class="tab-pane fade" id="emp_salary">
-                                <!-- Fulltime Tab -->
-                                <div style="display: none;" id="fulltime">
-                                    <div class="card"
-                                        style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
-                                        <div class="card-body">
-                                            <h3 class="card-title"> Earnings Information</h3>
-                                            <form action="{{ route('form/salary/fulltime') }}" method="POST">
-                                                @csrf
+                                <div class="tab-pane fade" id="emp_salary">
+                                    <!-- Fulltime Tab -->
+                                    <div style="display: none;" id="fulltime">
+                                        <div class="card"
+                                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                            <div class="card-body">
+                                                <h3 class="card-title"> Earnings Information</h3>
+
                                                 <div class="row">
                                                     <div class="col-sm-4" hidden>
                                                         <div class="form-group">
@@ -658,7 +666,8 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit
+                                                            <label class="col-form-label">UVG Erganzung
+                                                                Grobfahrlassigkeit
                                                                 <small class="text-muted">
                                                                     UVG</small></label>
                                                             <div class="input-group">
@@ -705,8 +714,8 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">Collective Labor Agreement<small
-                                                                    class="text-muted">
+                                                            <label class="col-form-label">Collective Labor
+                                                                Agreement<small class="text-muted">
                                                                     GAV Abzug</small></label>
                                                             <div class="input-group">
                                                                 <div class="input-group-prepend">
@@ -834,23 +843,26 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="submit-section">
-                                                    <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                                <div class="submit-section d-flex justify-content-center">
+                                                    <button type="button"
+                                                        class="btn btn-primary submit-btn mr-2 prev-form-btn"><i
+                                                            class="las la-arrow-left"></i> Back</button>
+
+                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i
+                                                            class="las la-save"></i> Save</button>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- /Fulltime Tab -->
+                                    <!-- /Fulltime Tab -->
 
-                                <!-- Parttime Tab -->
-                                <div style="display: none;" id="parttime">
-                                    <div class="card"
-                                        style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Parttime: Earnings Information</h3>
-                                            <form action="{{ route('form/salary/parttime') }}" method="POST">
-                                                @csrf
+                                    <!-- Parttime Tab -->
+                                    <div style="display: none;" id="parttime">
+                                        <div class="card"
+                                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                            <div class="card-body">
+                                                <h3 class="card-title">Parttime: Earnings Information</h3>
+
                                                 <div class="row">
                                                     <div class="col-sm-4" hidden>
                                                         <div class="form-group">
@@ -980,7 +992,8 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit
+                                                            <label class="col-form-label">UVG Erganzung
+                                                                Grobfahrlassigkeit
                                                                 <small class="text-muted">
                                                                     UVG</small></label>
                                                             <div class="input-group">
@@ -1027,8 +1040,8 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">Collective Labor Agreement<small
-                                                                    class="text-muted">
+                                                            <label class="col-form-label">Collective Labor
+                                                                Agreement<small class="text-muted">
                                                                     GAV Abzug</small></label>
                                                             <div class="input-group">
                                                                 <div class="input-group-prepend">
@@ -1156,23 +1169,25 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="submit-section">
-                                                    <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                                <div class="submit-section d-flex justify-content-center">
+                                                    <button type="button"
+                                                        class="btn btn-primary submit-btn mr-2 prev-form-btn"><i
+                                                            class="las la-arrow-left"></i> Back</button>
+
+                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i
+                                                            class="las la-save"></i> Save</button>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- /Parttime Tab -->
+                                    <!-- /Parttime Tab -->
 
-                                <!-- Hourly Tab -->
-                                <div style="display: none;" id="hourly">
-                                    <div class="card"
-                                        style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Hourly: Earnings Information</h3>
-                                            <form action="{{ route('form/salary/hourly') }}" method="POST">
-                                                @csrf
+                                    <!-- Hourly Tab -->
+                                    <div style="display: none;" id="hourly">
+                                        <div class="card"
+                                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                            <div class="card-body">
+                                                <h3 class="card-title">Hourly: Earnings Information</h3>
                                                 <div class="row">
 
                                                     <div class="col-sm-4" hidden>
@@ -1253,8 +1268,8 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">Timesupplement Night/Sunday<small
-                                                                    class="text-muted">
+                                                            <label class="col-form-label">Timesupplement
+                                                                Night/Sunday<small class="text-muted">
                                                                     Zeitzuschlag Nacht/Sonntag</small></label>
                                                             <div class="input-group">
                                                                 <div class="input-group-prepend">
@@ -1369,7 +1384,8 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">UVG Erganzung Grobfahrlassigkeit
+                                                            <label class="col-form-label">UVG Erganzung
+                                                                Grobfahrlassigkeit
                                                                 <small class="text-muted">
                                                                     UVG</small></label>
                                                             <div class="input-group">
@@ -1416,8 +1432,8 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label class="col-form-label">Collective Labor Agreement<small
-                                                                    class="text-muted">
+                                                            <label class="col-form-label">Collective Labor
+                                                                Agreement<small class="text-muted">
                                                                     GAV Abzug</small></label>
                                                             <div class="input-group">
                                                                 <div class="input-group-prepend">
@@ -1547,55 +1563,58 @@
 
                                                 </div>
 
-                                                <div class="submit-section">
-                                                    <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                                <div class="submit-section d-flex justify-content-center">
+                                                    <button type="button"
+                                                        class="btn btn-primary submit-btn mr-2 prev-form-btn"><i
+                                                            class="las la-arrow-left"></i> Back</button>
+
+                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i
+                                                            class="las la-save"></i> Save</button>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- /Hourly Tab -->
                                 </div>
-                                <!-- /Hourly Tab -->
                             </div>
-
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Add Employee Modal -->
+    </div>
+    <!-- /Add Employee Modal -->
 
 
-        <!-- Delete Leave Modal -->
-        <div class="modal custom-modal fade" id="delete_approve" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="form-header">
-                            <h3>Delete Employee</h3>
-                            <p>Are you sure want to delete this employee?</p>
-                        </div>
-                        <div class="modal-btn delete-action">
-                            <form action="{{ route('all/employee/delete') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="employee_id" id="e_id" value="">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Delete</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Cancel</a>
-                                    </div>
+    <!-- Delete Leave Modal -->
+    <div class="modal custom-modal fade" id="delete_approve" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete Employee</h3>
+                        <p>Are you sure want to delete this employee?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="{{ route('all/employee/delete') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="employee_id" id="e_id" value="">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal"
+                                        class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Delete Leave Modal -->
+    </div>
+    <!-- /Delete Leave Modal -->
 
     </div>
     <!-- /Page Wrapper -->
@@ -1608,6 +1627,32 @@
             var _this = $(this).parents('.profile-widget');
             $('#e_id').val(_this.find('.id').text());
         });
+
+
+
+        function fun() {
+            var ddl = document.getElementById("payment_method");
+            var selectedValue = ddl.options[ddl.selectedIndex].value;
+            if (selectedValue == "selectcard") {
+                $('.select-border').css('border', '1px solid #ff0000');
+                $('.errMsg').css("display", 'block');
+            } else {
+                // $('#next-form-btn').click();
+
+                $('#next-form-btn').on('click', function(e) {
+                    $('.emp_salary').click();
+                    $('.select-border').css('border', 'none');
+                    $('.errMsg').css("display", 'none');
+                });
+
+                $('.prev-form-btn').on('click', function(e) {
+                    $('.emp_profile').click();
+                    $('.select-border').css('border', 'none');
+                    $('.errMsg').css("display", 'none');
+                });
+
+            }
+        }
     </script>
     <script>
         $(document).ready(function() {
@@ -1638,7 +1683,12 @@
                     $('#parttime').css("display", 'none');
                     $('#hourly').css("display", 'block');
                 }
-            })
+            });
+
+
+
+
+
 
         });
     </script>
