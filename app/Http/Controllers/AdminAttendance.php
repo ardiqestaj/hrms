@@ -19,6 +19,8 @@ class AdminAttendance extends Controller
         if (Auth::user()->role_name == 'Admin') {
             $month = Carbon::now()->format('m');
             $years = Carbon::now()->format('Y');
+            $thisYear = '';
+
             $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $years);
 
             // $users = User::select('rec_id', 'name')
@@ -319,7 +321,7 @@ class AdminAttendance extends Controller
                     break;
             }
 
-            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists', 'thisMonth'));
+            return view('form.attendance', compact('users', 'month', 'thisYear', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'monthWorkingDays', 'monthWorkingHrs', 'workingHrs', 'now', 'userList', 'permission_lists', 'thisMonth'));
         } else {
             return redirect()->route('home');
         }
@@ -486,7 +488,7 @@ class AdminAttendance extends Controller
                 $monthVar = $request->month;
                 $month = str_replace("-", "", $monthVar);
                 $thisMonth = $month;
-
+                $thisYear = '';
                 switch ($thisMonth) {
                     case '01':
                         $thisMonth = 'Jan';
@@ -534,8 +536,9 @@ class AdminAttendance extends Controller
             if (!empty($request->year)) {
                 $yearsVar = $request->year;
                 $years = str_replace("-", "", $yearsVar);
+                $thisYear = $years;
 
-                $thisMonth = Carbon::now()->format('m');
+                $thisMonth = str_replace("-", "", $request->month);
 
                 switch ($thisMonth) {
                     case '01':
@@ -576,6 +579,7 @@ class AdminAttendance extends Controller
                         break;
 
                 }
+
             } else {
                 $years = Carbon::now()->format('Y');
             }
@@ -841,7 +845,7 @@ class AdminAttendance extends Controller
                 $finale[] = $stats;
             }
             // dd($finale);
-            return view('form.attendance', compact('users', 'month', 'years', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt', 'thisMonth'));
+            return view('form.attendance', compact('users', 'month', 'thisYear', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt', 'thisMonth'));
         } else {
             return redirect()->route('em/dashboard');
         }

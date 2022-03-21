@@ -54,37 +54,7 @@
                                                     <div class="text"><a href="">{{ Auth::user()->email }}</a>
                                                     </div>
                                                 </li>
-                                                @if (empty($information))
-                                                    <li>
-                                                        <div class="title">Birthday:</div>
-                                                        <div class="text">N/A</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Address:</div>
-                                                        <div class="text">N/A</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Gender:</div>
-                                                        <div class="text">N/A</div>
-                                                    </li>
-                                                    {{-- @if (Auth::user()->role_name != 'Admin')
-                                                        <li>
-                                                            <div class="title">Reports to:</div>
-                                                            <div class="text">
-                                                                <div class="avatar-box">
-                                                                    <div class="avatar avatar-xs">
-                                                                        <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
-                                                                            alt="{{ Auth::user()->name }}">
-                                                                    </div>
-                                                                </div>
-                                                                <a href="profile.html">
-                                                                    {{ Auth::user()->name }}
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    @else
-                                                    @endif --}}
-                                                @else
+                                                @if (!empty($information))
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Phone:</div>
@@ -123,7 +93,36 @@
                                                             <div class="text">N/A</div>
                                                         @endif
                                                     </li>
-
+                                                    {{-- @if (Auth::user()->role_name != 'Admin')
+                                                        <li>
+                                                            <div class="title">Reports to:</div>
+                                                            <div class="text">
+                                                                <div class="avatar-box">
+                                                                    <div class="avatar avatar-xs">
+                                                                        <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}"
+                                                                            alt="{{ Auth::user()->name }}">
+                                                                    </div>
+                                                                </div>
+                                                                <a href="profile.html">
+                                                                    {{ Auth::user()->name }}
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    @else
+                                                    @endif --}}
+                                                @else
+                                                    <li>
+                                                        <div class="title">Birthday:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Gender:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
                                                     {{-- <li>
                                                         <div class="title">Reports to:</div>
                                                         <div class="text">
@@ -264,8 +263,11 @@
                                                         @endif
                                                     @else
                                                         <td>N/A</td>
+
                                                         <td>N/A</td>
+
                                                         <td>N/A</td>
+
                                                         <td>N/A</td>
                                                     </tr>
                                                 @endif
@@ -293,7 +295,7 @@
                                     {{-- </div> --}}
                                     <div class="experience-box">
                                         <ul class="experience-list">
-                                            @if (!empty($education))
+                                            @if (count($education))
                                                 @foreach ($education as $edu)
                                                     <li>
 
@@ -342,7 +344,10 @@
                                                     <div class="experience-content">
                                                         <div class="timeline-content">
                                                             <a href="#/" class="name">N/A</a>
+                                                            <br>
+                                                            <br>
                                                             <div>N/A</div>
+                                                            <br>
                                                             <span class="time">N/A -
                                                                 N/A</span>
                                                         </div>
@@ -368,7 +373,7 @@
                                     </h3>
                                     <div class="experience-box">
                                         <ul class="experience-list">
-                                            @if (!empty($experience))
+                                            @if (count($experience))
                                                 @foreach ($experience as $exp)
                                                     <li>
                                                         <div class="experience-user">
@@ -401,14 +406,15 @@
                                                     </div>
                                                     <div class="experience-content">
                                                         <div class="timeline-content">
-                                                            <a href="#/" class="name">Web Designer at
-                                                                Ron-tech</a>
-                                                            <span class="time">Jan 2013 - Present (5 years 2
-                                                                months)</span>
+                                                            <a href="#/" class="name">N/A at
+                                                                N/A</a>
+                                                            <br>
+                                                            <br>
+                                                            <span class="time">N/A - N/A </span>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li>
+                                                {{-- <li>
                                                     <div class="experience-user">
                                                         <div class="before-circle"></div>
                                                     </div>
@@ -420,7 +426,7 @@
                                                                 months)</span>
                                                         </div>
                                                     </div>
-                                                </li>
+                                                </li> --}}
                                             @endif
                                         </ul>
                                     </div>
@@ -1565,7 +1571,7 @@
             </div>
         </div>
 
-        @if (!empty($education))
+        @if (count($education))
             {{-- @foreach ($education as $edu) --}}
 
             <div id="education_info" class="modal custom-modal fade" role="dialog">
@@ -1591,20 +1597,20 @@
                                                     <div class="form-group form-focus focused">
                                                         <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
                                                         <input type="hidden" name="id" id="id">
-                                                        <input type="text" name="institution" value="" id="institution" class="form-control floating">
+                                                        <input type="text" name="institution" value="{{ $education[0]->institution }}" id="institution" class="form-control floating">
                                                         <label class="focus-label">Institution</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus focused">
-                                                        <input type="text" name="subject" id="subject" value="" class="form-control floating">
+                                                        <input type="text" name="subject" id="subject" value="{{ $education[0]->subject }}" class="form-control floating">
                                                         <label class="focus-label">Subject</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus focused">
                                                         <div class="cal-icon">
-                                                            <input type="text" name="st_date" id="st_date" value="" class="form-control floating datetimepicker">
+                                                            <input type="text" name="st_date" id="st_date" value="{{ $education[0]->st_date }}" class="form-control floating datetimepicker">
                                                         </div>
                                                         <label class="focus-label">Starting Date</label>
                                                     </div>
@@ -1612,20 +1618,20 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus focused">
                                                         <div class="cal-icon">
-                                                            <input type="text" id="end_date" name="end_date" value="" class="form-control floating datetimepicker">
+                                                            <input type="text" id="end_date" name="end_date" value="{{ $education[0]->end_date }}" class="form-control floating datetimepicker">
                                                         </div>
                                                         <label class="focus-label">Complete Date</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus focused">
-                                                        <input type="text" id="degree" name="degree" value="" class="form-control floating">
+                                                        <input type="text" id="degree" name="degree" value="{{ $education[0]->degree }}" class="form-control floating">
                                                         <label class="focus-label">Degree</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus focused">
-                                                        <input type="text" id="grade" name="grade" value="" class="form-control floating">
+                                                        <input type="text" id="grade" name="grade" value="{{ $education[0]->grade }}" class="form-control floating">
                                                         <label class="focus-label">Grade</label>
                                                     </div>
                                                 </div>
@@ -1766,7 +1772,7 @@
                                 </div>
                             </div>
                             <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Submittt</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -1774,7 +1780,7 @@
             </div>
         </div>
 
-        @if (!empty($experience))
+        @if (count($experience))
             <!-- Experience Modal -->
             <div id="experience_info" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1797,26 +1803,26 @@
                                                     <div class="form-group form-focus">
                                                         <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
                                                         <input type="hidden" name="exp_id" id="exp_id">
-                                                        <input type="text" name="work_company_name" id="work_company_name" class="form-control floating" value="">
+                                                        <input type="text" name="work_company_name" id="work_company_name" class="form-control floating" value="{{ $experience[0]->work_company_name }}">
                                                         <label class="focus-label">Company Name</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
-                                                        <input type="text" name="work_address" id="work_address" class="form-control floating" value="">
+                                                        <input type="text" name="work_address" id="work_address" class="form-control floating" value="{{ $experience[0]->work_address }}">
                                                         <label class="focus-label">Location</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" id="work_position" name="work_position" value="">
+                                                        <input type="text" class="form-control floating" id="work_position" name="work_position" value="{{ $experience[0]->work_position }}">
                                                         <label class="focus-label">Job Position</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <div class="cal-icon">
-                                                            <input type="text" id="work_period_from" name="work_period_from" class="form-control floating datetimepicker" value="">
+                                                            <input type="text" id="work_period_from" name="work_period_from" class="form-control floating datetimepicker" value="{{ $experience[0]->work_period_from }}">
                                                         </div>
                                                         <label class="focus-label">Period From</label>
                                                     </div>
@@ -1824,7 +1830,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <div class="cal-icon">
-                                                            <input type="text" id="work_period_to" name="work_period_to" class="form-control floating datetimepicker" value="">
+                                                            <input type="text" id="work_period_to" name="work_period_to" class="form-control floating datetimepicker" value="{{ $experience[0]->work_period_to }}">
                                                         </div>
                                                         <label class="focus-label">Period To</label>
                                                     </div>

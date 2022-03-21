@@ -152,7 +152,7 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
                             <select class="select floating" name="year">
-                                <option> {{ $years }} </option>
+                                <option> {{ $thisYear }} </option>
                                 @for ($year = 2021; $year <= 2030; $year++)
                                     <option value='{{ $year }}-'>{{ $year }}</option>;
                                 @endfor
