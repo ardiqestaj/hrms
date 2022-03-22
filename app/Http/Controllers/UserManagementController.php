@@ -130,103 +130,12 @@ class UserManagementController extends Controller
         $family = DB::table('families')->where('rec_id', $profile)->first();
         $education = DB::table('education_information')->where('rec_id', $profile)->get();
         $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-        $employee = DB::table('users')->where('rec_id', $profile)->first();
-        // if (empty($employees)) {
-        //     $information = DB::table('profile_information')->where('rec_id', $profile)->first();
-        //     $employee = DB::table('employees')->where('employee_id', $profile)->first();
-        //     $family = DB::table('families')->where('rec_id', $profile)->first();
-        //     $education = DB::table('education_information')->where('rec_id', $profile)->get();
-        //     $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-        //     return view('usermanagement.profile_user', compact('information', 'user', 'employees', 'educations', 'families', 'experiences'));
-
-        // } else {
-        //     $rec_id = $employees->rec_id;
-        //     if ($rec_id == $profile) {
-        //         $information = DB::table('profile_information')->where('rec_id', $profile)->first();
-        //         $employee = DB::table('employees')->where('employee_id', $profile)->first();
-        //         $family = DB::table('families')->where('rec_id', $profile)->first();
-        //         $education = DB::table('education_information')->where('rec_id', $profile)->get();
-        //         $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-
-        //         return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'experience'));
-        //     } else {
-        //         $information = ProfileInformation::all();
-        //         $employee = Employee::all();
-        //         $family = Family::all();
-        //         $education = EducationInformation::all();
-        //         $experience = ExperienceInformation::all();
-        //         return view('usermanagement.profile_user', compact('information', 'user', 'employee', 'family', 'education', 'experience'));
-        //     }
-        // }
-
-        // if (empty($employees)) {
-        //     $information = DB::table('profile_information')->where('rec_id', $profile)->first();
-        //     return view('usermanagement.profile_user', compact('information', 'user'));
-        // } else {
-        //     $rec_id = $employees->rec_id;
-        //     if ($rec_id == $profile) {
-        //         $information = DB::table('profile_information')->where('rec_id', $profile)->first();
-        //         return view('usermanagement.profile_user', compact('information', 'user'));
-        //     } else {
-        //         $information = ProfileInformation::all();
-        //         return view('usermanagement.profile_user', compact('information', 'user'));
-        //     }
-        // }
-
-        // if (empty($families)) {
-        //     $family = DB::table('families')->where('rec_id', $profile)->first();
-        //     dd($family);
-
-        //     return view('usermanagement.profile_user', compact('family'));
-        // } else {
-        //     $rec_id = $employee->rec_id;
-        //     if ($rec_id == $profile) {
-        //         $family = DB::table('families')->where('rec_id', $profile)->first();
-        //         return view('usermanagement.profile_user', compact('family'));
-        //     } else {
-        //         $family = Family::all();
-        //         return view('usermanagement.profile_user', compact('family'));
-        //     }
-        // }
-
-        // if (empty($educations)) {
-
-        //     $education = DB::table('education_information')->where('rec_id', $profile)->get();
-        //     dd($education);
-        //     return view('usermanagement.profile_user', compact('education'));
-
-        // } else {
-
-        //     $rec_id = $employee->rec_id;
-        //     if ($rec_id == $profile) {
-
-        //         $education = DB::table('education_information')->where('rec_id', $profile)->get();
-        //         return view('usermanagement.profile_user', compact('education'));
-
-        //     } else {
-
-        //         $education = EducationInformation::all();
-        //         return view('usermanagement.profile_user', compact('education'));
-
-        //     }
-        // }
-
-        // if (empty($experiences)) {
-        //     $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-
-        //     return view('usermanagement.profile_user', compact('experience'));
-        // } else {
-        //     $rec_id = $employee->rec_id;
-        //     if ($rec_id == $profile) {
-        //         $experience = DB::table('experience_information')->where('rec_id', $profile)->get();
-
-        //         return view('usermanagement.profile_user', compact('experience'));
-        //     } else {
-        //         $experience = ExperienceInformation::all();
-        //         return view('usermanagement.profile_user', compact('experience'));
-        //     }
-        // }
-        return view('usermanagement.profile_user', compact('information', 'user', 'education', 'family', 'experience'));
+        $employee = DB::table('users')
+            ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+            ->where('rec_id', $profile)
+            ->select('users.name', 'employees.lastname')->first();
+        // dd($employee);
+        return view('usermanagement.profile_user', compact('information', 'education', 'employee', 'family', 'experience'));
 
     }
 

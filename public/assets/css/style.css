@@ -3399,7 +3399,7 @@ ul.sidebar-main-menu {
     color: #fff;
     display: inline-block;
     font-weight: 500;
-    height: 38px;
+    height: 34px;
     line-height: 38px;
     margin: 0 10px 0 0;
     text-align: center;
@@ -3417,7 +3417,7 @@ ul.sidebar-main-menu {
 
 .avatar.avatar-xs {
     width: 24px;
-    height: 24px
+    height: 21px
 }
 
 .avatar>img {
@@ -4133,7 +4133,7 @@ input::placeholder {
 
 .profile-img .avatar {
     font-size: 24px;
-    height: 80px;
+    height: 71.5px;
     line-height: 80px;
     margin: 0;
     width: 80px;

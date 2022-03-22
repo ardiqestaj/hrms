@@ -18,7 +18,7 @@ class EmployeeController extends Controller
 
             $users = DB::table('users')
                 ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                 ->paginate(11);
             $userList = DB::table('users')->get();
             $departments = DB::table('departments')->get();
@@ -213,7 +213,7 @@ class EmployeeController extends Controller
 
             $users = DB::table('users')
                 ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                 ->get();
             $departments = DB::table('departments')->get();
             // $permission_lists = DB::table('permission_lists')->get();
@@ -223,63 +223,64 @@ class EmployeeController extends Controller
             if ($request->employee_id) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
-                    ->get();
+                    ->latest()->paginate(11);
             }
             // search by name
             if ($request->name) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('users.name', 'LIKE', '%' . $request->name . '%')
-                    ->get();
+                    ->orWhere('employees.lastname', 'LIKE', '%' . $request->name . '%')
+                    ->latest()->paginate(11);
             }
             // search by department
             if ($request->department) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('users.department', 'LIKE', '%' . $request->department . '%')
-                    ->get();
+                    ->latest()->paginate(11);
             }
 
             // search by name and id
             if ($request->employee_id && $request->name) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
                     ->where('users.name', 'LIKE', '%' . $request->name . '%')
-                    ->get();
+                    ->latest()->paginate(11);
             }
             // search by department and id
             if ($request->employee_id && $request->department) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
                     ->where('users.department', 'LIKE', '%' . $request->department . '%')
-                    ->get();
+                    ->latest()->paginate(11);
             }
             // search by name and department
             if ($request->name && $request->department) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('users.name', 'LIKE', '%' . $request->name . '%')
                     ->where('users.department', 'LIKE', '%' . $request->department . '%')
-                    ->get();
+                    ->latest()->paginate(11);
             }
             // search by name and department and id
             if ($request->employee_id && $request->name && $request->department) {
                 $users = DB::table('users')
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
+                    ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company', 'employees.lastname')
                     ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
                     ->where('users.name', 'LIKE', '%' . $request->name . '%')
                     ->where('users.department', 'LIKE', '%' . $request->department . '%')
-                    ->get();
+                    ->latest()->paginate(11);
             }
             return view('form.allemployeecard', compact('users', 'userList', 'departments'));
         } else {

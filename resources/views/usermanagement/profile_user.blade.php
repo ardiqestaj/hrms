@@ -1,8 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
-
-
     <div class="page-wrapper">
         <!-- Page Content -->
         <div class="content container-fluid">
@@ -37,7 +34,11 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
+                                                @if (isset($employee->name))
+                                                    <h3 class="user-name m-t-0 mb-0">{{ $employee->name . ' ' . $employee->lastname }}</h3>
+                                                @else
+                                                    <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
+                                                @endif
                                                 {{-- <h6 class="text-muted">{{ Auth::user()->department }}</h6> --}}
                                                 <small class="text-muted">{{ Auth::user()->position }}</small>
                                                 <div class="staff-id">Employee ID : {{ Auth::user()->rec_id }}</div>
@@ -58,7 +59,11 @@
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Phone:</div>
-                                                            <div class="text"><a href="">{{ $information->phone_number }}</a></div>
+                                                            @if (isset($information->phone_number))
+                                                                <div class="text"><a href="">{{ $information->phone_number }}</a></div>
+                                                            @else
+                                                                <div class="text">N/A</div>
+                                                            @endif
                                                         @else
                                                             <div class="title">Phone:</div>
                                                             <div class="text">N/A</div>
@@ -67,9 +72,15 @@
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Birthday:</div>
-                                                            <div class="text">
-                                                                {{ date('d F, Y', strtotime($information->birth_date)) }}
-                                                            </div>
+                                                            @if (isset($information->birth_date))
+                                                                <div class="text">
+                                                                    {{ date('d F, Y', strtotime($information->birth_date)) }}
+                                                                </div>
+                                                            @else
+                                                                <div class="text">
+                                                                    <div class="text">N/A</div>
+                                                                </div>
+                                                            @endif
                                                         @else
                                                             <div class="title">Birthday:</div>
                                                             <div class="text">N/A</div>
@@ -78,7 +89,11 @@
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Address:</div>
-                                                            <div class="text">{{ $information->address }}</div>
+                                                            @if (isset($information->address))
+                                                                <div class="text">{{ $information->address .', ' .$information->state .', ' .$information->country .', ' .$information->pin_code }}</div>
+                                                            @else
+                                                                <div class="text">N/A</div>
+                                                            @endif
                                                         @else
                                                             <div class="title">Address:</div>
                                                             <div class="text">N/A</div>
@@ -87,7 +102,11 @@
                                                     <li>
                                                         @if (Auth::user()->rec_id == $information->rec_id)
                                                             <div class="title">Gender:</div>
-                                                            <div class="text">{{ $information->gender }}</div>
+                                                            @if (isset($information->gender))
+                                                                <div class="text">{{ $information->gender }}</div>
+                                                            @else
+                                                                <div class="text">N/A</div>
+                                                            @endif
                                                         @else
                                                             <div class="title">Gender:</div>
                                                             <div class="text">N/A</div>
@@ -154,7 +173,6 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
-                            <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Projects</a></li>
                             @if (Auth::user()->role_name == 'Admin')
                                 <li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin
                                             Only)</small></a></li>
@@ -992,7 +1010,11 @@
                                                 <div class="form-group">
                                                     <label>Birth Date</label>
                                                     <div class="cal-icon">
-                                                        <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate" value="{{ $information->birth_date }}" readonly>
+                                                        {{-- @if (isset($information->birth_date))
+                                                            <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate" value="{{ $information->birth_date }}" readonly>
+                                                        @else --}}
+                                                        <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate" value="{{ $information->birth_date }}">
+                                                        {{-- @endif --}}
                                                     </div>
                                                 </div>
                                             </div>
