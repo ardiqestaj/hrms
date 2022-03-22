@@ -83,7 +83,13 @@ class HomeController extends Controller
     public function emDashboard()
     {
         if (Auth::user()->role_name == 'Employee') {
+
             $em_id = Auth::user()->rec_id;
+            $employee = DB::table('users')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->where('rec_id', $em_id)
+                ->select('users.name', 'employees.lastname')->first();
+
             $dt = Carbon::now();
             $todayDate = $dt->toDayDateTimeString();
             $LeaveTypes = LeaveTypes::all();
@@ -97,7 +103,7 @@ class HomeController extends Controller
                 $totalTime = $dt->diff($nextHoliday->start)->format('%D Days, %H Hours and %I Minutes');} else {
                 $totalTime = 99999;
             }
-            return view('dashboard.emdashboard', compact('todayDate', 'LeaveTypes', 'LeavesEvidence', 'nextHoliday', 'totalTime'));
+            return view('dashboard.emdashboard', compact('todayDate', 'LeaveTypes', 'LeavesEvidence', 'employee', 'nextHoliday', 'totalTime'));
         } else {
             return redirect()->route('home');
         }

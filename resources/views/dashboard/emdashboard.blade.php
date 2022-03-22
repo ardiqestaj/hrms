@@ -14,7 +14,7 @@
                             <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
                         </div>
                         <div class="welcome-det">
-                            <h3>Welcome, {{ Auth::user()->name }}</h3>
+                            <h3>Welcome, {{ $employee->name . ' ' . $employee->lastname }}!</h3>
                             <p>{{ $todayDate }}</p>
                         </div>
                     </div>
