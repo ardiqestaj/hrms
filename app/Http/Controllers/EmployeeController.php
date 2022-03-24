@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\StaffSalary;
 use App\Models\User;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
@@ -194,6 +195,8 @@ class EmployeeController extends Controller
 
             Employee::where('employee_id', $request->employee_id)->delete();
             User::where('rec_id', $request->employee_id)->delete();
+            StaffSalary::where('rec_id', $request->employee_id)->delete();
+
             // module_permission::where('employee_id',$employee_id)->delete();
 
             DB::commit();
