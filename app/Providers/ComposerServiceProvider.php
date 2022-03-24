@@ -25,7 +25,13 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $notification = Notification::where('read_at', null)->get()
+        // $notification = Notification::where('read_at', null)->get()
+        // View::composer('*', function ($view) {
+        //     //
+        // });
+
+    
+    // View::share('city_zip_address', $city_zip_address);
         
 
     }
