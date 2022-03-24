@@ -3,8 +3,6 @@
 @extends('sidebar.dashboard')
 @endsection --}}
 @section('content')
-
- 
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -21,7 +19,7 @@
                     </div>
                 </div>
             </div>
-			<!-- /Page Header -->
+            <!-- /Page Header -->
 
             <!-- /Search Filter -->
             <div class="row">
@@ -44,7 +42,11 @@
                                 @foreach ($activityLog as $key => $item)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $item->user_name }}</td>
+                                        @if (isset($item->lastname))
+                                            <td>{{ $item->user_name . ' ' . $item->lastname }}</td>
+                                        @else
+                                            <td>{{ $item->user_name }}</td>
+                                        @endif
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->phone_number }}</td>
                                         <td>{{ $item->status }}</td>
@@ -62,4 +64,3 @@
         <!-- /Page Content -->
     </div>
 @endsection
-

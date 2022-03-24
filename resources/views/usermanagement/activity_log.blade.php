@@ -1,8 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
-
-
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -19,7 +16,7 @@
                     </div>
                 </div>
             </div>
-			<!-- /Page Header -->
+            <!-- /Page Header -->
 
             <!-- /Search Filter -->
             <div class="row">
@@ -29,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
+                                    {{-- <th>Name</th> --}}
                                     <th>Email</th>
                                     <th>Description</th>
                                     <th>Date Time</th>
@@ -39,7 +36,7 @@
                                 @foreach ($activityLog as $key => $item)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $item->name }}</td>
+                                        {{-- <td>{{ $item->name }}</td> --}}
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->date_time }}</td>
@@ -54,5 +51,3 @@
         <!-- /Page Content -->
     </div>
 @endsection
-
-

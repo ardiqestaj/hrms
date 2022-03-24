@@ -21,7 +21,10 @@ class UserManagementController extends Controller
     public function index()
     {
         if (Auth::user()->role_name == 'Admin') {
-            $result = DB::table('users')->get();
+            $result = DB::table('users')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->select('users.*', 'employees.lastname')
+                ->get();
             $role_name = DB::table('role_type_users')->get();
             $position = DB::table('position_types')->get();
             $department = DB::table('departments')->get();
@@ -37,7 +40,10 @@ class UserManagementController extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
             $users = DB::table('users')->get();
-            $result = DB::table('users')->get();
+            $result = DB::table('users')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->select('users.*', 'employees.lastname')
+                ->get();
             $role_name = DB::table('role_type_users')->get();
             $position = DB::table('position_types')->get();
             $department = DB::table('departments')->get();
@@ -45,7 +51,11 @@ class UserManagementController extends Controller
 
             // search by name
             if ($request->name) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')->get();
+                $result = DB::table('users')
+                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                    ->where('users.name', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('employees.lastname', 'LIKE', '%' . $request->name . '%')
+                    ->get();
             }
 
             // search by role name
@@ -60,8 +70,15 @@ class UserManagementController extends Controller
 
             // search by name and role name
             if ($request->name && $request->role_name) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
-                    ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                // $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                //     ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                //     ->get();
+
+                $result = DB::table('users')
+                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                    ->where('users.role_name', 'LIKE', '%' . $request->role_name . '%')
+                    ->where('users.name', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('employees.lastname', 'LIKE', '%' . $request->name . '%')
                     ->get();
             }
 
@@ -74,16 +91,32 @@ class UserManagementController extends Controller
 
             // search by name and status
             if ($request->name && $request->status) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                // $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                //     ->where('status', 'LIKE', '%' . $request->status . '%')
+                //     ->get();
+
+                $result = DB::table('users')
+                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
                     ->where('status', 'LIKE', '%' . $request->status . '%')
+
+                    ->where('users.name', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('employees.lastname', 'LIKE', '%' . $request->name . '%')
                     ->get();
             }
 
             // search by name and role name and status
             if ($request->name && $request->role_name && $request->status) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
-                    ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                // $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                //     ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                //     ->where('status', 'LIKE', '%' . $request->status . '%')
+                //     ->get();
+
+                $result = DB::table('users')
+                    ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
                     ->where('status', 'LIKE', '%' . $request->status . '%')
+
+                    ->where('users.name', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('employees.lastname', 'LIKE', '%' . $request->name . '%')
                     ->get();
             }
 
@@ -99,8 +132,9 @@ class UserManagementController extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
 
-            $activityLog = DB::table('user_activity_logs')->get();
-            return view('usermanagement.user_activity_log', compact('activityLog'));
+            $activityLog = DB::table('activity_logs')->get();
+            return view('usermanagement.activity_log', compact('activityLog'));
+
         } else {
             return redirect()->route('home');
         }
@@ -110,8 +144,15 @@ class UserManagementController extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
 
-            $activityLog = DB::table('activity_logs')->get();
-            return view('usermanagement.activity_log', compact('activityLog'));
+            $activityLog = DB::table('users')
+                ->join('user_activity_logs', 'users.email', '=', 'user_activity_logs.email')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->select('user_activity_logs.*', 'employees.lastname')
+                ->get();
+
+            // dd($activityLog[0]->lastname);
+            return view('usermanagement.user_activity_log', compact('activityLog'));
+
         } else {
             return redirect()->route('home');
         }

@@ -268,6 +268,13 @@
                                             $remainInMonth = 0;
                                            }
 
+                                           if(isset($workingHrsPerDay)){
+                                            $workingHrsPerDay1 = $workingHrsPerDay;
+                                         } else {
+                                            $workingHrsPerDay1 = 1;
+                                         }
+
+
                                            $attendance_for_day = '<div class="modalParent">
                                             <div hidden class="takeInfo">'  . $daysattendance . '</div>
                                             <div hidden class="takeInfo14">'  . $daysattendanceEdit . '</div>
@@ -279,7 +286,7 @@
                                             <div hidden class="takeInfo5">' . $overtime .' <small>hrs</small>'. '</div>
                                             <div hidden class="takeInfo6">' . $missedHrs .' <small>hrs</small>'. '</div>
                                             <div hidden class="takeInfo7">' . $monthWorkingHrs . '</div>
-                                            <div hidden class="takeInfo8">' . $workingHrsPerDay . '</div>
+                                            <div hidden class="takeInfo8">'. $workingHrsPerDay1. '</div>
                                             <div hidden class="takeInfo9">' . $monthAttendences . '</div>
                                             <div hidden class="takeInfo11">' . $monthMissedHrs . '</div>
                                             <div hidden class="takeInfo12">' . $monthOvertimeHrs . '</div>
