@@ -549,18 +549,6 @@
                                                 <h3 class="card-title"> Fulltime: Earnings Information</h3>
 
                                                 <div class="row">
-                                                    {{-- <div class="col-sm-4" hidden>
-                                                        <div class="form-group">
-                                                            <label>Gender <span class="text-danger">*</span></label>
-                                                            <select class="select form-control" name="payment_type"
-                                                                style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                                id="gender" name="gender" required>
-                                                                <option value="Fulltime" selected>
-                                                                    Fulltime</option>
-                                                            </select>
-                                                        </div>
-                                                    </div> --}}
-
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label class="col-form-label">Salary amount
@@ -573,6 +561,22 @@
                                                                 </div>
                                                                 <input type="text" class="form-control"
                                                                     name="salary_amount"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Hourly
+                                                                Salary <small class="text-muted">
+                                                                    Stundenlohn</small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="hourly_salary"
                                                                     placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
@@ -593,6 +597,69 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    {{-- Hidden Forms --}}
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Monthly
+                                                                Surcharge <small class="text-muted">
+                                                                    FSB Zussschlag mtl</small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="night_sunday_bon"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Monthly
+                                                                Surcharge <small class="text-muted">
+                                                                    FSB Zussschlag mtl</small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="holiday_bon" placeholder="Type your salary amount"
+                                                                    value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Monthly
+                                                                Surcharge <small class="text-muted">
+                                                                    FSB Zussschlag mtl</small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="holiday_bon_minus"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Monthly
+                                                                Surcharge <small class="text-muted">
+                                                                    FSB Zussschlag mtl</small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="timesupplement_night_sunday"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- End hidden forms --}}
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
@@ -885,20 +952,7 @@
                                             <div class="card-body">
                                                 <h3 class="card-title">Parttime: Earnings
                                                     Information</h3>
-
                                                 <div class="row">
-                                                    <div class="col-sm-4" hidden>
-                                                        <div class="form-group">
-                                                            <label>Gender <span class="text-danger">*</span></label>
-                                                            <select class="select form-control" name="payment_type"
-                                                                style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                                id="gender" name="gender" required>
-                                                                <option value="Parttime" selected>
-                                                                    Parttime</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label class="col-form-label">Salary amount
@@ -931,6 +985,82 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    {{-- Hidden Forms --}}
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Hourly
+                                                                Salary <small class="text-muted">
+                                                                    Stundenlohn</small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="hourly_salary"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Night Sunday Bonus
+                                                                <small class="text-muted">
+                                                                </small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="night_sunday_bon"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Holiday Bonus <small
+                                                                    class="text-muted">
+                                                                </small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="holiday_bon" placeholder="Type your salary amount"
+                                                                    value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label"><small class="text-muted">
+                                                                </small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="holiday_bon_minus"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label"><small class="text-muted">
+                                                                </small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    name="timesupplement_night_sunday"
+                                                                    placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- End Hdden Forms --}}
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
