@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\NotificationsController;
+
+
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -250,3 +254,10 @@ Route::post('posts/delete', [App\Http\Controllers\PostsController::class, 'delet
 
 Route::get('fullcalender', [EventController::class, 'index'])->middleware('auth');
 Route::post('fullcalenderAjax', [EventController::class, 'ajax'])->middleware('auth');
+
+//---------------------------------Notification----------------------------------------------------
+Route::get('all/notification', [NotificationsController::class, 'index'])->middleware('auth')->name('all/notification');
+Route::get('markall/notification', [NotificationsController::class, 'markAll'])->middleware('auth')->name('markall/notification');
+Route::get('show/notification/{id}', [NotificationsController::class, 'show'])->middleware('auth')->name('show/notification');
+Route::get('delete/notification/{id}', [NotificationsController::class, 'delete'])->middleware('auth')->name('delete/notification');
+Route::get('deleteone/notification/{id}', [NotificationsController::class, 'deleteone'])->middleware('auth')->name('deleteone/notification');

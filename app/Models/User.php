@@ -34,6 +34,10 @@ class User extends Authenticatable
         'password',
     ];
     
+     /**
+     * Get the notify for the blog to user.
+     */
+
     /**
      * The attributes that should be hidden for arrays.
      *

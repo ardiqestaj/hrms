@@ -81,38 +81,46 @@
         <!-- /Flag -->
         <!-- Notifications -->
         <li class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-bell-o text-dark"></i> <span class="badge badge-pill bg-dark"></span> </a>
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-bell-o text-dark"></i> <span class="badge badge-pill bg-dark">{{count(Auth()->user()->unreadNotifications)}}</span></a>
             <div class="dropdown-menu notifications">
-                <div class="topnav-dropdown-header"> <span class="notification-title">Notifications</span> <a href="javascript:void(0)" class="clear-noti"> Clear All </a> </div>
+                <div class="topnav-dropdown-header"> <span class="notification-title">Notifications</span> <a href="{{route('markall/notification')}}" class="clear-noti"> Mark as read </a> </div>
                 <div class="noti-content">
                     <ul class="notification-list">
-                        {{-- @forelse ()
+                        @php
+                        use Carbon\Carbon;
+                        @endphp
+                        @forelse (Auth()->user()->unreadNotifications as $notification)
 								<li class="notification-message">
-									<a href="activities.html">
+									<a href="{{ url('show/notification/' . $notification->id) }}"">
 										<div class="media"> <span class="avatar">
-													<img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+													<img alt="" src="{{ URL::to('assets/images/' . Auth()->user()->avatar) }}">
 												</span>
 											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-												<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+												<p class="noti-details"><span class="noti-title">{{Auth()->user()->name}}</span> About your leaves applies  <span class="noti-title">Your leaves hes been {{$notification->data['rec_id']}}</span></p>
+                                                <p class="noti-time"><span class="notification-time">
+                                                @php 
+                                                $time_created = $notification->created_at;
+                                                echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
+                                                @endphp</span> </h5>
+												</span></p>
 											</div>
 										</div>
 									</a>
 								</li>
 								@empty
 								<li class="notification-message">
-									<a href="activities.html">
+									<a href="#">
 										<div class="media"> <span class="avatar">
-													<img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+													<img alt="" src="{{ URL::to('assets/images/' . Auth()->user()->avatar) }}">
 												</span>
 											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">Empty</span> no notification <span class="noti-title"></span></p>
+												<p class="noti-details"><span class="noti-title">Empty</span> No new notification <span class="noti-title"></span></p>
 												{{-- <p class="noti-time"><span class="notification-time">4 mins ago</span></p> --}}
-                        {{-- </div>
+                                            </div>
 										</div>
 									</a>
-								</li> --}}
-                        {{-- @endforelse --}}
+								</li> 
+                         @endforelse
 
                         {{-- <li class="notification-message">
 									<a href="activities.html">
@@ -164,7 +172,7 @@
 								</li> --}}
                     </ul>
                 </div>
-                <div class="topnav-dropdown-footer"> <a href="activities.html">View all Notifications</a> </div>
+                <div class="topnav-dropdown-footer"> <a href="{{ route('all/notification') }}">View all Notifications</a> </div>
             </div>
         </li>
         <!-- /Notifications -->
