@@ -220,7 +220,8 @@ class AdminAttendance extends Controller
 
             // month Days
             $getMonthAllDays = workingDays($startOfMonth, $daysInMonth);
-
+            $days[] = '';
+            $workingHrs = 1;
             foreach ($final as $stats) {
                 foreach ($stats['schedule'] as $sched) {
                     $workingHrs = $sched['hours'];

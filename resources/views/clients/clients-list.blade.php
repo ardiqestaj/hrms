@@ -73,6 +73,8 @@
                                     <th>Email</th>
                                     <th>Mobile</th>
                                     <th class="text-right">Action</th>
+                                    <th hidden></th>
+                                    <th hidden></th>
                                 </tr>
                             </thead>
                             <tbody>

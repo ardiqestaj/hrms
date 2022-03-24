@@ -124,6 +124,13 @@
                                     <th>Reason</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-right">Actions</th>
+                                    <th hidden="hidden"></th>
+                                    <th hidden="hidden"></th>
+                                    <th hidden="hidden"></th>
+                                    <th hidden="hidden"></th>
+                                    <th hidden="hidden"></th>
+                                    <th hidden="hidden"></th>
+                                    <th hidden="hidden"></th>
                                 </tr>
                             </thead>
 

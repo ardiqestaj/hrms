@@ -39,7 +39,7 @@ class HomeController extends Controller
             $employees = DB::table('employees')
                 ->join('departments', 'employees.department', '=', 'departments.id')
                 ->join('users', 'users.rec_id', '=', 'employees.employee_id')
-                ->select('employees.*', 'departments.department as dep', 'users.avatar')
+                ->select('employees.*', 'departments.department as dep', 'users.avatar', 'users.status')
                 ->take(6)->get();
             $employeesCount = DB::table('employees')
                 ->join('departments', 'employees.department', '=', 'departments.id')

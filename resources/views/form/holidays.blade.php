@@ -36,8 +36,12 @@
                         <table class="table table-striped custom-table datatable">
                             <thead>
                                 <tr>
+                                    <th hidden></th>
+
                                     <th>No</th>
                                     <th>Title </th>
+                                    <th hidden></th>
+
                                     <th>Holiday Date</th>
                                     <th>Day</th>
                                     @if (Auth::user()->role_name == 'Admin')
