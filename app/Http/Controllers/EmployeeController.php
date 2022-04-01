@@ -379,7 +379,7 @@ class EmployeeController extends Controller
                 ->where('rec_id', '=', $rec_id)
                 ->first();
 
-            $userAdmin = DB::table('users')->where('rec_id', $rec_id)->w->first();
+            $userAdmin = DB::table('users')->where('rec_id', $rec_id)->first();
 
             $user = DB::table('users')
                 ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
