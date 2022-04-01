@@ -128,8 +128,8 @@
                                         <td>{{ $items->email }}</td>
                                         <td>{{ $items->payment_method }}</td>
                                         <td>{{ $items->role_name }}</td>
-                                        <td>${{ $items->salary }}</td>
-                                        <td hidden class="salary">{{ $items->salary }}</td>
+                                        <td>${{ $items->salary_amount }}</td>
+                                        <td hidden class="salary">{{ $items->salary_amount }}</td>
                                         <td><a class="btn btn-sm btn-primary"
                                                 href="{{ url('form/salary/view/' . $items->rec_id) }}">Generate
                                                 Slip</a>
@@ -426,7 +426,7 @@
     <!-- /Add Salary Modal -->
 
     <!-- Edit Salary Modal -->
-    <div id="edit_salary" class="modal custom-modal fade" role="dialog">
+    {{-- <div id="edit_salary" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -523,7 +523,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- /Edit Salary Modal -->
 
     <!-- Delete Salary Modal -->

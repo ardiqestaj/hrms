@@ -18,25 +18,33 @@ class UserController extends Controller
 {
     public function storeUser(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'role_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'birth_date' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'payment_method' => 'required|string|max:255',
+            'time_start' => 'required|string|max:255',
+            'time_end' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required',
+        ]);
+
         DB::beginTransaction();
+
+        foreach ($request->input() as $key => $value) {
+            if (empty($value)) {
+                $request->request->set($key, null);
+            }
+        }
+
         try {
-            $request->validate([
-                // Personal Information
-                'name' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'role_name' => 'required|string|max:255',
-                'phone_number' => 'required|string|max:255',
-                'birth_date' => 'required|string|max:255',
-                'gender' => 'required|string|max:255',
-                'department' => 'required|string|max:255',
-                'payment_method' => 'required|string|max:255',
-                'time_start' => 'required|string|max:255',
-                'time_end' => 'required|string|max:255',
-                'password' => 'required|string|min:8|confirmed',
-                'password_confirmation' => 'required',
-            ]);
 
             $dt = Carbon::now();
             $todayDate = $dt->toDayDateTimeString();
@@ -108,10 +116,11 @@ class UserController extends Controller
                 'telephone_shipment' => $request->telephone_shipment,
                 'mileage_compensation' => $request->mileage_compensation,
             ]);
-
+            DB::commit();
             Toastr::success('Create new Salary successfully :)', 'Success');
             return redirect('all/employee/card');
         } catch (\Exception$e) {
+            DB::rollback();
             Toastr::error('Add Salary fail :)', 'Error');
             return redirect('all/employee/card');
         }
