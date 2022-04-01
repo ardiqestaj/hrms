@@ -986,7 +986,6 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- Hidden Forms --}}
                                                     <div class="col-sm-4" hidden>
                                                         <div class="form-group">
                                                             <label class="col-form-label">Hourly
@@ -1060,7 +1059,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {{-- End Hdden Forms --}}
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
@@ -1357,11 +1355,11 @@
 
                                                     <div class="col-sm-4" hidden>
                                                         <div class="form-group">
-                                                            <label>Type of Work <span
+                                                            <label>Salary Amount <span
                                                                     class="text-danger">*</span></label>
                                                             <select class="select form-control" name="payment_type"
                                                                 style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                                id="gender" name="payment_type" required>
+                                                                id="gender" name="salary_amount" required>
                                                                 <option value="Hourly" selected>Houly
                                                                 </option>
                                                             </select>
