@@ -11,17 +11,15 @@
                     <div class="col">
                         <h3 class="page-title">Employee</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Employee</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
                         {{-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a> --}}
                         <div class="view-icons">
-                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i
-                                    class="fa fa-th"></i></a>
-                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i
-                                    class="fa fa-bars"></i></a>
+                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -66,8 +64,7 @@
                     <div class="card" style="height: 87%;">
                         <div class="card-body d-flex align-items-center justify-content-center">
 
-                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal"
-                                data-target="#add_employee" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add
+                            <a href="#" class="btn text-muted stretched-link" data-toggle="modal" data-target="#add_employee" style="border: none;"><i class="fa fa-3x fa-plus"></i> <br> Add
                                 Employee </a>
 
                         </div>
@@ -81,25 +78,19 @@
                             {{-- <input type="text" class="id" value="{{ $lists->rec_id }}"> --}}
 
                             <div class="profile-img" style="cursor: default;">
-                                <div class="avatar"><img src="{{ URL::to('/assets/images/' . $lists->avatar) }}"
-                                        alt="{{ $lists->avatar }}" alt="{{ $lists->avatar }}"></div>
+                                <div class="avatar"><img src="{{ URL::to('/assets/images/' . $lists->avatar) }}" alt="{{ $lists->avatar }}" alt="{{ $lists->avatar }}"></div>
                             </div>
                             <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item"
-                                        href="{{ url('all/employee/view/edit/' . $lists->rec_id) }}"><i
-                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item employeeDelete" href="#" data-toggle="modal"
-                                        data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{ url('all/employee/view/edit/' . $lists->rec_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a class="dropdown-item employeeDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 mb-0 text-ellipsis">{{ $lists->name . ' ' . $lists->lastname }}
                             </h4>
                             <div class="small text-muted">{{ $lists->rec_id }}</div>
-                            <a href="{{ url('employee/profile/' . $lists->rec_id) }}"
-                                class="btn btn-white btn-sm m-t-10">View Profile</a>
+                            <a href="{{ url('employee/profile/' . $lists->rec_id) }}" class="btn btn-white btn-sm m-t-10">View Profile</a>
 
                         </div>
                     </div>
@@ -128,15 +119,12 @@
                     </div>
                     <div class="modal-body">
                         {{-- Add employee menu --}}
-                        <div class="card"
-                            style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+                        <div class="card" style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
                             <div class="row user-tabs">
                                 <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                                     <ul class="nav nav-tabs nav-tabs-bottom ">
-                                        <li class="nav-item"><a href="#emp_profile" data-toggle="tab"
-                                                class="nav-link active emp_profile">Personal Information</a></li>
-                                        <li class="nav-item"><a href="#emp_salary" type="button"
-                                                class="nav-link emp_salary" onclick="tabclick()">Salary
+                                        <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active emp_profile">Personal Information</a></li>
+                                        <li class="nav-item"><a href="#emp_salary" type="button" class="nav-link emp_salary" onclick="tabclick()">Salary
                                                 Information</a></li>
                                     </ul>
                                 </div>
@@ -150,18 +138,14 @@
                             <div class="tab-content pt-0">
                                 {{-- Personal Info --}}
                                 <div class="tab-pane fade show active" id="emp_profile">
-                                    <div class="card"
-                                        style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                    <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                                         <div class="card-body">
                                             <h3 class="card-title"> Personal Information</h3>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">Name <span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control @error('name') is-invalid @enderror"
-                                                            type="text" id="name" name="name" value="{{ old('name') }}"
-                                                            required>
+                                                        <label class="col-form-label">Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name') }}" required>
                                                         @error('name')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -172,30 +156,23 @@
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">Last Name <span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" id="lastname"
-                                                            name="lastname" required>
+                                                        <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" id="lastname" name="lastname" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">User Name <span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" id="username"
-                                                            name="username" required>
+                                                        <label class="col-form-label">User Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" id="username" name="username" required>
                                                     </div>
                                                 </div>
 
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">Email <span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control @error('email') is-invalid @enderror"
-                                                            type="email" id="email" value="{{ old('email') }}"
-                                                            name="email" required>
+                                                        <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                                        <input class="form-control @error('email') is-invalid @enderror" type="email" id="email" value="{{ old('email') }}" name="email" required>
                                                         @error('email')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -206,35 +183,25 @@
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">Employee ID <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="rec_id" name=""
-                                                            placeholder="Auto id employee" readonly>
+                                                        <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="rec_id" name="" placeholder="Auto id employee" readonly>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">Role <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="role_name"
-                                                            name="role_name" placeholder="Employee" value="Employee"
-                                                            readonly>
+                                                        <label class="col-form-label">Role <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Employee" value="Employee" readonly>
                                                     </div>
                                                 </div>
 
-                                                <input type="hidden" class="image" name="image"
-                                                    value="photo_defaults.jpg">
+                                                <input type="hidden" class="image" name="image" value="photo_defaults.jpg">
 
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label"
-                                                            @error('password') is-invalid @enderror"
-                                                            name="password">Password <span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control" type="password" id="password"
-                                                            name="password" required>
+                                                        <label class="col-form-label" @error('password') is-invalid @enderror" name="password">Password <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="password" id="password" name="password" required>
                                                         @error('password')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -247,8 +214,7 @@
                                                     <div class="form-group">
                                                         <label class="col-form-label">Confirm Password
                                                             <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="password" id="confirmPassword"
-                                                            name="password_confirmation" required>
+                                                        <input class="form-control" type="password" id="confirmPassword" name="password_confirmation" required>
                                                     </div>
                                                 </div>
 
@@ -256,17 +222,14 @@
                                                     <div class="form-group">
                                                         <label class="col-form-label">Phone Number
                                                             <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" required
-                                                            id="phone_number" name="phone_number">
+                                                        <input class="form-control" type="text" required id="phone_number" name="phone_number">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="col-form-label">Birthday <span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control datetimepicker" type="text"
-                                                            id="birthDate" name="birth_date" required>
+                                                        <label class="col-form-label">Birthday <span class="text-danger">*</span></label>
+                                                        <input class="form-control datetimepicker" type="text" id="birthDate" name="birth_date" required>
 
                                                     </div>
                                                 </div>
@@ -274,9 +237,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Gender <span class="text-danger">*</span></label>
-                                                        <select class="select select2s-hidden-accessible"
-                                                            style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                            id="gender" name="gender" required>
+                                                        <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="gender" name="gender" required>
                                                             <option value="" selected disabled>-- Select
                                                                 --</option>
                                                             <option value="Male">Male</option>
@@ -289,8 +250,7 @@
                                                     <div class="form-group">
                                                         <label class="col-form-label">Type Of Work
                                                             <span class="text-danger">*</span></label>
-                                                        <select class="select @error('role_name') is-invalid @enderror"
-                                                            name="department" id="department">
+                                                        <select class="select @error('role_name') is-invalid @enderror" name="department" id="department">
                                                             <option selected disabled>-- Select
                                                                 Dapartment --</option>
                                                             @foreach ($departments as $department)
@@ -316,9 +276,7 @@
                                                             select
                                                             an option.</p>
                                                         <div class="select-border" style="border-radius: 5px;">
-                                                            <select class="select select2s-hidden-accessible"
-                                                                style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                                id="payment_method" name="payment_method" required>
+                                                            <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="payment_method" name="payment_method" required>
                                                                 <option value="selectcard">-- Select --
                                                                 </option>
                                                                 <option value="Fulltime">Fulltime
@@ -342,57 +300,41 @@
                                                         days</label>
                                                     <div class="form-group wday-box mb-4">
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Monday">
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Monday">
                                                             <span class="checkmark">M</span></label>
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Tuesday"><span
-                                                                class="checkmark">T</span></label>
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Tuesday"><span class="checkmark">T</span></label>
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Wednesday"><span
-                                                                class="checkmark">W</span></label>
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Wednesday"><span class="checkmark">W</span></label>
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Thursday"><span
-                                                                class="checkmark">T</span></label>
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Thursday"><span class="checkmark">T</span></label>
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Friday"><span
-                                                                class="checkmark">F</span></label>
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Friday"><span class="checkmark">F</span></label>
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Saturday "><span
-                                                                class="checkmark">S</span></label>
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Saturday "><span class="checkmark">S</span></label>
 
-                                                        <label class="checkbox-inline"><input type="checkbox"
-                                                                name="restdays[]" value="Sunday"><span
-                                                                class="checkmark">S</span></label>
+                                                        <label class="checkbox-inline"><input type="checkbox" name="restdays[]" value="Sunday"><span class="checkmark">S</span></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <div class="input-group time timepicker">
-                                                            <input class="form-control" type="time" id="time_start"
-                                                                name="time_start">
+                                                            <input class="form-control" type="time" id="time_start" name="time_start">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <div class="input-group time timepicker">
-                                                            <input class="form-control" type="time" id="time_end"
-                                                                name="time_end">
+                                                            <input class="form-control" type="time" id="time_end" name="time_end">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="onoffswitch">
-                                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
-                                                    id="switch_hospitalisation">
+                                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_hospitalisation">
                                                 <label class="onoffswitch-label" for="switch_hospitalisation">
                                                     <span class="onoffswitch-inner"></span>
                                                     <span class="onoffswitch-switch"></span>
@@ -408,49 +350,34 @@
                                                             days</label>
                                                         <div class="form-group wday-box mb-4">
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Monday">
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Monday">
                                                                 <span class="checkmark">M</span></label>
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Tuesday"><span
-                                                                    class="checkmark">T</span></label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Tuesday"><span class="checkmark">T</span></label>
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Wednesday"><span
-                                                                    class="checkmark">W</span></label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Wednesday"><span class="checkmark">W</span></label>
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Thursday"><span
-                                                                    class="checkmark">T</span></label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Thursday"><span class="checkmark">T</span></label>
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Friday"><span
-                                                                    class="checkmark">F</span></label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Friday"><span class="checkmark">F</span></label>
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Saturday "><span
-                                                                    class="checkmark">S</span></label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Saturday "><span class="checkmark">S</span></label>
 
-                                                            <label class="checkbox-inline"><input type="checkbox"
-                                                                    name="restdays_opt[]" value="Sunday"><span
-                                                                    class="checkmark">S</span></label>
+                                                            <label class="checkbox-inline"><input type="checkbox" name="restdays_opt[]" value="Sunday"><span class="checkmark">S</span></label>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <div class="input-group time timepicker">
-                                                                <input class="form-control" type="time" id="time_start"
-                                                                    name="time_start_opt">
+                                                                <input class="form-control" type="time" id="time_start" name="time_start_opt">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <div class="input-group time timepicker">
-                                                                <input class="form-control" type="time" id="time_end"
-                                                                    name="time_end_opt">
+                                                                <input class="form-control" type="time" id="time_end" name="time_end_opt">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -532,8 +459,7 @@
                                         {{-- </div> --}}
 
                                             <div class="submit-section">
-                                                <button id="next-form-btn" type="button" class="btn btn-primary submit-btn"
-                                                    onclick="fun()">Next <i class="mt-2 las la-arrow-right"></i></button>
+                                                <button id="next-form-btn" type="button" class="btn btn-primary submit-btn" onclick="fun()">Next <i class="mt-2 las la-arrow-right"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -543,8 +469,7 @@
                                 <div class="tab-pane fade" id="emp_salary">
                                     <!-- Fulltime Tab -->
                                     <div style="display: none;" id="fulltime">
-                                        <div class="card"
-                                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                        <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                                             <div class="card-body">
                                                 <h3 class="card-title"> Fulltime: Earnings Information</h3>
 
@@ -559,9 +484,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="salary_amount"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="salary_amount" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -575,9 +498,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="hourly_salary"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="hourly_salary" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -591,9 +512,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="monthly_surcharge"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="monthly_surcharge" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -608,9 +527,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="night_sunday_bon"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="night_sunday_bon" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -623,9 +540,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="holiday_bon" placeholder="Type your salary amount"
-                                                                    value="">
+                                                                <input type="text" class="form-control" name="holiday_bon" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -638,9 +553,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="holiday_bon_minus"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="holiday_bon_minus" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -653,9 +566,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="timesupplement_night_sunday"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="timesupplement_night_sunday" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -671,8 +582,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -683,13 +593,11 @@
                                                                 <small class="text-muted">
                                                                     Bruttolohn
                                                                     (Autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -707,9 +615,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="pension_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="pension_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -723,9 +629,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="unemployment_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="unemployment_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -739,9 +643,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="accident_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="accident_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -755,8 +657,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="uvg_grb"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="uvg_grb" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -770,9 +671,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="pension_fund"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="pension_fund" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -786,9 +685,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="medical_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="medical_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -803,9 +700,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="collective_labor"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="collective_labor" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -820,8 +715,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -832,13 +726,11 @@
                                                                 <small class="text-muted">
                                                                     Nettolohn
                                                                     (autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -857,8 +749,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="expenses"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="expenses" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -873,9 +764,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="telephone_shipment"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="telephone_shipment" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -889,9 +778,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="mileage_compensation"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="mileage_compensation" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -906,8 +793,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -918,26 +804,21 @@
                                                                 <small class="text-muted">
                                                                     Total Auszahlung
                                                                     (autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="submit-section d-flex justify-content-center">
-                                                    <button type="button"
-                                                        class="btn btn-primary submit-btn mr-2 prev-form-btn"><i
-                                                            class="las la-arrow-left"></i>
+                                                    <button type="button" class="btn btn-primary submit-btn mr-2 prev-form-btn"><i class="las la-arrow-left"></i>
                                                         Back</button>
 
-                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i
-                                                            class="las la-save"></i>
+                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i class="las la-save"></i>
                                                         Save</button>
                                                 </div>
                                             </div>
@@ -947,8 +828,7 @@
 
                                     <!-- Parttime Tab -->
                                     <div style="display: none;" id="parttime">
-                                        <div class="card"
-                                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                        <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                                             <div class="card-body">
                                                 <h3 class="card-title">Parttime: Earnings
                                                     Information</h3>
@@ -963,9 +843,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="salary_amount"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="salary_amount" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -979,9 +857,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="monthly_surcharge"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="monthly_surcharge" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -995,9 +871,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="hourly_salary"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="hourly_salary" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1010,38 +884,19 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="night_sunday_bon"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="night_sunday_bon" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4" hidden>
                                                         <div class="form-group">
-                                                            <label class="col-form-label">Holiday Bonus <small
-                                                                    class="text-muted">
+                                                            <label class="col-form-label">Holiday Bonus <small class="text-muted">
                                                                 </small></label>
                                                             <div class="input-group">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="holiday_bon" placeholder="Type your salary amount"
-                                                                    value="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4" hidden>
-                                                        <div class="form-group">
-                                                            <label class="col-form-label"><small class="text-muted">
-                                                                </small></label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">CHF</span>
-                                                                </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="holiday_bon_minus"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="holiday_bon" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1053,9 +908,19 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="timesupplement_night_sunday"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="holiday_bon_minus" placeholder="Type your salary amount" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" hidden>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label"><small class="text-muted">
+                                                                </small></label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">CHF</span>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="timesupplement_night_sunday" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1070,8 +935,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1082,13 +946,11 @@
                                                                 <small class="text-muted">
                                                                     Bruttolohn
                                                                     (Autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1106,9 +968,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="pension_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="pension_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1122,9 +982,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="unemployment_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="unemployment_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1138,9 +996,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="accident_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="accident_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1154,8 +1010,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="uvg_grb"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="uvg_grb" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1169,9 +1024,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="pension_fund"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="pension_fund" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1185,9 +1038,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="medical_insurance"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="medical_insurance" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1202,9 +1053,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="collective_labor"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="collective_labor" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1219,8 +1068,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1231,13 +1079,11 @@
                                                                 <small class="text-muted">
                                                                     Nettolohn
                                                                     (autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1256,8 +1102,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="expenses"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="expenses" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1272,9 +1117,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="telephone_shipment"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="telephone_shipment" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1288,9 +1131,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="mileage_compensation"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" name="mileage_compensation" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1305,8 +1146,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1317,26 +1157,21 @@
                                                                 <small class="text-muted">
                                                                     Total Auszahlung
                                                                     (autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Type your salary amount" value="">
+                                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="submit-section d-flex justify-content-center">
-                                                    <button type="button"
-                                                        class="btn btn-primary submit-btn mr-2 prev-form-btn"><i
-                                                            class="las la-arrow-left"></i>
+                                                    <button type="button" class="btn btn-primary submit-btn mr-2 prev-form-btn"><i class="las la-arrow-left"></i>
                                                         Back</button>
 
-                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i
-                                                            class="las la-save"></i>
+                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i class="las la-save"></i>
                                                         Save</button>
                                                 </div>
                                             </div>
@@ -1346,8 +1181,7 @@
 
                                     <!-- Hourly Tab -->
                                     <div style="display: none;" id="hourly">
-                                        <div class="card"
-                                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                        <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                                             <div class="card-body">
                                                 <h3 class="card-title">Hourly: Earnings Information
                                                 </h3>
@@ -1355,11 +1189,8 @@
 
                                                     <div class="col-sm-4" hidden>
                                                         <div class="form-group">
-                                                            <label>Salary Amount <span
-                                                                    class="text-danger">*</span></label>
-                                                            <select class="select form-control" name="payment_type"
-                                                                style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                                id="gender" name="salary_amount" required>
+                                                            <label>Type of Work <span class="text-danger">*</span></label>
+                                                            <select class="select form-control" name="payment_type" style="width: 100%;" tabindex="-1" aria-hidden="true" id="gender" name="payment_type" required>
                                                                 <option value="Hourly" selected>Houly
                                                                 </option>
                                                             </select>
@@ -1376,8 +1207,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="hourly_salary" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="hourly_salary" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1393,8 +1223,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="night_sunday_bon" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="night_sunday_bon" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1408,8 +1237,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="holiday_bon" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="holiday_bon" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1424,8 +1252,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="holiday_bon_minus" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="holiday_bon_minus" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1440,9 +1267,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="timesupplement_night_sunday"
-                                                                    value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="timesupplement_night_sunday" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1457,8 +1282,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" disabled
-                                                                    placeholder="00.00" name="monthly_surcharge" value="">
+                                                                <input type="text" class="form-control" disabled placeholder="00.00" name="monthly_surcharge" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1473,8 +1297,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" disabled
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" disabled placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1485,13 +1308,11 @@
                                                                 <small class="text-muted">
                                                                     Bruttolohn
                                                                     (Autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1509,8 +1330,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="pension_insurance" placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" name="pension_insurance" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1524,9 +1344,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="unemployment_insurance"
-                                                                    value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="unemployment_insurance" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1540,8 +1358,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" name="accident_insurance" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" name="accident_insurance" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1556,8 +1373,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="uvg_grb"
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" name="uvg_grb" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1571,9 +1387,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="pension_fund" disabled placeholder="00.00"
-                                                                    value="">
+                                                                <input type="text" class="form-control" name="pension_fund" disabled placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1587,8 +1401,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="medical_insurance" placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" name="medical_insurance" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1603,8 +1416,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="collective_labor" placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" name="collective_labor" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1619,8 +1431,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1631,13 +1442,11 @@
                                                                 <small class="text-muted">
                                                                     Nettolohn
                                                                     (autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">%</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1656,8 +1465,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="expenses"
-                                                                    disabled placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" name="expenses" disabled placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1672,8 +1480,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="telephone_shipment" placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" name="telephone_shipment" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1687,9 +1494,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    name="mileage_compensation" placeholder="00.00"
-                                                                    value="">
+                                                                <input type="text" class="form-control" name="mileage_compensation" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1704,8 +1509,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1716,13 +1520,11 @@
                                                                 <small class="text-muted">
                                                                     Total Auszahlung
                                                                     (autocalculated)</small></label>
-                                                            <div class="input-group"
-                                                                style="border: 1px solid green; border-radius: 5px;">
+                                                            <div class="input-group" style="border: 1px solid green; border-radius: 5px;">
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text">CHF</span>
                                                                 </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="00.00" value="">
+                                                                <input type="text" class="form-control" placeholder="00.00" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1731,13 +1533,10 @@
                                                 </div>
 
                                                 <div class="submit-section d-flex justify-content-center">
-                                                    <button type="button"
-                                                        class="btn btn-primary submit-btn mr-2 prev-form-btn"><i
-                                                            class="las la-arrow-left"></i>
+                                                    <button type="button" class="btn btn-primary submit-btn mr-2 prev-form-btn"><i class="las la-arrow-left"></i>
                                                         Back</button>
 
-                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i
-                                                            class="las la-save"></i>
+                                                    <button class="btn btn-primary submit-btn ml-2" type="submit"><i class="las la-save"></i>
                                                         Save</button>
                                                 </div>
                                             </div>
@@ -1773,8 +1572,7 @@
                                     <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                 </div>
                                 <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal"
-                                        class="btn btn-primary cancel-btn">Cancel</a>
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                 </div>
                             </div>
                         </form>

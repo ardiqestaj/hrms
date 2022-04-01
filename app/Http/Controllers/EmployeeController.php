@@ -378,10 +378,18 @@ class EmployeeController extends Controller
 
                 ->where('rec_id', '=', $rec_id)
                 ->first();
-            $user = DB::table('users')->where('rec_id', $rec_id)->first();
+
+            $userAdmin = DB::table('users')->where('rec_id', $rec_id)->w->first();
+
+            $user = DB::table('users')
+                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+                ->select('users.*', 'employees.lastname')
+                ->where('rec_id', $rec_id)->first();
             $education = DB::table('education_information')->where('rec_id', $rec_id)->get();
             $families = DB::table('families')->where('rec_id', $rec_id)->first();
-            return view('form.employeeprofile', compact('user', 'information', 'education', 'families'));
+            $experience = DB::table('experience_information')->where('rec_id', $rec_id)->get();
+
+            return view('form.employeeprofile', compact('user', 'information', 'education', 'families', 'experience'));
         } else {
             return redirect()->route('em/dashboard');
         }

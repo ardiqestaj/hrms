@@ -9,7 +9,6 @@ use App\Models\StaffSalary;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
-use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;

@@ -303,7 +303,7 @@
         <!-- Search Filter -->
         <form action="{{ route('attendance/search') }}" method="POST">
             @csrf
-            <div class="row filter-row">
+            <div class="row filter-row mt-5">
                 <div class="col-sm-3">
                     <div class="focused form-group form-focus focus focused">
                         <div class="cal-icon">

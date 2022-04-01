@@ -70,6 +70,10 @@ class AdminAttendance extends Controller
             // Leaves Table
             $monthLeaves = DB::table('leave_applies')->select('*')->where('status', 'Approved')->get();
             $monthLeavesCount = count($monthLeaves);
+            $final = [];
+            $finale = [];
+            $monthWorkingDays = '';
+            $monthWorkingHrs = '';
 
             // foreach
             foreach ($users as $user) {
@@ -104,7 +108,6 @@ class AdminAttendance extends Controller
                     }
                 }
                 $employee['monthLea'] = $leaves;
-
                 // Schedules
                 foreach ($schedules as $schedule) {
                     if ($schedule->employee_id == $user->rec_id) {
@@ -116,7 +119,6 @@ class AdminAttendance extends Controller
                 $employee['schedule'] = $schedul;
                 $final[] = $employee;
             }
-            // dd($final);
 
             // $month = Carbon::now()->format('m');
             // $years = Carbon::now()->format('Y');
@@ -234,6 +236,7 @@ class AdminAttendance extends Controller
                 $monthDaysEqualRestDays = count($common);
 
                 // Leaves
+                $leave = [];
                 foreach ($stats['monthLea'] as $leaves) {
                     $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
                     foreach ($daysThroughLeaves as $restDa) {
@@ -245,8 +248,12 @@ class AdminAttendance extends Controller
                         }
                     }
                 }
+                if (isset($leave)) {
+                    $allCurrentLeavesOfMonth = countDayOverleap7($leave);
+                } else {
+                    $allCurrentLeavesOfMonth = '';
+                }
 
-                $allCurrentLeavesOfMonth = countDayOverleap7($leave);
                 // dd($allCurrentLeavesOfMonth);
 
                 // Number of leaves that are rest days
@@ -484,6 +491,49 @@ class AdminAttendance extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
             // month
+            $thisYear = Carbon::now()->format('Y');
+            $thisMonth = Carbon::now()->format('m');
+            $name = '';
+
+            switch ($thisMonth) {
+                case '01':
+                    $thisMonth = 'Jan';
+                    break;
+                case '02':
+                    $thisMonth = 'Fab';
+                    break;
+                case '03':
+                    $thisMonth = 'Mar';
+                    break;
+                case '04':
+                    $thisMonth = 'Apr';
+                    break;
+                case '05':
+                    $thisMonth = 'May';
+                    break;
+                case '06':
+                    $thisMonth = 'Jun';
+                    break;
+                case '07':
+                    $thisMonth = 'Jul';
+                    break;
+                case '08':
+                    $thisMonth = 'Aug';
+                    break;
+                case '09':
+                    $thisMonth = 'Sep';
+                    break;
+                case '10':
+                    $thisMonth = 'Oct';
+                    break;
+                case '11';
+                    $thisMonth = 'Nov';
+                    break;
+                case '12':
+                    $thisMonth = 'Dec';
+                    break;
+
+            }
 
             if (!empty($request->month)) {
                 $monthVar = $request->month;
@@ -608,6 +658,7 @@ class AdminAttendance extends Controller
                     ->where('role_name', 'LIKE', 'employee')
                     ->where('name', 'LIKE', '%' . $name . '%')
                     ->get();
+                $name = $request->name;
                 if (count($users) > 8) {
                     $users = User::select('rec_id', 'name')
                         ->where('role_name', 'LIKE', 'employee')
@@ -796,7 +847,7 @@ class AdminAttendance extends Controller
 
                 $common = array_intersect($getMonthAllDays, $days);
                 $monthDaysEqualRestDays = count($common);
-
+                $leave = [];
                 // Leaves
                 foreach ($stats['monthLea'] as $leaves) {
                     $daysThroughLeaves = countLeaves($leaves['from_date'], $leaves['to_date']);
@@ -846,7 +897,7 @@ class AdminAttendance extends Controller
                 $finale[] = $stats;
             }
             // dd($finale);
-            return view('form.attendance', compact('users', 'month', 'thisYear', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt', 'thisMonth'));
+            return view('form.attendance', compact('users', 'month', 'thisYear', 'daysInMonth', 'finale', 'attendances', 'todayAttendances', 'schedules', 'now', 'userList', 'permission_lists', 'searchDt', 'thisMonth', 'name'));
         } else {
             return redirect()->route('em/dashboard');
         }

@@ -21,6 +21,9 @@ class UserManagementController extends Controller
     public function index()
     {
         if (Auth::user()->role_name == 'Admin') {
+            $role = 'Admin';
+            $resultAdmin = DB::table('users')->where('role_name', $role)->get();
+
             $result = DB::table('users')
                 ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
                 ->select('users.*', 'employees.lastname')
@@ -29,7 +32,7 @@ class UserManagementController extends Controller
             $position = DB::table('position_types')->get();
             $department = DB::table('departments')->get();
             $status_user = DB::table('user_types')->get();
-            return view('usermanagement.user_control', compact('result', 'role_name', 'position', 'department', 'status_user'));
+            return view('usermanagement.user_control', compact('result', 'role_name', 'position', 'department', 'status_user', 'resultAdmin'));
         } else {
             return redirect()->route('home');
         }
@@ -144,14 +147,26 @@ class UserManagementController extends Controller
     {
         if (Auth::user()->role_name == 'Admin') {
 
-            $activityLog = DB::table('users')
-                ->join('user_activity_logs', 'users.email', '=', 'user_activity_logs.email')
-                ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+            // $activityLog = DB::table('users')
+            //     ->join('user_activity_logs', 'users.email', '=', 'user_activity_logs.email')
+            //     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
+            //     ->select('user_activity_logs.*', 'employees.lastname')
+            //     ->get();
+            $role = 'Admin';
+
+            $activityLogAdmin = DB::table('user_activity_logs')
+                ->join('users', 'user_activity_logs.email', '=', 'users.email')
+                ->where('users.role_name', $role)
+                ->select('user_activity_logs.*')
+                ->get();
+
+            $activityLog = DB::table('user_activity_logs')
+                ->join('employees', 'user_activity_logs.email', '=', 'employees.email')
                 ->select('user_activity_logs.*', 'employees.lastname')
                 ->get();
 
-            // dd($activityLog[0]->lastname);
-            return view('usermanagement.user_activity_log', compact('activityLog'));
+            // dd($activityLog);
+            return view('usermanagement.user_activity_log', compact('activityLog', 'activityLogAdmin'));
 
         } else {
             return redirect()->route('home');
