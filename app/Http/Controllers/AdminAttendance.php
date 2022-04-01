@@ -7,6 +7,8 @@ use App\Models\TimeClock;
 use App\Models\User;
 use AUTH;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\EditedAttendanceNotification;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DB;
@@ -398,6 +400,7 @@ class AdminAttendance extends Controller
             $entry->missedhours = $missedhours;
 
             $entry->save();
+
             DB::commit();
             Toastr::success('Manual attendance created successfully :)', 'Success');
             return redirect()->route('attendance/page');
@@ -459,6 +462,10 @@ class AdminAttendance extends Controller
             ];
 
             TimeClock::where('date', $date)->where('idno', $idno)->update($update);
+
+            $users1 = User::where('rec_id', $request->rec_id)->first();
+            Notification::send($users1, new EditedAttendanceNotification($request));
+
             DB::commit();
             Toastr::success('Attendance edit successfull :)', 'Success');
             return redirect()->route('attendance/page');

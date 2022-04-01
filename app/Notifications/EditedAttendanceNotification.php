@@ -6,9 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use DB;
 
-class ApproveEmployeeLeaveNotify extends Notification
+class EditedAttendanceNotification extends Notification
 {
     use Queueable;
 
@@ -17,9 +16,9 @@ class ApproveEmployeeLeaveNotify extends Notification
      *
      * @return void
      */
-    public function __construct($leaves)
+    public function __construct($editAttend)
     {
-        $this->leaves = $leaves;
+        $this->editAttend = $editAttend;
         // $this->status = $requestt;
         // $this->day = $requestt;
 
@@ -44,12 +43,12 @@ class ApproveEmployeeLeaveNotify extends Notification
     //  */
     public function toMail($notifiable)
     {
-        $leavetypes = DB::table('leave_types')->where('leave_id', $this->leaves['leave_type_id'])->select('leave_names')->first();
+        // $leavetypes = DB::table('leave_types')->where('leave_id', $this->leaves['leave_type_id'])->select('leave_names')->first();
         return (new MailMessage)
                     // ->name('kashwbda')
-                    ->subject('Leaves Applies - ' . $leavetypes->leave_names)
-                    ->line('Your leaves applies from ' . $this->leaves['from_date'] . ' to ' . $this->leaves['to_date'] . ' has been ' . $this->leaves['status'])
-                    ->action('Notification Action', route('form/leavesemployee/new'))
+                    ->subject('Attendence Edited')
+                    ->line('Your attendance has been updated on this day ' . $this->editAttend['date'] . ', Time In: ' . $this->editAttend['time_in'] . ' Time out: ' . $this->editAttend['time_out'] )
+                    ->action('Notification Action', route('employee/attendance'))
                     ->line('Thank you for using our application!');
     }
 
@@ -62,10 +61,9 @@ class ApproveEmployeeLeaveNotify extends Notification
     public function toArray($notifiable)
     {
         return [
-            'status' => $this->leaves['status'],
-            'from_date' => $this->leaves['from_date'],
-            'to_date' => $this->leaves['to_date'],
-            'leave_type_id' => $this->leaves['leave_type_id']
+            'time_in' => $this->editAttend['time_in'],
+            'time_out' => $this->editAttend['time_out'],
+            'date' => $this->editAttend['date']
         ];
     }
 }

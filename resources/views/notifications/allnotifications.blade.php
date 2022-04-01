@@ -9,10 +9,10 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Posts <span id="year"></span></h3>
+                        <h3 class="page-title">Notification <span id="year"></span></h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Posts</li>
+                            <li class="breadcrumb-item active">Notification</li>
                         </ul>
                     </div>
                 </div>
@@ -61,27 +61,61 @@
                 {{-- <div class="item"> --}}
 
                 @forelse ($notifications as $notification)
+                @if ($notification->type == 'App\Notifications\ApproveEmployeeLeaveNotify')
+                    
                 <div class="item">
                     <div class="card content-post">
                         <div class="card-body ">
-                          <h5 class="card-title d-flex justify-content-between">Leaves Status<span style="font-size: 0.8rem" class="text-muted">
+                            <h5 class="card-title d-flex justify-content-between">Leaves Status<span style="font-size: 0.8rem" class="text-muted">
+                              @php 
+                              $time_created = $notification->created_at;
+                              echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
+                              @endphp</span> </h5>
+                              @foreach ($leavetypes as $leavetype)
+                              @if ($leavetype->leave_id == $notification->data['leave_type_id'])
+                             <h4 class="card-text text-muted">Your <strong>{{$leavetype->leave_names}}</strong> applie has been <strong>{{$notification->data['status']}}</strong>.</h4>
+                                  
+                              @endif
+                                  
+                              @endforeach
+                            {{-- <div class="truncate"> --}}
+                            <p class="card-text">Your leaves applies applies was from <strong>{{$notification->data['from_date']}} </strong>  to  <strong>{{$notification->data['to_date']}}</strong>.</p>
+                            {{-- </div> --}}
+                            <div class="d-flex justify-content-end">
+                            <a href="{{ url('deleteone/notification/' . $notification->id) }}" class="btn btn-danger"> <i class="las la-trash-alt"></i></a>
+                             <span style="font-size: 0.8rem" class="text-muted align-self-end">
+                             {{-- Author: {{$post->name}} --}}
+                              </span>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                @endif
+                @if ($notification->type == 'App\Notifications\EditedAttendanceNotification')
+                    
+                <div class="item">
+                    <div class="card content-post">
+                        <div class="card-body ">
+                        <h5 class="card-title d-flex justify-content-between">Attendance Updated<span style="font-size: 0.8rem" class="text-muted">
                             @php 
                             $time_created = $notification->created_at;
                             echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
                             @endphp</span> </h5>
-                          <h4 class="card-text text-muted">Your leaves applies has been {{$notification->data['rec_id']}}</h4>
-                          {{-- <div class="truncate"> --}}
-                          {{-- <p class="card-text">{!!$post->body!!}</p> --}}
-                          {{-- </div> --}}
-                          <div class="d-flex justify-content-end">
-                          <a href="{{ url('delete/notification/' . $notification->id) }}" class="btn btn-danger"> <i class="las la-trash-alt"></i></a>
-                           <span style="font-size: 0.8rem" class="text-muted align-self-end">
-                           {{-- Author: {{$post->name}} --}}
+                        <h4 class="card-text text-muted">Your attendance on this date <strong>{{$notification->data['date']}}</strong> has been <strong>Updated</strong>.</h4>
+                        {{-- <div class="truncate"> --}}
+                        <p class="card-text">Time in <strong>{{$notification->data['time_in']}} </strong>  and Time out  <strong>{{$notification->data['time_out']}}</strong>.</p>
+                        {{-- </div> --}}
+                        <div class="d-flex justify-content-end">
+                        <a href="{{ url('deleteone/notification/' . $notification->id) }}" class="btn btn-danger"> <i class="las la-trash-alt"></i></a>
+                        <span style="font-size: 0.8rem" class="text-muted align-self-end">
+                        {{-- Author: {{$post->name}} --}}
                             </span>
-                          </div>
+                        </div>
                         </div>
                     </div>
                 </div>
+                @endif
+
                 @empty
                     No Notification to show.
                 @endforelse

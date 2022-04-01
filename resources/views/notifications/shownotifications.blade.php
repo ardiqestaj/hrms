@@ -28,38 +28,54 @@
 
             <div class="mt-4">
                 {{-- <div class="item"> --}}
-
+                @if ($notifications->type == 'App\Notifications\ApproveEmployeeLeaveNotify')
                 <div class="item">
                     <div class="card content-post">
                         <div class="card-body ">
-                          <h5 class="card-title d-flex justify-content-between">Leaves Status<span style="font-size: 0.8rem" class="text-muted">
+                        <h5 class="card-title d-flex justify-content-between">Leaves Status<span style="font-size: 0.8rem" class="text-muted">
                             @php 
                             $time_created = $notifications->created_at;
                             echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
                             @endphp</span> </h5>
-                          <h4 class="card-text text-muted">Your leaves applies has been {{$notifications->data['rec_id']}}</h4>
-                          {{-- <div class="truncate"> --}}
-                          {{-- <p class="card-text">{!!$post->body!!}</p> --}}
-                          {{-- </div> --}}
-                          <div class="d-flex justify-content-end">
-                          <a href="{{ url('deleteone/notification/' . $notifications->id) }}" class="btn btn-danger"> <i class="las la-trash-alt"></i></a>
-                           <span style="font-size: 0.8rem" class="text-muted align-self-end">
-                           {{-- Author: {{$post->name}} --}}
+                        <h4 class="card-text text-muted">Your <strong>{{$leavetypes->leave_names}}</strong> applie has been <strong>{{$notifications->data['status']}}</strong>.</h4>
+                        {{-- <div class="truncate"> --}}
+                        <p class="card-text">Your leaves applies applies was from <strong>{{$notifications->data['from_date']}} </strong>  to  <strong>{{$notifications->data['to_date']}}</strong>.</p>
+                        {{-- </div> --}}
+                        <div class="d-flex justify-content-end">
+                        <a href="{{ url('deleteone/notification/' . $notifications->id) }}" class="btn btn-danger"> <i class="las la-trash-alt"></i></a>
+                        <span style="font-size: 0.8rem" class="text-muted align-self-end">
+                        {{-- Author: {{$post->name}} --}}
                             </span>
-                          </div>
+                        </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {{-- </div> --}}
-            {{-- <div class="mt-5">
-                @if (count($posts) >= 1)
-                    {{ $posts->links('vendor.pagination.bootstrap-4') }}
                 @endif
-            </div> --}}
+                @if ($notifications->type == 'App\Notifications\EditedAttendanceNotification')
+                <div class="item">
+                    <div class="card content-post">
+                        <div class="card-body ">
+                        <h5 class="card-title d-flex justify-content-between">Attendance Updated<span style="font-size: 0.8rem" class="text-muted">
+                            @php 
+                            $time_created = $notifications->created_at;
+                            echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
+                            @endphp</span> </h5>
+                        <h4 class="card-text text-muted">Your attendance on this date <strong>{{$notifications->data['date']}}</strong> has been <strong>Updated</strong>.</h4>
+                        {{-- <div class="truncate"> --}}
+                        <p class="card-text">Time in <strong>{{$notifications->data['time_in']}} </strong>  and Time out  <strong>{{$notifications->data['time_out']}}</strong>.</p>
+                        {{-- </div> --}}
+                        <div class="d-flex justify-content-end">
+                        <a href="{{ url('deleteone/notification/' . $notifications->id) }}" class="btn btn-danger"> <i class="las la-trash-alt"></i></a>
+                        <span style="font-size: 0.8rem" class="text-muted align-self-end">
+                        {{-- Author: {{$post->name}} --}}
+                            </span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
         </div>
-
-
     </div>
     <!-- /Page Wrapper -->
 @section('script')
