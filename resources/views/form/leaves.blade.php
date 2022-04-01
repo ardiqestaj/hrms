@@ -137,12 +137,68 @@
 
                             <tbody>
                                 {{-- @if (!empty($leaves)) --}}
+                                @foreach ($leavesAdmin as $lAdmin)
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{{ url('employee/profile/' . $lAdmin->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/' . $lAdmin->avatar) }}" alt="{{ $lAdmin->name }}"></a>
+                                                <a href="#">{{ $lAdmin->name }}<span>{{ $lAdmin->position }}</span></a>
+                                            </h2>
+                                        </td>
+                                        <td hidden class="id">{{ $lAdmin->leave_applies_id }}</td>
+                                        <td hidden class="rec_id">{{ $lAdmin->rec_id }}</td>
+                                        <td hidden class="leave_type_id">{{ $lAdmin->leave_type_id }}</td>
+                                        <td hidden class="status">{{ $lAdmin->status }}</td>
+                                        <td hidden class="days">{{ $lAdmin->day }}</td>
+                                        <td class="leave_type">{{ $lAdmin->leave_names }}</td>
+                                        <td hidden class="from_date">{{ $lAdmin->from_date }}</td>
+                                        <td>{{ date('d F, Y', strtotime($lAdmin->from_date)) }}</td>
+                                        <td hidden class="to_date">{{ $lAdmin->to_date }}</td>
+                                        <td>{{ date('d F, Y', strtotime($lAdmin->to_date)) }}</td>
+                                        <td class="day">{{ $lAdmin->day }} Day</td>
+                                        <td class="leave_reason">{{ $lAdmin->leave_reason }}</td>
+                                        <td class="text-center">
+                                            <div class="dropdown action-label">
+                                                <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                    @if ($lAdmin->status == 'New')
+                                                        <i class="fa fa-dot-circle-o text-purple"></i>
+                                                        New
+                                                    @elseif($lAdmin->status == 'Pending')
+                                                        <i class="fa fa-dot-circle-o text-danger"></i>
+                                                        Pending
+                                                    @elseif($lAdmin->status == 'Approved')
+                                                        <i class="fa fa-dot-circle-o text-success"></i>
+                                                        Approved
+                                                    @else
+                                                        <i class="fa fa-dot-circle-o text-danger"></i>
+                                                        Declined
+                                                    @endif
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#new_leave"><i class="fa fa-dot-circle-o text-purple"></i> New</a> -->
+                                                    <a class="dropdown-item PendingLeave" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                                    <a class="dropdown-item ApproveLeave" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                                    <a class="dropdown-item DeclinedLeave" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item leaveUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 @foreach ($leaves as $items)
                                     <tr>
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a href="{{ url('employee/profile/' . $items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/' . $items->avatar) }}" alt="{{ $items->name }}"></a>
-                                                <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                                <a href="#">{{ $items->name . ' ' . $items->lastname }}<span>{{ $items->position }}</span></a>
                                             </h2>
                                         </td>
                                         <td hidden class="id">{{ $items->leave_applies_id }}</td>

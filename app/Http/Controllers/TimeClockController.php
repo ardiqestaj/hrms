@@ -78,10 +78,11 @@ class TimeClockController extends Controller
             }
             // All days in a month
             $getMonthAllDays = workingDays($startOfMonth, $totalMonthDay);
-
             // Count all Leaves of the month
             function countLeaves($tableVar, $startCount, $endCount)
             {
+                $dates = [];
+
                 foreach ($tableVar as $monthL) {
                     $period = CarbonPeriod::create($monthL->$startCount, $monthL->$endCount);
                     foreach ($period as $date) {
@@ -92,6 +93,8 @@ class TimeClockController extends Controller
                 return $dates;
             }
             $daysThroughLeaves = countLeaves($monthLeaves, 'from_date', 'to_date');
+
+            $leave = [];
 
             foreach ($daysThroughLeaves as $restDa) {
                 foreach ($restDa as $leave[]) {
@@ -483,6 +486,9 @@ class TimeClockController extends Controller
         if (Auth::user()->role_name == 'Employee') {
 
             {
+
+                $thisMonth = '';
+                $thisYear = '';
                 // TmeClock Settings Table
                 $timeFormat = DB::table('clock_time_settings')->value("time_format");
                 $data = DB::table('clock_time_settings')->where('id', 1)->first();
@@ -551,6 +557,7 @@ class TimeClockController extends Controller
                 // Count all Leaves of the month
                 function countLeaves($tableVar, $startCount, $endCount)
                 {
+                    $dates = [];
                     foreach ($tableVar as $monthL) {
                         $period = CarbonPeriod::create($monthL->$startCount, $monthL->$endCount);
                         foreach ($period as $date) {
@@ -561,7 +568,7 @@ class TimeClockController extends Controller
                     return $dates;
                 }
                 $daysThroughLeaves = countLeaves($monthLeaves, 'from_date', 'to_date');
-
+                $leave = [];
                 foreach ($daysThroughLeaves as $restDa) {
                     foreach ($restDa as $leave[]) {
 

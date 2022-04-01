@@ -73,6 +73,96 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($resultAdmin as $rAdmin)
+                                    <tr>
+                                        <td>
+                                            <span hidden class="image">{{ $rAdmin->avatar }}</span>
+                                            <h2 class="table-avatar">
+                                                <a href="{{ url('employee/profile/' . $rAdmin->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/images/' . $rAdmin->avatar) }}" alt="{{ $rAdmin->avatar }}"></a>
+                                                <a href="{{ url('employee/profile/' . $rAdmin->rec_id) }}" class="name">
+
+                                                    {{ $rAdmin->name }}
+                                                    </span>
+
+                                                </a>
+                                            </h2>
+                                        </td>
+                                        <td hidden class="ids">{{ $rAdmin->id }}</td>
+                                        <td class="id">{{ $rAdmin->rec_id }}</td>
+                                        <td class="email">{{ $rAdmin->email }}</td>
+                                        {{-- <td class="position">{{ $rAdmin->position }}</td> --}}
+                                        <td class="phone_number">{{ $rAdmin->phone_number }}</td>
+                                        <td>{{ $rAdmin->join_date }}</td>
+                                        <td>
+                                            @if ($rAdmin->role_name == 'Admin')
+                                                <span class="badge bg-inverse-danger role_name">{{ $rAdmin->role_name }}</span>
+                                            @elseif ($rAdmin->role_name == 'Super Admin')
+                                                <span class="badge bg-inverse-warning role_name">{{ $rAdmin->role_name }}</span>
+                                            @elseif ($rAdmin->role_name == 'Normal User')
+                                                <span class="badge bg-inverse-info role_name">{{ $rAdmin->role_name }}</span>
+                                            @elseif ($rAdmin->role_name == 'Client')
+                                                <span class="badge bg-inverse-success role_name">{{ $rAdmin->role_name }}</span>
+                                            @elseif ($rAdmin->role_name == 'Employee')
+                                                <span class="badge bg-inverse-dark role_name">{{ $rAdmin->role_name }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="dropdown action-label">
+                                                @if ($rAdmin->status == 'Active')
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-dot-circle-o text-success"></i>
+                                                        <span class="statuss">{{ $rAdmin->status }}</span>
+                                                    </a>
+                                                @elseif ($rAdmin->status == 'Inactive')
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-dot-circle-o text-info"></i>
+                                                        <span class="statuss">{{ $rAdmin->status }}</span>
+                                                    </a>
+                                                @elseif ($rAdmin->status == 'Disable')
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-dot-circle-o text-danger"></i>
+                                                        <span class="statuss">{{ $rAdmin->status }}</span>
+                                                    </a>
+                                                @elseif ($rAdmin->status == '')
+                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-dot-circle-o text-dark"></i>
+                                                        <span class="statuss">N/A</span>
+                                                    </a>
+                                                @endif
+
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fa fa-dot-circle-o text-success"></i> Active
+                                                    </a>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fa fa-dot-circle-o text-warning"></i> Inactive
+                                                    </a>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fa fa-dot-circle-o text-danger"></i> Disable
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @foreach ($department as $dep)
+                                            @if ($dep->id == $rAdmin->department)
+                                                <td class="department">{{ $dep->department }}</td>
+                                            @endif
+                                        @endforeach
+                                        @if ($rAdmin->department == null)
+                                            <td class="department"></td>
+                                        @endif
+
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$rAdmin->id.'" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$rAdmin->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 @foreach ($result as $key => $user)
                                     <tr>
                                         <td>

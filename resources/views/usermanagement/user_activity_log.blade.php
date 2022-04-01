@@ -28,7 +28,6 @@
                         <table class="table table-striped custom-table datatable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Full Name</th>
                                     <th>Email Address</th>
                                     <th>Phone Number</th>
@@ -39,9 +38,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($activityLogAdmin as $key => $aAdmin)
+                                    <tr>
+                                        <td>{{ $aAdmin->user_name }}</td>
+                                        <td>{{ $aAdmin->email }}</td>
+                                        <td>{{ $aAdmin->phone_number }}</td>
+                                        <td>{{ $aAdmin->status }}</td>
+                                        <td>{{ $aAdmin->role_name }}</td>
+                                        <td>{{ $aAdmin->modify_user }}</td>
+                                        <td>{{ $aAdmin->date_time }}</td>
+                                    </tr>
+                                @endforeach
                                 @foreach ($activityLog as $key => $item)
                                     <tr>
-                                        <td>{{ ++$key }}</td>
                                         @if (isset($item->lastname))
                                             <td>{{ $item->user_name . ' ' . $item->lastname }}</td>
                                         @else

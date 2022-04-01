@@ -23,15 +23,26 @@ class LeavesController extends Controller
     public function leaves()
     {
         if (Auth::user()->role_name == 'Admin') {
+            $role = 'Admin';
+
+            $leavesAdmin = DB::table('leave_applies')
+                ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
+                ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
+                ->select('leave_applies.*', 'users.position', 'users.name', 'users.avatar', 'users.role_name', 'leave_types.leave_names', 'leave_types.leave_id')
+                ->where('users.role_name', $role)
+                ->get();
 
             $leaves = DB::table('leave_applies')
                 ->join('users', 'users.rec_id', '=', 'leave_applies.rec_id')
                 ->join('leave_types', 'leave_types.leave_id', '=', 'leave_applies.leave_type_id')
-                ->select('leave_applies.*', 'users.position', 'users.name', 'users.avatar', 'leave_types.leave_names', 'leave_types.leave_id')
+                ->join('employees', 'leave_applies.rec_id', '=', 'employees.employee_id')
+                ->select('leave_applies.*', 'users.position', 'users.name', 'users.avatar', 'leave_types.leave_names', 'leave_types.leave_id', 'employees.lastname')
                 ->get();
+
+            // dd($role);
             $LeaveTypes = DB::table('leave_types')->get();
 
-            return view('form.leaves', compact('leaves', 'LeaveTypes'));
+            return view('form.leaves', compact('leaves', 'LeaveTypes', 'leavesAdmin'));
         } else {
             return redirect()->route('em/dashboard');
         }
@@ -267,7 +278,7 @@ class LeavesController extends Controller
 
             return view('form.leavesemployee', compact('LeaveTypes', 'leavesapplies', 'users', 'LeavesEvidence'));
         } else {
-            return redirect()->route('em/dashboard');
+            return redirect()->route('form/leaves/new');
         }
     }
 

@@ -41,8 +41,7 @@
                 @if (Auth::user()->role_name == 'Admin')
                     <li class="submenu">
                         <a href="#">
-                            <i class="las la-user-check"></i> <span> User Controller</span> <span
-                                class="menu-arrow"></span>
+                            <i class="las la-user-check"></i> <span> User Controller</span> <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
                             <li><a href="{{ route('userManagement') }}">All User</a></li>
@@ -67,6 +66,7 @@
                             <li><a href="{{ route('attendance/page') }}">Attendance</a></li>
                             <li><a href="{{ route('form/leaves/new') }}">Leaves</a></li>
                             <li><a href="{{ route('form/department/new') }}">Departments</a></li>
+                            <li><a href="{{ route('form/incident/reports') }}">Incident Reports</a></li>
                         @endif
 
                         <!-- Employees Employee -->
@@ -74,7 +74,7 @@
                             <li><a href="{{ route('form/leavesemployee/new') }}">Leaves</a></li>
                             <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                             <li><a href="{{ route('employee/attendance') }}">Attendance</a></li>
-
+                            <li><a href="{{ route('form/incident/reports/page') }}">Incident Reports</a></li>
                             <!-- <li><a href="designations.html">Designations</a></li>
                             <li><a href="timesheet.html">Timesheet</a></li>
                             <li><a href="shift-scheduling.html">Shift & Schedule</a></li>

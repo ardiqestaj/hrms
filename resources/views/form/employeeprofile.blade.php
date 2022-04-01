@@ -35,7 +35,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name mt-0 mt-md-5 mb-0">{{ $user->name }}</h3>
+                                                <h3 class="user-name mt-0 mt-md-5 mb-0">{{ $user->name . ' ' . $user->lastname }}</h3>
                                                 {{-- <h6 class="text-muted"> {{ $user->department }}</h6> --}}
                                                 <small class="text-muted">{{ $user->position }}</small>
                                                 <div class="staff-id">Employee ID : {{ $user->rec_id }}</div>
@@ -302,7 +302,7 @@
                                     {{-- </div> --}}
                                     <div class="experience-box">
                                         <ul class="experience-list">
-                                            @if (!empty($education))
+                                            @if (count($education))
                                                 @foreach ($education as $edu)
                                                     <li>
 
@@ -346,7 +346,10 @@
                                                     <div class="experience-content">
                                                         <div class="timeline-content">
                                                             <a href="#/" class="name">N/A</a>
+                                                            <br>
+                                                            <br>
                                                             <div>N/A</div>
+                                                            <br>
                                                             <span class="time">N/A -
                                                                 N/A</span>
                                                         </div>
@@ -361,35 +364,51 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
+                                    <h3 class="card-title">Experience</h3>
                                     <div class="experience-box">
                                         <ul class="experience-list">
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">Web Designer at Zen
-                                                            Corporation</a>
-                                                        <span class="time">Jan 2013 - Present (5 years 2
-                                                            months)</span>
+                                            @if (count($experience))
+                                                @foreach ($experience as $exp)
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <a href="#" class="edit-icon expUpdate" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a>
+                                                                <span>
+                                                                    <a href="#/" class="name work_company_name">{{ $exp->work_company_name }}
+                                                                    </a> at <a href="#/" class="name work_address">{{ $exp->work_address }}</a>
+                                                                </span>
+
+                                                                <span class="time">
+                                                                    <span class="work_period_from">{{ $exp->work_period_from }}</span>
+                                                                    -
+                                                                    <span class="work_period_to">{{ $exp->work_period_to }}</span>
+                                                                </span>
+
+                                                                <span class="work_position" hidden>{{ $exp->work_position }}</span>
+                                                                <span class="exp_id" hidden>{{ $exp->exp_id }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            @else
+                                                <li>
+                                                    <div class="experience-user">
+                                                        <div class="before-circle"></div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="experience-user">
-                                                    <div class="before-circle"></div>
-                                                </div>
-                                                <div class="experience-content">
-                                                    <div class="timeline-content">
-                                                        <a href="#/" class="name">Web Designer at Ron-tech</a>
-                                                        <span class="time">Jan 2013 - Present (5 years 2
-                                                            months)</span>
+                                                    <div class="experience-content">
+                                                        <div class="timeline-content">
+                                                            <a href="#/" class="name">N/A at
+                                                                N/A</a>
+                                                            <br>
+                                                            <br>
+                                                            <span class="time">N/A - N/A </span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
+                                                </li>
+                                                {{-- <li>
                                                 <div class="experience-user">
                                                     <div class="before-circle"></div>
                                                 </div>
@@ -401,7 +420,8 @@
                                                             months)</span>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            </li> --}}
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
