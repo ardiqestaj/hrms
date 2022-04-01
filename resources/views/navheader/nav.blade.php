@@ -90,23 +90,45 @@
                         use Carbon\Carbon;
                         @endphp
                         @forelse (Auth()->user()->unreadNotifications as $notification)
-								<li class="notification-message">
-									<a href="{{ url('show/notification/' . $notification->id) }}"">
-										<div class="media"> <span class="avatar">
-													<img alt="" src="{{ URL::to('assets/images/' . Auth()->user()->avatar) }}">
-												</span>
-											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">{{Auth()->user()->name}}</span> About your leaves applies  <span class="noti-title">Your leaves hes been {{$notification->data['rec_id']}}</span></p>
-                                                <p class="noti-time"><span class="notification-time">
-                                                @php 
-                                                $time_created = $notification->created_at;
-                                                echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
-                                                @endphp</span> </h5>
-												</span></p>
-											</div>
-										</div>
-									</a>
-								</li>
+                        @if ($notification->type == 'App\Notifications\ApproveEmployeeLeaveNotify')
+                        <li class="notification-message">
+                            <a href="{{ url('show/notification/' . $notification->id) }}"">
+                                <div class="media"> <span class="avatar">
+                                            <img alt="" src="{{ URL::to('assets/images/' . Auth()->user()->avatar) }}">
+                                        </span>
+                                    <div class="media-body">
+                                        <p class="noti-details"><span class="noti-title">{{Auth()->user()->name}}</span> About your leaves applies  <span class="noti-title">Your leaves has been {{$notification->data['status']}}</span></p>
+                                        <p class="noti-time"><span class="notification-time">
+                                        @php 
+                                        $time_created = $notification->created_at;
+                                        echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
+                                        @endphp</span> </h5>
+                                        </span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        @endif
+                        @if ($notification->type == 'App\Notifications\EditedAttendanceNotification')
+                        <li class="notification-message">
+                            <a href="{{ url('show/notification/' . $notification->id) }}"">
+                                <div class="media"> <span class="avatar">
+                                            <img alt="" src="{{ URL::to('assets/images/' . Auth()->user()->avatar) }}">
+                                        </span>
+                                    <div class="media-body">
+                                        <p class="noti-details"><span class="noti-title">{{Auth()->user()->name}}</span> Your attendance on this date {{$notification->data['date']}}  <span class="noti-title">has been updated </span></p>
+                                        <p class="noti-time"><span class="notification-time">
+                                        @php 
+                                        $time_created = $notification->created_at;
+                                        echo Carbon::createFromFormat('Y-m-d H:i:s', $time_created)->diffForHumans(); 
+                                        @endphp</span> </h5>
+                                        </span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        @endif
+								
 								@empty
 								<li class="notification-message">
 									<a href="#">

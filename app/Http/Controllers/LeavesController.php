@@ -240,9 +240,9 @@ class LeavesController extends Controller
             // $requestt = '4';
             // $users1 = DB::table('users')->where('rec_id', $request->rec_id)->get();
             $users1 = User::where('rec_id', $request->rec_id)->first();
-            // dd($users1);
+            // dd($request);
 
-            Notification::send($users1, new ApproveEmployeeLeaveNotify($request->status));
+            Notification::send($users1, new ApproveEmployeeLeaveNotify($request));
 
             DB::commit();
             Toastr::success('Status Updated :)', 'Success');

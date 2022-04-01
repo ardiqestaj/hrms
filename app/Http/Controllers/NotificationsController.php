@@ -14,8 +14,10 @@ class NotificationsController extends Controller
     {
 
         $notifications =  Auth()->user()->notifications()->paginate(4); 
+        $leavetypes = DB::table('leave_types')->get();
 
-        return view('notifications.allnotifications', compact('notifications'));
+
+        return view('notifications.allnotifications', compact('notifications', 'leavetypes'));
     }
 
     public function show($id)
@@ -23,11 +25,22 @@ class NotificationsController extends Controller
         if ($id) {
             Auth()->user()->notifications->where('id',$id)->markAsRead();
         }
+        // if ($request->filled('image')) {
+            # code...
+        // }
         $notifications =  Auth()->user()->notifications->where('id',$id)->first();
 
         // dd($notifications);
+        if (isset($notifications->data['leave_type_id'])) {
+            # code...
+        $leavetypes = DB::table('leave_types')->where('leave_id', $notifications->data['leave_type_id'])->select('leave_names')->first();
 
-        return view('notifications.shownotifications', compact('notifications'));
+        } else {
+            $leavetypes = '';
+        }
+        
+
+        return view('notifications.shownotifications', compact('notifications', 'leavetypes'));
     }
 
     public function markAll()
