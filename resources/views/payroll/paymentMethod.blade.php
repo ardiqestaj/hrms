@@ -41,7 +41,7 @@
                 <div class="tab-pane fade show active" id="fulltime">
                     <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                         <div class="card-body">
-                            <h3 class="card-title"> Earnings Information</h3>
+                            <h3 class="card-title">Fulltime: Earnings Information</h3>
                             <form action="{{ route('form/salary/fulltime') }}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -351,7 +351,7 @@
                 <div class="tab-pane fade" id="parttime">
                     <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                         <div class="card-body">
-                            <h3 class="card-title"> Earnings Information</h3>
+                            <h3 class="card-title">Parttime: Earnings Information</h3>
                             <form action="{{ route('form/salary/parttime') }}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -662,7 +662,7 @@
                 <div class="tab-pane fade show" id="hourly">
                     <div class="card" style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
                         <div class="card-body">
-                            <h3 class="card-title"> Earnings Information</h3>
+                            <h3 class="card-title">Hourly: Earnings Information</h3>
                             <form action="{{ route('form/salary/hourly') }}" method="POST">
                                 @csrf
                                 <div class="row">
