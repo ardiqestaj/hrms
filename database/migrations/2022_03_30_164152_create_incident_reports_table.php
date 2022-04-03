@@ -20,7 +20,8 @@ class CreateIncidentReportsTable extends Migration
             $table->date('rep_date');
             $table->time('rep_time');
             $table->text('rep_description');
-            $table->time('read_at')->nullable();
+            $table->text('rep_image')->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

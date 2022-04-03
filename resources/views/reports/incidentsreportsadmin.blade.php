@@ -32,7 +32,7 @@
 
 
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable">
+                                <table class="table custom-table datatable">
                                     <thead>
                                         <tr>
                                             <th>Location</th>
@@ -40,36 +40,76 @@
                                             <th>Date</th>
                                             <th>Time</th>
                                             <th>Description</th>
-                                            <th class="text-right no-sort">Action</th>
+                                            <th>Provided Image</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @if (count($reports))
                                             @foreach ($reports as $report)
-                                                <tr>
-                                                    <td>
-                                                        {{ $report->location_name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $report->location_name }}
-                                                    </td>
-                                                    <td>{{ $report->rep_date }}</td>
-                                                    <td>{{ $report->rep_time }}</td>
+                                                @if (!isset($report->read_at))
+                                                    <tr class='clickable-row' data-href='{{ url('form/incident/report/show/' . $report->id) }}' style="cursor: pointer;">
+                                                        <td>
+                                                            {{ $report->location_name }}
 
-                                                    <td class="d-inline-block text-truncate" style="max-width: 150px;">{{ $report->rep_description }}</td>
-                                                    <td class="text-right">
-                                                        <div class="dropdown dropdown-action">
-                                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href=""><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                <a class="dropdown-item" href="" onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td>
+                                                            {{ $report->name . ' ' . $report->lastname }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $report->rep_date }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $report->rep_time }}
+                                                        </td>
+
+                                                        <td>
+                                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">{{ $report->rep_description }}</span>
+
+                                                        </td>
+
+                                                        <td>
+                                                            @if (isset($report->rep_image))
+                                                                <img class="img-fluid" width="30px" src="{{ URL::to('/assets/images/posts/' . $report->rep_image) }}">
+                                                            @else
+                                                                <span class="text-muted">No Image Provided</span>
+                                                            @endif
+
+                                                        </td>
+
+                                                    </tr>
+                                                @else
+                                                    <tr class='clickable-row' data-href='{{ url('form/incident/report/show/' . $report->id) }}' style="cursor: pointer; background-color: #F5F7F7">
+                                                        <td>
+                                                            {{ $report->location_name }}
+
+                                                        </td>
+                                                        <td>
+                                                            {{ $report->name . ' ' . $report->lastname }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $report->rep_date }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $report->rep_time }}
+                                                        </td>
+
+                                                        <td>
+                                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">{{ $report->rep_description }}</span>
+                                                        </td>
+
+                                                        <td>
+                                                            @if (isset($report->rep_image))
+                                                                <img class="img-fluid" width="30px" src="{{ URL::to('/assets/images/posts/' . $report->rep_image) }}">
+                                                            @else
+                                                                <span class="text-muted">No Image Provided</span>
+                                                            @endif
+
+                                                        </td>
+
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
-
                                     </tbody>
                                 </table>
                             </div>

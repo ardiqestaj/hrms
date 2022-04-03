@@ -221,6 +221,7 @@ Route::get('form/leave/reports/page', [ExpenseReportsController::class, 'leaveRe
 Route::get('form/incident/reports', [IncidentReportController::class, 'indexAdmin'])->middleware('auth')->name('form/incident/reports');
 Route::get('form/incident/reports/page', [IncidentReportController::class, 'index'])->middleware('auth')->name('form/incident/reports/page');
 Route::post('form/incident/reports/new', [IncidentReportController::class, 'createReport'])->middleware('auth')->name('form/incident/reports/new');
+Route::get('form/incident/report/show/{id}', [IncidentReportController::class, 'showReport'])->middleware('auth')->name('form/incident/report/show/{id}');
 
 // ----------------------------- performance  ------------------------------//
 Route::get('form/performance/indicator/page', [PerformanceController::class, 'index'])->middleware('auth')->name('form/performance/indicator/page');

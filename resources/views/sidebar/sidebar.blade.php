@@ -167,6 +167,8 @@
                 </ul> -->
                 </li>
 
+
+
                 {{-- App --}}
                 <li class="submenu"> <a href="#"><i class="las la-cube"></i>
                         <span> App </span> <span class="menu-arrow"></span></a>
@@ -198,6 +200,15 @@
                         <ul style="display: none;">
                             <li><a href="{{ route('change/password') }} "> Change Password </a></li>
                         </ul>
+                    </li>
+                @endif
+
+                @if (Auth::user()->role_name == 'Employee')
+                    <li class="submenu-click">
+                        <a href="{{ route('form/incident/reports/page') }}">
+                            <i class="las la-edit"></i>
+                            <span style="color: red">Incident Reports</span>
+                        </a>
                     </li>
                 @endif
 
