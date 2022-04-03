@@ -125,4 +125,45 @@ class UserController extends Controller
             return redirect('all/employee/card');
         }
     }
+
+    // employee profile edit Salary
+    public function editsalary($rec_id, Request $request)
+    {
+        DB::beginTransaction();
+        try {
+        $update = [
+                'name' => $request->name,
+                // 'rec_id' => $users->rec_id,
+                'payment_type' => $request->payment_method,
+                'salary_amount' => $request->salary_amount,
+                'hourly_salary' => $request->hourly_salary,
+                'monthly_surcharge' => $request->monthly_surcharge,
+                'night_sunday_bon' => $request->night_sunday_bon,
+                'holiday_bon' => $request->holiday_bon,
+                'holiday_bon_minus' => $request->holiday_bon_minus,
+                'timesupplement_night_sunday' => $request->timesupplement_night_sunday,
+                'pension_insurance' => $request->pension_insurance,
+                'unemployment_insurance' => $request->unemployment_insurance,
+                'accident_insurance' => $request->accident_insurance,
+                'uvg_grb' => $request->uvg_grb,
+                'pension_fund' => $request->pension_fund,
+                'medical_insurance' => $request->medical_insurance,
+                'collective_labor' => $request->collective_labor,
+                'expenses' => $request->expenses,
+                'telephone_shipment' => $request->telephone_shipment,
+                'mileage_compensation' => $request->mileage_compensation,
+        ];
+
+        StaffSalary::where('rec_id', $rec_id)->update($update);
+        
+        DB::commit();
+        Toastr::success('Updated Salary successfully :)', 'Success');
+        return redirect('form.employeeprofile');
+        } catch (\Exception$e) {
+            DB::rollback();
+            Toastr::error('Updated Salary fail :)', 'Error');
+            return redirect('form.employeeprofile');
+        }
+          
+    }
 }

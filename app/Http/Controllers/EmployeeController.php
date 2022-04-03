@@ -394,7 +394,9 @@ class EmployeeController extends Controller
             $families = DB::table('families')->where('rec_id', $rec_id)->first();
             $experience = DB::table('experience_information')->where('rec_id', $rec_id)->get();
 
-            return view('form.employeeprofile', compact('user', 'information', 'education', 'families', 'experience'));
+            $salaryData = StaffSalary::where('rec_id', $rec_id)->first();
+
+            return view('form.employeeprofile', compact('user', 'information', 'education', 'families', 'experience', 'salaryData'));
         } else {
             return redirect()->route('em/dashboard');
         }
