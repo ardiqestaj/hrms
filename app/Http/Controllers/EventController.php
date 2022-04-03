@@ -32,11 +32,13 @@ class EventController extends Controller
 
             $data=$data1->merge($data2);
 
+
             return response()->json($data);
 
         }
+        $holiday = Holiday::all();
   
-        return view('app/calendar_events');
+        return view('app/calendar_events', compact('holiday'));
     }
  
     /**

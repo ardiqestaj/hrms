@@ -209,6 +209,8 @@ Route::post('form/salary/delete', [PayrollController::class, 'deleteRecord'])->m
 Route::get('form/salary/view/{rec_id}', [PayrollController::class, 'salaryView'])->middleware('auth');
 Route::get('form/payroll/items', [PayrollController::class, 'payrollItems'])->middleware('auth')->name('form/payroll/items');
 Route::get('form/payroll/items/pdf/{rec_id}', [PayrollController::class, 'createPDF'])->middleware('auth')->name('form/payroll/items/pdf');
+Route::post('form/salary/edit/{rec_id}', [UserController::class, 'editsalary'])->middleware('auth')->name('form/salary/edit');
+
 
 // ----------------------------- reports  ------------------------------//
 Route::get('form/expense/reports/page', [ExpenseReportsController::class, 'index'])->middleware('auth')->name('form/expense/reports/page');
