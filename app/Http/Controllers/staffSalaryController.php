@@ -116,5 +116,4 @@ class PaymentMethodController extends Controller
             return redirect()->back();
         }
     }
-
 }

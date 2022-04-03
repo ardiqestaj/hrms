@@ -23,8 +23,13 @@ class EmployeeController extends Controller
                 ->paginate(11);
             $userList = DB::table('users')->get();
             $departments = DB::table('departments')->get();
+
+            $fulltimeConfig = DB::table('payment_methods')->where('payment_type', '=', "Fulltime")->first();
+            $parttimeConfig = DB::table('payment_methods')->where('payment_type', '=', "Parttime")->first();
+            $hourlyConfig = DB::table('payment_methods')->where('payment_type', '=', "Hourly")->first();
+
             // $permission_lists = DB::table('permission_lists')->get();
-            return view('form.allemployeecard', compact('users', 'userList', 'departments'));
+            return view('form.allemployeecard', compact('users', 'userList', 'departments', 'fulltimeConfig', 'parttimeConfig', 'hourlyConfig'));
         } else {
             return redirect()->route('em/dashboard');
         }
