@@ -9,6 +9,7 @@ use App\Models\StaffSalary;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
@@ -18,24 +19,24 @@ class UserController extends Controller
     public function storeUser(Request $request)
     {
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'role_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'birth_date' => 'required|string|max:255',
-            'gender' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'payment_method' => 'required|string|max:255',
-            'time_start' => 'required|string|max:255',
-            'time_end' => 'required|string|max:255',
-            'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required',
-        ]);
-
-        DB::beginTransaction();
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'lastname' => 'required|string|max:255',
+        //     'username' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'role_name' => 'required|string|max:255',
+        //     'phone_number' => 'required|string|max:255',
+        //     'birth_date' => 'required|string|max:255',
+        //     'gender' => 'required|string|max:255',
+        //     'department' => 'required|string|max:255',
+        //     'payment_method' => 'required|string|max:255',
+        //     'time_start' => 'required|string|max:255',
+        //     'time_end' => 'required|string|max:255',
+        //     'password' => 'required|string|min:8|confirmed',
+        //     'password_confirmation' => 'required',
+        // ]);
+        // dd($request);
+        // DB::beginTransaction();
 
         foreach ($request->input() as $key => $value) {
             if (empty($value)) {
