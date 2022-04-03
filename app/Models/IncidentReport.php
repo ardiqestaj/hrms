@@ -18,5 +18,6 @@ class IncidentReport extends Model
         'rep_time',
         'rep_description',
         'read_at',
+        'rep_image',
     ];
 }

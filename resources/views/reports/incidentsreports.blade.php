@@ -22,90 +22,95 @@
             {{-- message --}}
             {!! Toastr::message() !!}
             <div class="row align-center ">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title mb-0">Report an Incident</h4>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{ route('form/incident/reports/new') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <input type="hidden" class="form-control" name="rep_employee_id" value="{{ $userAssigned->employee_id }}">
+                @if (isset($userAssigned))
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Report an Incident</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ route('form/incident/reports/new') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <input type="hidden" class="form-control" name="rep_employee_id" value="{{ $userAssigned->employee_id }}">
 
-                                    <div class="form-group col-6" hidden>
-                                        <label class="col-form-label">Location ID</label>
+                                        <div class="form-group col-6" hidden>
+                                            <label class="col-form-label">Location ID</label>
 
-                                        <input type="text" class="form-control" name="rep_location_id" value="{{ $userAssigned->location_type_work_id }}">
+                                            <input type="text" class="form-control" name="rep_location_id" value="{{ $userAssigned->location_type_work_id }}">
 
+                                        </div>
+
+                                        <div class="form-group col-6 ">
+                                            <label class="col-form-label">Incident Date</label>
+
+                                            <input type="text" class="form-control datetimepicker" required name="rep_date" value="">
+
+                                        </div>
+
+                                        <div class="form-group col-6 ">
+                                            <label class="col-form-label">Incident Time</label>
+
+                                            <input type="time" class="form-control" required name="rep_time" value="">
+                                        </div>
+
+
+                                        <div class="form-group col-12">
+                                            <label class="col-form-label">Describe What Happened</label>
+
+                                            <textarea name="rep_description" id="" class="form-control" rows="3" required></textarea>
+                                        </div>
+
+                                        <div class="form-group col-12">
+                                            <label for="description" class="form-label">Provide Image</label>
+                                            <input value="" type="file" class="form-control" name="image" placeholder="image">
+                                        </div>
+
+                                        <div class="form-group col-12 text-center">
+                                            <label class="col-form-label"></label>
+
+                                            <button type="submit" class="btn btn-primary submit-btn">Report</button>
+
+                                        </div>
                                     </div>
-
-                                    <div class="form-group col-6 ">
-                                        <label class="col-form-label">Incident Date</label>
-
-                                        <input type="text" class="form-control datetimepicker" name="rep_date" value="">
-
-                                    </div>
-                                    {{-- <div class="col-12"> --}}
-                                    <div class="form-group col-6 ">
-                                        <label class="col-form-label">Incident Time</label>
-
-                                        <input type="time" class="form-control" name="rep_time" value="">
-                                    </div>
-
-                                    {{-- </div> --}}
-                                    {{-- <div class="col-12"> --}}
-                                    <div class="form-group col-12">
-                                        <label class="col-form-label">Describe What Happened</label>
-
-                                        <textarea name="rep_description" id="" class="form-control" rows="3"></textarea>
-                                    </div>
-                                    {{-- </div> --}}
-
-                                    <div class="form-group col-12 text-center">
-                                        <label class="col-form-label"></label>
-
-                                        <button type="submit" class="btn btn-primary submit-btn">Report</button>
-
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title mb-0">Previous Reports </h4>
-
-                        </div>
-                        <div class="card-body">
 
 
-                            <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable">
-                                    <thead>
-                                        <tr>
-                                            <th>Location</th>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Description</th>
-                                            {{-- <th class="text-right no-sort">Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (count($reports))
-                                            @foreach ($reports as $report)
-                                                <tr>
-                                                    <td>
-                                                        {{ $report->location_name }}
-                                                    </td>
-                                                    <td>{{ $report->rep_date }}</td>
-                                                    <td>{{ $report->rep_time }}</td>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Previous Reports </h4>
 
-                                                    <td class="d-inline-block text-truncate" style="max-width: 150px;">{{ $report->rep_description }}</td>
-                                                    {{-- <td class="text-right">
+                            </div>
+                            <div class="card-body">
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped custom-table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Location</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Description</th>
+                                                {{-- <th class="text-right no-sort">Action</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (count($reports))
+                                                @foreach ($reports as $report)
+                                                    <tr class='clickable-row' data-href='{{ url('form/incident/report/show/' . $report->id) }}' style="cursor: pointer;">
+                                                        <td>
+                                                            {{ $report->location_name }}
+                                                        </td>
+                                                        <td>{{ $report->rep_date }}</td>
+                                                        <td>{{ $report->rep_time }}</td>
+
+                                                        <td class="d-inline-block text-truncate" style="max-width: 150px;">{{ $report->rep_description }}</td>
+                                                        {{-- <td class="text-right">
                                                         <div class="dropdown dropdown-action">
                                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
@@ -114,16 +119,68 @@
                                                             </div>
                                                         </div>
                                                     </td> --}}
-                                                </tr>
-                                            @endforeach
-                                        @endif
+                                                    </tr>
+                                                @endforeach
+                                            @endif
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Previous Reports </h4>
+
+                            </div>
+                            <div class="card-body">
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped custom-table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Location</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Description</th>
+                                                <th>Image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (count($reports))
+                                                @foreach ($reports as $report)
+                                                    <tr class='clickable-row' data-href='{{ url('form/incident/report/show/' . $report->id) }}' style="cursor: pointer;">
+                                                        <td>
+                                                            {{ $report->location_name }}
+                                                        </td>
+                                                        <td>{{ $report->rep_date }}</td>
+                                                        <td>{{ $report->rep_time }}</td>
+
+                                                        <td class="d-inline-block text-truncate" style="max-width: 150px;">{{ $report->rep_description }}</td>
+                                                        <td>
+                                                            @if (isset($report->rep_image))
+                                                                <img class="img-fluid" width="30px" src="{{ URL::to('/assets/images/posts/' . $report->rep_image) }}">
+                                                            @else
+                                                                <span class="text-muted">No Image Provided</span>
+                                                            @endif
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
             </div>
         </div>
         <!-- /Page Content -->

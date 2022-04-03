@@ -72,6 +72,7 @@
                                             <span id="type"></span>
                                             <span id="message"></span>
                                             <span id="time"></span>
+                                            <span id="report"></span>
                                         </p>
                                     </div>
                                 </div>
@@ -575,7 +576,7 @@
         });
 
         $('#btnclockin').click(function(event) {
-            var url, type, idno, comment;
+            var url, type, idno, comment, just;
             url = $("#_url").val();
             type = $('.btnclock.active').data("type");
             idno = $('input[name="idno"]').val();
@@ -607,19 +608,33 @@
                     } else {
                         function type(clocktype) {
                             if (clocktype == "timein") {
+                                just = "timein";
                                 return "{{ __('Time In at') }}";
+
                             } else {
+                                just = "timeout";
                                 return "{{ __('Time Out at') }}";
+
                             }
                         }
                         $('.message-after').addClass('ok').hide();
                         $('.message-after').removeClass("notok");
-                        $('#type, #fullname, #message').text("").show();
+                        $('#type, #fullname, #message, #report').text("").show();
                         $('#time').html("").show();
                         $('#type').text(type(response['type']));
                         $('#fullname').text(response['firstname'] + ' ' + response['lastname']);
                         $('#time').html('<span id=clocktime>' + response['time'] + '</span>' + '.' +
-                            '<span id=clockstatus> {{ __('Success!') }}</span>');
+                            '<span id=clockstatus> {{ __('Success!') }} </span>');
+
+                        if (just == "timein") {
+
+
+                        } else {
+                            $('#report').html(' <br> <h4 class="mt-2"><small class="text-muted">In case of an incident report <a href="{{ route('form/incident/reports/page') }}" ><u>here</u></a>!</small>  </h4> </span>');
+                            // $('#time').html('<span id=clocktime>' + response['time'] + '</span>' + '.' +
+                            //     '<span id=clockstatus> {{ __('Success!') }} <br> <h4 class="mt-2"><small class="text-muted">In case of an incident report <a href="{{ route('form/incident/reports/page') }}" ><u>here</u></a>!</small>  </h4> </span>');
+                        }
+
                         $('.message-after').slideToggle().slideDown('400');
                     }
                 }
