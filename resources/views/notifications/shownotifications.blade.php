@@ -80,49 +80,6 @@
     <!-- /Page Wrapper -->
 @section('script')
     <script type="text/javascript">
-function resizeGridItem(item){
-    gridPost = document.getElementsByClassName("gridPost")[0];
-    rowHeight = parseInt(window.getComputedStyle(gridPost).getPropertyValue('grid-auto-rows'));
-    rowGap = parseInt(window.getComputedStyle(gridPost).getPropertyValue('grid-row-gap'));
-    rowSpan = Math.ceil((item.querySelector('.content-post').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
-      item.style.gridRowEnd = "span "+rowSpan;
-  }
-  
-  function resizeAllGridItems(){
-    allItems = document.getElementsByClassName("item");
-    for(x=0;x<allItems.length;x++){
-      resizeGridItem(allItems[x]);
-    }
-  }
-  
-  function resizeInstance(instance){
-      item = instance.elements[0];
-    resizeGridItem(item);
-  }
-  
-  window.onload = resizeAllGridItems();
-  window.addEventListener("resize", resizeAllGridItems);
-  
-  allItems = document.getElementsByClassName("item");
-  for(x=0;x<allItems.length;x++){
-    imagesLoaded( allItems[x], resizeInstance);
-  }
-
-        
-    </script>
-    <script>
-        document.getElementById("year").innerHTML = new Date().getFullYear();
-    </script>
-    {{-- update js --}}
-    <script>
-        $(document).on('click', '.userUpdate', function() {
-            var _this = $(this).parents('tr');
-            $('#e_id').val(_this.find('.id').text());
-            $('#holidayName_edit').val(_this.find('.holidayName').text());
-            $('#holidayDate_edit').val(_this.find('.holidayDate').text());
-        });
-    </script>
-    {{-- delete model --}}
     <script>
         $(document).on('click', '.holidayDelete', function() {
             var _this = $(this).parents('tr');

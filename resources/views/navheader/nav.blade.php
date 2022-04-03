@@ -92,7 +92,7 @@
                         @forelse (Auth()->user()->unreadNotifications as $notification)
                         @if ($notification->type == 'App\Notifications\ApproveEmployeeLeaveNotify')
                         <li class="notification-message">
-                            <a href="{{ url('show/notification/' . $notification->id) }}"">
+                            <a href="{{ url('show/notification/' . $notification->id) }}">
                                 <div class="media"> <span class="avatar">
                                             <img alt="" src="{{ URL::to('assets/images/' . Auth()->user()->avatar) }}">
                                         </span>
